@@ -1,0 +1,10 @@
+
+C:\Qsys_g\QEF\EFFONT>call "c:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" 
+Setting environment for using Microsoft Visual Studio 2008 x86 tools.
+
+C:\Qsys_g\QEF\EFFONT>hbmk2 qef.hbm -inc 
+hbmk2: Processando arquivo de configura‡Æo: c:\hb20\bin\hbmk.cfg
+hbmk2: Processando: QEF.HBC
+hbmk2: Linkando... C:\Qsys_g\Qef\Qef_.exe
+EF470_.obj : error LNK2001: unresolved external symbol _HB_FUN_ALLTRIMM
+C:\Qsys_g\Qef\Qef_.exe : fatal error LNK1120: 1 unresolved externals

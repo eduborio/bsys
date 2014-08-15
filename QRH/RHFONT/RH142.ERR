@@ -1,0 +1,33 @@
+238K available
+Compiling RH142.PRG
+RH142.PRG(11)  Warning C1004  Ambiguous reference, assuming memvar: 'SBLOCO'
+RH142.PRG(31)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH142.PRG(31)  Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH142.PRG(32)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH142.PRG(32)  Warning C1003  Ambiguous reference: 'XUSRA'
+RH142.PRG(46)  Warning C1004  Ambiguous reference, assuming memvar: 'NALIQUO'
+RH142.PRG(46)  Warning C1004  Ambiguous reference, assuming memvar: 'NLIMITE'
+RH142.PRG(50)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH142.PRG(50)  Warning C1001  RETURN statement with no value in function
+RH142.PRG(54)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH142.PRG(54)  Warning C1001  RETURN statement with no value in function
+RH142.PRG(58)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH142.PRG(67)  Warning C1001  RETURN statement with no value in function
+RH142.PRG(74)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH142.PRG(76)  Warning C1003  Ambiguous reference: 'SBLOCO'
+RH142.PRG(85)  Warning C1003  Ambiguous reference: 'NLIMITE'
+RH142.PRG(104) Warning C1004  Ambiguous reference, assuming memvar: 'NLIMITE'
+RH142.PRG(109) Warning C1004  Ambiguous reference, assuming memvar: 'NALIQUO'
+RH142.PRG(118) Warning C1003  Ambiguous reference: 'FANOMES'
+RH142.PRG(119) Warning C1003  Ambiguous reference: 'COPCAO'
+RH142.PRG(127) Warning C1003  Ambiguous reference: 'NLIMITE'
+RH142.PRG(127) Warning C1004  Ambiguous reference, assuming memvar: 'FIF_TETO'
+RH142.PRG(128) Warning C1003  Ambiguous reference: 'NALIQUO'
+RH142.PRG(128) Warning C1004  Ambiguous reference, assuming memvar: 'FIF_ALIQ'
+RH142.PRG(133) Warning C1003  Ambiguous reference: 'COPCAO'
+RH142.PRG(137) Warning C1003  Ambiguous reference: 'COPCAO'
+RH142.PRG(140) Warning C1001  RETURN statement with no value in function
+RH142.PRG(148) Warning C1003  Ambiguous reference: 'SBLOCO'
+RH142.PRG(166) Warning C1001  RETURN statement with no value in function
+29 warnings                
+Code size 1266, Symbols 640, Constants 478

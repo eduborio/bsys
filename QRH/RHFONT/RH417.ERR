@@ -1,0 +1,67 @@
+238K available
+Compiling RH417.PRG
+RH417.PRG(17)  Warning C1004  Ambiguous reference, assuming memvar: 'CAQUIS'
+RH417.PRG(18)  Warning C1004  Ambiguous reference, assuming memvar: 'CMESANO'
+RH417.PRG(23)  Warning C1003  Ambiguous reference: 'EVENTO'
+RH417.PRG(27)  Warning C1004  Ambiguous reference, assuming memvar: 'CAMBIENTE'
+RH417.PRG(30)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH417.PRG(49)  Warning C1004  Ambiguous reference, assuming memvar: 'CMATRICULA'
+RH417.PRG(53)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH417.PRG(54)  Warning C1003  Ambiguous reference: 'CMESANO'
+RH417.PRG(56)  Warning C1003  Ambiguous reference: 'CMESANO'
+RH417.PRG(61)  Warning C1001  RETURN statement with no value in function
+RH417.PRG(64)  Warning C1003  Ambiguous reference: 'CMESANO'
+RH417.PRG(64)  Warning C1003  Ambiguous reference: 'CMESANO'
+RH417.PRG(64)  Warning C1004  Ambiguous reference, assuming memvar: 'CANOMES'
+RH417.PRG(66)  Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH417.PRG(67)  Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH417.PRG(67)  Warning C1004  Ambiguous reference, assuming memvar: 'CMATRICULA'
+RH417.PRG(68)  Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH417.PRG(70)  Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH417.PRG(77)  Warning C1003  Ambiguous reference: 'CANOMES'
+RH417.PRG(77)  Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH417.PRG(77)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH417.PRG(81)  Warning C1004  Ambiguous reference, assuming memvar: 'CTMP1'
+RH417.PRG(83)  Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH417.PRG(83)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH417.PRG(83)  Warning C1003  Ambiguous reference: 'CANOMES'
+RH417.PRG(84)  Warning C1003  Ambiguous reference: 'CTMP1'
+RH417.PRG(89)  Warning C1004  Ambiguous reference, assuming memvar: 'CTMP1'
+RH417.PRG(89)  Warning C1004  Ambiguous reference, assuming memvar: 'CTMP1'
+RH417.PRG(94)  Warning C1003  Ambiguous reference: 'CANOMES'
+RH417.PRG(94)  Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH417.PRG(94)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH417.PRG(98)  Warning C1004  Ambiguous reference, assuming memvar: 'CTMP1'
+RH417.PRG(99)  Warning C1004  Ambiguous reference, assuming memvar: 'CTMP2'
+RH417.PRG(113) Warning C1001  RETURN statement with no value in function
+RH417.PRG(133) Warning C1003  Ambiguous reference: 'CANOMES'
+RH417.PRG(133) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH417.PRG(133) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH417.PRG(134) Warning C1001  RETURN statement with no value in function
+RH417.PRG(140) Warning C1003  Ambiguous reference: 'CANOMES'
+RH417.PRG(140) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH417.PRG(140) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH417.PRG(141) Warning C1001  RETURN statement with no value in function
+RH417.PRG(149) Warning C1003  Ambiguous reference: 'COPCAO'
+RH417.PRG(149) Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH417.PRG(150) Warning C1003  Ambiguous reference: 'COPCAO'
+RH417.PRG(170) Warning C1003  Ambiguous reference: 'COPCAO'
+RH417.PRG(175) Warning C1001  RETURN statement with no value in function
+RH417.PRG(178) Warning C1003  Ambiguous reference: 'CANOMES'
+RH417.PRG(178) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH417.PRG(178) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH417.PRG(179) Warning C1001  RETURN statement with no value in function
+RH417.PRG(184) Warning C1001  RETURN statement with no value in function
+RH417.PRG(195) Warning C1003  Ambiguous reference: 'CANOMES'
+RH417.PRG(196) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH417.PRG(197) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH417.PRG(210) Warning C1003  Ambiguous reference: 'COPCAO'
+RH417.PRG(211) Warning C1003  Ambiguous reference: 'CAQUIS'
+RH417.PRG(212) Warning C1001  RETURN statement with no value in function
+RH417.PRG(235) Warning C1003  Ambiguous reference: 'COPCAO'
+RH417.PRG(241) Warning C1003  Ambiguous reference: 'COPCAO'
+RH417.PRG(242) Warning C1003  Ambiguous reference: 'CAQUIS'
+RH417.PRG(243) Warning C1001  RETURN statement with no value in function
+RH417.PRG(258) Warning C1001  RETURN statement with no value in function
+63 warnings                
+Code size 2292, Symbols 1008, Constants 1196

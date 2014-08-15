@@ -1,0 +1,18 @@
+312K available
+Compiling RH301.PRG
+RH301.PRG(24)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH301.PRG(24)  Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH301.PRG(26)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH301.PRG(41)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH301.PRG(43)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH301.PRG(45)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH301.PRG(45)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH301.PRG(46)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH301.PRG(46)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH301.PRG(47)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH301.PRG(47)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH301.PRG(53)  Warning C1001  RETURN statement with no value in function
+RH301.PRG(60)  Warning C1003  Ambiguous reference: 'XFLAG'
+RH301.PRG(68)  Warning C1001  RETURN statement with no value in function
+14 warnings                
+Code size 432, Symbols 304, Constants 112

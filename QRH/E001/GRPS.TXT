@@ -1,0 +1,45 @@
+
+Estrutura do arquivo GRPS.DBF
+16/09/04  -  09:58:10
+
+ANOMES     - C -   6 -   0
+CODIGO     - C -   4 -   0
+COD_FPAS   - C -   3 -   0
+COD_TERC   - C -   4 -   0
+COD_SAT    - C -   3 -   0
+DESCRICAO  - C -  40 -   0
+ENDERECO   - C -  50 -   0
+BAIRRO     - C -  20 -   0
+CEP        - C -   8 -   0
+CGM        - C -   6 -   0
+TELEFONE   - C -  10 -   0
+CGC        - C -  18 -   0
+CEI        - C -  15 -   0
+PERC_EMPR  - N -   5 -   2
+PERC_ACID  - N -   5 -   2
+PERC_PROL  - N -   5 -   2
+PERC_TERC  - N -   5 -   2
+PERC_AUTO  - N -   5 -   2
+TERC_01    - N -   5 -   2
+TERC_02    - N -   5 -   2
+TERC_03    - N -   5 -   2
+TERC_04    - N -   5 -   2
+TERC_05    - N -   5 -   2
+TERC_06    - N -   5 -   2
+TERC_07    - N -   5 -   2
+TERC_08    - N -   5 -   2
+TERC_09    - N -   5 -   2
+TERC_10    - N -   5 -   2
+TERC_11    - N -   5 -   2
+MENSA_1    - C -  60 -   0
+MENSA_2    - C -  60 -   0
+SEGURADOS  - N -  14 -   2
+TOTAL      - N -  14 -   2
+COD_GPS    - C -   4 -   0
+
+Indexadores utilizados:
+
+01 - Ano + Mˆs + C¢digo da Guia     - GR_CODIG - ANOMES + CODIGO                                   
+02 - Ano + Mˆs + Descri‡„o da Guia  - GR_DESCR - ANOMES + DESCRICAO                                
+
+

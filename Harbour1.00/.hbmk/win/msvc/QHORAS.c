@@ -1,0 +1,91 @@
+/*
+ * Harbour 2.0.0 (Rev. 13372)
+ * MinGW GNU C 4.4.1 (32-bit)
+ * Generated C source from "QHORAS.PRG"
+ */
+
+#include "hbvmpub.h"
+#include "hbinit.h"
+
+
+HB_FUNC( QHORACENT );
+HB_FUNC_EXTERN( VAL );
+HB_FUNC_EXTERN( LEFT );
+HB_FUNC_EXTERN( SUBSTR );
+HB_FUNC_EXTERN( RIGHT );
+HB_FUNC( QCENTHORA );
+HB_FUNC_EXTERN( STRZERO );
+HB_FUNC_EXTERN( INT );
+HB_FUNC( QDIFHORA );
+HB_FUNC_EXTERN( TSTRING );
+HB_FUNC_EXTERN( SECS );
+
+
+HB_INIT_SYMBOLS_BEGIN( hb_vm_SymbolInit_QHORAS )
+{ "QHORACENT", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( QHORACENT )}, NULL },
+{ "VAL", {HB_FS_PUBLIC}, {HB_FUNCNAME( VAL )}, NULL },
+{ "LEFT", {HB_FS_PUBLIC}, {HB_FUNCNAME( LEFT )}, NULL },
+{ "SUBSTR", {HB_FS_PUBLIC}, {HB_FUNCNAME( SUBSTR )}, NULL },
+{ "RIGHT", {HB_FS_PUBLIC}, {HB_FUNCNAME( RIGHT )}, NULL },
+{ "QCENTHORA", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( QCENTHORA )}, NULL },
+{ "STRZERO", {HB_FS_PUBLIC}, {HB_FUNCNAME( STRZERO )}, NULL },
+{ "INT", {HB_FS_PUBLIC}, {HB_FUNCNAME( INT )}, NULL },
+{ "QDIFHORA", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( QDIFHORA )}, NULL },
+{ "TSTRING", {HB_FS_PUBLIC}, {HB_FUNCNAME( TSTRING )}, NULL },
+{ "SECS", {HB_FS_PUBLIC}, {HB_FUNCNAME( SECS )}, NULL }
+HB_INIT_SYMBOLS_EX_END( hb_vm_SymbolInit_QHORAS, "QHORAS.PRG", 0x0, 0x0002 )
+
+#if defined( HB_PRAGMA_STARTUP )
+   #pragma startup hb_vm_SymbolInit_QHORAS
+#elif defined( HB_DATASEG_STARTUP )
+   #define HB_DATASEG_BODY    HB_DATASEG_FUNC( hb_vm_SymbolInit_QHORAS )
+   #include "hbiniseg.h"
+#endif
+
+HB_FUNC( QHORACENT )
+{
+	static const HB_BYTE pcode[] =
+	{
+		13,4,1,36,4,0,176,1,0,176,2,0,95,1,
+		92,2,12,2,12,1,80,3,36,5,0,176,1,0,
+		176,3,0,95,1,92,4,92,2,12,3,12,1,80,
+		4,36,6,0,176,1,0,176,4,0,95,1,92,2,
+		12,2,12,1,80,5,36,7,0,95,3,95,4,92,
+		60,18,72,95,5,93,16,14,18,72,80,2,36,8,
+		0,95,2,110,7
+	};
+
+	hb_vmExecute( pcode, symbols );
+}
+
+HB_FUNC( QCENTHORA )
+{
+	static const HB_BYTE pcode[] =
+	{
+		13,1,1,36,12,0,176,6,0,176,7,0,95,1,
+		12,1,92,2,12,2,106,2,58,0,72,80,2,36,
+		13,0,95,1,176,7,0,95,1,12,1,49,92,60,
+		65,80,1,36,14,0,96,2,0,176,6,0,176,7,
+		0,95,1,12,1,92,2,12,2,106,2,58,0,72,
+		135,36,15,0,95,1,176,7,0,95,1,12,1,49,
+		92,60,65,80,1,36,16,0,96,2,0,176,6,0,
+		176,7,0,95,1,12,1,92,2,12,2,135,36,17,
+		0,95,2,110,7
+	};
+
+	hb_vmExecute( pcode, symbols );
+}
+
+HB_FUNC( QDIFHORA )
+{
+	static const HB_BYTE pcode[] =
+	{
+		13,0,2,36,20,0,176,9,0,95,2,95,1,35,
+		28,9,97,128,81,1,0,25,3,121,176,10,0,95,
+		2,12,1,72,176,10,0,95,1,12,1,49,20,1,
+		7
+	};
+
+	hb_vmExecute( pcode, symbols );
+}
+

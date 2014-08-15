@@ -1,0 +1,20 @@
+
+C:\qsys_g\QPG\PGFONT>call "c:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" 
+Setting environment for using Microsoft Visual Studio 2008 x86 tools.
+
+C:\qsys_g\QPG\PGFONT>hbmk2 qpg.hbm -inc 
+hbmk2: Processando arquivo de configura‡Æo: c:\hb20\bin\hbmk.cfg
+hbmk2: Processando: QPG.HBC
+hbmk2: Harbour: Compilando m¢dulos...
+hbmk2: Compilando...
+PG202_.c
+hbmk2: Linkando... C:\Qsys_g\Qpg\Qpg_.exe
+
+C:\qsys_g\QPG\PGFONT>call "c:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" 
+Setting environment for using Microsoft Visual Studio 2008 x86 tools.
+
+C:\qsys_g\QPG\PGFONT>hbmk2 qpg.hbm -inc 
+hbmk2: Processando arquivo de configura‡Æo: c:\hb20\bin\hbmk.cfg
+hbmk2: Processando: QPG.HBC
+hbmk2: Linkando... C:\Qsys_g\Qpg\Qpg_.exe
+LINK : fatal error LNK1104: cannot open file 'C:\Qsys_g\Qpg\Qpg_.exe'

@@ -1,0 +1,6 @@
+-Lc:\borland\bcc55\lib\obj;c:\borland\bcc55\lib;c:\harbour-1.0.0\lib -Gn -M -m -s -Tpe -x -ap +
+c0x32.obj obj\START_.obj obj\CP101_.obj obj\CP102_.obj obj\CP103_.obj obj\CP104_.obj obj\CP105_.obj obj\CP106_.obj obj\CP107_.obj obj\CP108_.obj obj\CP109_.obj obj\CP110_.obj obj\CP111_.obj obj\CP112_.obj obj\CP113_.obj obj\CP114_.obj obj\CP201_.obj obj\CP202_.obj obj\CP203_.obj obj\CP204_.obj obj\CP205_.obj obj\CP206_.obj obj\CP301_.obj obj\CP302_.obj obj\CP303_.obj obj\CP304_.obj obj\CP305_.obj obj\CP306_.obj obj\CP307_.obj obj\CP308_.obj obj\CP401_.obj obj\CP402_.obj obj\CP450_.obj obj\CP460_.obj obj\CP470_.obj obj\CP501_.obj obj\CP502_.obj obj\CP503_.obj obj\CP504_.obj obj\CP505_.obj obj\CP506_.obj obj\CP507_.obj obj\CP508_.obj obj\CP509_.obj obj\CP510_.obj obj\CP511_.obj obj\CP512_.obj obj\CP513_.obj obj\CP514_.obj obj\CP515_.obj obj\CP516_.obj obj\CP517_.obj obj\CP518_.obj obj\CP519_.obj obj\CP520_.obj obj\CP521_.obj obj\CP522_.obj obj\CP523_.obj obj\CP524_.obj obj\CP525_.obj obj\CP801_.obj obj\CP802_.obj obj\ERRORSYS.obj obj\FUNCOES_.obj obj\NEW_EMP_.obj obj\REALTIM.obj, +
+c:\qsys_g\qcp\qcp_.exe,, +
+c:\harbour-1.0.0\lib\hbct.lib hblang.lib hbvm.lib hbrtl.lib hbrdd.lib hbmacro.lib hbpp.lib rddntx.lib rddcdx.lib rddfpt.lib hbcommon.lib gtwin.lib hbcpage.lib hbpcre.lib hbhsx.lib hbsix.lib  hbmisc.lib hbqsql.lib import32.lib cw32.lib, +
+, +
+

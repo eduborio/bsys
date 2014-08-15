@@ -1,0 +1,33 @@
+312K available
+Compiling RH141.PRG
+RH141.PRG(11)  Warning C1004  Ambiguous reference, assuming memvar: 'SBLOCO'
+RH141.PRG(31)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH141.PRG(31)  Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH141.PRG(32)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH141.PRG(32)  Warning C1003  Ambiguous reference: 'XUSRA'
+RH141.PRG(46)  Warning C1004  Ambiguous reference, assuming memvar: 'NALIQUO'
+RH141.PRG(46)  Warning C1004  Ambiguous reference, assuming memvar: 'NLIMITE'
+RH141.PRG(50)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH141.PRG(50)  Warning C1001  RETURN statement with no value in function
+RH141.PRG(54)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH141.PRG(54)  Warning C1001  RETURN statement with no value in function
+RH141.PRG(58)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH141.PRG(67)  Warning C1001  RETURN statement with no value in function
+RH141.PRG(74)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH141.PRG(76)  Warning C1003  Ambiguous reference: 'SBLOCO'
+RH141.PRG(85)  Warning C1003  Ambiguous reference: 'NLIMITE'
+RH141.PRG(91)  Warning C1004  Ambiguous reference, assuming memvar: 'NLIMITE'
+RH141.PRG(93)  Warning C1003  Ambiguous reference: 'NLIMITE'
+RH141.PRG(93)  Warning C1003  Ambiguous reference: 'NLIMITE'
+RH141.PRG(94)  Warning C1004  Ambiguous reference, assuming memvar: 'NLIMITE'
+RH141.PRG(96)  Warning C1003  Ambiguous reference: 'NLIMITE'
+RH141.PRG(105) Warning C1003  Ambiguous reference: 'NLIMITE'
+RH141.PRG(119) Warning C1003  Ambiguous reference: 'FANOMES'
+RH141.PRG(120) Warning C1003  Ambiguous reference: 'COPCAO'
+RH141.PRG(131) Warning C1003  Ambiguous reference: 'COPCAO'
+RH141.PRG(135) Warning C1003  Ambiguous reference: 'COPCAO'
+RH141.PRG(138) Warning C1001  RETURN statement with no value in function
+RH141.PRG(146) Warning C1003  Ambiguous reference: 'SBLOCO'
+RH141.PRG(159) Warning C1001  RETURN statement with no value in function
+29 warnings                
+Code size 1176, Symbols 608, Constants 520

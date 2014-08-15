@@ -1,0 +1,6 @@
+-Lc:\Borland\BCC55\lib\obj;c:\Borland\BCC55\lib;c:\harbour-1.0.0\lib -Gn -M -m -s -Tpe -x -ap +
+c0x32.obj obj\START_.obj obj\CT101_.obj obj\CT102_.obj obj\CT103_.obj obj\CT104_.obj obj\CT105_.obj obj\CT107_.obj obj\CT108_.obj obj\CT201_.obj obj\CT202_.obj obj\CT203_.obj obj\CT204_.obj obj\CT205_.obj obj\CT301_.obj obj\CT302_.obj obj\CT303_.obj obj\CT401_.obj obj\CT402_.obj obj\CT403_.obj obj\CT404_.obj obj\CT405_.obj obj\CT406_.obj obj\CT410_.obj obj\CT420_.obj obj\CT430_.obj obj\CT440_.obj obj\CT501_.obj obj\CT502_.obj obj\CT503_.obj obj\CT504_.obj obj\CT505_.obj obj\CT506_.obj obj\CT507_.obj obj\CT510_.obj obj\CT514_.obj obj\CT515_.obj obj\CT516_.obj obj\CT517_.obj obj\CT518_.obj obj\CT519_.obj obj\CT520_.obj obj\CT521_.obj obj\CT522_.obj obj\CT523_.obj obj\CT524_.obj obj\CT525_.obj obj\CT526_.obj obj\CT528_.obj obj\CT529_.obj obj\CT589_.obj obj\CT801_.obj obj\CT802_.obj obj\CT803_.obj obj\CT804_.obj obj\CT805_.obj obj\CT806_.obj obj\CT807_.obj obj\ERRORSYS.obj obj\FUNCOES_.obj obj\NEW_EMP_.obj obj\REALTIM.obj, +
+c:\qsys_g\qct\qct_.exe,, +
+c:\harbour-1.0.0\lib\hbct.lib hblang.lib hbvm.lib hbrtl.lib hbrdd.lib hbmacro.lib hbpp.lib rddntx.lib rddcdx.lib rddfpt.lib hbcommon.lib gtwin.lib hbcpage.lib hbpcre.lib hbhsx.lib hbsix.lib  hbqsql.lib import32.lib cw32.lib, +
+, +
+

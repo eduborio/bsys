@@ -1,0 +1,73 @@
+
+Estrutura do arquivo SITUA.DBF
+16/09/04  -  09:58:10
+
+ANOMES     - C -   6 -   0
+MATRICULA  - C -   6 -   0
+SITUACAO   - C -   1 -   0
+CATEGORIA  - C -   1 -   0
+VINCULO    - C -   1 -   0
+TURNO      - C -   1 -   0
+CARGO      - C -   6 -   0
+CBO        - C -   7 -   0
+TIPO_PGTO  - C -   1 -   0
+HENTRADA   - C -   5 -   0
+HINTERVALO - C -  11 -   0
+HSAIDA     - C -   5 -   0
+HSABADO    - C -  11 -   0
+DESCANSO   - C -   7 -   0
+SALARIO    - N -   9 -   2
+SALARIOMA  - N -   9 -   2
+SALARIOPM  - N -   9 -   2
+SALARIOIN  - N -   9 -   2
+DATA_AUMEN - D -   8 -   0
+AF_COD     - C -   2 -   0
+AF_INI     - D -   8 -   0
+AF_RET     - D -   8 -   0
+INICIO_AV  - D -   8 -   0
+FINAL_AV   - D -   8 -   0
+COD_CAGED  - C -   4 -   0
+CODSAQFGTS - C -   2 -   0
+READMISSAO - C -   1 -   0
+AI_FERIAS  - D -   8 -   0
+AF_FERIAS  - D -   8 -   0
+DI_FERIAS  - D -   8 -   0
+DF_FERIAS  - D -   8 -   0
+PI_FERIAS  - D -   8 -   0
+PF_FERIAS  - D -   8 -   0
+BI_FERIAS  - D -   8 -   0
+BF_FERIAS  - D -   8 -   0
+DEP_BOLSA  - N -   2 -   0
+DEP_IR     - N -   2 -   0
+DEP_FAM    - N -   2 -   0
+DEP_SAUDE  - N -   2 -   0
+DEP_VIDA   - N -   2 -   0
+B_IR_M_ANT - N -   9 -   2
+BLOQ       - C -  24 -   0
+TRAV       - C -  24 -   0
+TRANSF     - C -   1 -   0
+DATA_TRANS - D -   8 -   0
+DEBITO     - N -   9 -   2
+KIT_I_MS   - C -   3 -   0
+KIT_E_MS   - C -   3 -   0
+KIT_I_FR   - C -   3 -   0
+KIT_E_FR   - C -   3 -   0
+KIT_I_AD   - C -   3 -   0
+KIT_E_AD   - C -   3 -   0
+KIT_I_DT   - C -   3 -   0
+KIT_E_DT   - C -   3 -   0
+ADIANTA    - N -   9 -   2
+CCUSTO     - C -   8 -   0
+LIQ_MS     - N -   9 -   2
+LIQ_AD     - N -   9 -   2
+LIQ_FR     - N -   9 -   2
+LIQ_DT     - N -   9 -   2
+
+Indexadores utilizados:
+
+01 - Matr¡cula do Funcion rio       - SI_MATRI - MATRICULA                                         
+02 - Matr¡cula + Data de Aumento    - SI_MAAUM - MATRICULA+DTOS(DATA_AUMEN)                        
+03 - Centro de Custo + Matricula    - SI_CCMAT - CCUSTO + MATRICULA                                
+wc04 - Matricula e Ano Mes            - SIT_MATR - MATRICULA + ANOMES
+05 - Codigo da situacao funcionario - SIT_VINC - VINCULO                                           
+

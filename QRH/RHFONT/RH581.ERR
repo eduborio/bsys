@@ -1,0 +1,18 @@
+238K available
+Compiling RH581.PRG
+RH581.PRG(18)  Warning C1003  Ambiguous reference: 'XDRV_RHX'
+RH581.PRG(40)  Warning C1004  Ambiguous reference, assuming memvar: 'CTITULO'
+RH581.PRG(41)  Warning C1004  Ambiguous reference, assuming memvar: 'CTITULO'
+RH581.PRG(41)  Warning C1004  Ambiguous reference, assuming memvar: 'CTITULO'
+RH581.PRG(52)  Warning C1001  RETURN statement with no value in function
+RH581.PRG(54)  Warning C1003  Ambiguous reference: 'XCOND1'
+RH581.PRG(58)  Warning C1001  RETURN statement with no value in function
+RH581.PRG(60)  Warning C1003  Ambiguous reference: 'XPAGINA'
+RH581.PRG(62)  Warning C1003  Ambiguous reference: 'CTITULO'
+RH581.PRG(64)  Warning C1003  Ambiguous reference: 'XAEXPAN'
+RH581.PRG(64)  Warning C1003  Ambiguous reference: 'XDEXPAN'
+RH581.PRG(78)  Warning C1003  Ambiguous reference: 'XAEXPAN'
+RH581.PRG(78)  Warning C1003  Ambiguous reference: 'XDEXPAN'
+RH581.PRG(132) Warning C1001  RETURN statement with no value in function
+14 warnings                
+Code size 1885, Symbols 384, Constants 1347

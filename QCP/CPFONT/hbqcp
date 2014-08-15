@@ -1,0 +1,203 @@
+#BCC
+VERSION=BCB.01
+!ifndef CC_DIR
+CC_DIR = $(MAKE_DIR)
+!endif
+
+!ifndef HB_DIR
+HB_DIR = $(HARBOUR_DIR)
+!endif
+ 
+RECURSE= NO 
+ 
+SHELL = 
+COMPRESS = NO
+EXTERNALLIB = YES
+XFWH = NO
+FILESTOADD =  1
+WARNINGLEVEL =  0
+USERDEFINE = 
+USERINCLUDE = 
+USERLIBS = c:\harbour-1.0.0\lib\hbct.lib
+EDITOR = edit
+GUI = NO
+MT = NO
+SRC02 = obj 
+PROJECT = c:\qsys_g\qcp\qcp_.exe $(PR) 
+OBJFILES = $(SRC02)\START_.obj //
+ $(SRC02)\CP101_.obj //
+ $(SRC02)\CP102_.obj //
+ $(SRC02)\CP103_.obj //
+ $(SRC02)\CP104_.obj //
+ $(SRC02)\CP105_.obj //
+ $(SRC02)\CP106_.obj //
+ $(SRC02)\CP107_.obj //
+ $(SRC02)\CP108_.obj //
+ $(SRC02)\CP109_.obj //
+ $(SRC02)\CP110_.obj //
+ $(SRC02)\CP111_.obj //
+ $(SRC02)\CP112_.obj //
+ $(SRC02)\CP113_.obj //
+ $(SRC02)\CP114_.obj //
+ $(SRC02)\CP201_.obj //
+ $(SRC02)\CP202_.obj //
+ $(SRC02)\CP203_.obj //
+ $(SRC02)\CP204_.obj //
+ $(SRC02)\CP205_.obj //
+ $(SRC02)\CP206_.obj //
+ $(SRC02)\CP301_.obj //
+ $(SRC02)\CP302_.obj //
+ $(SRC02)\CP303_.obj //
+ $(SRC02)\CP304_.obj //
+ $(SRC02)\CP305_.obj //
+ $(SRC02)\CP306_.obj //
+ $(SRC02)\CP307_.obj //
+ $(SRC02)\CP308_.obj //
+ $(SRC02)\CP401_.obj //
+ $(SRC02)\CP402_.obj //
+ $(SRC02)\CP450_.obj //
+ $(SRC02)\CP460_.obj //
+ $(SRC02)\CP470_.obj //
+ $(SRC02)\CP501_.obj //
+ $(SRC02)\CP502_.obj //
+ $(SRC02)\CP503_.obj //
+ $(SRC02)\CP504_.obj //
+ $(SRC02)\CP505_.obj //
+ $(SRC02)\CP506_.obj //
+ $(SRC02)\CP507_.obj //
+ $(SRC02)\CP508_.obj //
+ $(SRC02)\CP509_.obj //
+ $(SRC02)\CP510_.obj //
+ $(SRC02)\CP511_.obj //
+ $(SRC02)\CP512_.obj //
+ $(SRC02)\CP513_.obj //
+ $(SRC02)\CP514_.obj //
+ $(SRC02)\CP515_.obj //
+ $(SRC02)\CP516_.obj //
+ $(SRC02)\CP517_.obj //
+ $(SRC02)\CP518_.obj //
+ $(SRC02)\CP519_.obj //
+ $(SRC02)\CP520_.obj //
+ $(SRC02)\CP521_.obj //
+ $(SRC02)\CP522_.obj //
+ $(SRC02)\CP523_.obj //
+ $(SRC02)\CP524_.obj //
+ $(SRC02)\CP525_.obj //
+ $(SRC02)\CP801_.obj //
+ $(SRC02)\CP802_.obj //
+ $(SRC02)\ERRORSYS.obj //
+ $(SRC02)\FUNCOES_.obj //
+ $(SRC02)\NEW_EMP_.obj //
+ $(SRC02)\REALTIM.obj $(OB) 
+PRGFILES = START_.PRG //
+ CP101_.PRG //
+ CP102_.PRG //
+ CP103_.PRG //
+ CP104_.PRG //
+ CP105_.PRG //
+ CP106_.PRG //
+ CP107_.PRG //
+ CP108_.PRG //
+ CP109_.PRG //
+ CP110_.PRG //
+ CP111_.PRG //
+ CP112_.PRG //
+ CP113_.PRG //
+ CP114_.PRG //
+ CP201_.PRG //
+ CP202_.PRG //
+ CP203_.PRG //
+ CP204_.PRG //
+ CP205_.PRG //
+ CP206_.PRG //
+ CP301_.PRG //
+ CP302_.PRG //
+ CP303_.PRG //
+ CP304_.PRG //
+ CP305_.PRG //
+ CP306_.PRG //
+ CP307_.PRG //
+ CP308_.PRG //
+ CP401_.PRG //
+ CP402_.PRG //
+ CP450_.PRG //
+ CP460_.PRG //
+ CP470_.PRG //
+ CP501_.PRG //
+ CP502_.PRG //
+ CP503_.PRG //
+ CP504_.PRG //
+ CP505_.PRG //
+ CP506_.PRG //
+ CP507_.PRG //
+ CP508_.PRG //
+ CP509_.PRG //
+ CP510_.PRG //
+ CP511_.PRG //
+ CP512_.PRG //
+ CP513_.PRG //
+ CP514_.PRG //
+ CP515_.PRG //
+ CP516_.PRG //
+ CP517_.PRG //
+ CP518_.PRG //
+ CP519_.PRG //
+ CP520_.PRG //
+ CP521_.PRG //
+ CP522_.PRG //
+ CP523_.PRG //
+ CP524_.PRG //
+ CP525_.PRG //
+ CP801_.PRG //
+ CP802_.PRG //
+ ERRORSYS.PRG //
+ FUNCOES_.PRG //
+ NEW_EMP_.PRG //
+ REALTIM.PRG $(PS) 
+OBJCFILES = $(OBC) 
+CFILES = $(CF)
+RESFILES = 
+RESDEPEN = 
+TOPMODULE = START_.PRG
+LIBFILES =  hblang.lib hbvm.lib hbrtl.lib hbrdd.lib hbmacro.lib hbpp.lib rddntx.lib rddcdx.lib rddfpt.lib hbcommon.lib gtwin.lib hbcpage.lib hbpcre.lib hbhsx.lib hbsix.lib  hbmisc.lib hbqsql.lib
+EXTLIBFILES = hbmisc.lib hbqsql.lib
+DEFFILE = 
+HARBOURFLAGS =  -m  -w0
+CFLAG1 =  -OS $(SHELL)  $(CFLAGS) -d -c -L$(HB_DIR)\lib 
+CFLAG2 =  -I$(HB_DIR)\include;$(CC_DIR)\include
+RFLAGS = 
+LFLAGS = -L$(CC_DIR)\lib\obj;$(CC_DIR)\lib;$(HB_DIR)\lib -Gn -M -m -s -Tpe -x -ap
+IFLAGS = 
+LINKER = ilink32
+ 
+ALLOBJ = c0x32.obj $(OBJFILES) $(OBJCFILES)
+ALLRES = $(RESDEPEN)
+ALLLIB = $(USERLIBS) $(LIBFILES) import32.lib cw32.lib
+.autodepend
+ 
+#DEPENDS
+ 
+#COMMANDS
+.cpp.obj:
+$(CC_DIR)\BIN\bcc32 $(CFLAG1) $(CFLAG2) -o$* $**
+ 
+.c.obj:
+$(CC_DIR)\BIN\bcc32 -I$(HB_DIR)\include $(CFLAG1) $(CFLAG2) -o$* $**
+ 
+.prg.obj:
+$(HB_DIR)\bin\harbour -D__EXPORT__ -n -go -I$(HB_DIR)\include $(HARBOURFLAGS) -o$* $**
+ 
+.rc.res:
+$(CC_DIR)\BIN\brcc32 $(RFLAGS) $<
+ 
+#BUILD
+ 
+$(PROJECT): $(CFILES) $(OBJFILES) $(RESDEPEN) $(DEFFILE)
+    $(CC_DIR)\BIN\$(LINKER) @&&!  
+    $(LFLAGS) +
+    $(ALLOBJ), +
+    $(PROJECT),, +
+    $(ALLLIB), +
+    $(DEFFILE), +
+    $(ALLRES) 
+!

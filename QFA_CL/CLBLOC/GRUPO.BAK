@@ -1,0 +1,10 @@
+
+\qsys_g\qutil\qbloc b*.rrb qbloc
+copy qbloc.glo \qsys_g\qfa_cl
+copy qbloc.glo \qsys\qfa_cl
+del *.blo
+del *.glo
+dir \qsys\qfa_cl\*.glo
+dir \qsys_g\qfa_cl\*.glo
+cd..
+

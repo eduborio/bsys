@@ -1,0 +1,10 @@
+
+C:\qsys\QCP\CPFONT>call "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" 
+Setting environment for using Microsoft Visual Studio 2008 x86 tools.
+
+C:\qsys\QCP\CPFONT>hbmk2 qcp.hbm -inc 
+hbmk2: Processando arquivo de configura‡Æo: c:\hb20\bin\hbmk.cfg
+hbmk2: Processando: QCP.HBC
+hbmk2: Linkando... C:\Qsys_g\Qcp\Qcp_.exe
+CP202_.obj : error LNK2001: unresolved external symbol _HB_FUN_XMLCEBECALHO
+C:\Qsys_g\Qcp\Qcp_.exe : fatal error LNK1120: 1 unresolved externals

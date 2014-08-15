@@ -1,0 +1,33 @@
+312K available
+Compiling RH143.PRG
+RH143.PRG(11)  Warning C1004  Ambiguous reference, assuming memvar: 'SBLOCO'
+RH143.PRG(31)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH143.PRG(31)  Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH143.PRG(32)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH143.PRG(32)  Warning C1003  Ambiguous reference: 'XUSRA'
+RH143.PRG(46)  Warning C1004  Ambiguous reference, assuming memvar: 'NALIQUO'
+RH143.PRG(46)  Warning C1004  Ambiguous reference, assuming memvar: 'NLIMITE'
+RH143.PRG(50)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH143.PRG(50)  Warning C1001  RETURN statement with no value in function
+RH143.PRG(54)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH143.PRG(54)  Warning C1001  RETURN statement with no value in function
+RH143.PRG(58)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH143.PRG(67)  Warning C1001  RETURN statement with no value in function
+RH143.PRG(74)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH143.PRG(76)  Warning C1003  Ambiguous reference: 'SBLOCO'
+RH143.PRG(85)  Warning C1003  Ambiguous reference: 'NLIMITE'
+RH143.PRG(91)  Warning C1004  Ambiguous reference, assuming memvar: 'NLIMITE'
+RH143.PRG(93)  Warning C1003  Ambiguous reference: 'NLIMITE'
+RH143.PRG(94)  Warning C1004  Ambiguous reference, assuming memvar: 'NLIMITE'
+RH143.PRG(96)  Warning C1003  Ambiguous reference: 'NLIMITE'
+RH143.PRG(111) Warning C1003  Ambiguous reference: 'NLIMITE'
+RH143.PRG(120) Warning C1003  Ambiguous reference: 'FIR_DESC'
+RH143.PRG(127) Warning C1003  Ambiguous reference: 'FANOMES'
+RH143.PRG(128) Warning C1003  Ambiguous reference: 'COPCAO'
+RH143.PRG(139) Warning C1003  Ambiguous reference: 'COPCAO'
+RH143.PRG(146) Warning C1001  RETURN statement with no value in function
+RH143.PRG(154) Warning C1003  Ambiguous reference: 'SBLOCO'
+RH143.PRG(169) Warning C1003  Ambiguous reference: 'IR_DESC'
+RH143.PRG(170) Warning C1001  RETURN statement with no value in function
+29 warnings                
+Code size 1295, Symbols 624, Constants 593

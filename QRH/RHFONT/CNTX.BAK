@@ -1,0 +1,19 @@
+CLS
+@ echo off
+set lib2=%lib%
+set lib=%lib%;c:\qsys_g\qutil;c:\clipper\lib
+set include2=%include%
+set path2=%path%
+set path=%path%;c:\blinker\bin;c:\clipper\bin
+set include=\clipper\include
+@ echo on
+RMAKE  QRH
+BLINKER @QRHNTX
+@ echo off
+set lib=%lib2%
+set include=%include2%
+set path=%path2%
+set path2=""
+set lib2=""
+set include2
+

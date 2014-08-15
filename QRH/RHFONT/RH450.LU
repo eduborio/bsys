@@ -1,0 +1,670 @@
+/////////////////////////////////////////////////////////////////////////////
+// SISTEMA....: FOLHA DE PAGAMENTO
+// OBJETIVO...: CAGED EM DISQUETE
+// ANALISTA...: CARLOS EDUARDO RABELLO NUNES
+// PROGRAMADOR: O MESMO
+// INICIO.....: SETEMBRO DE 1995
+// OBS........:
+// ALTERACOES.:
+
+#include "rh.ch"
+
+// DECLARACAO E INICIALIZACAO DE VARIAVEIS __________________________________
+
+private bESCAPE   := {||(XNIVEL==1 .and. !XFLAG) .or. lastkey() = 27}
+
+private sBLOCO2   := qlbloc("B450E","QBLOC.GLO")
+private sBLOCO3   := qlbloc("B450F","QBLOC.GLO")
+
+private lCONF      // variavel  para confirmacoes
+private cCONVENIO  // codigo do convenio
+private nBUREAU    // numero da empresa bureau
+private cMESANO    // mes e ano de competencia
+private cDRIVE     // drive para gravacao
+private cCAGED     // string de montagem de cada linha
+
+// ABRE ARQUIVO CAGED.DBF E ZERA ____________________________________________
+
+if ! quse(XDRV_RHX,"CAGED",NIL,"E")
+   qmensa("N„o foi poss¡vel abrir arquivo CAGED.DBF !! Tente novamente.")
+   return
+endif
+
+CAGED->(__dbzap())
+
+// ABRE ARQUIVO QINST.DBF, FILTRA E ALIMENTA ARQUIVO CFGDISQ.DBF ____________
+
+if ! quse(XDRV_SH,"QINST",{"QINST1","QINST2"},"R")
+   qmensa("N„o foi poss¡vel abrir arquivo QINST.DBF !! Tente novamente.")
+   return
+endif
+
+QINST->(dbSetFilter({|| Empresa <> "000"}, 'Empresa <> "000"'))
+
+QINST->(dbgotop())
+
+qlbloc(5,0,"B450A","QBLOC.GLO")
+
+do while ! QINST->(eof())
+
+   if "RH" $ QINST->Sistemas
+
+      qmensa("Processando Empresa: " + QINST->Razao)
+
+      if ! quse(QINST->Drv_rh,"CONFIG",NIL,"R")
+         qmensa("N„o foi poss¡vel abrir arquivo CONFIG.DBF !! Tente novamente.")
+         return .F.
+      endif
+
+      CGM->(dbseek(QINST->Cgm))
+
+      if CFGDISQ->(dbseek(QINST->Empresa))
+         if CFGDISQ->(qrlock())
+            replace CFGDISQ->Razao   with QINST->Razao
+            replace CFGDISQ->Cgccei  with strzero(val(qtiraponto(QINST->Cgccpf)),14)
+         endif
+      else
+         if CFGDISQ->(qappend())
+            replace CFGDISQ->Empresa with QINST->Empresa
+            replace CFGDISQ->Razao   with QINST->Razao
+            replace CFGDISQ->Cgccei  with strzero(val(qtiraponto(QINST->Cgccpf)),14)
+         endif
+      endif
+
+      CONFIG->(dbclosearea())
+
+   else
+
+      if CFGDISQ->(dbseek(QINST->Empresa))
+         if CFGDISQ->(qrlock())
+            CFGDISQ->(dbdelete())
+         endif
+      endif
+
+   endif
+
+   QINST->(dbskip())
+
+enddo
+
+qmensa()
+
+QINST->(dbclosearea())
+
+CFGDISQ->(dbgotop())
+
+CFGDISQ->(qview({{"Empresa/Emp"  ,1},;
+                 {"Razao/Raz„o"  ,0},;
+                 {"f450a()/Emite",0}},"P",;
+                 {NIL,"f450b",NIL,NIL},;
+                  NIL,"<ESC> Encerra / <A>ltera / <C>onsulta / <P>rocessa"))
+return
+
+//////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA INDICACAO SE EMITE CAGED OU NAO ______________________________
+
+function f450a
+return(iif(CFGDISQ->Caged=="S","SIM","NAO"))
+
+/////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA ESCOLHA DO TIPO DE MANUTENCAO 1 ______________________________
+
+function f450b
+   local nCURSOR := setcursor(1)
+
+   parameters cOPCAO
+
+   cOPCAO := upper(chr(cOPCAO))
+
+   do case
+      case cOPCAO $ "AC"
+           i_edicao()
+           select CFGDISQ
+      case cOPCAO == "P"
+           i_processa()
+   endcase
+
+   setcursor(nCURSOR)
+
+return ""
+   
+/////////////////////////////////////////////////////////////////////////////
+// EDICAO DOS DADOS INFORMATIVOS POR EMPRESA E FILIAIS ______________________
+
+static function i_edicao
+   local aEDICAO1 := {}
+
+   qlbloc(9,7,"B450B","QBLOC.GLO")
+
+   CFGDISQ->(qpublicfields())
+   CFGDISQ->(qinitfields())
+   CFGDISQ->(qcopyfields())
+
+   qsay(10,21,CFGDISQ->Empresa)
+   qsay(10,27,left(CFGDISQ->Razao,44))
+   qsay(12,33,fCGCCEI)
+   qsay(14,34,qabrev(fCAGED,"SN",{"Sim","N„o"}))
+        
+   // CONSULTA _________________________________________________________________
+
+   if cOPCAO == "C" ; qwait() ; return ; endif
+
+   // CRIACAO DO VETOR DE BLOCOS _______________________________________________
+   
+   aadd(aEDICAO1,{{ || qesco(-1,0,@fCAGED,XSN)},"CAGED" })
+
+   // INICIALIZACAO DA EDICAO _______________________________________________
+
+   XNIVEL := 1
+   XFLAG  := .T.
+
+   // SEGUNDO LOOP PARA ENTRADA DOS DADOS ___________________________________
+
+   do while XNIVEL >= 1 .and. XNIVEL <= len(aEDICAO1)
+      eval ( aEDICAO1 [XNIVEL,1] )
+      if eval ( bESCAPE ) ; CFGDISQ->(qreleasefields()) ; return "" ; endif
+      iif ( XFLAG , XNIVEL++ , XNIVEL-- )
+   enddo
+
+   // GRAVACAO DO CFGDISQ ___________________________________________________
+
+   if cOPCAO == "A"
+      if CFGDISQ->(qrlock())
+         CFGDISQ->(qreplacefields())
+         CFGDISQ->(qunlock())
+      else
+         qm2()
+      endif
+   endif
+
+   if fCAGED == "N"
+      return
+   endif
+
+   // EDICAO DAS FILIAIS ____________________________________________________
+   
+   cPATH := "\QSYS_G\QCT\E" + CFGDISQ->Empresa + "\"
+   
+   // ABRE ARQUIVO DE FILIAIS _______________________________________________
+
+   if ! quse(cPATH,"FILIAL",{"FI_CGCCP"})
+      qmensa("N„o foi poss¡vel abrir arquivo FILIAL.DBF !! Tente novamente.")
+      return .F.
+   endif
+
+   FILIAL->(qview({{"left(Razao,30)/Filial",1},;
+                   {"Codigo/C¢digo"        ,2}},"16002379",;
+                   {NIL,"f450c",NIL,NIL},;
+                    NIL,"<ESC> Encerra / <A>ltera / <C>onsulta"))
+
+   FILIAL->(dbclosearea())
+
+return
+
+/////////////////////////////////////////////////////////////////////////////
+// EDICAO DADOS DAS FILIAIS _________________________________________________
+
+function f450c
+   local aEDICAO2 := {}
+
+   parameters cOPCAO
+
+   cOPCAO := upper(chr(cOPCAO))
+
+   qlbloc(9,7,"B450G","QBLOC.GLO")
+
+   FILIAL->(qpublicfields())
+   FILIAL->(qinitfields())
+   FILIAL->(qcopyfields())
+
+   if(empty(fENCER_ATIV),fENCER_ATIV := "2",fENCER_ATIV)
+   if(empty(fPRIM_DECLA),fPRIM_DECLA := "N",fPRIM_DECLA)
+   if(empty(fMUDOU_END ),fMUDOU_END  := "N",fMUDOU_END )
+   if(empty(fMUDOU_ATIV),fMUDOU_ATIV := "N",fMUDOU_ATIV)
+
+   XNIVEL := 1
+
+   qsay(10,21,FILIAL->Codigo)
+   qsay(10,28,left(FILIAL->Razao,43))
+   qsay(12,32,qabrev(fTIPO_INSC,"12",{"CGC","CEI"}))
+   qsay(12,57,fCGCCPF)
+   qsay(14,32,qabrev(fENCER_ATIV,"123",{"Neste mˆs/ano de competˆncia","Continua em Atividade","T‚rmino do Convˆnio Magn‚tico"}))
+   qsay(16,38,qabrev(fPRIM_DECLA,"SN",{"Sim","N„o"}))
+   qsay(16,68,qabrev(fMUDOU_END,"SN",{"Sim","N„o"}))
+   qsay(18,36,qabrev(fMUDOU_ATIV,"SN",{"Sim","N„o"}))
+        
+   // CONSULTA _________________________________________________________________
+
+   if cOPCAO == "C" ; qwait() ; return "" ; endif
+
+   // CRIACAO DO VETOR DE BLOCOS _______________________________________________
+   
+   aadd(aEDICAO2,{{ || qesco(-1,0,@fENCER_ATIV,SBLOCO2 )} , "ENCER_ATIV" })
+   aadd(aEDICAO2,{{ || qesco(-1,0,@fPRIM_DECLA,XSN     )} , "PRIM_DECLA" })
+   aadd(aEDICAO2,{{ || qesco(-1,0,@fMUDOU_END ,XSN     )} , "MUDOU_END"  })
+   aadd(aEDICAO2,{{ || qesco(-1,0,@fMUDOU_ATIV,XSN     )} , "MUDOU_ATIV" })
+
+   // INICIALIZACAO DA EDICAO _______________________________________________
+
+   XNIVEL := 1
+   XFLAG  := .T.
+
+   // SEGUNDO LOOP PARA ENTRADA DOS DADOS ___________________________________
+
+   do while XNIVEL >= 1 .and. XNIVEL <= len(aEDICAO2)
+      eval ( aEDICAO2 [XNIVEL,1] )
+      if eval ( bESCAPE ) ; FILIAL->(qreleasefields()) ; return "EXIT" ; endif
+      if ! i_critica1( aEDICAO2[XNIVEL,2] ) ; loop ; endif
+      iif ( XFLAG , XNIVEL++ , XNIVEL-- )
+   enddo
+
+   // GRAVACAO DO CFGDISQ ___________________________________________________
+
+   if cOPCAO == "A"
+      if FILIAL->(qrlock())
+         FILIAL->(qreplacefields())
+         FILIAL->(qunlock())
+      else
+         qm2()
+      endif
+   endif
+
+return
+
+/////////////////////////////////////////////////////////////////////////////
+// CRITICA ADICIONAL NA DESCIDA 1 ___________________________________________
+
+static function i_critica1 ( cCAMPO )
+   qmensa()
+   do case
+      case cCAMPO == "ENCER_ATIV"
+           qrsay ( XNIVEL , qabrev(fENCER_ATIV,"123",{"Neste mˆs/ano de competˆncia","Continua em Atividade","T‚rmino do Convˆnio Magn‚tico"}))
+      case cCAMPO == "PRIM_DECLA"
+           qrsay ( XNIVEL , qabrev(fPRIM_DECLA,"SN",{"Sim","N„o"}))
+      case cCAMPO == "MUDOU_END"
+           qrsay ( XNIVEL , qabrev(fMUDOU_END,"SN",{"Sim","N„o"}))
+      case cCAMPO == "MUDOU_ATIV"
+           qrsay ( XNIVEL , qabrev(fMUDOU_ATIV,"SN",{"Sim","N„o"}))
+   endcase
+
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// INICIALIZACAO DO PROCESSO DE GERACAO DO CAGED EM DISQUETE ________________
+
+static function i_processa
+   local AEDICAO3 := {}
+
+   // CRIACAO DO VETOR DE BLOCOS _______________________________________________
+
+   aadd(AEDICAO3,{{ || qgetx(-1,0,@cCONVENIO ,"999999-9"          )} , "CONVENIO" })
+   aadd(AEDICAO3,{{ || view_disq(-1,0,@nBUREAU                    )} , "BUREAU"   })
+   aadd(AEDICAO3,{{ || NIL },NIL}) // razao da empresa bureau
+   aadd(AEDICAO3,{{ || NIL },NIL}) // mes/ano de competencia
+   aadd(AEDICAO3,{{ || qesco(-1,0,@cDRIVE,SBLOCO3                 )} , "DRIVE"    })
+   aadd(AEDICAO3,{{ || lCONF := qconf("Confirma emiss„o do CAGED ?") },NIL})
+
+   do while .T.
+
+      qlbloc(5,0,"B450C","QBLOC.GLO")
+      XNIVEL    := 1
+      XFLAG     := .T.
+      cCAGED    := ""
+      cCONVENIO := "      - "
+      nBUREAU   := space(3)
+      cMESANO   := right(qanomes(XDATASYS),2) + "/" + substr(left(qanomes(XDATASYS),6),1,4)
+      cDRIVE    := "A"
+
+      // SEGUNDO LOOP PARA ENTRADA DOS DADOS ___________________________________
+
+      do while XNIVEL >= 1 .and. XNIVEL <= len(AEDICAO3)
+         eval ( AEDICAO3 [XNIVEL,1] )
+         if eval ( bESCAPE ) ; CFGDISQ->(qreleasefields()) ; return ; endif
+         if ! i_critica2( AEDICAO3[XNIVEL,2] ) ; loop ; endif
+         iif ( XFLAG , XNIVEL++ , XNIVEL-- )
+      enddo
+
+      iif ( lCONF , i_gravacao() , NIL )
+
+   enddo
+
+return ""
+
+/////////////////////////////////////////////////////////////////////////////
+// CRITICA ADICIONAL NA DESCIDA 3 ___________________________________________
+
+static function i_critica2 ( cCAMPO )
+   qmensa()
+   do case
+      case cCAMPO == "CONVENIO"
+           if empty(qtiraponto(cCONVENIO))
+              qmensa("Campo CONVENIO ‚ obrigat¢rio !","B")
+              return .F.
+           endif
+      case cCAMPO == "BUREAU"
+           if CFGDISQ->(dbseek(nBUREAU:=strzero(val(nBUREAU),3)))
+              qrsay(XNIVEL,nBUREAU)
+              qrsay(XNIVEL+1,left(CFGDISQ->Razao,30))
+           else
+              qmensa("Empresa n„o cadastrada !","B")
+              return .F.
+           endif
+           qrsay(XNIVEL+2,cMESANO)
+      case cCAMPO == "DRIVE"
+           qrsay(XNIVEL,qabrev(cDRIVE,"AB",{"A:","B:"}))
+   endcase
+
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// INICIALIZA PROCESSO DE GRAVACAO __________________________________________
+
+static function i_gravacao
+   local nCONT , lCONF , nSEQ := 1 , cPATH1 , cPATH2
+   local cCOD_NOVO , lNOVO := .F. , cNOMARQ
+   local nCONT20 := nCONT30  := nCONT40 := 0
+
+   cPATH2 := "\QSYS_G\QCT\E" + CFGDISQ->Empresa + "\"
+
+   if ! quse(cPATH2,"FILIAL",{"FI_CGCCP"},"R")
+      qmensa("N„o foi poss¡vel abrir arquivo FILIAL.DBF !! Tente novamente.")
+      return .F.
+   endif
+
+   if ! FILIAL->(dbseek(CFGDISQ->Cgccei))
+      qmensa("Filial n„o cadastrada no arquivo FILIAL.DBF !!","B")
+      return .F.
+   endif
+
+   CGM->(dbseek(FILIAL->Cgm))
+
+   // MONTA REGISTRO TIPO 10 ________________________________________________
+
+   cCAGED := "A2" + qtiraponto(cCONVENIO) + qtiraponto(cMESANO) + "1" + strzero(nSEQ,5) + FILIAL->Tipo_insc + strzero(val(FILIAL->Cgccpf),14)
+   cCAGED += left(FILIAL->Razao,35) + left(FILIAL->Endereco,24) + left(FILIAL->Bairro,11) + str(FILIAL->Numero,5) + FILIAL->Cep
+   cCAGED += CGM->Estado + qtiraponto(left(FILIAL->Telefone,8)) + space(5)
+// cCAGED += qtiraponto(cMESANO) + "9" + FILIAL->Encer_ativ
+// cCAGED += iif(FILIAL->Prim_decla=="S","1","2") + iif(FILIAL->Mudou_end=="S","1","2") + FILIAL->Cep
+
+   FILIAL->(dbclosearea())
+
+   CAGED->(qappend())
+   CAGED->Linha := cCAGED
+   cCAGED := ""
+
+   CFGDISQ->(dbgotop())
+   
+   do while ! CFGDISQ->(eof())
+      qgirabarra()
+
+      if CFGDISQ->Caged $ "N "
+         CFGDISQ->(dbskip())
+         loop
+      endif
+
+      cPATH1 := "\QSYS_G\QRH\E" + CFGDISQ->Empresa + "\"
+      cPATH2 := "\QSYS_G\QCT\E" + CFGDISQ->Empresa + "\"
+
+      if ! file(cPATH1 + "CONFIG.DBF")
+         qmensa("Empresa sem arquivo CONFIG.DBF !!! Verifique com a Q-SYS...","B")
+         CFGDISQ->(dbskip())
+         loop
+      endif
+
+      if ! quse(cPATH1,"CONFIG",NIL,"R")
+         qmensa("N„o foi poss¡vel abrir arquivo CONFIG.DBF !! Tente novamente.")
+         return .F.
+      endif
+
+      qsay(17,30,CFGDISQ->Empresa)
+      qsay(17,36,left(CFGDISQ->Razao,35))
+
+      if ! quse(cPATH1,"FUN",{"FU_FILMA"},"R")
+         qmensa("N„o foi poss¡vel abrir arquivo FUN.DBF !! Tente novamente.")
+         return .F.
+      endif
+
+      if ! quse(cPATH1,"SITUA",{"SI_MATRI"},"R")
+         qmensa("N„o foi poss¡vel abrir arquivo SITUA.DBF !! Tente novamente.")
+         return .F.
+      endif
+
+      SITUA->(dbSetFilter({|| Anomes == XANOMES},"Anomes == XANOMES"))
+
+      if ! quse(XDRV_RHX,"AFAST",{"AF_CODIG"},"R")
+         qmensa("N„o foi poss¡vel abrir arquivo AFAST.DBF !! Tente novamente.")
+         return .F.
+      endif
+
+      if ! quse(cPATH2,"FILIAL",{"FI_CODIG"},"R")
+         qmensa("N„o foi poss¡vel abrir arquivo FILIAL.DBF !! Tente novamente.")
+         return .F.
+      endif
+
+      FILIAL->(dbgotop())
+
+      do while ! FILIAL->(eof())
+         qgirabarra()
+
+         private nTOTFUN := nPRIMADM := nREEMP := nTRANSEN := nDESLSJ  := nDESLCJ := 0
+         private nINICPP := nAPOSENT := nMORTE := nTRANSSA := nFIMCONT := nTOTADM := 0
+         private nTOTDES := 0
+
+         qsay(18,30,FILIAL->Codigo)
+         qsay(18,37,left(FILIAL->Razao,34))
+         
+         // MONTA REGISTRO TIPO 20 ____________________________________________
+
+         CGM->(dbseek(FILIAL->Cgm))
+         
+         nSEQ++
+         cCAGED := "B" + FILIAL->Tipo_insc + FILIAL->Cgccpf
+         cCAGED += strzero(nSEQ,5) + iif(FILIAL->Prim_decla=="S","1","2") + FILIAL->Encer_ativ
+         cCAGED += FILIAL->Cep + qtiraponto(CONFIG->Cnae)
+//       cCAGED += iif(FILIAL->Mudou_end=="S","3",iif(FILIAL->Prim_decla=="S","1","2"))
+//       cCAGED +=
+         cCAGED += left(FILIAL->Razao,40) + left(FILIAL->Endereco,35) + str(FILIAL->Numero,5)
+         cCAGED += left(FILIAL->Bairro,20) + CGM->Estado
+
+         CAGED->(qappend())
+         CAGED->Linha := cCAGED
+         cCAGED := ""
+
+         nCONT20++
+
+         // MONTA REGISTROS TIPO 30 ___________________________________________
+
+         SITUA->(dbsetrelation("AFAST",{||SITUA->Af_cod},"SITUA->Af_cod"))
+
+         FUN->(dbseek(FILIAL->Codigo))
+
+         do while ! FUN->(eof()) .and. FUN->Filial == FILIAL->Codigo
+            qgirabarra()
+
+            SITUA->(dbseek(FUN->Matricula))
+
+            if FUN->Data_adm > qfimmes(XDATASYS)
+               FUN->(dbskip())
+               loop
+            endif
+
+            if SITUA->Af_ini > qfimmes(XDATASYS)
+               FUN->(dbskip())
+               loop
+            endif
+
+            if SITUA->Categoria == "9" .and. SITUA->Vinculo = "H"
+               FUN->(dbskip())
+               loop
+            endif
+
+            if SITUA->Vinculo = K_DIRETOR .or. FUN->Situacao $ "H"
+               FUN->(dbskip())
+               loop
+            endif
+
+            if ! empty(SITUA->Af_ini)
+               if SITUA->Af_ini < qinimes(XDATASYS)
+                  FUN->(dbskip())
+                  loop
+               endif
+            endif
+
+            if FUN->Data_adm < qinimes(XDATASYS)
+               nTOTFUN++
+            endif
+
+            do case
+               case FUN->Data_adm >= qinimes(XDATASYS) .and. FUN->Prim_adm == "S"
+                    nPRIMADM++
+               case FUN->Data_adm >= qinimes(XDATASYS) .and. FUN->Prim_adm == "N" .and. SITUA->Transf != "S"
+                    nREEMP++
+               case FUN->Data_adm >= qinimes(XDATASYS) .and. SITUA->Transf == "S"
+                    nTRANSEN++
+               case SITUA->Af_ini   >= qinimes(XDATASYS) .and. AFAST->cod_caged == "31"
+                    nDESLSJ++
+               case SITUA->Af_ini   >= qinimes(XDATASYS) .and. AFAST->cod_caged == "32"
+                    nDESLCJ++
+               case SITUA->Af_ini   >= qinimes(XDATASYS) .and. AFAST->cod_caged == "40"
+                    nINICPP++
+               case SITUA->Af_ini   >= qinimes(XDATASYS) .and. AFAST->cod_caged == "50"
+                    nAPOSENT++
+               case SITUA->Af_ini   >= qinimes(XDATASYS) .and. AFAST->cod_caged == "60"
+                    nMORTE++
+               case SITUA->Af_ini   >= qinimes(XDATASYS) .and. AFAST->cod_caged == "80"
+                    nTRANSSA++
+               case SITUA->Af_ini   >= qinimes(XDATASYS) .and. AFAST->cod_caged == "45"
+                    nFIMCONT++
+            endcase
+
+            nTOTADM := nPRIMADM + nREEMP  + nTRANSEN
+            nTOTDES := nDESLSJ  + nDESLCJ + nINICPP + nAPOSENT + nMORTE + nTRANSSA + nFIMCONT
+
+            if empty(SITUA->Af_ini) .and. FUN->Data_adm < qinimes(XDATASYS)
+               FUN->(dbskip())
+               loop
+            endif
+
+            if ! empty(SITUA->Af_ini) .and. ! AFAST->Cod_caged $ "31-32-40-45-50-60-70-80"
+               FUN->(dbskip())
+               loop
+            endif
+
+            if FUN->Data_adm >= qinimes(XDATASYS)
+               lNOVO := .T.
+               if SITUA->Transf != "S"
+                  if FUN->Prim_adm == "S"
+                     cCOD_NOVO := "10"
+                  else
+                     cCOD_NOVO := "20"
+                  endif
+               else
+                  if qanomes(SITUA->Data_trans) == qanomes(XDATASYS)
+                     cCOD_NOVO := "70"
+                  endif
+               endif
+            endif
+
+            qsay(19,30,FUN->Matricula)
+            qsay(19,39,FUN->Nome)
+
+            nSEQ++
+            cCAGED := "C" + FILIAL->Tipo_insc + FILIAL->Cgccpf
+            cCAGED += strzero(nSEQ,5) + FUN->Pis_num
+            cCAGED += iif(FUN->Sexo=="M","1","2") + qtiraponto(dtoc(FUN->Data_nasc))
+            cCAGED += FUN->Instrucao + qtiraponto(SITUA->Cbo)
+            if SITUA->Categoria == "1"
+               cCAGED += strzero(val(qtiraponto(str(SITUA->Salario,9,2))),8)
+            else
+               cCAGED += strzero(val(qtiraponto(str((SITUA->Salario*FUN->Hor_trab),9,2))),8)
+            endif
+            cCAGED += strzero(int(FUN->Hor_sema),2) + qtiraponto(dtoc(FUN->Data_adm))
+            cCAGED += iif(lNOVO,cCOD_NOVO,AFAST->Cod_caged)
+            cCAGED += iif(lNOVO,"99",left(dtoc(SITUA->Af_ini),2)) + FUN->Nome
+            cCAGED += space(10) + strzero(val(qtiraponto(FUN->Cp_num)),7)
+            cCAGED += strzero(val(FUN->Cp_serie),3)
+            CGM->(dbseek(FUN->Cp_cgm))
+            cCAGED += CGM->Estado
+
+            CAGED->(qappend())
+            CAGED->Linha := cCAGED
+            cCAGED := ""
+
+            nCONT30++
+
+            lNOVO := .F.
+
+            FUN->(dbskip())
+
+         enddo
+
+         qmensa()
+
+         // MONTA REGISTROS TIPO 40 ___________________________________________
+
+         nSEQ++
+//       cCAGED := "40" + qtiraponto(cCONVENIO) + FILIAL->Tipo_insc + FILIAL->Cgccpf
+//       cCAGED += strzero(nSEQ,6) + qtiraponto(cMESANO) + "9" + space(1)
+//       cCAGED += strzero(nTOTFUN,5) + strzero(nPRIMADM,4) + strzero(nREEMP,4)
+//       cCAGED += strzero(nTRANSEN,4) + "0000" + strzero(nTOTADM,5)
+//       cCAGED += strzero(nDESLSJ,4) + strzero(nDESLCJ,4) + strzero(nINICPP,4)
+//       cCAGED += strzero(nAPOSENT,3) + strzero(nMORTE,3) + strzero(nTRANSSA,4)
+//       cCAGED += strzero(nFIMCONT,4) + strzero(nTOTDES,5)
+//       cCAGED += strzero((nTOTFUN+nTOTADM-nTOTDES),5)
+//
+//       CAGED->(qappend())
+//       CAGED->Linha := cCAGED
+//       cCAGED := ""
+//
+//       nCONT40++
+
+         FILIAL->(dbskip())
+
+      enddo
+
+      CONFIG->(dbclosearea())
+
+      AFAST->(dbclosearea())
+
+      FUN->(dbclosearea())
+
+      SITUA->(dbclosearea())
+
+      FILIAL->(dbclosearea())
+
+      CFGDISQ->(dbskip())
+      
+   enddo
+
+   // MONTA REGISTRO TIPO 50 ________________________________________________
+
+   nSEQ++
+   cCAGED := "X0" + qtiraponto(cCONVENIO) + space(15) + strzero(nSEQ,6)
+   cCAGED += qtiraponto(cMESANO) + strzero(nCONT20,4) + strzero(nCONT30,5)
+   cCAGED += strzero(nCONT40,5)
+
+   CAGED->(qappend())
+   CAGED->Linha := cCAGED
+   cCAGED := ""
+
+   // GRAVA ARQUIVO NO DISQUETE _____________________________________________
+
+   qmensa("Aguarde...Gravando arquivo...","B")
+   
+   cNOMARQ := cDRIVE + ":C" + qtiraponto(cCONVENIO) + ".001"
+
+   CAGED->(dbgotop())
+
+   CAGED->(__dbSDF( .T., CNOMARQ , { },,,,, .F. ) )
+
+   qmensa()
+
+   select CFGDISQ
+
+   CFGDISQ->(dbgotop())
+
+   if CAGED->(qflock())
+      CAGED->(__dbzap())
+   endif
+
+return

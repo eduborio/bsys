@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PedidoDeVenda" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="09cd533b-88ab-4f43-8975-feec7a602de1">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_do_pedido" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Eduardo\\Desktop\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ordem" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+     p.id,
+     p.data_pedido,
+     p.tipo_frete as frete,
+     p.cfop,
+     p.observacoes,
+     c.id,
+     c.nome,
+     c.cnpj,
+     c.fantasia,
+     c.inscricao_estadual as ie,
+     c.cep_entrega as cep,
+     c.logradouro_entrega as endereco,
+     c.numero_entrega as numero,
+     c.bairro_entrega as bairro,
+     c.complemento_entrega as compl,
+     c.telefone_entrega as fone,
+     c.voltagem,
+     m.descricao as cidade,
+     e.sigla as uf,
+     emp.razao as emp_razao,
+     rep.nome as rep_nome,
+     transp.nome as transp_nome,
+     transp.telefone as transp_fone
+from
+     pedido_venda as p
+     left outer join clientes as c   on c.id = p.id_cliente
+     left outer join municipios as m on c.id_municipio_entrega = m.id
+     left outer join estados as e    on m.estado_id = e.id
+     left outer join empresa as emp  on emp.id = 1
+     left outer join transportadoras as transp on transp.id = p.transportadora_id
+     left outer join representantes as rep on rep.id = c.representante_id
+where
+     p.id = $P{id_do_pedido}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data_pedido" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="frete" class="java.lang.Long"/>
+	<field name="cfop" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="observacoes" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cnpj" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fantasia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ie" class="java.lang.String"/>
+	<field name="cep" class="java.lang.String"/>
+	<field name="endereco" class="java.lang.String"/>
+	<field name="numero" class="java.lang.String"/>
+	<field name="bairro" class="java.lang.String"/>
+	<field name="compl" class="java.lang.String"/>
+	<field name="fone" class="java.lang.String"/>
+	<field name="voltagem" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String"/>
+	<field name="uf" class="java.lang.String"/>
+	<field name="emp_razao" class="java.lang.String"/>
+	<field name="rep_nome" class="java.lang.String"/>
+	<field name="transp_nome" class="java.lang.String"/>
+	<field name="transp_fone" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="161" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="8de4bf6a-c06d-4d5d-ab5e-a49448a5100e" x="0" y="13" width="555" height="19" forecolor="#CCCCCC" backcolor="#CCCCCC"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="a4d0a8ff-16c3-466a-aaa5-949c30a802b2" x="0" y="0" width="259" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emp_razao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyy HH:mm:ss">
+				<reportElement uuid="73f8c82d-f56b-4cfb-bdac-e65cc679d69e" x="455" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fbec1ec7-afd4-498b-ad39-132ca6fe6c2b" x="0" y="13" width="33" height="19"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Pedido:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="cc02fe0e-3033-47f4-ac26-082ce8a25b2c" x="33" y="13" width="39" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="be816fde-d523-423e-8f09-a97021a304be" x="184" y="13" width="47" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f3ce343f-b78c-4e37-8904-b293defb819b" x="221" y="14" width="297" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fbec1ec7-afd4-498b-ad39-132ca6fe6c2b" x="72" y="14" width="33" height="19"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Emisão:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="ec76202a-a26a-42f3-882b-b10f8ae5765c" x="117" y="14" width="53" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data_pedido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="189" y="40" width="26" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Cnpj:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="352" y="39" width="85" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Inscrição Estadual:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="0" y="39" width="62" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Fantasia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="0" y="55" width="43" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="64" y="55" width="204" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{endereco}+", "+$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="387" y="55" width="168" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cidade}+" - "+$F{uf}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="352" y="55" width="35" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Cidade: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="0" y="70" width="43" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="64" y="70" width="280" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bairro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="352" y="70" width="31" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Cep:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="387" y="70" width="107" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cep}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="226" y="40" width="114" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cnpj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="437" y="39" width="118" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ie}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="64" y="39" width="120" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fantasia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="0" y="85" width="64" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Representante:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="64" y="85" width="288" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rep_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="352" y="85" width="31" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[CFOP:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="387" y="85" width="107" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cfop}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="0" y="100" width="31" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Frete:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="31" y="100" width="31" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{frete} == 0 ? "Fob" : "Cif" )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="64" y="100" width="64" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Transportadora:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="135" y="100" width="212" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transp_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="be816fde-d523-423e-8f09-a97021a304be" x="424" y="12" width="31" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Fone:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="ec76202a-a26a-42f3-882b-b10f8ae5765c" x="455" y="14" width="100" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="352" y="100" width="31" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Fone:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="387" y="100" width="107" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transp_fone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="0" y="115" width="62" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Voltagem:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="69" y="115" width="31" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{voltagem}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="68" y="130" width="469" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observacoes}.replace("<br>","")]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="02e2badf-316f-4ce4-83bd-604b44ac9997" positionType="FixRelativeToBottom" x="0" y="152" width="553" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="0" y="130" width="62" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Observações:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b147d0c9-9679-4d0c-bd05-2c1400a99279" x="279" y="55" width="61" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compl}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="345dfcdd-b434-410b-9aaa-4cdbbd365cc9" stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="125"/>
+				<subreportParameter name="ordem">
+					<subreportParameterExpression><![CDATA[$P{ordem}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_do_pedido">
+					<subreportParameterExpression><![CDATA[$P{id_do_pedido}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PedidoDeVenda_itens.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c798f749-a24a-4ee9-8bc6-e7e20b9936fc" x="403" y="1" width="80" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="a20c0b24-b7a9-41d0-88b4-13552b53a2d1" x="486" y="1" width="40" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="7" y="16" width="376" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Coleta...:    Inicio ___:___  Fim ___:___  Responsável __________________________
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2b6c1869-0f17-43ab-b7b6-4b80466f9cbb" x="7" y="31" width="376" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Expedição: Inicio ___:___  Fim ___:___  Responsável __________________________
+]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

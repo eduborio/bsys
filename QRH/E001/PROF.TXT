@@ -1,0 +1,22 @@
+
+Estrutura do arquivo PROF.DBF
+16/09/04  -  09:58:09
+
+MATRICULA  - C -   6 -   0
+EMPRESA    - C -  50 -   0
+ENDERECO   - C -  60 -   0
+BAIRRO     - C -  15 -   0
+CGM_TRAB   - C -   6 -   0
+CEP        - C -   8 -   0
+DDD        - C -   4 -   0
+TELEFONE   - C -  20 -   0
+ADMISSAO   - D -   8 -   0
+DEMISSAO   - D -   8 -   0
+ATIVIDADE  - C -  53 -   0
+MOTIVO     - C -  53 -   0
+
+Indexadores utilizados:
+
+01 - Matr¡cula do Funcion rio       - PR_MATRI - MATRICULA                                         
+
+

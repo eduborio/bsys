@@ -1,0 +1,13 @@
+
+C:\qsys_g\qindex>call "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" 
+Setting environment for using Microsoft Visual Studio 2008 x86 tools.
+
+C:\qsys_g\qindex>hbmk2 qindex.hbm 
+hbmk2: Processando arquivo de configura‡Æo: c:\hb20\bin\hbmk.cfg
+hbmk2: Processando: qindex.hbc
+qindex.c
+hbqsys.lib(QUSE_.obj) : error LNK2001: unresolved external symbol _HB_FUN_I_PROT_ADIC
+hbqsys.lib(QGETX_.obj) : error LNK2001: unresolved external symbol _HB_FUN_I_PROT_ADIC
+hbqsys.lib(QSAY_.obj) : error LNK2001: unresolved external symbol _HB_FUN_I_PROT_ADIC
+hbqsys.lib(QSCREEN.obj) : error LNK2001: unresolved external symbol _HB_FUN_I_PROT_ADIC
+C:\Qsys_g\Qindex\Qindex.exe : fatal error LNK1120: 1 unresolved externals

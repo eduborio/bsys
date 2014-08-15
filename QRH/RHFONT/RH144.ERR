@@ -1,0 +1,61 @@
+238K available
+Compiling RH144.PRG
+RH144.PRG(11)  Warning C1004  Ambiguous reference, assuming memvar: 'SBLOCO'
+RH144.PRG(31)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH144.PRG(31)  Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH144.PRG(32)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH144.PRG(32)  Warning C1003  Ambiguous reference: 'XUSRA'
+RH144.PRG(45)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH144.PRG(45)  Warning C1001  RETURN statement with no value in function
+RH144.PRG(49)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH144.PRG(49)  Warning C1001  RETURN statement with no value in function
+RH144.PRG(51)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH144.PRG(51)  Warning C1001  RETURN statement with no value in function
+RH144.PRG(56)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH144.PRG(65)  Warning C1001  RETURN statement with no value in function
+RH144.PRG(72)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH144.PRG(74)  Warning C1003  Ambiguous reference: 'SBLOCO'
+RH144.PRG(82)  Warning C1003  Ambiguous reference: 'FGR_SEGVID'
+RH144.PRG(83)  Warning C1003  Ambiguous reference: 'FGR_INDAUX'
+RH144.PRG(84)  Warning C1003  Ambiguous reference: 'FGR_CESTA'
+RH144.PRG(85)  Warning C1003  Ambiguous reference: 'FGR_SALMIN'
+RH144.PRG(86)  Warning C1003  Ambiguous reference: 'FGR_NATALI'
+RH144.PRG(87)  Warning C1003  Ambiguous reference: 'FGR_FGTS'
+RH144.PRG(88)  Warning C1003  Ambiguous reference: 'FGR_TICKET'
+RH144.PRG(89)  Warning C1003  Ambiguous reference: 'FGR_D_UTIL'
+RH144.PRG(90)  Warning C1003  Ambiguous reference: 'FGR_D_DESC'
+RH144.PRG(91)  Warning C1003  Ambiguous reference: 'FIND_INFLAC'
+RH144.PRG(95)  Warning C1004  Ambiguous reference, assuming memvar: 'ZTMP'
+RH144.PRG(98)  Warning C1003  Ambiguous reference: 'FANOMES'
+RH144.PRG(99)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH144.PRG(105) Warning C1003  Ambiguous reference: 'ZTMP'
+RH144.PRG(110) Warning C1003  Ambiguous reference: 'COPCAO'
+RH144.PRG(114) Warning C1003  Ambiguous reference: 'COPCAO'
+RH144.PRG(117) Warning C1001  RETURN statement with no value in function
+RH144.PRG(123) Warning C1003  Ambiguous reference: 'SBLOCO'
+RH144.PRG(124) Warning C1003  Ambiguous reference: 'GR_SEGVID'
+RH144.PRG(125) Warning C1003  Ambiguous reference: 'GR_INDAUX'
+RH144.PRG(126) Warning C1003  Ambiguous reference: 'GR_CESTA'
+RH144.PRG(127) Warning C1003  Ambiguous reference: 'GR_SALMIN'
+RH144.PRG(128) Warning C1003  Ambiguous reference: 'GR_NATALI'
+RH144.PRG(129) Warning C1003  Ambiguous reference: 'GR_FGTS'
+RH144.PRG(130) Warning C1003  Ambiguous reference: 'GR_TICKET'
+RH144.PRG(131) Warning C1003  Ambiguous reference: 'GR_D_UTIL'
+RH144.PRG(132) Warning C1003  Ambiguous reference: 'GR_D_DESC'
+RH144.PRG(133) Warning C1003  Ambiguous reference: 'IND_INFLAC'
+RH144.PRG(134) Warning C1003  Ambiguous reference: 'IND_CORRIG'
+RH144.PRG(136) Warning C1001  RETURN statement with no value in function
+RH144.PRG(140) Warning C1004  Ambiguous reference, assuming memvar: 'NINDCORRIGIDO'
+RH144.PRG(142) Warning C1003  Ambiguous reference: 'NINDCORRIGIDO'
+RH144.PRG(145) Warning C1004  Ambiguous reference, assuming memvar: 'A'
+RH144.PRG(145) Warning C1004  Ambiguous reference, assuming memvar: 'A'
+RH144.PRG(145) Warning C1004  Ambiguous reference, assuming memvar: 'A'
+RH144.PRG(145) Warning C1003  Ambiguous reference: 'A'
+RH144.PRG(152) Warning C1003  Ambiguous reference: 'NINDCORRIGIDO'
+RH144.PRG(152) Warning C1004  Ambiguous reference, assuming memvar: 'NINDCORRIGIDO'
+RH144.PRG(153) Warning C1003  Ambiguous reference: 'NINDCORRIGIDO'
+RH144.PRG(153) Warning C1004  Ambiguous reference, assuming memvar: 'NINDCORRIGIDO'
+RH144.PRG(155) Warning C1003  Ambiguous reference: 'NINDCORRIGIDO'
+RH144.PRG(160) Warning C1001  RETURN statement with no value in function
+57 warnings                
+Code size 1359, Symbols 1008, Constants 577

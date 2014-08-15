@@ -1,0 +1,7 @@
+
+Estrutura do arquivo REFGTSU.DBF
+16/09/04  -  09:58:09
+
+LINHA      - C - 250 -   0
+
+

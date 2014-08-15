@@ -1,0 +1,8 @@
+
+Estrutura do arquivo ATIV.DBF
+16/09/04  -  09:58:10
+
+CODIGO     - C -   4 -   0
+DESCRICAO  - C -  40 -   0
+
+

@@ -1,0 +1,3 @@
+SET CLIPPER=F200 //DYNF:8 //SWAPK:65535 //SWAPPATH:"C:\TEMP" //TEMPPATH:"C:\TEMP"
+cd\caixa\sefip
+sefip

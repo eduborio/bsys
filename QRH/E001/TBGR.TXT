@@ -1,0 +1,22 @@
+
+Estrutura do arquivo TBGR.DBF
+16/09/04  -  09:58:09
+
+ANOMES     - C -   6 -   0
+GR_SEGVID  - N -   9 -   2
+GR_INDAUX  - N -   9 -   2
+GR_SALMIN  - N -   9 -   2
+GR_NATALI  - N -   9 -   2
+GR_FGTS    - N -   5 -   2
+GR_CESTA   - N -   9 -   2
+GR_TICKET  - N -   6 -   2
+GR_D_UTIL  - N -   2 -   0
+GR_D_DESC  - N -   2 -   0
+IND_INFLAC - N -   5 -   2
+IND_CORRIG - N -   7 -   4
+
+Indexadores utilizados:
+
+01 - Ano + Mˆs                      - TBGR     - ANOMES                                            
+
+

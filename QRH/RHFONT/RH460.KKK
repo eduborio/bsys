@@ -1,0 +1,373 @@
+
+/////////////////////////////////////////////////////////////////////////////
+// SISTEMA....: FOLHA DE PAGAMENTO
+// OBJETIVO...: DIRF EM DISQUETE
+// ANALISTA...: CARLOS EDUARDO RABELLO NUNES
+// PROGRAMADOR: O MESMO
+// INICIO.....: MARCO DE 1997
+// OBS........:
+// ALTERACOES.:
+
+#include "rh.ch"
+
+// DECLARACAO E INICIALIZACAO DE VARIAVEIS __________________________________
+
+private bESCAPE   := {||(XNIVEL==1 .and. !XFLAG) .or. lastkey() = 27}
+
+private sBLOCO1   := qlbloc("B460D","QBLOC.GLO")
+private sBLOCO2   := qlbloc("B460E","QBLOC.GLO")
+
+private cANOBASE        // ano base para emissao
+private aEDICAO1 := {}  // vetor para entrada de dados 1
+private aEDICAO2 := {}  // vetor para entrada de dados 2
+private aTOTMES  := {}  // vetor com totais por mes
+private cDRIVE          // drive para gravacao
+private cDIRF           // string de montagem de cada linha
+private nCONT           // contador auxiliar
+private lCONF           // variavel de confirmacao
+
+// ABRE ARQUIVO DIRF.DBF ____________________________________________________
+
+if ! quse(XDRV_RHX,"DIRF",NIL,"E")
+   qmensa("N„o foi poss¡vel abrir arquivo DIRF.DBF !! Tente novamente.")
+   return
+endif
+
+FILIAL->(dbsetorder(3))
+
+FILIAL->(qview({{"left(Razao,50)/Filial",1},;
+                {"Codigo/C¢digo"        ,2}},"P",;
+                {NIL,"f460a",NIL,NIL},;
+                 NIL,"<ESC> Encerra / <A>ltera / <C>onsulta / <P>rocessa"))
+
+return
+
+/////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA ESCOLHA DO TIPO DE MANUTENCAO ________________________________
+
+function f460a
+   local nCURSOR := setcursor(1)
+
+   parameters cOPCAO
+
+   cOPCAO := upper(chr(cOPCAO))
+
+   do case
+      case cOPCAO $ "AC"
+           qlbloc(11,7,"B460C","QBLOC.GLO",1)
+           i_edicao()
+      case cOPCAO == "P"
+           i_processa()
+   endcase
+
+   setcursor(nCURSOR)
+
+return ""
+
+/////////////////////////////////////////////////////////////////////////////
+// EDICAO DADOS DAS FILIAIS _________________________________________________
+
+static function i_edicao
+   local aEDICAO1 := {}
+
+   FILIAL->(qpublicfields())
+   FILIAL->(qinitfields())
+   FILIAL->(qcopyfields())
+
+   if(empty(fSEI),fSEI := "I",fSEI)
+
+   XNIVEL := 1
+
+   qsay(12,21,FILIAL->Codigo)
+   qsay(12,28,left(FILIAL->Razao,44))
+   qsay(14,28,qabrev(fTIPO_INSC,"12",{"CGC","CEI"}))
+   qsay(14,58,fCGCCPF)
+   qsay(16,19,qabrev(fSEI,"SEI",{"Corre‡„o de Estabelecimento Rejeitado ou Substitui‡„o",;
+                           "Exclus„o de Estabelecimento","Inclus„o de Estabelecimento"}))
+
+   // CONSULTA _________________________________________________________________
+
+   if cOPCAO == "C" ; qwait() ; return "" ; endif
+
+   // CRIACAO DO VETOR DE BLOCOS _______________________________________________
+
+   aadd(aEDICAO1,{{ || qesco(-1,0,@fSEI,SBLOCO2)},"SEI"})
+   
+   // INICIALIZACAO DA EDICAO _______________________________________________
+
+   XNIVEL := 1
+   XFLAG  := .T.
+   
+   // SEGUNDO LOOP PARA ENTRADA DOS DADOS ___________________________________
+
+   do while XNIVEL >= 1 .and. XNIVEL <= len(aEDICAO1)
+      eval ( aEDICAO1 [XNIVEL,1] )
+      if eval ( bESCAPE ) ; FILIAL->(qreleasefields()) ; return "EXIT" ; endif
+      if ! i_critica1( aEDICAO1[XNIVEL,2] ) ; loop ; endif
+      iif ( XFLAG , XNIVEL++ , XNIVEL-- )
+   enddo
+
+   // GRAVACAO DA FILIAL ____________________________________________________
+
+   if cOPCAO == "A"
+      if FILIAL->(qrlock())
+         FILIAL->(qreplacefields())
+         FILIAL->(qunlock())
+      else
+         qm2()
+      endif
+   endif
+
+return
+
+/////////////////////////////////////////////////////////////////////////////
+// CRITICA ADICIONAL NA DESCIDA 1 ___________________________________________
+
+static function i_critica1 ( cCAMPO )
+   qmensa()
+   do case
+      case cCAMPO == "SEI"
+           qrsay(XNIVEL,qabrev(fSEI,"SEI",{"Corre‡„o de Estabelecimento Rejeitado ou Substitui‡„o",;
+                                       "Exclus„o de Estabelecimento","Inclus„o de Estabelecimento"}))
+   endcase
+
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// INICIALIZACAO DO PROCESSO DE GERACAO DA RAIS EM DISQUETE ________________
+
+static function i_processa
+   local aEDICAO2 := {}
+
+   // CRIACAO DO VETOR DE BLOCOS _______________________________________________
+
+   aadd(aEDICAO2,{{ || qgetx(-1,0,@cANOBASE      )},"ANOBASE"})
+   aadd(aEDICAO2,{{ || qesco(-1,0,@cDRIVE,SBLOCO1)},"DRIVE"  })
+   aadd(aEDICAO2,{{ || lCONF := qconf("Confirma emiss„o da DIRF ?") },NIL})
+
+   do while .T.
+
+      qlbloc(5,0,"B460F","QBLOC.GLO")
+      XNIVEL    := 1
+      XFLAG     := .T.
+      cRESP     := "   "
+      cANOBASE  := "    "
+      cDRIVE    := "A"
+
+      // SEGUNDO LOOP PARA ENTRADA DOS DADOS ___________________________________
+
+      do while XNIVEL >= 1 .and. XNIVEL <= len(aEDICAO2)
+         eval ( aEDICAO2 [XNIVEL,1] )
+         if eval ( bESCAPE ) ; return ; endif
+         if ! i_critica2( aEDICAO2[XNIVEL,2] ) ; loop ; endif
+         iif ( XFLAG , XNIVEL++ , XNIVEL-- )
+      enddo
+
+      iif ( lCONF , i_gravacao() , NIL )
+
+      FILIAL->(dbgotop())
+
+   enddo
+
+return ""
+
+/////////////////////////////////////////////////////////////////////////////
+// CRITICA ADICIONAL NA DESCIDA _____________________________________________
+
+static function i_critica2 ( cCAMPO )
+   qmensa()
+   do case
+      case cCAMPO == "ANOBASE"
+           qrsay(XNIVEL , cANOBASE)
+      case cCAMPO == "DRIVE"
+           qrsay(XNIVEL , qabrev(cDRIVE,"AB",{"A:","B:"}))
+   endcase
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// INICIALIZA PROCESSO DE GRAVACAO __________________________________________
+
+static function i_gravacao
+   local lCONF , nSEQ := 1 , cNOMARQ , cDIRF := "" , nMESES
+   local nREND := nDEDU := nIRRF := nULT := nTOTREG := 0 , lPRIM := .T.
+   local nTTBASE13 := nTTDEDU13 := nTTIRRF13 := 0 , lACHOUF := .F. , lACHOUE := .F.
+
+   DIRF->(__dbzap())
+
+   qmensa("Aguarde...")
+
+   FUN->(dbCreateIndex( XDRV_RH + "TMP", "Filial + Cpf_num", {|| Filial + Cpf_num}, if( .F., .T., NIL ) ))
+
+   qmensa()
+
+   FUN->(dbSetFilter({|| ! empty(Filial)},"! empty(Filial)"))
+
+   FILIAL->(dbgotop())
+
+   do while ! FILIAL->(eof())
+      qgirabarra()
+
+      aTOTMES := {}
+
+      for nCONT = 1 to 12
+          aadd ( aTOTMES, { 0 , 0 , 0 } )
+      next
+
+
+      FUN->(dbseek(FILIAL->Codigo))
+
+      do while ! FUN->(eof()) .and. FUN->Filial == FILIAL->Codigo
+         qgirabarra()
+
+         if year(FUN->Data_adm) > val(cANOBASE)
+            FUN->(dbskip())
+            loop
+         endif
+
+         lACHOUF := .F.
+
+         for nCONT = 1 to 12
+             if BASE->(dbseek(FUN->Matricula+right(cANOBASE,2)+strzero(nCONT,2)))
+                if BASE->V_irrfms <= 0 .and. BASE->V_irrffr <= 0 .and. BASE->V_irrfdt <= 0 .and. BASE->V_irrf13 <= 0
+                   lACHOUF := .F.
+                else
+                   lACHOUF := .T.
+                   exit
+                endif
+             endif
+         next
+
+         if ! lACHOUF
+            FUN->(dbskip())
+            loop
+         endif
+
+         BASE->(dbseek(FUN->Matricula+right(cANOBASE,2)))
+
+         qsay(16,28,FILIAL->Codigo)
+         qsay(16,35,left(FILIAL->Razao,37))
+
+         if lPRIM
+            // MONTA REGISTRO TIPO 1 _________________________________________________
+
+            cDIRF += strzero(nSEQ,8) + "1" + FILIAL->Cgccpf + "DIRF"
+            cDIRF += right(cANOBASE,2) + FILIAL->Sei + "1" + space(11)
+            cDIRF += left(FILIAL->Razao,60) + space(48) + qtiraponto(XCGCCPF)
+
+            DIRF->(qappend())
+            DIRF->Linha := cDIRF
+            cDIRF := ""
+            lPRIM := .F.
+         endif
+
+         qsay(17,28,FUN->Matricula)
+         qsay(17,37,FUN->Nome)
+
+         // MONTA REGISTROS TIPO 2 ____________________________________________
+
+         nSEQ++
+         cDIRF += strzero(nSEQ,8) + "2" + FILIAL->Cgccpf + "05611"
+         cDIRF += "000" + qtiraponto(FUN->Cpf_num) + FUN->Nome + space(30)
+
+         nTOTREG++
+
+         lACHOUE := .T.
+
+         if val(right(BASE->Anomes,2)) > 1
+            for nMESES = 1 to (val(right(BASE->Anomes,2)) - 1)
+                cDIRF += repl("0",45)
+            next
+         endif
+      
+         do while ! BASE->(eof()) .and. BASE->Matricula == FUN->Matricula .and. left(BASE->Anomes,2) == right(cANOBASE,2)
+            nULT  := val(right(BASE->Anomes,2))
+            nREND := BASE->B_irrfms + BASE->B_irrffr + BASE->B_irrfdt
+            nDEDU := BASE->D_irrfms + BASE->D_irrffr + BASE->D_irrfdt
+            nIRRF := BASE->V_irrfms + BASE->V_irrffr + BASE->V_irrfdt
+
+            cDIRF += strtran(qtiraponto(transform(nREND,"@E 9999999999999.99"))," ","0")
+            cDIRF += strtran(qtiraponto(transform(nDEDU,"@E 9999999999999.99"))," ","0")
+            cDIRF += strtran(qtiraponto(transform(nIRRF,"@E 9999999999999.99"))," ","0")
+
+            aTOTMES[val(right(BASE->Anomes,2)),1] += nREND
+            aTOTMES[val(right(BASE->Anomes,2)),2] += nDEDU
+            aTOTMES[val(right(BASE->Anomes,2)),3] += nIRRF
+
+            if left(BASE->Anomes,2) == "12"
+               nTTBASE13 += BASE->B_irrf13
+               nTTDEDU13 += BASE->D_irrf13
+               nTTIRRF13 += BASE->V_irrf13
+
+               cDIRF += strtran(qtiraponto(transform(BASE->B_irrf13,"@E 9999999999999.99"))," ","0")
+               cDIRF += strtran(qtiraponto(transform(BASE->D_irrf13,"@E 9999999999999.99"))," ","0")
+               cDIRF += strtran(qtiraponto(transform(BASE->V_irrf13,"@E 9999999999999.99"))," ","0")
+            endif
+
+            BASE->(dbskip())
+
+         enddo
+
+         if nULT < 12
+            for nMESES = (nULT + 1) to 13
+                cDIRF += repl("0",45)
+            next
+         endif
+
+         DIRF->(qappend())
+         DIRF->Linha := cDIRF
+         cDIRF := ""
+
+         FUN->(dbskip())
+
+      enddo
+
+      qmensa()
+
+      if lACHOUE
+         // MONTA REGISTROS TIPO 3 ____________________________________________
+
+         nSEQ++
+         cDIRF += strzero(nSEQ,8) + "3" + FILIAL->Cgccpf + "0561"
+         cDIRF += strzero(nTOTREG,8) + space(67)
+
+         for nCONTA = 1 to 12
+             cDIRF += strtran(qtiraponto(transform(aTOTMES[nCONTA,1],"@E 9999999999999.99"))," ","0")
+             cDIRF += strtran(qtiraponto(transform(aTOTMES[nCONTA,2],"@E 9999999999999.99"))," ","0")
+             cDIRF += strtran(qtiraponto(transform(aTOTMES[nCONTA,3],"@E 9999999999999.99"))," ","0")
+         next
+
+         cDIRF += strtran(qtiraponto(transform(nTTBASE13,"@E 9999999999999.99"))," ","0")
+         cDIRF += strtran(qtiraponto(transform(nTTDEDU13,"@E 9999999999999.99"))," ","0")
+         cDIRF += strtran(qtiraponto(transform(nTTIRRF13,"@E 9999999999999.99"))," ","0")
+
+         DIRF->(qappend())
+         DIRF->Linha := cDIRF
+         cDIRF := ""
+
+         nSEQ++
+         nTTBASE13 := nTTDEDU13 := nTTIRRF13 := nTOTREG := 0
+      endif
+
+      lPRIM   := .T.
+      lACHOUE := .F.
+
+      FILIAL->(dbskip())
+
+   enddo
+
+   DIRF->(qappend())
+   DIRF->Linha := repl("9",730)
+   
+   // GRAVA ARQUIVO NO DISQUETE _____________________________________________
+
+   qmensa("Gravando Arquivo...")
+
+   cNOMARQ := cDRIVE + ":DIRF."
+
+   DIRF->(dbgotop())
+
+   DIRF->(__dbSDF( .T., CNOMARQ , { },,,,, .F. ) )
+
+   qmensa()
+
+return

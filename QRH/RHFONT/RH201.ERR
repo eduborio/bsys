@@ -1,0 +1,151 @@
+312K available
+Compiling RH201.PRG
+RH201.PRG(16)  Warning C1003  Ambiguous reference: 'XDATASYS'
+RH201.PRG(16)  Warning C1004  Ambiguous reference, assuming memvar: 'DDATA_CALCULO'
+RH201.PRG(17)  Warning C1003  Ambiguous reference: 'XDATASYS'
+RH201.PRG(17)  Warning C1004  Ambiguous reference, assuming memvar: 'CANOMES'
+RH201.PRG(28)  Warning C1003  Ambiguous reference: 'ANOMES'
+RH201.PRG(28)  Warning C1003  Ambiguous reference: 'XANOMES'
+RH201.PRG(30)  Warning C1003  Ambiguous reference: 'MATRICULA'
+RH201.PRG(30)  Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(32)  Warning C1003  Ambiguous reference: 'EVENTO'
+RH201.PRG(36)  Warning C1004  Ambiguous reference, assuming memvar: 'CAMBIENTE'
+RH201.PRG(37)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(56)  Warning C1004  Ambiguous reference, assuming memvar: 'CAMBIENTE'
+RH201.PRG(57)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(57)  Warning C1001  RETURN statement with no value in function
+RH201.PRG(64)  Warning C1004  Ambiguous reference, assuming memvar: 'CMATRICULA'
+RH201.PRG(69)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(70)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(74)  Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH201.PRG(75)  Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH201.PRG(75)  Warning C1004  Ambiguous reference, assuming memvar: 'CMATRICULA'
+RH201.PRG(76)  Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH201.PRG(79)  Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH201.PRG(84)  Warning C1003  Ambiguous reference: 'XDATASYS'
+RH201.PRG(99)  Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(99)  Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH201.PRG(99)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(103) Warning C1004  Ambiguous reference, assuming memvar: 'CTMP1'
+RH201.PRG(105) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH201.PRG(105) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(105) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(106) Warning C1003  Ambiguous reference: 'CTMP1'
+RH201.PRG(111) Warning C1004  Ambiguous reference, assuming memvar: 'CTMP1'
+RH201.PRG(111) Warning C1004  Ambiguous reference, assuming memvar: 'CTMP1'
+RH201.PRG(116) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(116) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH201.PRG(116) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(120) Warning C1004  Ambiguous reference, assuming memvar: 'CTMP1'
+RH201.PRG(121) Warning C1004  Ambiguous reference, assuming memvar: 'CTMP2'
+RH201.PRG(137) Warning C1001  RETURN statement with no value in function
+RH201.PRG(157) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(157) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH201.PRG(157) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(158) Warning C1001  RETURN statement with no value in function
+RH201.PRG(164) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(164) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH201.PRG(164) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(165) Warning C1001  RETURN statement with no value in function
+RH201.PRG(173) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(173) Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH201.PRG(174) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(174) Warning C1003  Ambiguous reference: 'XUSRA'
+RH201.PRG(184) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(185) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(186) Warning C1001  RETURN statement with no value in function
+RH201.PRG(201) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(202) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(208) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(210) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(211) Warning C1001  RETURN statement with no value in function
+RH201.PRG(224) Warning C1001  RETURN statement with no value in function
+RH201.PRG(227) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(227) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH201.PRG(227) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(228) Warning C1001  RETURN statement with no value in function
+RH201.PRG(233) Warning C1001  RETURN statement with no value in function
+RH201.PRG(244) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(245) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH201.PRG(246) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(258) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(261) Warning C1001  RETURN statement with no value in function
+RH201.PRG(288) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(295) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(297) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(298) Warning C1001  RETURN statement with no value in function
+RH201.PRG(314) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(317) Warning C1001  RETURN statement with no value in function
+RH201.PRG(321) Warning C1001  RETURN statement with no value in function
+RH201.PRG(343) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(346) Warning C1001  RETURN statement with no value in function
+RH201.PRG(349) Warning C1001  RETURN statement with no value in function
+RH201.PRG(367) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(370) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(371) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(373) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(382) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(385) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(386) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(388) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(397) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(409) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(413) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(427) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(431) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(445) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(449) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(483) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(485) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(493) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(499) Warning C1003  Ambiguous reference: 'COPCAO'
+RH201.PRG(505) Warning C1001  RETURN statement with no value in function
+RH201.PRG(518) Warning C1001  RETURN statement with no value in function
+RH201.PRG(526) Warning C1001  RETURN statement with no value in function
+RH201.PRG(536) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(536) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(539) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(541) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(548) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(548) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(557) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(557) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(569) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(610) Warning C1001  RETURN statement with no value in function
+RH201.PRG(631) Warning C1001  RETURN statement with no value in function
+RH201.PRG(646) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(646) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(647) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(675) Warning C1001  RETURN statement with no value in function
+RH201.PRG(700) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(700) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(720) Warning C1001  RETURN statement with no value in function
+RH201.PRG(730) Warning C1003  Ambiguous reference: 'CANOMES'
+RH201.PRG(730) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(731) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(745) Warning C1001  RETURN statement with no value in function
+RH201.PRG(752) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(754) Warning C1001  RETURN statement with no value in function
+RH201.PRG(757) Warning C1004  Ambiguous reference, assuming memvar: 'AKITS'
+RH201.PRG(758) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(758) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROI'
+RH201.PRG(759) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH201.PRG(759) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROE'
+RH201.PRG(767) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROI'
+RH201.PRG(768) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROE'
+RH201.PRG(769) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROI'
+RH201.PRG(770) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROE'
+RH201.PRG(771) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROI'
+RH201.PRG(772) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROE'
+RH201.PRG(773) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROI'
+RH201.PRG(774) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROE'
+RH201.PRG(775) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROI'
+RH201.PRG(776) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROE'
+RH201.PRG(777) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROI'
+RH201.PRG(778) Warning C1004  Ambiguous reference, assuming memvar: 'CMACROE'
+RH201.PRG(783) Warning C1003  Ambiguous reference: 'AKITS'
+RH201.PRG(784) Warning C1001  RETURN statement with no value in function
+RH201.PRG(787) Warning C1003  Ambiguous reference: 'AKITS'
+RH201.PRG(788) Warning C1001  RETURN statement with no value in function
+147 warnings                
+Code size 8138, Symbols 2768, Constants 4294

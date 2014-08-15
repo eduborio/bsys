@@ -1,0 +1,6 @@
+238K available
+Compiling NEW_EMP.PRG
+NEW_EMP.PRG(13)    Warning C1003  Ambiguous reference: 'XDRV_SY'
+NEW_EMP.PRG(13)    Warning C1002  Procedure returns value
+2 warnings                
+Code size 253, Symbols 304, Constants 51

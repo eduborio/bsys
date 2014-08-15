@@ -1,0 +1,133 @@
+/////////////////////////////////////////////////////////////////////////////
+// SISTEMA....: SISTEMA DE FATURAMENTO COMERCIAL
+// OBJETIVO...: MANUTENCAO DE ESTADOS
+// ANALISTA...:
+// PROGRAMADOR: EDUARDO AUGUSTO BORIO
+// INICIO.....: JANEIRO DE 2003
+// OBS........:
+// ALTERACOES.:
+
+function cl119
+UFS->(qview({{"Codigo/Codigo"         ,1},;
+          {"Descricao/Descricao"           ,0}},"P",;
+             {NIL,"c119a",NIL,NIL},;
+              NIL,q_msg_acesso_usr()))
+
+/////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA ESCOLHA DO TIPO DE MANUTENCAO ________________________________
+
+function c119a
+
+   local nCURSOR := setcursor(1)
+   parameters cOPCAO
+   cOPCAO := upper(chr(cOPCAO))
+
+   if cOPCAO $ XUSRA
+      qlbloc(7,0,"B119A","QBLOC.GLO",1)
+      qmensa(qabrev(cOPCAO,"IA",{"Inclus„o... <ESC - Cancela>","Altera‡„o... <ESC - Cancela>"}))
+      i_edicao()
+   endif
+
+   setcursor(nCURSOR)
+
+return ""
+
+/////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA REALIZAR A EDICAO DA TELA ____________________________________
+
+static function i_edicao
+   local lCONF   := .F.
+   local aEDICAO := {}
+   local bESCAPE := {||(XNIVEL==1.and.!XFLAG).or. Lastkey()==27}
+
+   // MONTA DADOS NA TELA ___________________________________________________
+
+   if cOPCAO <> "I"
+
+      XNIVEL := 1
+
+      qrsay ( XNIVEL++ , UFS->Codigo                     )
+      qrsay ( XNIVEL++ , UFS->Descricao                  )
+
+   endif
+   // CONSULTA OU EXCLUSAO __________________________________________________
+
+   if cOPCAO == "C" ; qwait()      ; return ; endif
+   if cOPCAO == "E" ; i_exclusao() ; return ; endif
+
+   // PREENCHE O VETOR DE EDICAO ____________________________________________
+
+   aadd(aEDICAO,{{ || qgetx(-1,0,@fCODIGO   ,"@!")       },"CODIGO"    })
+   aadd(aEDICAO,{{ || qgetx(-1,0,@fDESCRICAO,"@!")        },"DESCRICAO"    })
+   aadd(aEDICAO,{{ || lCONF := qconf("Confirma "+iif(cOPCAO=="I","inclus„o","altera‡„o")+" ?") },NIL})
+
+   // INICIALIZACAO DA EDICAO _______________________________________________
+
+   UFS->(qpublicfields())
+   iif(cOPCAO=="I",UFS->(qinitfields()),UFS->(qcopyfields()))
+
+   XNIVEL := 1
+   XFLAG  := .T.
+
+   // LOOP PARA ENTRADA DOS CAMPOS __________________________________________
+
+   do while XNIVEL >= 1 .and. XNIVEL <= len(aEDICAO)
+      eval ( aEDICAO [XNIVEL,1] )
+      if eval ( bESCAPE ) ; UFS->(qreleasefields()) ; return ; endif
+      if ! i_critica( aEDICAO[XNIVEL,2] ) ; loop ; endif
+      iif ( XFLAG , XNIVEL++ , XNIVEL-- )
+   enddo
+
+   // GRAVACAO ______________________________________________________________
+
+   if ! lCONF ; return ; endif
+
+   if CONFIG->(qrlock()) .and. UFS->(iif(cOPCAO=="I",qappend(),qrlock()))
+
+      UFS->(qreplacefields())
+      UFS->(dbgotop())
+
+   else
+      iif(cOPCAO=="I",qm1(),qm2())
+   endif
+
+   dbunlockall()
+
+   if cOPCAO == "I" ; keyboard "I" ; endif
+
+return
+
+/////////////////////////////////////////////////////////////////////////////
+// CRITICA DE EDICAO ________________________________________________________
+
+static function i_critica ( cCAMPO )
+
+   if ! XFLAG ; return .T. ; endif
+
+   do case
+
+      case cCAMPO == "CODIGO"
+
+           if cOPCAO == "I"
+              if UFS->(dbseek(fCODIGO))
+                 qmensa("Estado ja cadastrado !","B")
+                 return .F.
+              endif
+           endif
+   endcase
+
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA EXCLUIR ESTADO _______________________________________
+
+static function i_exclusao
+   if qconf("Confirma exclus„o deste Estado ?")
+      if UFS->(qrlock())
+         UFS->(dbdelete())
+         UFS->(qunlock())
+      else
+         qm3()
+      endif
+   endif
+return

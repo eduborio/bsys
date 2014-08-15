@@ -1,0 +1,365 @@
+/////////////////////////////////////////////////////////////////////////////
+// SISTEMA....: FOLHA DE PAGAMENTO
+// OBJETIVO...: EMISSAO DA GUIA DE RECOLHIMENTO RESCISORIO DO FGTS (GRFP)
+// ANALISTA...: LUCINEIDE VILAR POSSEBOM
+// PROGRAMADOR: A MESMA
+// INICIO.....: NOVEMBRO DE 1998
+// OBS........:
+// ALTERACOES.:
+
+// DECLARACAO E INICIALIZACAO DE VARIAVEIS __________________________________
+
+local   bESCAPE    := {||(XNIVEL==1 .and. !XFLAG) .or. lastkey() = 27}
+
+private sBLOCO1    := qlbloc("B519B","QBLOC.GLO")
+private sBLOCO2    := qlbloc("B519C","QBLOC.GLO")
+private sBLOCO3    := qlbloc("B519D","QBLOC.GLO")
+private sBLOCO4    := qlbloc("B519E","QBLOC.GLO")
+
+private aEDICAO   := {}        // vetor para entrada de dados
+private cMES_ANT  := space(6)
+private cMES_ATU  := space(6)
+private nCAM_17   := 0
+private nCAM_18   := 0
+private nCAM_19   := 0
+private nCAM_341  := 0
+private nCAM_351  := 0
+private nCAM_361  := 0
+private nCAM_342  := 0
+private nCAM_352  := 0
+private nCAM_362  := 0
+private nCAM_343  := 0
+private nCAM_353  := 0
+private nCAM_363  := 0
+private nMUL_37   := 0
+private nMUL_38   := 0
+private lACHOU    := .F.       // flag verificador de existencia de dados
+private cMATRICULA := space(6) // matricula do funcionario
+private cCATEG    := ""
+private cOCORR    := ""
+private cAVISO    := ""
+private cDISSI    := ""
+private cANOMES   := space(6)   // ano/mes de competencia
+
+// POSICIONA ARQUIVO CGM EM RELACAO A CIDADE DA EMPRESA _____________________
+
+CGM->(dbseek(XCGM))
+LANC->(Dbsetorder(3))
+
+// CRIACAO DO VETOR DE BLOCOS _______________________________________________
+
+aadd(aEDICAO,{{ || view_fun(-1,0,@cMATRICULA                  )}, "MATRICULA" })
+aadd(aEDICAO,{{ || NIL },NIL}) // nome do funcionario
+aadd(aEDICAO,{{ || qesco(-1,0,@cCATEG ,sBLOCO1                )} , "CATEG"    })
+aadd(aEDICAO,{{ || qesco(-1,0,@cOCORR ,sBLOCO2                )} , "OCORR"    })
+aadd(aEDICAO,{{ || qesco(-1,0,@cAVISO ,sBLOCO3                )} , "AVISO"    })
+aadd(aEDICAO,{{ || qesco(-1,0,@cDISSI ,sBLOCO4                )} , "DISSI"    })
+
+aadd(aEDICAO,{{ || qgetx(-1,0,@cMES_ANT ,"99/9999"            )} , "MES_ANT"  })
+aadd(aEDICAO,{{ || qgetx(-1,0,@nCAM_341 ,"99,999,999.99"      )} , "CAM_341"  })
+aadd(aEDICAO,{{ || qgetx(-1,0,@nCAM_351 ,"99,999,999.99"      )} , "CAM_351"  })
+aadd(aEDICAO,{{ || qgetx(-1,0,@nCAM_361 ,"99,999,999.99"      )} , "CAM_361"  })
+
+aadd(aEDICAO,{{ || qgetx(-1,0,@cMES_ATU ,"99/9999"            )} , "MES_ATU"  })
+aadd(aEDICAO,{{ || qgetx(-1,0,@nCAM_342 ,"99,999,999.99"      )} , "CAM_342"  })
+aadd(aEDICAO,{{ || qgetx(-1,0,@nCAM_352 ,"99,999,999.99"      )} , "CAM_352"  })
+aadd(aEDICAO,{{ || qgetx(-1,0,@nCAM_362 ,"99,999,999.99"      )} , "CAM_362"  })
+
+aadd(aEDICAO,{{ || qgetx(-1,0,@nCAM_343 ,"99,999,999.99"      )} , "CAM_343"  })
+aadd(aEDICAO,{{ || qgetx(-1,0,@nCAM_353 ,"99,999,999.99"      )} , "CAM_353"  })
+aadd(aEDICAO,{{ || qgetx(-1,0,@nCAM_363 ,"99,999,999.99"      )} , "CAM_363"  })
+
+aadd(aEDICAO,{{ || qgetx(-1,0,@nMUL_37  ,"99,999,999.99"      )} , "MUL_37"   })
+aadd(aEDICAO,{{ || qgetx(-1,0,@nMUL_38  ,"99,999,999.99"      )} , "MUL_38"   })
+
+do while .T.
+
+   qlbloc(5,0,"B519A","QBLOC.GLO")
+   qmensa()
+   XNIVEL   := 1
+   XFLAG    := .T.
+   dDT_VENC := ctod("")
+
+   // SEGUNDO LOOP PARA ENTRADA DOS DADOS ___________________________________
+
+   do while XNIVEL >= 1 .and. XNIVEL <= len(aEDICAO)
+      eval ( aEDICAO [XNIVEL,1] )
+      if eval ( bESCAPE ) ; dbcloseall() ; return ; endif
+      if ! i_critica( aEDICAO[XNIVEL,2] ) ; loop ; endif
+      iif ( XFLAG , XNIVEL++ , XNIVEL-- )
+   enddo
+
+   if ( i_inicializacao() , i_impressao() , NIL )
+
+enddo
+
+return
+
+/////////////////////////////////////////////////////////////////////////////
+// CRITICA ADICIONAL NA DESCIDA _____________________________________________
+
+static function i_critica ( cCAMPO )
+   qmensa()
+   do case
+      case cCAMPO == "MATRICULA"
+           if empty(cMATRICULA) ; return .F. ; endif
+           if ! FUN->(dbseek(cMATRICULA:=strzero(val(cMATRICULA),6)))
+              qmensa("Funcionario n„o Encontrado !","B")
+              qmensa("")
+              return .F.
+           else
+             qrsay(XNIVEL+1,left(FUN->Nome,30))
+           endif
+
+      case cCAMPO == "CATEG"
+           qrsay(XNIVEL,qabrev(cCATEG,"ABCDEFGHIJK",{"Empregado",;
+                                                     "Trabalhador Avulso",;
+                                                     "Empregado afastado p/prestar servico militar",;
+                                                     "Empregado sob cont. trabalho p/prazo determ.",;
+                                                     "Diretor n„o Empregado com FGTS",;
+                                                     "Diretor n„o Empregado sem FGTS",;
+                                                     "Agente Publico",;
+                                                     "Trab. autonomo ou equip. c/contr. s/ remuneracao",;
+                                                     "Trab. autonomo ou equip. c/contr. s/ salario-base",;
+                                                     "Transp. autonomo c/ contrib. s/ remuneracao",;
+                                                     "Transp. autonomo c/ contrib. s/ salario-base"}))
+      case cCAMPO == "OCORR"
+           qrsay(XNIVEL,qabrev(cOCORR,"1234",{"N„o exposi‡„o a agente nocivo",;
+                                              "Exp. agente nocivo (apos. espec. 15 anos)",;
+                                              "Exp. agente nocivo (apos. espec. 20 anos)",;
+                                              "Exp. agente nocivo (apos. espec. 25 anos)"}))
+
+      case cCAMPO == "AVISO"
+           qrsay(XNIVEL,qabrev(cAVISO,"123",{"Trabalhado",;
+                                             "Indenizado",;
+                                             "Ausencia/Dispensa"}))
+
+      case cCAMPO == "DISSI"
+           qrsay(XNIVEL,qabrev(cDISSI,"01",{"0 - Sim",;
+                                            "1 - N„o"}))
+
+//    case cCAMPO == "CODIGO MOVIMENTACAO" ????
+//         qrsay(XNIVEL,qabrev(cAVISO,"123",{"I - Disp. s/justa causa,cujo aviso ...",;
+//                                          "V - Disp. s/justa causa,no caso de ...",;
+//                                          "T - Extincao normal ou rescisao ...",;
+//                                          "L - Demais casos de rescisao ..."}))
+
+           qmensa("Aguarde... calculando...")
+
+           cMES_ATU := subs(dtoc(XDATASYS),4,2) + "/" + right(dtoc(XDATASYS),4)
+           cMES_ANT := strzero(val(subs(dtoc(XDATASYS),4,2))-1,2) + "/" + right(dtoc(XDATASYS),4)
+
+           XMES_ATU := right(dtoc(XDATASYS),4) + subs(dtoc(XDATASYS),4,2)
+           XMES_ANT := right(dtoc(XDATASYS),4) + strzero(val(subs(dtoc(XDATASYS),4,2))-1,2)
+
+           SITUA->(dbSetFilter({|| Anomes == XMES_ANT},"Anomes == XMES_ANT"))
+           SITUA->(dbseek(FUN->Matricula))
+           LANC->(dbSetFilter({|| Anomes == XMES_ANT},"Anomes == XMES_ANT"))
+           LANC->(dbseek(FUN->Matricula))
+
+           do while LANC->Matricula == FUN->Matricula
+
+              if LANC->Evento $ "100*301*102"
+                 nCAM_341 += LANC->Valor
+              endif
+
+              if LANC->Evento $ "811*812*814"
+                 nCAM_351 += LANC->Valor
+              endif
+
+              if LANC->Evento == "930" .and. SITUA->Af_cod <> "21"
+                 nCAM_361 += LANC->Valor
+              endif
+
+              LANC->(Dbskip())
+
+           enddo
+           SITUA->(Dbsetfilter())
+           LANC->(Dbsetfilter())
+
+           SITUA->(dbSetFilter({|| Anomes == XANOMES},"Anomes == XANOMES"))
+           SITUA->(dbseek(FUN->Matricula))
+           LANC->(dbSetFilter({|| Anomes == XANOMES},"Anomes == XANOMES"))
+           LANC->(dbseek(FUN->Matricula))
+
+           do while LANC->Matricula == FUN->Matricula
+
+              if LANC->Evento == "102*450*311*313*406*187"
+                 nCAM_342 += LANC->Valor
+              endif
+
+              if LANC->Evento $ "814*558*811*812*453"
+                 nCAM_352 += LANC->Valor
+              endif
+
+              if LANC->Evento == "934"
+                 nCAM_362 += LANC->Valor
+              endif
+
+              if LANC->Evento $ "150*326*149*404"
+                 nCAM_343 += LANC->Valor
+              endif
+
+              if LANC->Evento $ "813*451"
+                 nCAM_353 += LANC->Valor
+              endif
+
+              if CONFIG->Gr_simples=="N"
+                 if LANC->Evento $ "909*910*914"
+                    nCAM_17 += LANC->Valor
+                 endif
+              else
+                 if LANC->Evento $ "910*914"
+                    nCAM_17 += LANC->Valor
+                 endif
+              Endif
+
+              if LANC->Evento $ "910*914"
+                 nCAM_18 += LANC->Valor
+              endif
+
+              if LANC->Evento $ "901"
+                 nCAM_19 += LANC->Valor
+              endif
+
+              LANC->(Dbskip())
+
+           enddo
+
+           nCAM_17 := nCAM_17 - nCAM_19 // diminui salario familia se houver
+
+           qmensa("")
+
+   endcase
+
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA FAZER A INICIALIZACAO DO RELATORIO ___________________________
+
+static function i_inicializacao
+
+   cANOMES := right(dtoc(XDATASYS),4) + subs(dtoc(XDATASYS),4,2)
+   SITUA->(dbSetFilter({|| Anomes == XANOMES},"Anomes == XANOMES"))
+   SITUA->(dbseek(FUN->Matricula))
+
+   // TOTALIZACAO DE PROVENTOS DE FUNCIONARIOS ______________________________
+
+   qmensa("Totalizando FGTS de funcion†rios...")
+
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// INICIALIZA PROCESSO DE IMPRESSAO _________________________________________
+
+static function i_impressao
+
+   if ! qinitprn() ; return ; endif
+   if ! qlineprn() ; return ; endif
+   @ prow(),pcol() say XCOND0
+
+   @ prow()+08,11  say left(XRAZAO,35)
+   @ prow()   ,51  say left(XCONTATO,9)
+   @ prow()   ,61  say XTELEFONE
+   @ prow()   ,79  say XCOND1 + XCGCCPF + XCOND0
+
+   @ prow()+2 ,11 say alltrim(XENDERECO) + "  " + XNUMERO + "  " + alltrim(XCOMPL)
+   @ prow()   ,65 say alltrim(XBAIRRO)
+
+   @ prow()+2 ,11 say XCEP
+   CGM->(dbseek(XCGM))
+   @ prow()   ,25 say CGM->Municipio
+   @ prow()   ,87 say CGM->Estado
+
+   @ prow()+2,00 say ""
+
+   GRPS->(dbseek(XANOMES+FUN->Grps))
+
+   @ prow()+3 ,11 say GRPS->Cod_fpas
+   @ prow()   ,20 say GRPS->Cod_terc
+   @ prow()   ,27 say iif(CONFIG->Gr_simples=="N","1","2")
+   @ prow()   ,34 say iif(CONFIG->Gr_simples=="N",GRPS->Cod_sat,"         ")
+   @ prow()   ,44 say CONFIG->Cnae
+
+   @ prow()+2 ,11 say transform(nCAM_17,"@R 999,999,999.99")
+   @ prow()   ,35 say transform(nCAM_18,"@R 999,999,999.99")
+   @ prow()   ,61 say transform(nCAM_19,"@R 999,999,999.99")
+   @ prow()   ,86 say transform((nCAM_17+nCAM_18+nCAM_19),"@R 999,999,999.99")
+
+   @ prow()+04,11 say left(FUN->Nome,35)
+   @ prow()   ,49 say dtoc(FUN->Data_nasc)
+   @ prow()   ,60 say dtoc(FUN->Fgts_dat)
+
+   @ prow()+2 ,11 say FUN->Pis_num
+   @ prow()   ,27 say FUN->Cp_num + "/" + FUN->Cp_serie
+   @ prow()   ,41 say dtoc(FUN->Data_adm)
+   do case
+      case cCATEG == "A"
+           @ prow()  ,53 say "1"
+      case cCATEG == "B"
+           @ prow()  ,53 say "2"
+      case cCATEG == "C"
+           @ prow()  ,53 say "3"
+      case cCATEG == "D"
+           @ prow()  ,53 say "4"
+      case cCATEG == "E"
+           @ prow()  ,53 say "5"
+      case cCATEG == "F"
+           @ prow()  ,53 say "11"
+      case cCATEG == "G"
+           @ prow()  ,53 say "12"
+      case cCATEG == "H"
+           @ prow()  ,53 say "13"
+      case cCATEG == "I"
+           @ prow()  ,53 say "14"
+      case cCATEG == "J"
+           @ prow()  ,53 say "15"
+      case cCATEG == "K"
+           @ prow()  ,53 say "16"
+   endcase
+
+   @ prow()   ,57 say "  " //strzero(val(cOCORR),2)
+
+   SITUA->(dbseek(FUN->Matricula))
+
+   @ prow()   ,62 say dtoc(SITUA->Af_ini)
+   AFAST->(dbseek(SITUA->Af_cod))
+//   @ prow()   ,75 say SITUA->Af_cod
+   @ prow()   ,75 say AFAST->COD_RE
+   @ prow()   ,82 say cAVISO
+   @ prow()   ,99 say cDISSI
+
+   if right(cANOMES,2) == "01"
+      @ prow()+04,21 say "12/" + str(val(left(cANOMES,4))-1,4)
+   else
+      @ prow()+04,21 say strzero(val(right(cANOMES,2))-1,2) + "/" + left(cANOMES,4)
+   endif
+
+   cMESANT := left(cANOMES,4) + strzero(val(right(cANOMES,2))-1,2)
+
+   @ prow() ,35 say transform(nCAM_341,"@r 9,999,999.99")
+   @ prow() ,51 say transform(nCAM_351,"@r 9,999,999.99")
+   @ prow() ,68 say transform(nCAM_361,"@r 9,999,999.99")
+
+   @ prow()+02,21 say right(qanomes(XDATASYS),2) + "/" + left(qanomes(XDATASYS),4)
+
+   @ prow() ,35 say transform(nCAM_342,"@r 9,999,999.99")
+   @ prow() ,51 say transform(nCAM_352,"@r 9,999,999.99")
+   @ prow() ,68 say transform(nCAM_362,"@r 9,999,999.99")
+
+   @ prow()+1,84 say "CURITIBA, " + dtoc(date())
+
+   @ prow()+1,35 say transform(nCAM_343,"@r 9,999,999.99")
+   @ prow() ,51 say transform(nCAM_353,"@r 9,999,999.99")
+   @ prow() ,68 say transform(nCAM_363,"@r 9,999,999.99")
+   
+   @ prow()+2,35 say transform(nMUL_37,"@r 9,999,999.99")
+   @ prow()  ,68 say transform(nMUL_38,"@r 9,999,999.99")
+
+   @ prow()+2,34  say transform(nCAM_341+nCAM_342+nCAM_343+nMUL_37,"@r 99,999,999.99")
+   @ prow()  ,50  say transform(nCAM_351+nCAM_352+nCAM_353,"@R 99,999,999.99")
+   @ prow()  ,67  say transform(nCAM_361+nCAM_362+nCAM_363+nMUL_38,"@R 99,999,999.99")
+
+   qstopprn()
+
+return

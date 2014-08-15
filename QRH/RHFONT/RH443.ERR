@@ -1,0 +1,29 @@
+238K available
+Compiling RH443.PRG
+RH443.PRG(15)  Warning C1003  Ambiguous reference: 'ANOMES'
+RH443.PRG(15)  Warning C1003  Ambiguous reference: 'XANOMES'
+RH443.PRG(15)  Warning C1003  Ambiguous reference: 'SITUACAO'
+RH443.PRG(15)  Warning C1003  Ambiguous reference: 'CATEGORIA'
+RH443.PRG(15)  Warning C1003  Ambiguous reference: 'VINCULO'
+RH443.PRG(42)  Warning C1003  Ambiguous reference: 'XDATASYS'
+RH443.PRG(42)  Warning C1004  Ambiguous reference, assuming memvar: 'NMESES'
+RH443.PRG(43)  Warning C1003  Ambiguous reference: 'NMESES'
+RH443.PRG(44)  Warning C1003  Ambiguous reference: 'NMESES'
+RH443.PRG(44)  Warning C1004  Ambiguous reference, assuming memvar: 'NMESES'
+RH443.PRG(46)  Warning C1003  Ambiguous reference: 'NMESES'
+RH443.PRG(46)  Warning C1004  Ambiguous reference, assuming memvar: 'NMESES'
+RH443.PRG(48)  Warning C1003  Ambiguous reference: 'NMESES'
+RH443.PRG(56)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH443.PRG(56)  Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH443.PRG(57)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH443.PRG(57)  Warning C1003  Ambiguous reference: 'XUSRA'
+RH443.PRG(57)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH443.PRG(74)  Warning C1004  Ambiguous reference, assuming memvar: 'CCORANTERIOR'
+RH443.PRG(81)  Warning C1001  RETURN statement with no value in function
+RH443.PRG(94)  Warning C1001  RETURN statement with no value in function
+RH443.PRG(98)  Warning C1001  RETURN statement with no value in function
+RH443.PRG(108) Warning C1001  RETURN statement with no value in function
+RH443.PRG(123) Warning C1003  Ambiguous reference: 'CCORANTERIOR'
+RH443.PRG(124) Warning C1001  RETURN statement with no value in function
+25 warnings                
+Code size 1026, Symbols 640, Constants 398

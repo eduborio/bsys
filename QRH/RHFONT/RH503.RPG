@@ -1,0 +1,375 @@
+/////////////////////////////////////////////////////////////////////////////
+// SISTEMA....: SISTEMA VEICULOS E EQUIPAMENTOS
+// OBJETIVO...: RELATORIO DE CUSTO POR FILIAL
+// ANALISTA...:
+// PROGRAMADOR: IN SUNG CHANG
+// INICIO.....: JENEIRO DE 1997
+// OBS........:
+// ALTERACOES.:
+
+#define K_MAX_LIN 55
+
+// DECLARACAO E INICIALIZACAO DE VARIAVEIS __________________________________
+
+local bESCAPE  := {||(XNIVEL==1 .and. !XFLAG).or.lastkey()==27}
+
+//fu_abre_ccusto()
+
+private cTITULO                               // titulo do relatorio
+
+private bFILTRO                               // code block de filtro
+private cFILIAL
+private aEDICAO := {}                         // vetor para os campos de entrada de dados
+
+private lIMP_FILIAL := .T.
+
+// CRIACAO DO VETOR DE BLOCOS _______________________________________________
+
+aadd(aEDICAO,{{ || view_filial(-1,0,@cFILIAL                    )} ,"FILIAL"   })
+aadd(aEDICAO,{{ || NIL },NIL }) // descricao da filial
+aadd(aEDICAO,{{ || qgetx(-1,0,@dDATA_INI     ,"@D"     ,NIL,NIL) } ,"DATA_INI"})
+aadd(aEDICAO,{{ || qgetx(-1,0,@dDATA_FIM     ,"@D"     ,NIL,NIL) } ,"DATA_FIM"})
+
+do while .T.
+
+   qlbloc(5,0,"B506A","QBLOC.GLO",1)
+   XNIVEL  := 1
+   XFLAG   := .T.
+   cFILIAL := space(11)
+   dDATA_INI  := ctod("01/" + right(qanomes(date()),2) + "/" + left(qanomes(date()),2))
+   dDATA_FIM  := qfimmes(dDATA_INI)
+
+   // SEGUNDO LOOP PARA ENTRADA DOS DADOS ___________________________________
+
+   do while XNIVEL >= 1 .and. XNIVEL <= len(aEDICAO)
+      eval ( aEDICAO [XNIVEL,1] )
+      if eval ( bESCAPE ) ; dbcloseall() ; return ; endif
+      if ! i_critica( aEDICAO[XNIVEL,2] ) ; loop ; endif
+      iif ( XFLAG , XNIVEL++ , XNIVEL-- )
+   enddo
+
+   if ( i_inicializacao() , i_impressao() , NIL )
+
+enddo
+
+/////////////////////////////////////////////////////////////////////////////
+// CRITICA ADICIONAL NA DESCIDA _____________________________________________
+
+static function i_critica ( cCAMPO )
+
+   do case
+      case cCAMPO == "FILIAL"
+           if empty(cFILIAL)
+              qrsay(XNIVEL+1,"*** Todas as Filiais ***")
+           else
+              qrsay(XNIVEL,cFILIAL:=alltrim(cFILIAL))
+              if ! FILIAL->(dbseek(cFILIAL))
+                 qmensa("Filial n„o encontrado !","B")
+                 return .F.
+              endif
+              qrsay(XNIVEL+1,left(FILIAL->Razao,28))
+           endif
+
+      case cCAMPO == "DATA_INI"
+           if empty(dDATA_INI) ; return .F. ; endif
+           dDATA_FIM := qfimmes(dDATA_INI)
+           qrsay(XNIVEL+1,dDATA_FIM)
+
+      case cCAMPO == "DATA_FIM"
+           if empty(dDATA_FIM) ; return .F. ; endif
+           if dDATA_INI > dDATA_FIM
+              qmensa("Data Inicial n„o pode ser maior que a Data Final !","B")
+              return .F.
+           endif
+   endcase
+
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA FAZER A INICIALIZACAO DO RELATORIO ___________________________
+
+static function i_inicializacao
+
+   // CRIA TITULO DO RELATORIO ______________________________________________
+
+   cTITULO := "RELATORIO DE CUSTO SINTETICO POR VEICULO DE: " + dtoc(dDATA_INI) + " ATE " + dtoc(dDATA_FIM)
+   
+   // SELECIONA ORDEM DO ARQUIVO CODIGOS_____________________________________
+
+   qmensa("")
+
+   bFILTRO := { || PEDIDO->Data_ped >= dDATA_INI .and. PEDIDO->Data_ped <= dDATA_FIM }
+
+   // ESTABELECE RELACOES ENTRE ARQUIVOS ____________________________________
+
+   VEICULOS->(dbsetorder(5)) // FILIAL + CODIGO
+   VEICULOS->(dbgotop())
+
+   PEDIDO->(dbsetorder(2))   // CODIGO
+
+   LANC->(dbsetorder(3))     // COD_VEIC
+
+   PROD->(dbsetorder(4))     // CODIGO REDUZIDO
+
+   ODOMETRO->(dbsetorder(1)) // COD_VEIC + DTOS(DATA_LANC)
+
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA INICIALIZAR O PROCESSO DE IMPRESSAO __________________________
+
+static function i_impressao
+
+   local cPIC1 := "@E 999,999.99"
+   local cPIC2 := "@E 9,999,999.99"
+   local cPIC3 := "@E 99,999,999.99"
+
+   local nTOT_PECAS := nVAL_PECAS   := nFIL_PECAS := 0
+   local nTOT_PNEUS := nVAL_PNEUS   := nFIL_PNEUS := 0
+   local nTOT_MANUT := nVAL_MANUT   := nFIL_MANUT := 0
+   local nTOT_COMBU := nVAL_COMBU   := nFIL_COMBU := 0
+   local nTOT_LUBRI := nVAL_LUBRI   := nFIL_LUBRI := 0
+   local nTOT_SERVI := nVAL_SERVI   := nFIL_SERVI := 0
+   local nTOT_OUTRO := nVAL_OUTRO   := nFIL_OUTRO := 0
+   local nTOT_GERAL := nTOT_VEICULO := nFIL_VEIC  := 0
+
+   local nTOT_ODOMETRO := 0
+
+   // INICIALIZA PROCESSO DE IMPRESSAO ______________________________________
+
+   if ! qinitprn() ; return ; endif
+
+   if ! empty(cFILIAL)
+      VEICULOS->(dbseek(cFILIAL))
+   else
+      VEICULOS->(dbgotop())
+   endif
+
+   do while ! VEICULOS->(eof()) .and. qcontprn()
+
+      if ! qlineprn() ; exit ; endif
+
+      qgirabarra()
+
+      if XPAGINA == 0 .or. prow() > K_MAX_LIN
+         @ prow(),pcol() say XCOND0
+         qpageprn()
+         qcabecprn(cTITULO,80)
+      endif
+
+      if empty(cFILIAL) .or. alltrim(cFILIAL) == alltrim(VEICULOS->Filial)
+
+         if lIMP_FILIAL
+            FILIAL->(dbseek(VEICULOS->Filial))
+            @ prow(),pcol() say XCOND0
+            @ prow()+1,0 say "Filial: " + FILIAL->Codigo
+            @ prow()+1,0 say replicate("-",80)
+            @ prow(),pcol() say XCOND1
+            @ prow()+1,0 say "VEICULOS               PECAS        PNEUS   MANUTENCAO COMBUSTIVEIS LUBRIFICANTES    SERVICOS       OUTROS         TOTAL    CUSTO P/KM"
+            @ prow(),pcol() say XCOND0
+            @ prow()+1,0 say replicate("-",80)
+            @ prow(),pcol() say XCOND1
+            lIMP_FILIAL := .F.
+         endif
+
+         cTMP_FILIAL := VEICULOS->Filial
+
+         nINI_ODOMETRO := nFIM_ODOMETRO := 0
+
+         if ODOMETRO->(dbseek(VEICULOS->Codigo+dtos(dDATA_INI)))
+            nINI_ODOMETRO := ODOMETRO->Odometro
+         endif
+
+         if ODOMETRO->(dbseek(VEICULOS->Codigo+dtos(dDATA_FIM)))
+            nFIM_ODOMETRO := ODOMETRO->Odometro
+         endif
+
+         if nINI_ODOMETRO == 0 .or. nFIM_ODOMETRO == 0
+            nINI_ODOMETRO := nFIM_ODOMETRO := 0
+         endif
+
+         if LANC->(dbseek(VEICULOS->Codigo))
+            do while LANC->Cod_veic == VEICULOS->Codigo .and. ! LANC->(eof())
+               if PEDIDO->(dbseek(LANC->Cod_ped))
+                  if eval(bFILTRO)
+                     PROD->(dbseek(LANC->Cod_prod))
+                     do case
+                        case left(PROD->Codigo,4) $ "0402_0403_0404_0405_0406_0407_0408_0409_0410_0411_0412_0413_0414_0415"
+                             nVAL_PECAS += (LANC->Preco * LANC->Quant) + ((LANC->Preco * LANC->Quant)*PROD->Ipi/100)
+
+                        case left(PROD->Codigo,2) == "05"
+                             nVAL_PNEUS += (LANC->Preco * LANC->Quant) + ((LANC->Preco * LANC->Quant)*PROD->Ipi/100)
+
+                        case left(PROD->Codigo,4) == "0401"
+                             nVAL_MANUT += (LANC->Preco * LANC->Quant) + ((LANC->Preco * LANC->Quant)*PROD->Ipi/100)
+
+                        case left(PROD->Codigo,2) == "02"
+                             nVAL_COMBU += (LANC->Preco * LANC->Quant) + ((LANC->Preco * LANC->Quant)*PROD->Ipi/100)
+
+                        case left(PROD->Codigo,2) == "03"
+                             nVAL_LUBRI += (LANC->Preco * LANC->Quant) + ((LANC->Preco * LANC->Quant)*PROD->Ipi/100)
+
+                        case left(PROD->Codigo,2) == "06"
+                             nVAL_SERVI += (LANC->Preco * LANC->Quant) + ((LANC->Preco * LANC->Quant)*PROD->Ipi/100)
+
+                        case left(PROD->Codigo,2) $ "09_10"
+                             nVAL_OUTRO += (LANC->Preco * LANC->Quant) + ((LANC->Preco * LANC->Quant)*PROD->Ipi/100)
+                        otherwise
+                             nVAL_OUTRO += (LANC->Preco * LANC->Quant) + ((LANC->Preco * LANC->Quant)*PROD->Ipi/100)
+                     endcase
+                  endif
+               endif
+               LANC->(dbskip())
+            enddo
+         endif
+
+         REQUISIC->(Dbsetorder(2))
+         REQUISIC->(Dbgotop())
+
+         do while ! REQUISIC->(eof())
+
+            qgirabarra()
+
+            if REQUISIC->Cod_veic == VEICULOS->Codigo .and. REQUISIC->Bx_estoque
+
+               ITENS_RQ->(Dbsetorder(2))
+               ITENS_RQ->(Dbseek(REQUISIC->Codigo))
+
+               do while ITENS_RQ->Cod_req == REQUISIC->Codigo .and. ! ITENS_RQ->(eof())
+
+                  if REQUISIC->Dt_requisi >= dDATA_INI .and. REQUISIC->Dt_requisi <= dDATA_FIM
+
+                     PROD->(dbseek(ITENS_RQ->Cod_produt))
+
+                     do case
+                        case left(PROD->Codigo,4) $ "0402_0403_0404_0405_0406_0407_0408_0409_0410_0411_0412_0413_0414_0415"
+                             nVAL_PECAS += (ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade) + ((ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade)*PROD->Ipi/100)
+
+                        case left(PROD->Codigo,2) == "05"
+                             nVAL_PNEUS += (ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade) + ((ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade)*PROD->Ipi/100)
+
+                        case left(PROD->Codigo,4) == "0401"
+                             nVAL_MANUT += (ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade) + ((ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade)*PROD->Ipi/100)
+
+                        case left(PROD->Codigo,2) == "02"
+                             nVAL_COMBU += (ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade) + ((ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade)*PROD->Ipi/100)
+
+                        case left(PROD->Codigo,2) == "03"
+                             nVAL_LUBRI += (ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade) + ((ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade)*PROD->Ipi/100)
+
+                        case left(PROD->Codigo,2) == "06"
+                             nVAL_SERVI += (ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade) + ((ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade)*PROD->Ipi/100)
+
+                        case left(PROD->Codigo,2) $ "09_10"
+                             nVAL_OUTRO += (ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade) + ((ITENS_RQ->Vl_unitari * ITENS_RQ->Quantidade)*PROD->Ipi/100)
+
+                     endcase
+
+                  endif
+
+                  ITENS_RQ->(dbskip())
+
+               enddo
+
+            endif
+
+            REQUISIC->(Dbskip())
+
+         enddo
+
+         nTOT_VEICULO := nVAL_PECAS + nVAL_PNEUS + nVAL_MANUT + nVAL_COMBU + nVAL_LUBRI + nVAL_SERVI + nVAL_OUTRO
+
+         if nTOT_VEICULO <> 0
+            @ prow()+1,0 say VEICULOS->Descricao           + "   " +;
+                             transform(nVAL_PECAS,cPIC1)   + "   " +;
+                             transform(nVAL_PNEUS,cPIC1)   + "   " +;
+                             transform(nVAL_MANUT,cPIC1)   + "   " +;
+                             transform(nVAL_COMBU,cPIC1)   + "   " +;
+                             transform(nVAL_LUBRI,cPIC1)   + "   " +;
+                             transform(nVAL_SERVI,cPIC1)   + "   " +;
+                             transform(nVAL_OUTRO,cPIC1)   + "   " +;
+                             transform(nTOT_VEICULO,cPIC2) + "   " +;
+                             transform(nTOT_VEICULO/(nFIM_ODOMETRO-nINI_ODOMETRO),cPIC1)
+
+
+            nFIL_PECAS += nVAL_PECAS
+            nFIL_PNEUS += nVAL_PNEUS
+            nFIL_MANUT += nVAL_MANUT
+            nFIL_COMBU += nVAL_COMBU
+            nFIL_LUBRI += nVAL_LUBRI
+            nFIL_SERVI += nVAL_SERVI
+            nFIL_OUTRO += nVAL_OUTRO
+
+            nFIL_VEIC  += nTOT_VEICULO
+
+            nVAL_PECAS := 0
+            nVAL_PNEUS := 0
+            nVAL_MANUT := 0
+            nVAL_COMBU := 0
+            nVAL_LUBRI := 0
+            nVAL_SERVI := 0
+            nVAL_OUTRO := 0
+
+            nTOT_VEICULO := 0
+
+         endif
+      endif
+
+      VEICULOS->(dbskip())
+
+      if (alltrim(cTMP_FILIAL) <> alltrim(VEICULOS->Filial) .and. nFIL_VEIC <> 0) .or. (VEICULOS->(eof()).and.nFIL_VEIC<>0)
+         @ prow()+1,0  say XCOND0 + replicate("=",80) + XCOND1
+         @ prow()+1,0  say "Total do Filial:  "          +;
+                           transform(nFIL_PECAS,cPIC1)   + "   " +;
+                           transform(nFIL_PNEUS,cPIC1)   + "   " +;
+                           transform(nFIL_MANUT,cPIC1)   + "   " +;
+                           transform(nFIL_COMBU,cPIC1)   + "   " +;
+                           transform(nFIL_LUBRI,cPIC1)   + "   " +;
+                           transform(nFIL_SERVI,cPIC1)   + "   " +;
+                           transform(nFIL_OUTRO,cPIC1)   + "   " +;
+                           transform(nFIL_VEIC,cPIC2)
+
+         @ prow()+2,0 say ""
+
+         nTOT_PECAS += nFIL_PECAS
+         nTOT_PNEUS += nFIL_PNEUS
+         nTOT_MANUT += nFIL_MANUT
+         nTOT_COMBU += nFIL_COMBU
+         nTOT_LUBRI += nFIL_LUBRI
+         nTOT_SERVI += nFIL_SERVI
+         nTOT_OUTRO += nFIL_OUTRO
+
+         nTOT_GERAL += nFIL_VEIC
+
+         nFIL_PECAS := 0
+         nFIL_PNEUS := 0
+         nFIL_MANUT := 0
+         nFIL_COMBU := 0
+         nFIL_LUBRI := 0
+         nFIL_SERVI := 0
+         nFIL_OUTRO := 0
+
+         nFIL_VEIC  := 0
+
+         lIMP_FILIAL := .T.
+
+      endif
+
+   enddo
+
+   @ prow()+1,0 say XCOND0 + replicate("=",80) + XCOND1
+   @ prow()+1,0 say "Total..........: " +;
+                    transform(nTOT_PECAS,cPIC2) + " " +;
+                    transform(nTOT_PNEUS,cPIC2) + " " +;
+                    transform(nTOT_MANUT,cPIC2) + " " +;
+                    transform(nTOT_COMBU,cPIC2) + " " +;
+                    transform(nTOT_LUBRI,cPIC2) + " " +;
+                    transform(nTOT_SERVI,cPIC2) + " " +;
+                    transform(nTOT_OUTRO,cPIC2) + " " +;
+                    transform(nTOT_GERAL,cPIC3)
+
+
+   qstopprn()
+
+return
+

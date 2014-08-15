@@ -1,0 +1,159 @@
+#BCC
+VERSION=BCB.01
+!ifndef CC_DIR
+CC_DIR = $(MAKE_DIR)
+!endif
+
+!ifndef HB_DIR
+HB_DIR = $(HARBOUR_DIR)
+!endif
+ 
+RECURSE= NO 
+ 
+SHELL = 
+COMPRESS = NO
+EXTERNALLIB = YES
+XFWH = NO
+FILESTOADD =  1
+WARNINGLEVEL =  0
+USERDEFINE = 
+USERINCLUDE = 
+USERLIBS = c:\harbour-1.0.0\lib\hbct.lib
+EDITOR = edit
+GUI = NO
+MT = NO
+SRC02 = obj 
+PROJECT = c:\qsys_g\qpg\qpg_.exe $(PR) 
+OBJFILES = $(SRC02)\START_.obj //
+ $(SRC02)\ERRORSYS.obj //
+ $(SRC02)\FUNCOES_.obj //
+ $(SRC02)\NEW_EMP_.obj //
+ $(SRC02)\PG101_.obj //
+ $(SRC02)\PG102_.obj //
+ $(SRC02)\PG103_.obj //
+ $(SRC02)\PG104_.obj //
+ $(SRC02)\PG105_.obj //
+ $(SRC02)\PG201_.obj //
+ $(SRC02)\PG202_.obj //
+ $(SRC02)\PG203_.obj //
+ $(SRC02)\PG204_.obj //
+ $(SRC02)\PG205_.obj //
+ $(SRC02)\PG206_.obj //
+ $(SRC02)\PG301_.obj //
+ $(SRC02)\PG302_.obj //
+ $(SRC02)\PG303_.obj //
+ $(SRC02)\PG304_.obj //
+ $(SRC02)\PG305_.obj //
+ $(SRC02)\PG306_.obj //
+ $(SRC02)\PG307_.obj //
+ $(SRC02)\PG308_.obj //
+ $(SRC02)\PG309_.obj //
+ $(SRC02)\PG310_.obj //
+ $(SRC02)\PG311_.obj //
+ $(SRC02)\PG402_.obj //
+ $(SRC02)\PG403_.obj //
+ $(SRC02)\PG404_.obj //
+ $(SRC02)\PG410_.obj //
+ $(SRC02)\PG501_.obj //
+ $(SRC02)\PG502_.obj //
+ $(SRC02)\PG503_.obj //
+ $(SRC02)\PG504_.obj //
+ $(SRC02)\PG505_.obj //
+ $(SRC02)\PG506_.obj //
+ $(SRC02)\PG507_.obj //
+ $(SRC02)\PG508_.obj //
+ $(SRC02)\PG509_.obj //
+ $(SRC02)\PG510_.obj //
+ $(SRC02)\PG511_.obj //
+ $(SRC02)\PG801_.obj //
+ $(SRC02)\REALTIM.obj $(OB) 
+PRGFILES = START_.PRG //
+ ERRORSYS.PRG //
+ FUNCOES_.PRG //
+ NEW_EMP_.PRG //
+ PG101_.PRG //
+ PG102_.PRG //
+ PG103_.PRG //
+ PG104_.PRG //
+ PG105_.PRG //
+ PG201_.PRG //
+ PG202_.PRG //
+ PG203_.PRG //
+ PG204_.PRG //
+ PG205_.PRG //
+ PG206_.PRG //
+ PG301_.PRG //
+ PG302_.PRG //
+ PG303_.PRG //
+ PG304_.PRG //
+ PG305_.PRG //
+ PG306_.PRG //
+ PG307_.PRG //
+ PG308_.PRG //
+ PG309_.PRG //
+ PG310_.PRG //
+ PG311_.PRG //
+ PG402_.PRG //
+ PG403_.PRG //
+ PG404_.PRG //
+ PG410_.PRG //
+ PG501_.PRG //
+ PG502_.PRG //
+ PG503_.PRG //
+ PG504_.PRG //
+ PG505_.PRG //
+ PG506_.PRG //
+ PG507_.PRG //
+ PG508_.PRG //
+ PG509_.PRG //
+ PG510_.PRG //
+ PG511_.PRG //
+ PG801_.PRG //
+ REALTIM.PRG $(PS) 
+OBJCFILES = $(OBC) 
+CFILES = $(CF)
+RESFILES = 
+RESDEPEN = 
+TOPMODULE = START_.PRG
+LIBFILES =  hblang.lib hbvm.lib hbrtl.lib hbrdd.lib hbmacro.lib hbpp.lib rddntx.lib rddcdx.lib rddfpt.lib hbcommon.lib gtwin.lib hbcpage.lib hbpcre.lib hbhsx.lib hbsix.lib  hbqsql.lib
+EXTLIBFILES = hbqsql.lib
+DEFFILE = 
+HARBOURFLAGS =  -m  -w0
+CFLAG1 =  -OS $(SHELL)  $(CFLAGS) -d -c -L$(HB_DIR)\lib 
+CFLAG2 =  -I$(HB_DIR)\include;$(CC_DIR)\include
+RFLAGS = 
+LFLAGS = -L$(CC_DIR)\lib\obj;$(CC_DIR)\lib;$(HB_DIR)\lib -Gn -M -m -s -Tpe -x -ap
+IFLAGS = 
+LINKER = ilink32
+ 
+ALLOBJ = c0x32.obj $(OBJFILES) $(OBJCFILES)
+ALLRES = $(RESDEPEN)
+ALLLIB = $(USERLIBS) $(LIBFILES) import32.lib cw32.lib
+.autodepend
+ 
+#DEPENDS
+ 
+#COMMANDS
+.cpp.obj:
+$(CC_DIR)\BIN\bcc32 $(CFLAG1) $(CFLAG2) -o$* $**
+ 
+.c.obj:
+$(CC_DIR)\BIN\bcc32 -I$(HB_DIR)\include $(CFLAG1) $(CFLAG2) -o$* $**
+ 
+.prg.obj:
+$(HB_DIR)\bin\harbour -D__EXPORT__ -n -go -I$(HB_DIR)\include $(HARBOURFLAGS) -o$* $**
+ 
+.rc.res:
+$(CC_DIR)\BIN\brcc32 $(RFLAGS) $<
+ 
+#BUILD
+ 
+$(PROJECT): $(CFILES) $(OBJFILES) $(RESDEPEN) $(DEFFILE)
+    $(CC_DIR)\BIN\$(LINKER) @&&!  
+    $(LFLAGS) +
+    $(ALLOBJ), +
+    $(PROJECT),, +
+    $(ALLLIB), +
+    $(DEFFILE), +
+    $(ALLRES) 
+!

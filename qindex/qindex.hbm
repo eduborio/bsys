@@ -1,0 +1,8 @@
+# Nome do .Exe
+-oC:\Qsys_g\Qindex\Qindex.exe
+
+-lhbqsys.lib
+
+-incpath=c:\hb20\include
+
+qindex

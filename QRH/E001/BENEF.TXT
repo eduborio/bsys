@@ -1,0 +1,22 @@
+
+Estrutura do arquivo BENEF.DBF
+16/09/04  -  09:58:10
+
+ANOMES     - C -   6 -   0
+EVENTO     - C -   3 -   0
+AMBIENTE   - C -   2 -   0
+MATRICULA  - C -   6 -   0
+VALOR      - N -   9 -   2
+FRACAO     - N -   8 -   4
+FIXA       - L -   1 -   0
+N1         - N -   3 -   0
+N2         - N -   3 -   0
+C1         - C -   1 -   0
+C2         - C -   1 -   0
+
+Indexadores utilizados:
+
+01 - Ano+Mˆs+Evento+Ambiente+Matric - BE_EVENT - ANOMES+ EVENTO + AMBIENTE + MATRICULA             
+02 - Ano+Mˆs+Matric+Ambiente+Evento - BE_MATRI - ANOMES + MATRICULA + AMBIENTE + EVENTO            
+
+

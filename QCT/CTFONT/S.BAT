@@ -1,0 +1,4 @@
+@ECHO OFF
+CD..\
+QCT1_.EXE
+CD CTFONT

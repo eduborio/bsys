@@ -1,0 +1,26 @@
+312K available
+Compiling RH145.PRG
+RH145.PRG(10)  Warning C1004  Ambiguous reference, assuming memvar: 'SBLOCO'
+RH145.PRG(30)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH145.PRG(30)  Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH145.PRG(31)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH145.PRG(31)  Warning C1003  Ambiguous reference: 'XUSRA'
+RH145.PRG(45)  Warning C1004  Ambiguous reference, assuming memvar: 'NALIQUO'
+RH145.PRG(45)  Warning C1004  Ambiguous reference, assuming memvar: 'NLIMITE'
+RH145.PRG(49)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH145.PRG(49)  Warning C1001  RETURN statement with no value in function
+RH145.PRG(53)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH145.PRG(53)  Warning C1001  RETURN statement with no value in function
+RH145.PRG(57)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH145.PRG(66)  Warning C1001  RETURN statement with no value in function
+RH145.PRG(73)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH145.PRG(75)  Warning C1003  Ambiguous reference: 'SBLOCO'
+RH145.PRG(122) Warning C1003  Ambiguous reference: 'FANOMES'
+RH145.PRG(123) Warning C1003  Ambiguous reference: 'COPCAO'
+RH145.PRG(134) Warning C1003  Ambiguous reference: 'COPCAO'
+RH145.PRG(138) Warning C1003  Ambiguous reference: 'COPCAO'
+RH145.PRG(141) Warning C1001  RETURN statement with no value in function
+RH145.PRG(149) Warning C1003  Ambiguous reference: 'SBLOCO'
+RH145.PRG(173) Warning C1001  RETURN statement with no value in function
+22 warnings                
+Code size 1292, Symbols 624, Constants 420

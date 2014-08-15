@@ -1,0 +1,167 @@
+/////////////////////////////////////////////////////////////////////////////
+// SISTEMA....: SISTEMA DE FATURAMENTO COMERCIO
+// OBJETIVO...: RELATORIO DE FATURAMENTO POR SETOR
+// ANALISTA...: EDUARDO AUGUSTO BORIO
+// PROGRAMADOR: EDUARDO AUGUSTO BORIO
+// INICIO.....: MAIO DE 2009
+// OBS........:
+// ALTERACOES.:
+
+function cl573
+#define K_MAX_LIN 57
+
+// DECLARACAO E INICIALIZACAO DE VARIAVEIS __________________________________
+
+local   bESCAPE := {||(XNIVEL==1 .and. !XFLAG) .or. empty(dINI) }
+
+private cTITULO                   // titulo do relatorio
+private dINI
+private dFIM
+private cCLI := ""
+private aEDICAO := {}             // vetor para os campos de entrada de dados
+
+// CRIACAO DO VETOR DE BLOCOS _______________________________________________
+
+aadd(aEDICAO,{{ || qgetx(-1,0,@dINI)            } , "INI"    })
+aadd(aEDICAO,{{ || qgetx(-1,0,@dFIM)            } , "FIM"    })
+aadd(aEDICAO,{{ || view_cli2(-1,0,@cCLI)        } , "COD_CLI"    })
+aadd(aEDICAO,{{ || NIL                          } , NIL      })
+
+do while .T.
+
+   qlbloc(5,0,"B573A","QBLOC.GLO")
+   XNIVEL := 1
+   XFLAG  := .T.
+   dINI := dFIM := ctod("")
+
+   // SEGUNDO LOOP PARA ENTRADA DOS DADOS ___________________________________
+
+   do while XNIVEL >= 1 .and. XNIVEL <= len(aEDICAO)
+      eval ( aEDICAO [XNIVEL,1] )
+      if eval ( bESCAPE ) ; dbcloseall() ; return ; endif
+      if ! i_critica( aEDICAO[XNIVEL,2] ) ; loop ; endif
+      iif ( XFLAG , XNIVEL++ , XNIVEL-- )
+   enddo
+
+   if ( i_inicializacao() , i_impressao() , NIL )
+
+   qmensa("")
+
+enddo
+
+/////////////////////////////////////////////////////////////////////////////
+// CRITICA ADICIONAL NA DESCIDA _____________________________________________
+
+static function i_critica ( cCAMPO )
+
+   do case
+      case cCAMPO == "FIM"
+           if dFIM < dINI
+             return .F.
+           endif
+
+//      case cCAMPO == "CLI"
+//
+//           if !empty(cCLI)
+//              cCLI := strzero(val(cCLI),5)
+//           endif
+//
+//           Qrsay(XNIVEL,cCLI)
+//
+//           if CLI1->(Dbseek(cCLI))
+//              qrsay(XNIVEL++,left(CLI1->Razao,30))
+ //          else
+  //            qrsay(XNIVEL++," *** todos clientes *** ")
+  //         endif
+
+      case cCAMPO == "COD_CLI"
+
+           qrsay(XNIVEL,cCLI)
+
+           if empty(cCLI)
+              qrsay(XNIVEL++, "Todos os Clientes......")
+           else
+              if ! CLI1->(Dbseek(cCLI))
+                 qmensa("Cliente n„o encontrado","B")
+                 return .F.
+              else
+                 qrsay(XNIVEL++,left(CLI1->Razao,30))
+              endif
+           endif
+
+
+
+   endcase
+
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA FAZER A INICIALIZACAO DO RELATORIO ___________________________
+
+static function i_inicializacao
+
+   // CRIA TITULO DO RELATORIO ______________________________________________
+
+
+   cTITULO := "RELATORIO DE % DE CUSTO DE FRETE " +" de " + dtoc(dINI) + " a " + dtoc(dFIM)
+
+   qmensa("")
+
+   // ESTABELECE RELACOES ENTRE ARQUIVOS ____________________________________
+
+   if !empty(cCLI)
+      FRETE->(dbsetfilter({|| Dt_emissao >= dINI .and. Dt_Emissao <= dFIM .and. Cod_cli == cCLI }))
+   else
+      FRETE->(dbsetfilter({|| Dt_emissao >= dINI .and. Dt_Emissao <= dFIM}))
+   endif
+
+
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA INICIALIZAR O PROCESSO DE IMPRESSAO __________________________
+
+static function i_impressao
+
+   // INICIALIZA PROCESSO DE IMPRESSAO ______________________________________
+
+
+   FRETE->(dbgotop())
+
+   if ! qinitprn() ; return ; endif
+
+   do while ! FRETE->(eof())
+
+      if ! qlineprn() ; exit ; endif
+
+      if XPAGINA == 0 .or. prow() > K_MAX_LIN
+         @prow()+1,0 say XCOND1
+         qpageprn()
+         qcabecprn(cTITULO,132)
+         @ prow()+1,0 say "Emissao    Cliente                                  Valor Total NF(s)      Valor do Frete        % "
+         @ prow()+1,0 say ""
+      endif
+
+      qgirabarra()
+
+      qmensa("Aguarde... Processando ...")
+   
+      CLI1->(dbseek(FRETE->Cod_cli))
+
+      CGM->(dbgotop())
+      CGM->(dbseek(CLI1->Cgm_cob))
+
+      @ prow()+1,00  say dtoc(FRETE->Dt_emissao)
+      @ prow()  ,12  say left(CLI1->Razao,50)
+      @ prow()  ,70  say transform(FRETE->Vlr_Nf,"@E 999,999.99")
+      @ prow()  ,90  say transform(FRETE->Vlr_Total,"@E 999,999.99")
+      @ prow()  ,110 say transform((FRETE->Vlr_total/FRETE->Vlr_NF)*100,"@E 999.99")+" %"
+
+
+      FRETE->(dbskip())
+
+   enddo
+
+   qstopprn()
+
+return

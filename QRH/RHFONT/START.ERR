@@ -1,0 +1,23 @@
+312K available
+Compiling START.PRG
+START.PRG(29)  Warning C1004  Ambiguous reference, assuming memvar: 'XPROG'
+START.PRG(46)  Warning C1003  Ambiguous reference: 'XDRV_RH'
+START.PRG(47)  Warning C1004  Ambiguous reference, assuming memvar: 'XPATHCONTA'
+START.PRG(48)  Warning C1004  Ambiguous reference, assuming memvar: 'XPATHSHARE'
+START.PRG(49)  Warning C1004  Ambiguous reference, assuming memvar: 'XDATA_ATUAL'
+START.PRG(51)  Warning C1004  Ambiguous reference, assuming memvar: 'XDATASYS'
+START.PRG(52)  Warning C1003  Ambiguous reference: 'XDATASYS'
+START.PRG(52)  Warning C1004  Ambiguous reference, assuming memvar: 'XANOMES'
+START.PRG(58)  Warning C1003  Ambiguous reference: 'XDRV_SH'
+START.PRG(63)  Warning C1003  Ambiguous reference: 'XANOMES'
+START.PRG(63)  Warning C1003  Ambiguous reference: 'XANOMES'
+START.PRG(67)  Warning C1003  Ambiguous reference: 'XDATASYS'
+START.PRG(71)  Warning C1003  Ambiguous reference: 'XDRV_RH'
+START.PRG(72)  Warning C1003  Ambiguous reference: 'ANOMES'
+START.PRG(72)  Warning C1003  Ambiguous reference: 'XANOMES'
+START.PRG(79)  Warning C1003  Ambiguous reference: 'XDRV_CT'
+START.PRG(85)  Warning C1003  Ambiguous reference: 'XDRV_CT'
+START.PRG(98)  Warning C1001  RETURN statement with no value in function
+START.PRG(105) Warning C1007  Function does not end with RETURN
+19 warnings                
+Code size 720, Symbols 720, Constants 480

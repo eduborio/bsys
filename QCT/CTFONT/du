@@ -1,0 +1,10 @@
+
+C:\qsys\QCT\CTFONT>call "C:\Arquivos de programas\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" 
+Setting environment for using Microsoft Visual Studio 2008 x86 tools.
+
+C:\qsys\QCT\CTFONT>hbmk2 qct.hbm -inc 
+hbmk2: Processando arquivo de configura‡Æo: c:\hb20\bin\hbmk.cfg
+hbmk2: Processando: QCT.HBC
+hbmk2: Linkando... C:\Qsys_g\Qct\Qct_.exe
+CT508_.obj : error LNK2001: unresolved external symbol _HB_FUN_RETURN
+C:\Qsys_g\Qct\Qct_.exe : fatal error LNK1120: 1 unresolved externals

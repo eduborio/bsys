@@ -1,0 +1,36 @@
+
+Estrutura do arquivo HORA.DBF
+16/09/04  -  09:58:09
+
+CODIGO     - C -   4 -   0
+DESCRICAO  - C -  30 -   0
+SEG_ENTRA  - C -   5 -   0
+SEG_INTER  - C -   5 -   0
+SEG_RETOR  - C -   5 -   0
+SEG_SAIDA  - C -   5 -   0
+TER_ENTRA  - C -   5 -   0
+TER_INTER  - C -   5 -   0
+TER_RETOR  - C -   5 -   0
+TER_SAIDA  - C -   5 -   0
+QUA_ENTRA  - C -   5 -   0
+QUA_INTER  - C -   5 -   0
+QUA_RETOR  - C -   5 -   0
+QUA_SAIDA  - C -   5 -   0
+QUI_ENTRA  - C -   5 -   0
+QUI_INTER  - C -   5 -   0
+QUI_RETOR  - C -   5 -   0
+QUI_SAIDA  - C -   5 -   0
+SEX_ENTRA  - C -   5 -   0
+SEX_INTER  - C -   5 -   0
+SEX_RETOR  - C -   5 -   0
+SEX_SAIDA  - C -   5 -   0
+SAB_ENTRA  - C -   5 -   0
+SAB_INTER  - C -   5 -   0
+SAB_RETOR  - C -   5 -   0
+SAB_SAIDA  - C -   5 -   0
+DOM_ENTRA  - C -   5 -   0
+DOM_INTER  - C -   5 -   0
+DOM_RETOR  - C -   5 -   0
+DOM_SAIDA  - C -   5 -   0
+
+

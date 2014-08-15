@@ -1,0 +1,30 @@
+238K available
+Compiling FORM.PRG
+FORM.PRG(30)   Warning C1003  Ambiguous reference: 'CANOMES'
+FORM.PRG(30)   Warning C1003  Ambiguous reference: 'CAMBIENTE'
+FORM.PRG(64)   Warning C1003  Ambiguous reference: 'CFORMULA'
+FORM.PRG(71)   Warning C1001  RETURN statement with no value in function
+FORM.PRG(77)   Warning C1003  Ambiguous reference: 'CFORMULA'
+FORM.PRG(79)   Warning C1004  Ambiguous reference, assuming memvar: 'CFORMULA'
+FORM.PRG(81)   Warning C1004  Ambiguous reference, assuming memvar: 'AFORMULAS'
+FORM.PRG(81)   Warning C1003  Ambiguous reference: 'NMEIO'
+FORM.PRG(82)   Warning C1004  Ambiguous reference, assuming memvar: 'CFORMULA'
+FORM.PRG(119)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+FORM.PRG(121)  Warning C1003  Ambiguous reference: 'CANOMES'
+FORM.PRG(131)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+FORM.PRG(166)  Warning C1003  Ambiguous reference: 'CANOMES'
+FORM.PRG(167)  Warning C1003  Ambiguous reference: 'CANOMES'
+FORM.PRG(185)  Warning C1003  Ambiguous reference: 'VALOR'
+FORM.PRG(185)  Warning C1003  Ambiguous reference: 'FRACAO'
+FORM.PRG(245)  Warning C1001  RETURN statement with no value in function
+FORM.PRG(253)  Warning C1001  RETURN statement with no value in function
+FORM.PRG(258)  Warning C1001  RETURN statement with no value in function
+FORM.PRG(263)  Warning C1001  RETURN statement with no value in function
+FORM.PRG(286)  Warning C1001  RETURN statement with no value in function
+FORM.PRG(300)  Warning C1003  Ambiguous reference: 'XDRV_RHX'
+FORM.PRG(303)  Warning C1004  Ambiguous reference, assuming memvar: 'NREC_TBGR'
+FORM.PRG(308)  Warning C1003  Ambiguous reference: 'CANOMES'
+FORM.PRG(309)  Warning C1003  Ambiguous reference: 'CANOMES'
+FORM.PRG(357)  Warning C1003  Ambiguous reference: 'NREC_TBGR'
+26 warnings                
+Code size 3534, Symbols 1184, Constants 306

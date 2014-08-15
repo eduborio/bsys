@@ -1,0 +1,10 @@
+238K available
+Compiling RH105.PRG
+RH105.PRG(37)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH105.PRG(38)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH105.PRG(38)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH105.PRG(39)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH105.PRG(39)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH105.PRG(49)  Warning C1001  RETURN statement with no value in function
+6 warnings                
+Code size 344, Symbols 256, Constants 152

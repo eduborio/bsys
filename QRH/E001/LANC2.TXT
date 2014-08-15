@@ -1,0 +1,22 @@
+
+Estrutura do arquivo LANC2.DBF
+16/09/04  -  09:58:10
+
+ANOMES     - C -   4 -   0
+MATRICULA  - C -   6 -   0
+AMBIENTE   - C -   2 -   0
+EVENTO     - C -   3 -   0
+VALOR      - N -  13 -   2
+FRACAO     - N -   8 -   4
+FIXA       - L -   1 -   0
+AQUISICAO  - C -   4 -   0
+INTERFACE  - C -   1 -   0
+
+Indexadores utilizados:
+
+01 - C¢digo do Pedido               - LA2_CODI - COD_PED                                           
+02 - C¢digo do Produto              - LA2_PROD - COD_PROD                                          
+03 - C¢digo do Ve¡culo              - LA2_VEIC - COD_VEIC                                          
+04 - C¢digo do Equipamento          - LA2_EQUI - COD_EQUIP                                         
+
+

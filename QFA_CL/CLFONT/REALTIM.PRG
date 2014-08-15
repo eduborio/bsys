@@ -1,0 +1,2 @@
+function realtime
+RETURN

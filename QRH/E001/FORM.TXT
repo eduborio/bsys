@@ -1,0 +1,18 @@
+
+Estrutura do arquivo FORM.DBF
+16/09/04  -  09:58:10
+
+CODIGO     - C -   4 -   0
+DESCRICAO  - C -  40 -   0
+PARAMETER  - C -   5 -   0
+FORMULA    - M -  10 -   0
+USR_IDT    - C -  10 -   0
+ULT_DATA   - D -   8 -   0
+ULT_HORA   - C -   5 -   0
+
+Indexadores utilizados:
+
+01 - C¢digo da F¢rmula              - FO_CODIG - CODIGO                                            
+02 - Descri‡„o da F¢rmula           - FO_DESCR - DESCRICAO                                         
+
+

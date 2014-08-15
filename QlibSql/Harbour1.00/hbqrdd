@@ -1,0 +1,53 @@
+#BCC
+VERSION=BCB.01
+!ifndef CC_DIR
+CC_DIR = $(MAKE_DIR)
+!endif
+
+!ifndef HB_DIR
+HB_DIR = $(HARBOUR_DIR)
+!endif
+ 
+OBJ = obj 
+PROJECT = .lib $(PR)
+OBJFILES = $(OBJ)\QRDD.obj $(OB) 
+PRGFILES = QRDD.PRG $(PS) 
+RESFILES =
+RESDEPEN = $(RESFILES)
+DEFFILE = 
+HARBOURFLAGS =  -a 
+INSTALLLIB = NO
+USERDEFINE = 
+USERINCLUDE = 
+EDITOR = edit
+CFLAG1 =  -OS $(SHELL)  $(CFLAGS) -d -L$(HB_DIR)\lib;$(FWH)\lib -c
+CFLAG2 =  -I$(HB_DIR)\include -I$(CC_DIR)\include -I
+RFLAGS = 
+LFLAGS = /P32 /0
+IFLAGS = 
+LINKER = tlib $(LFLAGS) $(PROJECT)
+ 
+ALLOBJ =  $(OBJFILES) $(OBJCFILES)
+ALLRES = $(RESDEPEN)
+ALLLIB = 
+.autodepend
+ 
+#COMMANDS
+.cpp.obj:
+$(CC_DIR)\BIN\bcc32 $(CFLAG1) $(CFLAG2) -o$* $**
+ 
+.c.obj:
+$(CC_DIR)\BIN\bcc32 -I$(HB_DIR)\include $(CFLAG1) $(CFLAG2) -o$* $**
+ 
+.prg.obj:
+$(HB_DIR)\bin\harbour -n -go -I$(HB_DIR)\include $(HARBOURFLAGS) -I$(FWH)\include -o$* $**
+ 
+.rc.res:
+$(CC_DIR)\BIN\brcc32 $(RFLAGS) $<
+ 
+#BUILD
+ 
+$(PROJECT): $(CFILES) $(OBJFILES)
+    $(CC_DIR)\BIN\$(LINKER) @&&!
+    $(ALLOBJ)
+!

@@ -1,0 +1,408 @@
+/////////////////////////////////////////////////////////////////////////////
+// SISTEMA....: RELATORIO DE COMPOSICAO DE HORAS EXTRAS
+// OBJETIVO...: FICHA FINANCEIRA
+// ANALISTA...: EDUARDO AUGUSTO BORIO
+// PROGRAMADOR: EDUARDO AUGUSTO BORIO
+// INICIO.....: NOVEMBRO DE 2000
+// OBS........:
+// ALTERACOES.:
+
+#define K_MAX_LIN 55
+
+// DECLARACAO E INICIALIZACAO DE VARIAVEIS __________________________________
+
+local   bESCAPE := {||(XNIVEL==1 .and. lastkey()==27)}
+
+private sBLOCO1 := qlbloc("B508A","QBLOC.GLO") // bloco basico
+
+private cTITULO                // titulo do relatorio
+private cMATRICULA             // matricula p/ impressao individual
+private aEDICAO := {}          // vetor para os campos de entrada de dados
+private cPERI                  // periodo inicial
+private cPERF                  // periodo final
+
+
+// CRIACAO DO VETOR DE BLOCOS _______________________________________________
+
+aadd(aEDICAO,{{ || qgetx(-1,0,@cPERI,"@R 99/9999") }   , "PERI"      })
+aadd(aEDICAO,{{ || qgetx(-1,0,@cPERF,"@R 99/9999") }   , "PERF"      })
+aadd(aEDICAO,{{ || view_fun(-1,0,@cMATRICULA)}       , "MATRICULA" })
+aadd(aEDICAO,{{ || NIL },NIL}) // nome do funcionario
+
+do while .T.
+
+   qlbloc(5,0,"B508A","QBLOC.GLO")
+   XNIVEL     := 1
+   XFLAG      := .T.
+   cMATRICULA := space(6)
+   cPERI      := space(6)
+   cPERF      := space(6)
+
+   qmensa()
+
+   // SEGUNDO LOOP PARA ENTRADA DOS DADOS ___________________________________
+
+   do while XNIVEL >= 1 .and. XNIVEL <= len(aEDICAO)
+      eval ( aEDICAO [XNIVEL,1] )
+      if eval ( bESCAPE ) ; dbcloseall() ; return ; endif
+      if ! i_critica( aEDICAO[XNIVEL,2] ) ; loop ; endif
+      iif ( XFLAG , XNIVEL++ , XNIVEL-- )
+   enddo
+
+   if ( i_inicializacao() , i_impressao() , NIL )
+
+enddo
+
+/////////////////////////////////////////////////////////////////////////////
+// CRITICA ADICIONAL NA DESCIDA _____________________________________________
+
+static function i_critica ( cCAMPO )
+   if XFLAG
+      do case
+         case cCAMPO == "MATRICULA"
+              if empty(cMATRICULA); return .F.; endif
+              if ! empty(cMATRICULA)
+                 if ! FUN->(dbseek(strzero(val(cMATRICULA),6)))
+                   qmensa("Funcionario NÆo Cadastrado!!!","B")
+                   return .F.
+                 endif
+                 qrsay(XNIVEL,cMATRICULA:=strzero(val(cMATRICULA),6))
+              endif
+      endcase
+   endif
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA FAZER A INICIALIZACAO DO RELATORIO ___________________________
+
+static function i_inicializacao
+
+   // CONSTROI VARIAVEL "cTITULO" __________________________________________
+
+
+//   cTITULO = "RELATORIO DE COMPOSICAO P/ MEDIA DE HORAS EXTRAS"
+
+
+
+   // SELECIONA ORDEM DO ARQUIVO FUN _____________________________________
+
+
+   qmensa()
+
+   FUN->(dbsetorder(1))
+
+
+   // ESTABELECE RELACOES ENTRE ARQUIVOS ____________________________________
+
+   select LANC
+   set relation to Evento into EVENT
+
+
+
+   FUN->(dbgotop())
+
+return .T.
+
+/////////////////////////////////////////////////////////////////////////////
+// FUNCAO PARA INICIALIZAR O PROCESSO DE IMPRESSAO __________________________
+
+static function i_impressao
+
+   local nCONT := 0
+   local mCONT := -1
+   local nTOTAL:= 0
+   local cCOND
+   local cANOMES := strzero(year(XDATASYS),4) + strzero(month(XDATASYS),2)
+   local nInsal := nDsr:=nAnuenio:=nIntra50:=nIntra100:=nIntra875  := 0
+
+   local nTOT50 := nTOT55 := nTOT60 := nTOT65 := nTOT70 := nTOT75 := nTOT80 := nTOT85 := nTOT100 := nTOT125 := nTOT130 := nTOT150 := nTOT200 := 0
+      // INICIALIZA PROCESSO DE IMPRESSAO ______________________________________
+
+   if ! qinitprn() ; return ; endif
+
+   @ prow(),0    say XCOND0
+   @ prow(),01 say qcabecprn("RELATORIO DE COMPOSICAO P/MEDIA DE HORAS EXTRAS",79)
+
+   if ! empty(cMATRICULA)
+      FUN->(dbseek(cMATRICULA))
+   endif
+   LANC->(dbsetorder(3))
+   LANC->(dbgotop())
+   cPERI := val(subs(cPERI,3,4) + subs(cPERI,1,2))
+   cPERF := val(subs(cPERF,3,4) + subs(cPERF,1,2))
+
+   @ prow()+1,0 say XCOND1+"Matricula..:" + FUN->Matricula + "  Nome..: " + left(FUN->Nome,30)
+   @ prow()+1,0 say replicate("-",136)
+
+   @ prow()+1,10 say "H.E 50%" + "   H.E 55%" + "   H.E 60%" + "   H.E 65%" + "   H.E 70%" + "   H.E 75%" +"   H.E 80%" + "   H.E 85%" + "  H.E 100%" + "  H.E 125%" + "  H.E 130%" + "  H.E 150%" + "  H.E 200%   Insalubridade       Dsr      Anuenio    Intra 50%   Intra 100%  "
+   @ prow()+1,0 say replicate("-",136)
+
+      for nCONT = cPERI to cPERF
+
+          mCONT ++
+          if subs(str(nCONT,6),5,2) == "13"
+             nCONT += 87
+             loop
+          endif
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "311"))
+          @ prow() +1,0 say subs(str(nCONT,6),5,2)+"/"+subs(str(nCONT,6),1,4) + space(2) + transform(LANC->Fracao,"@E 999.9999")
+          nTOT50 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "308"))
+          @ prow()   ,19 say  transform(LANC->Fracao,"@E 999.9999")
+          nTOT55 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "314"))
+          @ prow()   ,29 say  transform(LANC->Fracao,"@E 999.9999")
+          nTOT60 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "315"))
+          @ prow()   ,39 say  transform(LANC->Fracao,"@E 999.9999")
+          nTOT65 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "319"))
+          @ prow()   ,49 say  transform(LANC->Fracao,"@E 999.9999")
+          nTOT70 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "312"))
+          @ prow()   ,59 say  transform(LANC->Fracao,"@E 999.9999")
+          nTOT75 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "318"))
+          @ prow()   ,69 say  transform(LANC->Fracao,"@E 999.9999")
+          nTOT80 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "316"))
+          @ prow()   ,79 say  transform(LANC->Fracao,"@E 999.9999")
+          nTOT85 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "313"))
+          @ prow()   ,89 say  transform(LANC->Fracao,"@E 999.9999")
+          nTOT100 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "320"))
+          @ prow()   ,99 say  transform(LANC->Fracao,"@E 999.9999")
+          nTOT125 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "329"))
+          @ prow()   ,109 say  transform(LANC->Fracao,"@E 999.9999")
+          nTOT130 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "330"))
+          @ prow()   ,119 say  transform(LANC->Fracao,"@E 999.9999")
+          nTOT150 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "317"))
+          @ prow()   ,129 say  transform(LANC->Fracao,"@E 999.9999")
+          nTOT200 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "420"))
+          @ prow()   ,145 say  transform(LANC->Valor,"@E 999,999.99")
+          nINSAL += LANC->Valor
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "187"))
+          @ prow()   ,160 say  transform(LANC->Valor,"@E 999,999.99")
+          nDSR += LANC->Valor
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "208"))
+          @ prow()   ,175 say  transform(LANC->Valor,"@E 999,999.99")
+          nAnuenio += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "338"))
+          @ prow()   ,190 say  transform(LANC->Fracao,"@E 999,999.99")
+          nIntra50 += LANC->Fracao
+
+          LANC->(dbseek(cMATRICULA  + str(nCONT,6) + "337"))
+          @ prow()   ,205 say  transform(LANC->Fracao,"@E 999,999.99")
+          nIntra100 += LANC->Fracao
+
+
+          if ! qlineprn() ; return ; endif
+
+      next
+   
+   @ prow()+1, 0 say replicate("-",136)
+   @ prow()+1, 0 say "Total..: " + Transform(nTOT50,"@E 999.9999")
+   @ prow()  , 19 say  Transform(nTOT55,"@E 999.9999")
+   @ prow()  , 29 say  Transform(nTOT60,"@E 999.9999")
+   @ prow()  , 39 say  Transform(nTOT65,"@E 999.9999")
+   @ prow()  , 49 say  Transform(nTOT70,"@E 999.9999")
+   @ prow()  , 59 say  Transform(nTOT75,"@E 999.9999")
+   @ prow()  , 69 say  Transform(nTOT80,"@E 999.9999")
+   @ prow()  , 79 say  Transform(nTOT85,"@E 999.9999")
+   @ prow()  , 89 say  Transform(nTOT100,"@E 999.9999")
+   @ prow()  , 99 say  Transform(nTOT125,"@E 999.9999")
+   @ prow()  ,109 say  Transform(nTOT130,"@E 999.9999")
+   @ prow()  ,119 say  Transform(nTOT150,"@E 999.9999")
+   @ prow()  ,129 say  Transform(nTOT200,"@E 999.9999")
+   @ prow()  ,145 say  Transform(nInsal   ,"@E 999,999.99")
+   @ prow()  ,160 say  Transform(nDsr     ,"@E 999,999.99")
+   @ prow()  ,175 say  Transform(nAnuenio ,"@E 999,999.99")
+   @ prow()  ,190 say  Transform(nIntra50,"@E 999,999.99")
+   @ prow()  ,205 say  Transform(nIntra100,"@E 999,999.99")
+   @ prow()  ,220 say  Transform(nIntra875 ,"@E 999,999.99")
+
+   @ prow()+1, 0 say replicate("-",136)
+   @ prow()+1, 0 say "Media..: " + Transform(nTOT50/mCONT,"@E 999.9999")
+   @ prow()  , 19 say  Transform( nTOT55/mCONT,"@E 999.9999")
+   @ prow()  , 29 say  Transform( nTOT60/mCONT,"@E 999.9999")
+   @ prow()  , 39 say  Transform( nTOT65/mCONT,"@E 999.9999")
+   @ prow()  , 49 say  Transform( nTOT70/mCONT,"@E 999.9999")
+   @ prow()  , 59 say  Transform( nTOT75/mCONT,"@E 999.9999")
+   @ prow()  , 69 say  Transform( nTOT80/mCONT,"@E 999.9999")
+   @ prow()  , 79 say  Transform( nTOT85/mCONT,"@E 999.9999")
+   @ prow()  , 89 say  Transform(nTOT100/mCONT,"@E 999.9999")
+   @ prow()  , 99 say  Transform(nTOT125/mCONT,"@E 999.9999")
+   @ prow()  ,109 say  Transform(nTOT130/mCONT,"@E 999.9999")
+   @ prow()  ,119 say  Transform(nTOT150/mCONT,"@E 999.9999")
+   @ prow()  ,129 say  Transform(nTOT200/mCONT,"@E 999.9999")
+   @ prow()  ,145 say  Transform(nInsal   /mCont,"@E 999,999.99")
+   @ prow()  ,160 say  Transform(nDsr     /mCont ,"@E 999,999.99")
+   @ prow()  ,175 say  Transform(nAnuenio /mCont ,"@E 999,999.99")
+   @ prow()  ,190 say  Transform(nIntra50 /mCont,"@E 999,999.99")
+   @ prow()  ,205 say  Transform(nIntra100/mCont,"@E 999,999.99")
+   @ prow()  ,220 say  Transform(nIntra875 /mCont ,"@E 999,999.99")
+
+
+   SITUA->(dbsetorder(4))
+   SITUA->(Dbseek(cMatricula + strzero(year(XDATASYS),4) + strzero(month(XDATASYS),2)))
+   @ prow()+1, 0 say replicate("-",136)
+   @ prow()+1, 0 say "Valor..: " + Transform(((SITUA->Salario/220)*(nTOT50/mCONT))*1.5,"@E 9,999.99")
+   @ prow()  , 19 say  Transform((SITUA->Salario/220)*(nTOT55/mCONT)*1.55,"@E 9,999.99")
+   @ prow()  , 29 say  Transform((SITUA->Salario/220)*(nTOT60/mCONT)*1.6,"@E 9,999.99")
+   @ prow()  , 39 say  Transform((SITUA->Salario/220)*(nTOT65/mCONT)*1.65,"@E 9,999.99")
+   @ prow()  , 49 say  Transform((SITUA->Salario/220)*(nTOT70/mCONT)*1.7,"@E 9,999.99")
+   @ prow()  , 59 say  Transform((SITUA->Salario/220)*(nTOT75/mCONT)*1.75,"@E 9,999.99")
+   @ prow()  , 69 say  Transform((SITUA->Salario/220)*(nTOT80/mCONT)*1.8,"@E 9,999.99")
+   @ prow()  , 79 say  Transform((SITUA->Salario/220)*(nTOT85/mCONT)*1.85,"@E 9,999.99")
+   @ prow()  , 89 say  Transform((SITUA->Salario/220)*(nTOT100/mCONT)*2,"@E 9,999.99")
+   @ prow()  , 99 say  Transform((SITUA->Salario/220)*(nTOT125/mCONT)*2.25,"@E 9,999.99")
+   @ prow()  ,109 say  Transform((SITUA->Salario/220)*(nTOT130/mCONT)*2.3,"@E 9,999.99")
+   @ prow()  ,119 say  Transform((SITUA->Salario/220)*(nTOT150/mCONT)*2.5,"@E 9,999.99")
+   @ prow()  ,129 say  Transform((SITUA->Salario/220)*(nTOT200/mCONT)*3,"@E 9,999.99")
+   @ prow()  ,145 say  Transform(nInsal   /mCont,"@E 999,999.99")
+   @ prow()  ,160 say  Transform(nDsr     /mCont ,"@E 999,999.99")
+   @ prow()  ,175 say  Transform(nAnuenio /mCont ,"@E 999,999.99")
+   @ prow()  ,190 say  Transform((SITUA->Salario/220)*(nIntra50/mCONT)*1.5,"@E 9,999.99")
+   @ prow()  ,205 say  Transform((SITUA->Salario/220)*(nIntra100/mCONT)*2 ,"@E 9,999.99")
+
+
+   @ prow()+2,0 say "SALARIO HORA .................:              " + iif(SITUA->Categoria <> "5",transform(SITUA->Salario/220,"@E 9,999.99"),transform(SITUA->Salario,"@E 9,999.99"))
+   @ prow()+1,0 say "Composicao da Base de Calculo.: "
+
+   @ prow()+2,0 say "SALARIO BASE " + space(32) + iif(SITUA->Categoria <> "5",transform(SITUA->Salario,"@E 9,999.99"),transform(SITUA->Salario*220,"@E 9,999.99"))
+   nTOTAL += iif(SITUA->Categoria != "5",SITUA->Salario,SITUA->Salario*220)
+
+   LANC->(dbsetorder(3))
+   LANC->(dbgotop())
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "512"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("512"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "526"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("526"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "513"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("513"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "514"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("514"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   if LANC->(dbseek(cMATRICULA+cANOMES+"515"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("515"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "516"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("516"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "517"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("517"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "518"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("518"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "519"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("519"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "524"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("524"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "527"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("527"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "528"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("528"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "521"))
+     nTOTAL += LANC->Valor
+     EVENT->(Dbseek("521"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   if LANC->(dbseek(cMATRICULA  + cANOMES + "208"))
+     nTOTAL += LANC->Valor
+     nAnuenio := LANC->Valor
+     EVENT->(Dbseek("208"))
+     @ prow()+1,0 say EVENT->Descricao + space(5) + transform(LANC->Valor,"@E 9,999.99")
+   endif
+
+   nTOTAL := (nINSAL/mCONT)
+   nTOTAL += nAnuenio
+   nTOTAL += ( ((SITUA->Salario/220)*(nIntra50/mCONT) )*1.5)
+   nTOTAL += ( ((SITUA->Salario/220)*(nIntra100/mCONT) )*2)
+   nTOTAL += ( ((SITUA->Salario/220)*(nTOT50/mCONT) )*1.5)  //Transform(((SITUA->Salario/220)*(nTOT50/mCONT))*1.5,"@E 9,999.99")
+   nTOTAL += ( ((SITUA->Salario/220)*(nTOT100/mCONT) )*2 )  //Transform(((SITUA->Salario/220)*(nTOT50/mCONT))*1.5,"@E 9,999.99")
+   @ prow()+1  ,0   say  "Media Adicional de Insalubridade.: "+Transform(nInsal   /mCont ,"@E 999,999.99")
+   @ prow()+1  ,0   say  "Anuenio..........................: "+Transform(nAnuenio,"@E 999,999.99")
+   @ prow()+1  ,0   say  "Media Intra-Jornada 50%..........: "+Transform(((SITUA->Salario/220)*(nIntra50/mCONT))*1.5,"@E 9,999.99")
+   @ prow()+1  ,0   say  "Media Intra-Jornada 100%.........: "+Transform(((SITUA->Salario/220)*(nIntra100/mCONT))*2,"@E 9,999.99")
+   @ prow()+1  ,0   say  "Media Horas Extras 50%...........: "+Transform(((SITUA->Salario/220)*(nTOT50/mCONT))*1.5,"@E 9,999.99")
+   @ prow()+1  ,0   say  "Media Horas Extras 100%..........: "+Transform(((SITUA->Salario/220)*(nTOT100/mCONT))*2,"@E 9,999.99")
+   nDsr := (nTOTAL / 24) * 6
+   nTOTAL+= nDsr
+   nTOTAL+= SITUA->Salario
+   @ prow()+1  ,0   say  "Media Dsr........................: "+Transform(nDsr   ,"@E 999,999.99")
+
+
+   @ prow()+2,0 say "Total da Base de Calculo......:  " +space(12)+ transform(nTOTAL,"@E 9,999.99")
+   eject
+   qstopprn(.F.)
+
+return
+

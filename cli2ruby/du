@@ -1,0 +1,10 @@
+
+C:\Qsys_g\cli2ruby>hbmk2 cli2ruby 
+hbmk2: Processando arquivo de configura‡Æo: C:\hb20\bin\hbmk.cfg
+hbmk2: Processando: CLI2RUBY.HBC
+cli2ruby.c
+cli2ruby.obj : error LNK2001: unresolved external symbol _HB_FUN_QUSE
+cli2ruby.exe : fatal error LNK1120: 1 unresolved externals
+
+C:\Qsys_g\cli2ruby>copy cli2ruby.exe c:\qsys_g\qutil 
+The system cannot find the file specified.

@@ -1,0 +1,5 @@
+ -DHB 
+-I"C:\harbour-1.0.0\include;C:\Borland\BCC55\include;;\clipper\include;C:\BORLAND\BCC55\INCLUDE;C:\XHARBOUR\INCLUDE;\SIX\INCLUDE;C:\Medcl\xHarbour\Include"
+-L"C:\harbour-1.0.0\lib;C:\Borland\BCC55\lib;C:\Borland\BCC55\lib\psdk;;c:\clipper\lib;\qsys_g\qutil;\xharbour\lib;\borland\bcc55\lib;\SIX\LIB;;;\clipper\obj;\SIX\OBJ"
+-o"C:\QSYS_G\QlibSql\Harbour1.00\seekl_sl.obj"
+"C:\QSYS_G\QlibSql\Harbour1.00\seekl_sl.c"

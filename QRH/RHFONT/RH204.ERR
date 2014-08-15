@@ -1,0 +1,145 @@
+238K available
+Compiling RH204.PRG
+RH204.PRG(17)  Warning C1004  Ambiguous reference, assuming memvar: 'ABENEF'
+RH204.PRG(19)  Warning C1004  Ambiguous reference, assuming memvar: 'CMATRICULA'
+RH204.PRG(29)  Warning C1003  Ambiguous reference: 'ABENEF'
+RH204.PRG(35)  Warning C1003  Ambiguous reference: 'XDRV_RHX'
+RH204.PRG(35)  Warning C1002  Procedure returns value
+RH204.PRG(36)  Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(38)  Warning C1002  Procedure returns value
+RH204.PRG(44)  Warning C1003  Ambiguous reference: 'MATRICULA'
+RH204.PRG(45)  Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(45)  Warning C1003  Ambiguous reference: 'MATRICULA'
+RH204.PRG(45)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(45)  Warning C1003  Ambiguous reference: 'EVENTO'
+RH204.PRG(47)  Warning C1004  Ambiguous reference, assuming memvar: 'CAMBIENTE'
+RH204.PRG(49)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(67)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(68)  Warning C1004  Ambiguous reference, assuming memvar: 'CEVENTO'
+RH204.PRG(74)  Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(77)  Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(79)  Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(79)  Warning C1004  Ambiguous reference, assuming memvar: 'CEVENTO'
+RH204.PRG(81)  Warning C1003  Ambiguous reference: 'ABENEF'
+RH204.PRG(81)  Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(88)  Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(98)  Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(98)  Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(98)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(116) Warning C1001  RETURN statement with no value in function
+RH204.PRG(122) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(122) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(122) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(123) Warning C1001  RETURN statement with no value in function
+RH204.PRG(129) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(129) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(129) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(130) Warning C1001  RETURN statement with no value in function
+RH204.PRG(148) Warning C1003  Ambiguous reference: 'COPCAO'
+RH204.PRG(148) Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH204.PRG(152) Warning C1003  Ambiguous reference: 'COPCAO'
+RH204.PRG(156) Warning C1004  Ambiguous reference, assuming memvar: 'CMATRICULA'
+RH204.PRG(161) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH204.PRG(163) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH204.PRG(163) Warning C1004  Ambiguous reference, assuming memvar: 'CMATRICULA'
+RH204.PRG(165) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH204.PRG(165) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH204.PRG(166) Warning C1003  Ambiguous reference: 'XDATASYS'
+RH204.PRG(168) Warning C1001  RETURN statement with no value in function
+RH204.PRG(171) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(173) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(173) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(173) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(173) Warning C1003  Ambiguous reference: 'CMATRICULA'
+RH204.PRG(175) Warning C1001  RETURN statement with no value in function
+RH204.PRG(190) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(192) Warning C1001  RETURN statement with no value in function
+RH204.PRG(194) Warning C1001  RETURN statement with no value in function
+RH204.PRG(196) Warning C1001  RETURN statement with no value in function
+RH204.PRG(198) Warning C1001  RETURN statement with no value in function
+RH204.PRG(200) Warning C1001  RETURN statement with no value in function
+RH204.PRG(202) Warning C1001  RETURN statement with no value in function
+RH204.PRG(205) Warning C1001  RETURN statement with no value in function
+RH204.PRG(207) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(211) Warning C1001  RETURN statement with no value in function
+RH204.PRG(215) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(216) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(217) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(227) Warning C1004  Ambiguous reference, assuming memvar: 'ZREGBNF'
+RH204.PRG(229) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(230) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(232) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(234) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(235) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(245) Warning C1003  Ambiguous reference: 'ZREGBNF'
+RH204.PRG(259) Warning C1003  Ambiguous reference: 'COPCAO'
+RH204.PRG(273) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(275) Warning C1001  RETURN statement with no value in function
+RH204.PRG(277) Warning C1001  RETURN statement with no value in function
+RH204.PRG(279) Warning C1001  RETURN statement with no value in function
+RH204.PRG(281) Warning C1001  RETURN statement with no value in function
+RH204.PRG(283) Warning C1001  RETURN statement with no value in function
+RH204.PRG(285) Warning C1001  RETURN statement with no value in function
+RH204.PRG(288) Warning C1001  RETURN statement with no value in function
+RH204.PRG(289) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(293) Warning C1001  RETURN statement with no value in function
+RH204.PRG(310) Warning C1003  Ambiguous reference: 'COPCAO'
+RH204.PRG(321) Warning C1003  Ambiguous reference: 'COPCAO'
+RH204.PRG(325) Warning C1003  Ambiguous reference: 'COPCAO'
+RH204.PRG(329) Warning C1003  Ambiguous reference: 'COPCAO'
+RH204.PRG(340) Warning C1003  Ambiguous reference: 'COPCAO'
+RH204.PRG(356) Warning C1003  Ambiguous reference: 'COPCAO'
+RH204.PRG(363) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(363) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(365) Warning C1003  Ambiguous reference: 'COPCAO'
+RH204.PRG(375) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(375) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(388) Warning C1003  Ambiguous reference: 'ABENEF'
+RH204.PRG(389) Warning C1004  Ambiguous reference, assuming memvar: 'ABENEF'
+RH204.PRG(391) Warning C1001  RETURN statement with no value in function
+RH204.PRG(400) Warning C1004  Ambiguous reference, assuming memvar: 'CC2'
+RH204.PRG(401) Warning C1004  Ambiguous reference, assuming memvar: 'NN2'
+RH204.PRG(416) Warning C1003  Ambiguous reference: 'NN2'
+RH204.PRG(418) Warning C1003  Ambiguous reference: 'CC2'
+RH204.PRG(423) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(423) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(423) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(425) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(425) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(425) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(432) Warning C1003  Ambiguous reference: 'NN2'
+RH204.PRG(434) Warning C1003  Ambiguous reference: 'CC2'
+RH204.PRG(441) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(441) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(441) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(450) Warning C1004  Ambiguous reference, assuming memvar: 'NFUN'
+RH204.PRG(450) Warning C1004  Ambiguous reference, assuming memvar: 'NTOT'
+RH204.PRG(450) Warning C1004  Ambiguous reference, assuming memvar: 'NSAB'
+RH204.PRG(450) Warning C1004  Ambiguous reference, assuming memvar: 'NUTIL'
+RH204.PRG(450) Warning C1004  Ambiguous reference, assuming memvar: 'NN2'
+RH204.PRG(454) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(454) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(454) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(455) Warning C1004  Ambiguous reference, assuming memvar: 'NFUN'
+RH204.PRG(456) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(456) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(456) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH204.PRG(460) Warning C1003  Ambiguous reference: 'XGR_D_UTIL'
+RH204.PRG(460) Warning C1004  Ambiguous reference, assuming memvar: 'NUTIL'
+RH204.PRG(461) Warning C1003  Ambiguous reference: 'XDATASYS'
+RH204.PRG(461) Warning C1004  Ambiguous reference, assuming memvar: 'NTOT'
+RH204.PRG(462) Warning C1003  Ambiguous reference: 'NTOT'
+RH204.PRG(462) Warning C1003  Ambiguous reference: 'XGR_D_UTIL'
+RH204.PRG(462) Warning C1003  Ambiguous reference: 'XGR_D_DESC'
+RH204.PRG(462) Warning C1004  Ambiguous reference, assuming memvar: 'NSAB'
+RH204.PRG(464) Warning C1003  Ambiguous reference: 'NUTIL'
+RH204.PRG(464) Warning C1003  Ambiguous reference: 'NSAB'
+RH204.PRG(468) Warning C1004  Ambiguous reference, assuming memvar: 'NTOT'
+RH204.PRG(468) Warning C1004  Ambiguous reference, assuming memvar: 'NUTIL'
+RH204.PRG(468) Warning C1004  Ambiguous reference, assuming memvar: 'NSAB'
+RH204.PRG(471) Warning C1003  Ambiguous reference: 'NFUN'
+RH204.PRG(472) Warning C1003  Ambiguous reference: 'XANOMES'
+RH204.PRG(472) Warning C1003  Ambiguous reference: 'CEVENTO'
+RH204.PRG(472) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+141 warnings                
+Code size 4721, Symbols 1552, Constants 1743

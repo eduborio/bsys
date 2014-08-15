@@ -1,0 +1,6 @@
+-Lc:\Borland\BCC55\lib\obj;c:\Borland\BCC55\lib;c:\harbour-1.0.0\lib -Gn -M -m -s -Tpe -x -ap +
+c0x32.obj obj\START_.obj obj\ERRORSYS.obj obj\FUNCOES_.obj obj\NEW_EMP_.obj obj\PG101_.obj obj\PG102_.obj obj\PG103_.obj obj\PG104_.obj obj\PG105_.obj obj\PG201_.obj obj\PG202_.obj obj\PG203_.obj obj\PG204_.obj obj\PG205_.obj obj\PG206_.obj obj\PG301_.obj obj\PG302_.obj obj\PG303_.obj obj\PG304_.obj obj\PG305_.obj obj\PG306_.obj obj\PG307_.obj obj\PG308_.obj obj\PG309_.obj obj\PG310_.obj obj\PG311_.obj obj\PG402_.obj obj\PG403_.obj obj\PG404_.obj obj\PG410_.obj obj\PG501_.obj obj\PG502_.obj obj\PG503_.obj obj\PG504_.obj obj\PG505_.obj obj\PG506_.obj obj\PG507_.obj obj\PG508_.obj obj\PG509_.obj obj\PG510_.obj obj\PG511_.obj obj\PG801_.obj obj\REALTIM.obj, +
+c:\qsys_g\qpg\qpg_.exe,, +
+c:\harbour-1.0.0\lib\hbct.lib hblang.lib hbvm.lib hbrtl.lib hbrdd.lib hbmacro.lib hbpp.lib rddntx.lib rddcdx.lib rddfpt.lib hbcommon.lib gtwin.lib hbcpage.lib hbpcre.lib hbhsx.lib hbsix.lib  hbqsql.lib import32.lib cw32.lib, +
+, +
+

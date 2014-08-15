@@ -1,0 +1,15 @@
+
+Estrutura do arquivo DISC.DBF
+16/09/04  -  09:58:10
+
+MATRICULA  - C -   6 -   0
+DESCRICAO  - C -  50 -   0
+DATA_OCORR - D -   8 -   0
+HORA_OCORR - C -   5 -   0
+TEXTO      - M -  10 -   0
+
+Indexadores utilizados:
+
+01 - Matr¡cula + Data da Ocorrˆncia - DC_MATRI - MATRICULA + DTOS(DATA_OCORR) + HORA_OCORR         
+
+

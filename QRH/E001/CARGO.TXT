@@ -1,0 +1,26 @@
+
+Estrutura do arquivo CARGO.DBF
+16/09/04  -  09:58:10
+
+CODIGO     - C -   6 -   0
+DESCRICAO  - C -  40 -   0
+CBO_ASSOC  - C -   7 -   0
+KIT_I_MS   - C -   3 -   0
+KIT_E_MS   - C -   3 -   0
+KIT_I_FR   - C -   3 -   0
+KIT_E_FR   - C -   3 -   0
+KIT_I_AD   - C -   3 -   0
+KIT_E_AD   - C -   3 -   0
+KIT_I_DT   - C -   3 -   0
+KIT_E_DT   - C -   3 -   0
+SALARIO    - N -   9 -   2
+VLR_ADIANT - N -   9 -   2
+SALARIOB   - N -   9 -   2
+ESPECIFICA - C -   1 -   0
+
+Indexadores utilizados:
+
+01 - C¢digo do Cargo                - CA_CODIG - CODIGO                                            
+02 - Descri‡„o do Cargo             - CA_DESCR - DESCRICAO                                         
+
+

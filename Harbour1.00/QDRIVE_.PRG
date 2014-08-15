@@ -1,0 +1,2 @@
+function qdrive(str)
+return

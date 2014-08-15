@@ -1,0 +1,10 @@
+
+C:\Qsys_g\QCT\CTFONT>call "c:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" 
+Setting environment for using Microsoft Visual Studio 2008 x86 tools.
+
+C:\Qsys_g\QCT\CTFONT>hbmk2 qct.hbm -inc 
+hbmk2: Processando arquivo de configura‡Æo: c:\hb20\bin\hbmk.cfg
+hbmk2: Processando: QCT.HBC
+hbmk2: Linkando... C:\Qsys_g\Qct\Qct_.exe
+CT460_.obj : error LNK2005: _HB_FUN_CT430 already defined in CT430_.obj
+C:\Qsys_g\Qct\Qct_.exe : fatal error LNK1169: one or more multiply defined symbols found

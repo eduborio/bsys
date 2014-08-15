@@ -1,0 +1,15 @@
+
+Estrutura do arquivo VALE.DBF
+16/09/04  -  09:58:09
+
+ANOMES     - C -   6 -   0
+CODIGO     - C -   2 -   0
+DESCRICAO  - C -  20 -   0
+VALOR      - N -   6 -   2
+
+Indexadores utilizados:
+
+01 - C¢digo do Vale Transporte      - VA_CODIG - ANOMES + CODIGO                                   
+02 - Descri‡„o do Vale Transporte   - VA_DESCR - ANOMES + DESCRICAO                                
+
+

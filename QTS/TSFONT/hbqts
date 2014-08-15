@@ -1,0 +1,227 @@
+#BCC
+VERSION=BCB.01
+!ifndef CC_DIR
+CC_DIR = $(MAKE_DIR)
+!endif
+
+!ifndef HB_DIR
+HB_DIR = $(HARBOUR_DIR)
+!endif
+ 
+RECURSE= NO 
+ 
+SHELL = 
+COMPRESS = NO
+EXTERNALLIB = YES
+XFWH = NO
+FILESTOADD =  1
+WARNINGLEVEL =  0
+USERDEFINE = 
+USERINCLUDE = 
+USERLIBS = c:\harbour-1.0.0\lib\hbct.lib
+EDITOR = edit
+GUI = NO
+MT = NO
+SRC02 = obj 
+PROJECT = c:\qsys_g\qts\qts_.exe $(PR) 
+OBJFILES = $(SRC02)\START_.obj //
+ $(SRC02)\ERRORSYS.obj //
+ $(SRC02)\FUNCOES_.obj //
+ $(SRC02)\NEW_EMP_.obj //
+ $(SRC02)\REALTIM.obj //
+ $(SRC02)\TS101_.obj //
+ $(SRC02)\TS102_.obj //
+ $(SRC02)\TS103_.obj //
+ $(SRC02)\TS104_.obj //
+ $(SRC02)\TS201_.obj //
+ $(SRC02)\TS202_.obj //
+ $(SRC02)\TS203_.obj //
+ $(SRC02)\TS204_.obj //
+ $(SRC02)\TS205_.obj //
+ $(SRC02)\TS206_.obj //
+ $(SRC02)\TS207_.obj //
+ $(SRC02)\TS208_.obj //
+ $(SRC02)\TS209_.obj //
+ $(SRC02)\TS210_.obj //
+ $(SRC02)\TS211_.obj //
+ $(SRC02)\TS212_.obj //
+ $(SRC02)\TS213_.obj //
+ $(SRC02)\TS214_.obj //
+ $(SRC02)\TS215_.obj //
+ $(SRC02)\TS216_.obj //
+ $(SRC02)\TS301_.obj //
+ $(SRC02)\TS302_.obj //
+ $(SRC02)\TS303_.obj //
+ $(SRC02)\TS304_.obj //
+ $(SRC02)\TS305_.obj //
+ $(SRC02)\TS306_.obj //
+ $(SRC02)\TS307_.obj //
+ $(SRC02)\TS308_.obj //
+ $(SRC02)\TS309_.obj //
+ $(SRC02)\TS310_.obj //
+ $(SRC02)\TS311_.obj //
+ $(SRC02)\TS312_.obj //
+ $(SRC02)\TS313_.obj //
+ $(SRC02)\TS314_.obj //
+ $(SRC02)\TS315_.obj //
+ $(SRC02)\TS401_.obj //
+ $(SRC02)\TS402_.obj //
+ $(SRC02)\TS403_.obj //
+ $(SRC02)\TS404_.obj //
+ $(SRC02)\TS405_.obj //
+ $(SRC02)\TS406_.obj //
+ $(SRC02)\TS407_.obj //
+ $(SRC02)\TS408_.obj //
+ $(SRC02)\TS409_.obj //
+ $(SRC02)\TS410_.obj //
+ $(SRC02)\TS411_.obj //
+ $(SRC02)\TS501_.obj //
+ $(SRC02)\TS502_.obj //
+ $(SRC02)\TS503_.obj //
+ $(SRC02)\TS504_.obj //
+ $(SRC02)\TS505_.obj //
+ $(SRC02)\TS506_.obj //
+ $(SRC02)\TS507_.obj //
+ $(SRC02)\TS508_.obj //
+ $(SRC02)\TS509_.obj //
+ $(SRC02)\TS510_.obj //
+ $(SRC02)\TS511_.obj //
+ $(SRC02)\TS512_.obj //
+ $(SRC02)\TS513_.obj //
+ $(SRC02)\TS514_.obj //
+ $(SRC02)\TS515_.obj //
+ $(SRC02)\TS516_.obj //
+ $(SRC02)\TS517_.obj //
+ $(SRC02)\TS518_.obj //
+ $(SRC02)\TS519_.obj //
+ $(SRC02)\TS520_.obj //
+ $(SRC02)\TS521_.obj //
+ $(SRC02)\TS522_.obj //
+ $(SRC02)\TS523_.obj //
+ $(SRC02)\TS524_.obj //
+ $(SRC02)\TS801_.obj //
+ $(SRC02)\TS802_.obj $(OB) 
+PRGFILES = START_.PRG //
+ ERRORSYS.PRG //
+ FUNCOES_.PRG //
+ NEW_EMP_.PRG //
+ REALTIM.PRG //
+ TS101_.PRG //
+ TS102_.PRG //
+ TS103_.PRG //
+ TS104_.PRG //
+ TS201_.PRG //
+ TS202_.PRG //
+ TS203_.PRG //
+ TS204_.PRG //
+ TS205_.PRG //
+ TS206_.PRG //
+ TS207_.PRG //
+ TS208_.PRG //
+ TS209_.PRG //
+ TS210_.PRG //
+ TS211_.PRG //
+ TS212_.PRG //
+ TS213_.PRG //
+ TS214_.PRG //
+ TS215_.PRG //
+ TS216_.PRG //
+ TS301_.PRG //
+ TS302_.PRG //
+ TS303_.PRG //
+ TS304_.PRG //
+ TS305_.PRG //
+ TS306_.PRG //
+ TS307_.PRG //
+ TS308_.PRG //
+ TS309_.PRG //
+ TS310_.PRG //
+ TS311_.PRG //
+ TS312_.PRG //
+ TS313_.PRG //
+ TS314_.PRG //
+ TS315_.PRG //
+ TS401_.PRG //
+ TS402_.PRG //
+ TS403_.PRG //
+ TS404_.PRG //
+ TS405_.PRG //
+ TS406_.PRG //
+ TS407_.PRG //
+ TS408_.PRG //
+ TS409_.PRG //
+ TS410_.PRG //
+ TS411_.PRG //
+ TS501_.PRG //
+ TS502_.PRG //
+ TS503_.PRG //
+ TS504_.PRG //
+ TS505_.PRG //
+ TS506_.PRG //
+ TS507_.PRG //
+ TS508_.PRG //
+ TS509_.PRG //
+ TS510_.PRG //
+ TS511_.PRG //
+ TS512_.PRG //
+ TS513_.PRG //
+ TS514_.PRG //
+ TS515_.PRG //
+ TS516_.PRG //
+ TS517_.PRG //
+ TS518_.PRG //
+ TS519_.PRG //
+ TS520_.PRG //
+ TS521_.PRG //
+ TS522_.PRG //
+ TS523_.PRG //
+ TS524_.PRG //
+ TS801_.PRG //
+ TS802_.PRG $(PS) 
+OBJCFILES = $(OBC) 
+CFILES = $(CF)
+RESFILES = 
+RESDEPEN = 
+TOPMODULE = START_.PRG
+LIBFILES =  hblang.lib hbvm.lib hbrtl.lib hbrdd.lib hbmacro.lib hbpp.lib rddntx.lib rddcdx.lib rddfpt.lib hbcommon.lib gtwin.lib hbcpage.lib hbpcre.lib hbhsx.lib hbsix.lib  hbqsql.lib
+EXTLIBFILES = hbqsql.lib
+DEFFILE = 
+HARBOURFLAGS =  -m  -w0
+CFLAG1 =  -OS $(SHELL)  $(CFLAGS) -d -c -L$(HB_DIR)\lib 
+CFLAG2 =  -I$(HB_DIR)\include;$(CC_DIR)\include
+RFLAGS = 
+LFLAGS = -L$(CC_DIR)\lib\obj;$(CC_DIR)\lib;$(HB_DIR)\lib -Gn -M -m -s -Tpe -x -ap
+IFLAGS = 
+LINKER = ilink32
+ 
+ALLOBJ = c0x32.obj $(OBJFILES) $(OBJCFILES)
+ALLRES = $(RESDEPEN)
+ALLLIB = $(USERLIBS) $(LIBFILES) import32.lib cw32.lib
+.autodepend
+ 
+#DEPENDS
+ 
+#COMMANDS
+.cpp.obj:
+$(CC_DIR)\BIN\bcc32 $(CFLAG1) $(CFLAG2) -o$* $**
+ 
+.c.obj:
+$(CC_DIR)\BIN\bcc32 -I$(HB_DIR)\include $(CFLAG1) $(CFLAG2) -o$* $**
+ 
+.prg.obj:
+$(HB_DIR)\bin\harbour -D__EXPORT__ -n -go -I$(HB_DIR)\include $(HARBOURFLAGS) -o$* $**
+ 
+.rc.res:
+$(CC_DIR)\BIN\brcc32 $(RFLAGS) $<
+ 
+#BUILD
+ 
+$(PROJECT): $(CFILES) $(OBJFILES) $(RESDEPEN) $(DEFFILE)
+    $(CC_DIR)\BIN\$(LINKER) @&&!  
+    $(LFLAGS) +
+    $(ALLOBJ), +
+    $(PROJECT),, +
+    $(ALLLIB), +
+    $(DEFFILE), +
+    $(ALLRES) 
+!

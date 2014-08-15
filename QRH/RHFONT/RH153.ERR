@@ -1,0 +1,61 @@
+238K available
+Compiling RH153.PRG
+RH153.PRG(23)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(23)  Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH153.PRG(24)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(24)  Warning C1003  Ambiguous reference: 'XUSRA'
+RH153.PRG(26)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(39)  Warning C1003  Ambiguous reference: 'FCODIGO'
+RH153.PRG(39)  Warning C1003  Ambiguous reference: 'XNIVEL'
+RH153.PRG(39)  Warning C1003  Ambiguous reference: 'XFLAG'
+RH153.PRG(39)  Warning C1003  Ambiguous reference: 'XNIVEL'
+RH153.PRG(39)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(39)  Warning C1003  Ambiguous reference: 'XFLAG'
+RH153.PRG(43)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(44)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH153.PRG(45)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH153.PRG(45)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH153.PRG(46)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH153.PRG(46)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH153.PRG(51)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(51)  Warning C1001  RETURN statement with no value in function
+RH153.PRG(52)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(52)  Warning C1001  RETURN statement with no value in function
+RH153.PRG(56)  Warning C1003  Ambiguous reference: 'FCODIGO'
+RH153.PRG(56)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(57)  Warning C1003  Ambiguous reference: 'FDESCRICAO'
+RH153.PRG(58)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(63)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(64)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH153.PRG(65)  Warning C1004  Ambiguous reference, assuming memvar: 'XFLAG'
+RH153.PRG(69)  Warning C1003  Ambiguous reference: 'XNIVEL'
+RH153.PRG(69)  Warning C1003  Ambiguous reference: 'XNIVEL'
+RH153.PRG(70)  Warning C1003  Ambiguous reference: 'XNIVEL'
+RH153.PRG(71)  Warning C1001  RETURN statement with no value in function
+RH153.PRG(72)  Warning C1003  Ambiguous reference: 'XNIVEL'
+RH153.PRG(73)  Warning C1003  Ambiguous reference: 'XFLAG'
+RH153.PRG(73)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH153.PRG(73)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH153.PRG(73)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH153.PRG(73)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH153.PRG(78)  Warning C1001  RETURN statement with no value in function
+RH153.PRG(80)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(84)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(87)  Warning C1001  RETURN statement with no value in function
+RH153.PRG(95)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(96)  Warning C1003  Ambiguous reference: 'FCODIGO'
+RH153.PRG(115) Warning C1001  RETURN statement with no value in function
+RH153.PRG(133) Warning C1001  RETURN statement with no value in function
+RH153.PRG(150) Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(150) Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH153.PRG(151) Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(151) Warning C1003  Ambiguous reference: 'XUSRA'
+RH153.PRG(152) Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(155) Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(166) Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(172) Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(181) Warning C1003  Ambiguous reference: 'COPCAO'
+RH153.PRG(186) Warning C1001  RETURN statement with no value in function
+RH153.PRG(199) Warning C1001  RETURN statement with no value in function
+57 warnings                
+Code size 2028, Symbols 880, Constants 580

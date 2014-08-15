@@ -1,0 +1,139 @@
+<!--
+################################################
+# xDevStudio Project - xdev@kssoftware.com.br  #
+# Created @ 10/05/2009 21:44:20                #
+#                                              #
+### Standard xDev Config - Layout v1.5 #########
+-->
+<project>
+   <option compiler="316383">
+   <option outputname="Qsqlhb">
+   <option targettype="LIB">
+   <option outputpath="">
+   <option root="($)">
+   <option runpath="">
+   <option runparams="">
+   <option pathch="">
+   <option pathlib="">
+   <option pathobj="">
+   <option pathtooutput="">
+   <option defines="">
+   <option documentroot="">
+   <option makeincfile="Não">
+   <option taskprepare="">
+   <option taskfinalize="">
+
+   <compilerparam name="Harbour.xCompiler">
+      <option presetsname="316383">
+      <option finstalllib="Sim">
+   </compilerparam>
+
+   <unit filename="ATCSC_.PRG" compile="Sim">
+   <unit filename="ATCSC_SL.PRG" compile="Sim">
+   <unit filename="ATNSC_.PRG" compile="Sim">
+   <unit filename="ATNSC_SL.PRG" compile="Sim">
+   <unit filename="CHECK_.PRG" compile="Sim">
+   <unit filename="CHRSC_.PRG" compile="Sim">
+   <unit filename="CHRSC_SL.PRG" compile="Sim">
+   <unit filename="CLEAR_.PRG" compile="Sim">
+   <unit filename="COLOR_.PRG" compile="Sim">
+   <unit filename="duview_.prg" compile="Sim">
+   <unit filename="IQ_DEBUG.PRG" compile="Sim">
+   <unit filename="POSCU_.PRG" compile="Sim">
+   <unit filename="POSCU_SL.PRG" compile="Sim">
+   <unit filename="Q198.PRG" compile="Sim">
+   <unit filename="Q199.PRG" compile="Sim">
+   <unit filename="Q590.PRG" compile="Sim">
+   <unit filename="Q595.PRG" compile="Sim">
+   <unit filename="Q595__.PRG" compile="Sim">
+   <unit filename="Q901.PRG" compile="Sim">
+   <unit filename="QABREV_.PRG" compile="Sim">
+   <unit filename="QACHOIC_.PRG" compile="Sim">
+   <unit filename="QAD_CONF.PRG" compile="Sim">
+   <unit filename="QAD_ESTA.PRG" compile="Sim">
+   <unit filename="QAD_HIST.PRG" compile="Sim">
+   <unit filename="QAD_LIMP.PRG" compile="Sim">
+   <unit filename="QAD_MANU.PRG" compile="Sim">
+   <unit filename="QAD_PERM.PRG" compile="Sim">
+   <unit filename="QAD_SENH.PRG" compile="Sim">
+   <unit filename="QAGENDA_.PRG" compile="Sim">
+   <unit filename="QAPPEND_.PRG" compile="Sim">
+   <unit filename="QARRAY.PRG" compile="Sim">
+   <unit filename="QAUXPROG.PRG" compile="Sim">
+   <unit filename="QBACKUP.PRG" compile="Sim">
+   <unit filename="QBEEP_.PRG" compile="Sim">
+   <unit filename="QBUSCA_.PRG" compile="Sim">
+   <unit filename="QBUSCAI.PRG" compile="Sim">
+   <unit filename="QCALC_.PRG" compile="Sim">
+   <unit filename="QCALL_.PRG" compile="Sim">
+   <unit filename="QCHECK.PRG" compile="Sim">
+   <unit filename="QCLEAR.PRG" compile="Sim">
+   <unit filename="QCLEAR_.PRG" compile="Sim">
+   <unit filename="QCONF_.PRG" compile="Sim">
+   <unit filename="QCONFPRN.PRG" compile="Sim">
+   <unit filename="QCRC_.PRG" compile="Sim">
+   <unit filename="QCRIP.PRG" compile="Sim">
+   <unit filename="QDATAS.PRG" compile="Sim">
+   <unit filename="QDIFTIM_.PRG" compile="Sim">
+   <unit filename="QDIGITO_.PRG" compile="Sim">
+   <unit filename="qdirs.prg" compile="Sim">
+   <unit filename="QDIVER.PRG" compile="Sim">
+   <unit filename="QDRIVE_.PRG" compile="Sim">
+   <unit filename="QERRSYS.PRG" compile="Sim">
+   <unit filename="QESCO_.PRG" compile="Sim">
+   <unit filename="QEXTEN_.PRG" compile="Sim">
+   <unit filename="QFIELDS.PRG" compile="Sim">
+   <unit filename="QFLOCK_.PRG" compile="Sim">
+   <unit filename="QGETPRO_.PRG" compile="Sim">
+   <unit filename="QGETSEN_.PRG" compile="Sim">
+   <unit filename="QGETX_.PRG" compile="Sim">
+   <unit filename="QGIRABAR.PRG" compile="Sim">
+   <unit filename="QHELP_.PRG" compile="Sim">
+   <unit filename="QHORAS.PRG" compile="Sim">
+   <unit filename="QINDEXC.PRG" compile="Sim">
+   <unit filename="QINITS.PRG" compile="Sim">
+   <unit filename="QINITV.PRG" compile="Sim">
+   <unit filename="QINKEY_.PRG" compile="Sim">
+   <unit filename="QINST_.PRG" compile="Sim">
+   <unit filename="QINTCHR_.PRG" compile="Sim">
+   <unit filename="QINVER.PRG" compile="Sim">
+   <unit filename="QINVER_.PRG" compile="Sim">
+   <unit filename="QKEYOFF.PRG" compile="Sim">
+   <unit filename="QKEYON.PRG" compile="Sim">
+   <unit filename="QLOGERRO.PRG" compile="Sim">
+   <unit filename="QLOGIN1.PRG" compile="Sim">
+   <unit filename="QLOGIN2.PRG" compile="Sim">
+   <unit filename="QM.PRG" compile="Sim">
+   <unit filename="QMACROS_.PRG" compile="Sim">
+   <unit filename="QMANUT.PRG" compile="Sim">
+   <unit filename="QMEMOUSR.PRG" compile="Sim">
+   <unit filename="QMENSA_.PRG" compile="Sim">
+   <unit filename="QMENU_.PRG" compile="Sim">
+   <unit filename="QMOUSE.PRG" compile="Sim">
+   <unit filename="QNOME.PRG" compile="Sim">
+   <unit filename="QOPEN_.PRG" compile="Sim">
+   <unit filename="QPEDEDAT.PRG" compile="Sim">
+   <unit filename="QPRN.PRG" compile="Sim">
+   <unit filename="QRAND_.PRG" compile="Sim">
+   <unit filename="QRESTARR.PRG" compile="Sim">
+   <unit filename="QRLOCK_.PRG" compile="Sim">
+   <unit filename="QSAVEARR.PRG" compile="Sim">
+   <unit filename="QSAY_.PRG" compile="Sim">
+   <unit filename="QSCREEN.PRG" compile="Sim">
+   <unit filename="QSEEK_.PRG" compile="Sim">
+   <unit filename="QSELEMP.PRG" compile="Sim">
+   <unit filename="QSHELL.PRG" compile="Sim">
+   <unit filename="QSTRUCT.PRG" compile="Sim">
+   <unit filename="QTIRAPON.PRG" compile="Sim">
+   <unit filename="QTOOLS.PRG" compile="Sim">
+   <unit filename="QTOTCHR_.PRG" compile="Sim">
+   <unit filename="QUSE_.PRG" compile="Sim">
+   <unit filename="QVIEW_.PRG" compile="Sim">
+   <unit filename="QWAIT_.PRG" compile="Sim">
+   <unit filename="SAYSC_.PRG" compile="Sim">
+   <unit filename="SAYSC_SL.PRG" compile="Sim">
+   <unit filename="SCROL_.PRG" compile="Sim">
+   <unit filename="SEEKB_.PRG" compile="Sim">
+   <unit filename="seekc_sl.prg" compile="Sim">
+   <unit filename="seekl_sl.prg" compile="Sim" prg_disabledebug="Sim">
+</project>

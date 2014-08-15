@@ -1,0 +1,6 @@
+
+-oqsysrdd.lib
+
+-hblib qsysrdd.lib
+
+qrdd

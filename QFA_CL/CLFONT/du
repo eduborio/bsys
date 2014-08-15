@@ -1,0 +1,297 @@
+
+C:\qsys\QFA_CL\CLFONT>call "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" 
+Setting environment for using Microsoft Visual Studio 2010 x86 tools.
+
+C:\qsys\QFA_CL\CLFONT>hbmk2 qcl.hbm 
+Harbour 3.0.0 (Rev. 16951)
+Copyright (c) 1999-2011, http://harbour-project.org/
+Compiling 'CL101_.prg'...
+1002003004005006007008009001000110012001300Lines 1305, Functions/Procedures 24
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL101_.c'... Done.
+Compiling 'CL102_.prg'...
+100Lines 145, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL102_.c'... Done.
+Compiling 'CL103_.prg'...
+100Lines 161, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL103_.c'... Done.
+Compiling 'CL104_.prg'...
+100Lines 148, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL104_.c'... Done.
+Compiling 'CL105_.prg'...
+100Lines 162, Functions/Procedures 6
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL105_.c'... Done.
+Compiling 'CL106_.prg'...
+100Lines 178, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL106_.c'... Done.
+Compiling 'CL107_.prg'...
+100Lines 141, Functions/Procedures 6
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL107_.c'... Done.
+Compiling 'CL108_.prg'...
+100Lines 135, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL108_.c'... Done.
+Compiling 'CL109_.prg'...
+100Lines 135, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL109_.c'... Done.
+Compiling 'CL110_.prg'...
+100Lines 148, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL110_.c'... Done.
+Compiling 'CL111_.prg'...
+100Lines 191, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL111_.c'... Done.
+Compiling 'CL112_.prg'...
+100200Lines 265, Functions/Procedures 10
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL112_.c'... Done.
+Compiling 'CL113_.prg'...
+100Lines 171, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL113_.c'... Done.
+Compiling 'CL114_.prg'...
+100Lines 173, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL114_.c'... Done.
+Compiling 'CL115_.prg'...
+100Lines 172, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL115_.c'... Done.
+Compiling 'CL116_.prg'...
+100Lines 133, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL116_.c'... Done.
+Compiling 'CL117_.prg'...
+100200100200300400Lines 685, Functions/Procedures 14
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL117_.c'... Done.
+Compiling 'CL118_.prg'...
+100Lines 189, Functions/Procedures 6
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL118_.c'... Done.
+Compiling 'CL119_.prg'...
+100Lines 133, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL119_.c'... Done.
+Compiling 'CL120_.prg'...
+100200300Lines 347, Functions/Procedures 14
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL120_.c'... Done.
+Compiling 'CL121_.prg'...
+100Lines 180, Functions/Procedures 6
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL121_.c'... Done.
+Compiling 'CL122_.prg'...
+Lines 88, Functions/Procedures 4
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL122_.c'... Done.
+Compiling 'CL123_.prg'...
+100Lines 195, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL123_.c'... Done.
+Compiling 'CL124_.prg'...
+100Lines 195, Functions/Procedures 6
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL124_.c'... Done.
+Compiling 'CL125_.prg'...
+100200300400Lines 469, Functions/Procedures 17
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL125_.c'... Done.
+Compiling 'CL126_.prg'...
+100Lines 149, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL126_.c'... Done.
+Compiling 'CL127_.prg'...
+100200300Lines 351, Functions/Procedures 13
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL127_.c'... Done.
+Compiling 'CL128_.prg'...
+100Lines 187, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL128_.c'... Done.
+Compiling 'CL129_.prg'...
+100Lines 148, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL129_.c'... Done.
+Compiling 'CL130_.prg'...
+100Lines 148, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL130_.c'... Done.
+Compiling 'CL131_.prg'...
+100200300Lines 360, Functions/Procedures 14
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL131_.c'... Done.
+Compiling 'CL132_.prg'...
+100Lines 148, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL132_.c'... Done.
+Compiling 'CL133_.prg'...
+100200300Lines 358, Functions/Procedures 14
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL133_.c'... Done.
+Compiling 'CL134_.prg'...
+100200300Lines 349, Functions/Procedures 13
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL134_.c'... Done.
+Compiling 'CL136_.prg'...
+100Lines 148, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL136_.c'... Done.
+Compiling 'CL137_.prg'...
+100Lines 148, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL137_.c'... Done.
+Compiling 'CL138_.prg'...
+100200Lines 277, Functions/Procedures 7
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL138_.c'... Done.
+Compiling 'CL139_.prg'...
+100Lines 180, Functions/Procedures 6
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL139_.c'... Done.
+Compiling 'CL201_.prg'...
+10020010020030040050060070080090010001100120013001400150016001700180019002000210022002300240025002600270028002900300031003200330034003500360037003800390040004100Lines 4360, Functions/Procedures 75
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL201_.c'... Done.
+Compiling 'CL202_.prg'...
+1002001002003004005006007008009001000110012001300140015001600170018001900Lines 2143, Functions/Procedures 33
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL202_.c'... Done.
+Compiling 'CL203_.prg'...
+1002001002003004005006007008009001000110012001300140015001600170018001900200021002200230024002500Lines 2786, Functions/Procedures 43
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL203_.c'... Done.
+Compiling 'CL204_.prg'...
+100200300Lines 324, Functions/Procedures 7
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL204_.c'... Done.
+Compiling 'CL205_.prg'...
+10020010020030040050060070080090010001100120013001400Lines 1691, Functions/Procedures 28
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL205_.c'... Done.
+Compiling 'CL206_.prg'...
+100200100200300400500600700Lines 1005, Functions/Procedures 17
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL206_.c'... Done.
+Compiling 'CL207_.prg'...
+100200Lines 218, Functions/Procedures 6
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL207_.c'... Done.
+Compiling 'CL208_.prg'...
+1002001002003004005006007008009001000Lines 1269, Functions/Procedures 30
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL208_.c'... Done.
+Compiling 'CL301_.prg'...
+1002003004005006007008009001000Lines 1021, Functions/Procedures 38
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL301_.c'... Done.
+Compiling 'CL302_.prg'...
+1002003004005006007008009001000Lines 1012, Functions/Procedures 38
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL302_.c'... Done.
+Compiling 'CL303_.prg'...
+100200300Lines 389, Functions/Procedures 8
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL303_.c'... Done.
+Compiling 'CL304_.prg'...
+Lines 67, Functions/Procedures 3
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL304_.c'... Done.
+Compiling 'CL305_.prg'...
+Lines 73, Functions/Procedures 4
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL305_.c'... Done.
+Compiling 'CL306_.prg'...
+Lines 77, Functions/Procedures 3
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL306_.c'... Done.
+Compiling 'CL307_.prg'...
+100Lines 148, Functions/Procedures 7
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL307_.c'... Done.
+Compiling 'CL308_.prg'...
+100Lines 160, Functions/Procedures 8
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL308_.c'... Done.
+Compiling 'CL309_.prg'...
+100200Lines 291, Functions/Procedures 12
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL309_.c'... Done.
+Compiling 'CL310_.prg'...
+100200300400500600Lines 605, Functions/Procedures 11
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL310_.c'... Done.
+Compiling 'CL401_.prg'...
+100Lines 152, Functions/Procedures 3
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL401_.c'... Done.
+Compiling 'CL402_.prg'...
+Lines 60, Functions/Procedures 1
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL402_.c'... Done.
+Compiling 'CL403_.prg'...
+100Lines 183, Functions/Procedures 4
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL403_.c'... Done.
+Compiling 'CL404_.prg'...
+100200Lines 251, Functions/Procedures 3
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL404_.c'... Done.
+Compiling 'CL405_.prg'...
+Lines 71, Functions/Procedures 1
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL405_.c'... Done.
+Compiling 'CL406_.prg'...
+100Lines 168, Functions/Procedures 4
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL406_.c'... Done.
+Compiling 'CL407_.prg'...
+Lines 49, Functions/Procedures 1
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL407_.c'... Done.
+Compiling 'CL408_.prg'...
+100Lines 110, Functions/Procedures 2
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL408_.c'... Done.
+Compiling 'CL409_.prg'...
+Lines 54, Functions/Procedures 1
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL409_.c'... Done.
+Compiling 'CL410_.prg'...
+100200300400500600700Lines 782, Functions/Procedures 13
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL410_.c'... Done.
+Compiling 'CL420_.prg'...
+100200300400500600Lines 619, Functions/Procedures 8
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL420_.c'... Done.
+Compiling 'CL430_.prg'...
+100200300400Lines 432, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL430_.c'... Done.
+Compiling 'CL440_.prg'...
+100200100200300100100200300400Lines 1234, Functions/Procedures 7
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL440_.c'... Done.
+Compiling 'CL450_.prg'...
+100Lines 124, Functions/Procedures 1
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL450_.c'... Done.
+Compiling 'CL460_.prg'...
+Lines 42, Functions/Procedures 1
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL460_.c'... Done.
+Compiling 'CL499_.prg'...
+100200300400500600700800900100011001200130014001500160017001800Lines 1883, Functions/Procedures 29
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL499_.c'... Done.
+Compiling 'CL501_.prg'...
+100200300400Lines 437, Functions/Procedures 7
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL501_.c'... Done.
+Compiling 'CL502_.prg'...
+100Lines 121, Functions/Procedures 4
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL502_.c'... Done.
+Compiling 'CL503_.prg'...
+100200Lines 287, Functions/Procedures 4
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL503_.c'... Done.
+Compiling 'CL504_.prg'...
+100Lines 125, Functions/Procedures 4
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL504_.c'... Done.
+Compiling 'CL505_.prg'...
+100200300400Lines 498, Functions/Procedures 9
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL505_.c'... Done.
+Compiling 'CL506_.prg'...
+100200300400Lines 449, Functions/Procedures 8
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL506_.c'... Done.
+Compiling 'CL507_.prg'...
+100200Lines 218, Functions/Procedures 4
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL507_.c'... Done.
+Compiling 'CL508_.prg'...
+100Lines 195, Functions/Procedures 4
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL508_.c'... Done.
+Compiling 'CL509_.prg'...
+100200Lines 212, Functions/Procedures 4
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL509_.c'... Done.
+Compiling 'CL510_.prg'...
+100Lines 174, Functions/Procedures 4
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL510_.c'... Done.
+Compiling 'CL511_.prg'...
+100Lines 164, Functions/Procedures 4
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL511_.c'... Done.
+Compiling 'CL512_.prg'...
+100200Lines 224, Functions/Procedures 5
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL512_.c'... Done.
+Compiling 'CL513_.prg'...
+100200300Lines 355, Functions/Procedures 6
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL513_.c'... Done.
+Compiling 'CL514_.prg'...
+100Lines 151, Functions/Procedures 3
+Generating C source output to 'C:\Users\Eduardo\AppData\Local\Temp\hbmk_zovwjy.dir\CL514_.c'... Done.
+Compiling 'CL515_.prg'...
+100100200300400500600100200100100100200300400500100200300400500600700800900100011001200130014001500160017001800190020002100220023002400250026002700280029003000310032003300340035003600370038003900400041001 error
+
+No code generated.
+
+C:\qsys\QFA_CL\CLFONT>call "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" 
+Setting environment for using Microsoft Visual Studio 2010 x86 tools.
+
+C:\qsys\QFA_CL\CLFONT>hbmk2 qcl.hbm -inc 
+hbmk2: Harbour: Compilando m¢dulos...
+Harbour 3.0.0 (Rev. 16951)
+Copyright (c) 1999-2011, http://harbour-project.org/
+Compiling 'NFeFont\hbNFeEvento.prg'...
+10010020030040050060010020030016 errors
+
+No code generated.
+
+C:\qsys\QFA_CL\CLFONT>call "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" 
+Setting environment for using Microsoft Visual Studio 2010 x86 tools.
+
+C:\qsys\QFA_CL\CLFONT>hbmk2 qcl.hbm -inc 
+hbmk2: Harbour: Compilando m¢dulos...
+Harbour 3.0.0 (Rev. 16951)
+Copyright (c) 1999-2011, http://harbour-project.org/
+Compiling 'NFeFont\hbNFeEvento.prg'...
+100100200300400500600100200300400500600700100200300400500600700800100100100100200300400500100200300Lines 3882, Functions/Procedures 5
+Generating C source output to 'C:\Qsys_g\Qfa_cl\.hbmk\win\msvc\hbNFeEvento.c'... Done.
+hbmk2: Compilando...
+CL515_.c
+hbNFeEvento.c
+Generating Code...
+hbmk2: Linkando... C:\Qsys_g\Qfa_cl\Qcl_.exe

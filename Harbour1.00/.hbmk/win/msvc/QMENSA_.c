@@ -1,0 +1,63 @@
+/*
+ * Harbour 2.0.0 (Rev. 13372)
+ * MinGW GNU C 4.4.1 (32-bit)
+ * Generated C source from "QMENSA_.PRG"
+ */
+
+#include "hbvmpub.h"
+#include "hbinit.h"
+
+
+HB_FUNC( QMENSA );
+HB_FUNC_EXTERN( QSBLOC );
+HB_FUNC_EXTERN( EMPTY );
+HB_FUNC_EXTERN( PAD );
+HB_FUNC_EXTERN( QSAY );
+HB_FUNC_EXTERN( QBEEP );
+HB_FUNC_EXTERN( INKEY );
+HB_FUNC_EXTERN( QRBLOC );
+
+
+HB_INIT_SYMBOLS_BEGIN( hb_vm_SymbolInit_QMENSA_ )
+{ "QMENSA", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( QMENSA )}, NULL },
+{ "QSBLOC", {HB_FS_PUBLIC}, {HB_FUNCNAME( QSBLOC )}, NULL },
+{ "EMPTY", {HB_FS_PUBLIC}, {HB_FUNCNAME( EMPTY )}, NULL },
+{ "PAD", {HB_FS_PUBLIC}, {HB_FUNCNAME( PAD )}, NULL },
+{ "QSAY", {HB_FS_PUBLIC}, {HB_FUNCNAME( QSAY )}, NULL },
+{ "XCOR_MENSA", {HB_FS_PUBLIC | HB_FS_MEMVAR}, {NULL}, NULL },
+{ "QBEEP", {HB_FS_PUBLIC}, {HB_FUNCNAME( QBEEP )}, NULL },
+{ "INKEY", {HB_FS_PUBLIC}, {HB_FUNCNAME( INKEY )}, NULL },
+{ "QRBLOC", {HB_FS_PUBLIC}, {HB_FUNCNAME( QRBLOC )}, NULL }
+HB_INIT_SYMBOLS_EX_END( hb_vm_SymbolInit_QMENSA_, "QMENSA_.PRG", 0x0, 0x0002 )
+
+#if defined( HB_PRAGMA_STARTUP )
+   #pragma startup hb_vm_SymbolInit_QMENSA_
+#elif defined( HB_DATASEG_STARTUP )
+   #define HB_DATASEG_BODY    HB_DATASEG_FUNC( hb_vm_SymbolInit_QMENSA_ )
+   #include "hbiniseg.h"
+#endif
+
+HB_FUNC( QMENSA )
+{
+	static const HB_BYTE pcode[] =
+	{
+		13,1,2,36,3,0,176,1,0,92,24,92,11,92,
+		24,92,79,12,4,80,3,36,5,0,176,2,0,95,
+		2,12,1,28,7,106,1,0,80,2,36,7,0,176,
+		2,0,95,1,12,1,28,7,106,1,0,80,1,36,
+		9,0,176,3,0,95,1,92,69,12,2,80,1,36,
+		11,0,176,4,0,92,24,121,106,12,77,101,110,115,
+		97,103,101,110,115,58,32,0,95,1,72,100,109,5,
+		0,20,5,36,13,0,106,2,66,0,95,2,24,28,
+		7,176,6,0,20,0,36,14,0,106,2,84,0,95,
+		2,24,31,11,106,2,66,0,95,2,24,28,18,176,
+		7,0,101,0,0,0,0,0,0,4,64,10,1,20,
+		1,36,15,0,106,2,82,0,95,2,24,28,13,176,
+		8,0,92,24,92,11,95,3,20,3,36,16,0,106,
+		2,76,0,95,2,24,28,10,176,0,0,106,1,0,
+		20,1,36,18,0,7
+	};
+
+	hb_vmExecute( pcode, symbols );
+}
+

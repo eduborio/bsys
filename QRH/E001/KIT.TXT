@@ -1,0 +1,14 @@
+
+Estrutura do arquivo KIT.DBF
+16/09/04  -  09:58:10
+
+CODIGO     - C -   3 -   0
+DESCRICAO  - C -  30 -   0
+EVENTOS    - C - 150 -   0
+
+Indexadores utilizados:
+
+01 - C¢digo do Kit                  - KI_CODIG - CODIGO                                            
+02 - Descri‡„o do Kit               - KI_DESCR - DESCRICAO                                         
+
+

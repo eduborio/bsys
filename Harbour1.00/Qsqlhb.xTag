@@ -1,0 +1,386 @@
+<!--
+################################################
+# xDevStudio Project - xdev@kssoftware.com.br  #
+# Created @ 11/05/2009 19:04:21                #
+#                                              #
+### Standard xDev TagList - Layout v1.5 ########
+-->
+<taglist>
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="i_loadrpt" args="<cNOME> " scope="PUBLIC" type="ptFunction" line="163">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="i_sinc_inc" args="<cNOMEREL>, <lINC> " scope="PUBLIC" type="ptFunction" line="123">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="i_exec_vetor" args="<aVET>, <cDESCR>, <aCAB>, <aROD>, <aDAD> " scope="PUBLIC" type="ptFunction" line="321">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="i_conv_vetor" args="<aVET>, <aCAB>, <aROD>, <aDAD> " scope="PUBLIC" type="ptFunction" line="178">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="i_sincronismo" args=" " scope="PUBLIC" type="ptFunction" line="97">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="q590" args=" " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="gclear" args="<nLIN1>, <nCOL1>, <nLIN2>, <nCOL2>, <cCOLOR> " scope="PUBLIC" type="ptFunction" line="579">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="i590a" args="<cPATH>, <cCODIGO> " scope="PUBLIC" type="ptFunction" line="38">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="K_CONV_BLOC" args=" " scope="PUBLIC" type="ptConstant" line="3">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="gcentra" args="<cSTRING>, <nLENG> " scope="PUBLIC" type="ptFunction" line="568">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="ginforma" args="<nLINHA>, <nCOLUNA>, <cMENSAGEM>, <cVARIAVEL>, <zINIC>, <cPIC>, <cVALID>, <cCOLOR> " scope="PUBLIC" type="ptFunction" line="545">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="grelacao" args="<cCAMPO>, <cALIAS> " scope="PUBLIC" type="ptFunction" line="575">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="gfiltro" args="<cSTRING> " scope="PUBLIC" type="ptFunction" line="571">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="ginicvar" args="<cVAR>, <zVAL> " scope="PUBLIC" type="ptFunction" line="541">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="i_ctrl_erro" args="<oERRO> " scope="PUBLIC" type="ptFunction" line="479">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="i_exec_cab" args="<aCAB>, <cNUM> " scope="PUBLIC" type="ptFunction" line="466">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="gsalta" args=" " scope="PUBLIC" type="ptFunction" line="537">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q590.PRG" name="gimp" args="<nLIN>, <nCOL>, <cSTR> " scope="PUBLIC" type="ptFunction" line="520">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q198.PRG" name="c198a" args=" " scope="PUBLIC" type="ptFunction" line="24">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q198.PRG" name="i_edicao" args=" " scope="PUBLIC" type="ptFunction" line="39">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q198.PRG" name="i_exclusao" args=" " scope="PUBLIC" type="ptFunction" line="122">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q198.PRG" name="i_critica" args="<cCAMPO> " scope="PUBLIC" type="ptFunction" line="108">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q198.PRG" name="q198" args=" " scope="PUBLIC" type="ptFunction" line="3">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595.PRG" name="faz_help" args=" " scope="PUBLIC" type="ptFunction" line="198">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595.PRG" name="edita" args="<cFILE>, <cDESCRICAO>, <lPEDACO> " scope="PUBLIC" type="ptFunction" line="88">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595.PRG" name="atualiza_vetor" args="<aLINES>, <cPARCIAL>, <lPEDACO> " scope="PUBLIC" type="ptFunction" line="264">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595.PRG" name="i_le_dir" args="<aNAMES>, <aSTRINGS> " scope="PUBLIC" type="ptFunction" line="237">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595.PRG" name="K_JANELA" args=" " scope="PUBLIC" type="ptConstant" line="3">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595.PRG" name="i_ctrl595" args="<nMODO>, <nITEM>, <nLINHA> " scope="PUBLIC" type="ptFunction" line="44">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595.PRG" name="q595" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595.PRG" name="K_LENBUF" args=" " scope="PUBLIC" type="ptConstant" line="2">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q199.PRG" name="f199b" args=" " scope="PUBLIC" type="ptFunction" line="41">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q199.PRG" name="f199a" args=" " scope="PUBLIC" type="ptFunction" line="26">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q199.PRG" name="q199" args=" " scope="PUBLIC" type="ptFunction" line="3">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q199.PRG" name="i_edicao" args=" " scope="PUBLIC" type="ptFunction" line="56">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q199.PRG" name="i_critica" args="<cCAMPO> " scope="PUBLIC" type="ptFunction" line="119">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q199.PRG" name="i_exclusao" args=" " scope="PUBLIC" type="ptFunction" line="139">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q199.PRG" name="f199c" args=" " scope="PUBLIC" type="ptFunction" line="153">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="i_txt" args=" " scope="PUBLIC" type="ptFunction" line="216">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="i_doc" args=" " scope="PUBLIC" type="ptFunction" line="238">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="i_xls" args=" " scope="PUBLIC" type="ptFunction" line="259">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="qinitprn" args="<nMARGEM>, <cWHERE>, <cNOME> " scope="PUBLIC" type="ptFunction" line="14">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="i_ret_nome_prn" args=" " scope="PUBLIC" type="ptFunction" line="179">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="i_spool" args=" " scope="PUBLIC" type="ptFunction" line="195">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="qpageprn" args=" " scope="PUBLIC" type="ptFunction" line="285">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="qhelpprn" args=" " scope="PUBLIC" type="ptFunction" line="354">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="qcabecprn" args="<cSTRING>, <nLENGHT>, <dDATA>, <cSTRING2> " scope="PUBLIC" type="ptFunction" line="368">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="i_cod_prn" args="<lATIVA> " scope="PUBLIC" type="ptFunction" line="409">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="qlineprn" args=" " scope="PUBLIC" type="ptFunction" line="302">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="qstopprn" args="<lEJECT>, <lEDICAO> " scope="PUBLIC" type="ptFunction" line="319">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPRN.PRG" name="qcontprn" args=" " scope="PUBLIC" type="ptFunction" line="348">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCRIP.PRG" name="qdecri" args="<str> " scope="PUBLIC" type="ptFunction" line="19">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCRIP.PRG" name="qencri" args="<str> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QNOME.PRG" name="qnomeestado" args="<zPARM> " scope="PUBLIC" type="ptFunction" line="77">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QNOME.PRG" name="qnomesemana" args="<zPARM>, <lCOMPLETO> " scope="PUBLIC" type="ptFunction" line="39">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QNOME.PRG" name="qnomemes" args="<zPARM> " scope="PUBLIC" type="ptFunction" line="3">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\qdirs.prg" name="qcdir" args="<cPATH> " scope="PUBLIC" type="ptFunction" line="9">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\qdirs.prg" name="qmdir" args="<cPATH> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\qdirs.prg" name="qrdir" args="<cPATH> " scope="PUBLIC" type="ptFunction" line="18">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCRC_.PRG" name="qcrc" args="<cSTRING> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QUSE_.PRG" name="quse" args="<cPATH>, <cFILE>, <aNTX>, <cMODE>, <cALIAS> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSAY_.PRG" name="qsay" args="<nLIN>, <nCOL>, <zVAR>, <cPIC>, <nATRIB> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSAY_.PRG" name="qrsay" args="<nPOS>, <zVAR>, <cPIC>, <nATRIB> " scope="PUBLIC" type="ptFunction" line="28">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCHECK.PRG" name="qcheckpis" args="<cPIS> " scope="PUBLIC" type="ptFunction" line="169">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCHECK.PRG" name="qcheckcpf" args="<cCPF> " scope="PUBLIC" type="ptFunction" line="4">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCHECK.PRG" name="qcheckcgc" args="<cCGC> " scope="PUBLIC" type="ptFunction" line="84">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595__.PRG" name="i_le_dir" args="<aNAMES>, <aSTRINGS> " scope="PUBLIC" type="ptFunction" line="327">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595__.PRG" name="atualiza_vetor" args="<aLINES>, <cPARCIAL>, <lPEDACO> " scope="PUBLIC" type="ptFunction" line="354">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595__.PRG" name="faz_help" args=" " scope="PUBLIC" type="ptFunction" line="288">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595__.PRG" name="K_JANELA" args=" " scope="PUBLIC" type="ptConstant" line="2">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595__.PRG" name="i_ctrl595" args="<nMODO>, <nITEM>, <nLINHA> " scope="PUBLIC" type="ptFunction" line="44">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595__.PRG" name="q595__" args=" " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595__.PRG" name="K_LENBUF" args=" " scope="PUBLIC" type="ptConstant" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595__.PRG" name="i_ret_pedaco" args=" " scope="PUBLIC" type="ptFunction" line="169">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595__.PRG" name="edita2" args="<cFILE>, <cDESCRICAO>, <lPEDACO> " scope="PUBLIC" type="ptFunction" line="177">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595__.PRG" name="i_leitura_de_linhas" args=" " scope="PUBLIC" type="ptFunction" line="165">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q595__.PRG" name="edita" args="<cFILE>, <cDESCRICAO>, <lPEDADO> " scope="PUBLIC" type="ptFunction" line="88">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCLEAR.PRG" name="QCLEAR" args="<nTopLin>, <nTopCol>, <nBottomLin>, <nBottomCol>, <cAttr> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QDATAS.PRG" name="qfimmes" args="<zDATA> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QDATAS.PRG" name="qinimes" args="<zDATA> " scope="PUBLIC" type="ptFunction" line="17">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QDATAS.PRG" name="qanomes" args="<zDATA> " scope="PUBLIC" type="ptFunction" line="27">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QDATAS.PRG" name="qdataexten" args="<zDATA> " scope="PUBLIC" type="ptFunction" line="62">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QDATAS.PRG" name="qanomes" args="<dDATAINF>, <nQUANT> " scope="PUBLIC" type="ptFunction" line="34">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\CHECK_.PRG" name="check_sl" args="<naosei> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCALC_.PRG" name="i_visor" args="<zVALOR> " scope="PUBLIC" type="ptFunction" line="140">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCALC_.PRG" name="i_fixdec" args=" " scope="PUBLIC" type="ptFunction" line="153">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCALC_.PRG" name="qcalc" args=" " scope="PUBLIC" type="ptFunction" line="3">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCALC_.PRG" name="i_calc" args=" " scope="PUBLIC" type="ptFunction" line="14">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSHELL.PRG" name="qshell" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\CLEAR_.PRG" name="CLEAR_SL" args="<nTopLin>, <nTopCol>, <nBottomLin>, <nBottomCol>, <cAttr> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\SEEKB_.PRG" name="seekb_sl" args="<cSTR>, <XNIVEL>, <cSTR2> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QDIVER.PRG" name="q_back_field" args=" " scope="PUBLIC" type="ptFunction" line="9">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QDIVER.PRG" name="q_msg_acesso_usr" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCALL_.PRG" name="qcall" args=" " scope="PUBLIC" type="ptFunction" line="7">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QBEEP_.PRG" name="qbeep" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QHORAS.PRG" name="qhoracent" args="<cHORA> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QHORAS.PRG" name="qdifhora" args="<cHORAI>, <cHORAF> " scope="PUBLIC" type="ptFunction" line="18">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QHORAS.PRG" name="qcenthora" args="<nCENT> " scope="PUBLIC" type="ptFunction" line="9">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\ATCSC_.PRG" name="atcsc_sl" args="<nLIN>, <nCOL> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QARRAY.PRG" name="qsarray" args="<aVET>, <cNOME> " scope="PUBLIC" type="ptFunction" line="5">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QARRAY.PRG" name="qrarray" args="<aVET>, <cNOME> " scope="PUBLIC" type="ptFunction" line="40">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QARRAY.PRG" name="qarray" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\CHRSC_.PRG" name="chrsc_sl" args="<nLIN>, <nCOL>, <cSTR> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINVER.PRG" name="qinver3" args="<nLIN>, <nCOL>, <nQUANT> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QRAND_.PRG" name="qrand" args="<nINIC> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="i_marca" args=" " scope="PUBLIC" type="ptFunction" line="88">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="i_edicao" args=" " scope="PUBLIC" type="ptFunction" line="105">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="i_impressao" args=" " scope="PUBLIC" type="ptFunction" line="359">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="i_ativa" args=" " scope="PUBLIC" type="ptFunction" line="46">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="i_tec_emp" args=" " scope="PUBLIC" type="ptFunction" line="55">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="qmanutemp" args=" " scope="PUBLIC" type="ptFunction" line="6">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="i_inicializacao" args=" " scope="PUBLIC" type="ptFunction" line="336">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="view__cgm" args="<XX>, <YY>, <ZZ> " scope="PUBLIC" type="ptFunction" line="263">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="i_ajust_fields" args=" " scope="PUBLIC" type="ptFunction" line="238">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="keyb" args="<C_STRING> " scope="PUBLIC" type="ptFunction" line="270">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="i_critica" args="<cCAMPO> " scope="PUBLIC" type="ptFunction" line="216">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="i_critica1" args="<cCAMPO> " scope="PUBLIC" type="ptFunction" line="322">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMANUT.PRG" name="i_lista" args=" " scope="PUBLIC" type="ptFunction" line="277">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCONF_.PRG" name="qconf" args="<cMENSAGEM> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QKEYON.PRG" name="qkeyon" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITS.PRG" name="i_atua_paths" args=" " scope="PUBLIC" type="ptFunction" line="143">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITS.PRG" name="i_chk_set_clipper" args=" " scope="PUBLIC" type="ptFunction" line="119">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITS.PRG" name="i_chk_file" args="<cFILE> " scope="PUBLIC" type="ptFunction" line="74">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITS.PRG" name="qinit_sist" args=" " scope="PUBLIC" type="ptFunction" line="7">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITS.PRG" name="i_chk_space" args=" " scope="PUBLIC" type="ptFunction" line="103">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITS.PRG" name="i_limpa_prn" args=" " scope="PUBLIC" type="ptFunction" line="88">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSEEK_.PRG" name="qnextchar" args="<cSTRING> " scope="PUBLIC" type="ptFunction" line="13">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSEEK_.PRG" name="qseekn" args="<cCHAVE> " scope="PUBLIC" type="ptFunction" line="8">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSEEK_.PRG" name="qseek" args="<cCHAVE>, <lSOFT> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMOUSE.PRG" name="qmouseli" args=" " scope="PUBLIC" type="ptFunction" line="12">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMOUSE.PRG" name="qmousebo" args=" " scope="PUBLIC" type="ptFunction" line="6">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMOUSE.PRG" name="qmouseco" args=" " scope="PUBLIC" type="ptFunction" line="9">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMOUSE.PRG" name="qmouseok" args=" " scope="PUBLIC" type="ptFunction" line="3">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMOUSE.PRG" name="qmousecu" args="<nPAR> " scope="PUBLIC" type="ptFunction" line="15">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\ATNSC_.PRG" name="atnsc_sl" args="<nLIN>, <nCOL> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QHELP_.PRG" name="i_help_prog" args=" " scope="PUBLIC" type="ptFunction" line="29">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QHELP_.PRG" name="qhelp" args=" " scope="PUBLIC" type="ptFunction" line="3">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QHELP_.PRG" name="i_help_bloc" args="<cBLOC> " scope="PUBLIC" type="ptFunction" line="24">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QESCO_.PRG" name="qesco" args="<nLIN>, <nCOL>, <cVAR>, <sBLOC>, <nSHADOW> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITV.PRG" name="i_vencido" args=" " scope="PUBLIC" type="ptFunction" line="225">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITV.PRG" name="f_macro1" args="<keyboard><XMACRO1><return> " scope="PUBLIC" type="ptFunction" line="204">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITV.PRG" name="i_aciona_macros" args=" " scope="PUBLIC" type="ptFunction" line="143">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITV.PRG" name="qinit_var" args="<cSIGLA> " scope="PUBLIC" type="ptFunction" line="6">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITV.PRG" name="f_macro7" args="<keyboard><XMACRO7><return> " scope="PUBLIC" type="ptFunction" line="216">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITV.PRG" name="f_macro5" args="<keyboard><XMACRO5><return> " scope="PUBLIC" type="ptFunction" line="212">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITV.PRG" name="f_macro4" args="<keyboard><XMACRO4><return> " scope="PUBLIC" type="ptFunction" line="210">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITV.PRG" name="f_macro3" args="<keyboard><XMACRO3><return> " scope="PUBLIC" type="ptFunction" line="208">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITV.PRG" name="f_macro2" args="<keyboard><XMACRO2><return> " scope="PUBLIC" type="ptFunction" line="206">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINITV.PRG" name="f_macro6" args="<keyboard><XMACRO6><return> " scope="PUBLIC" type="ptFunction" line="214">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\COLOR_.PRG" name="color_sl" args="<N1>, <N2>, <N3>, <N4>, <N5>, <STR> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QTOOLS.PRG" name="qtools" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QOPEN_.PRG" name="qopen" args=" " scope="PUBLIC" type="ptFunction" line="5">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\SAYSC_.PRG" name="sbbaysc_sl" args="<nLIN>, <nCOL>, <cVAR>, <nATRIB> " scope="PUBLIC" type="ptFunction" line="14">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\SAYSC_.PRG" name="saysc_sl" args="<nLIN>, <nCOL>, <cVAR>, <nATRIB> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\SCROL_.PRG" name="scrol_sl" args="<nTOP>, <nLEFT>, <nBOT>, <nRIGHT>, <nQTD>, <cSTR> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QWAIT_.PRG" name="qwait" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMENU_.PRG" name="gprogperm" args=" " scope="PUBLIC" type="ptFunction" line="70">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMENU_.PRG" name="gprogescol" args=" " scope="PUBLIC" type="ptFunction" line="79">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMENU_.PRG" name="i_menu_parcial" args=" " scope="PUBLIC" type="ptFunction" line="49">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMENU_.PRG" name="i_call_menu" args=" " scope="PUBLIC" type="ptFunction" line="27">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMENU_.PRG" name="qmenu" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QGETX_.PRG" name="getval" args=" " scope="PUBLIC" type="ptFunction" line="34">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QGETX_.PRG" name="qgetx" args="<nLIN>, <nCOL>, <zVAR>, <cPIC>, <cVALID>, <lWHEN>, <zCOLOR> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\POSCU_.PRG" name="Poscu_sl" args="<nLIN>, <nCOL> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QVIEW_.PRG" name="centraview" args="<aVETOR>, <nLEFT>, <nRIGHT> " scope="PUBLIC" type="ptFunction" line="665">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QVIEW_.PRG" name="montaview" args="<nTOP>, <nLEFT>, <nBOTTOM>, <nRIGHT> " scope="PUBLIC" type="ptFunction" line="707">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QVIEW_.PRG" name="qview" args="<nLIN>, <nCOL>, <zGET>, <cPIC>, <cVAL>, <cWHE>, <cCOR>, <aVET>, <cARE>, <aFUN>, <cFIL>, <cMEN>, <cKOR>, <cEXIT> " scope="PUBLIC" type="ptFunction" line="49">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QVIEW_.PRG" name="do_get" args="<oVIEW> " scope="PUBLIC" type="ptFunction" line="577">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QVIEW_.PRG" name="instoggle" args=" " scope="PUBLIC" type="ptFunction" line="652">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QVIEW_.PRG" name="i_pesq" args="<oVIEW>, <aFUNCOES>, <cAREA>, <nLEFT>, <nRIGHT> " scope="PUBLIC" type="ptFunction" line="406">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QVIEW_.PRG" name="qviewx" args="<aESTRUCT>, <cAREA>, <aFUNCOES>, <cFILTRO>, <cMENSAGEM>, <cKOLOR>, <cEXIT>, <cMSGEXIT> " scope="PUBLIC" type="ptFunction" line="78">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QVIEW_.PRG" name="fblock" args="<cFIELD> " scope="PUBLIC" type="ptFunction" line="492">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QVIEW_.PRG" name="cblock" args="<cFIELD> " scope="PUBLIC" type="ptFunction" line="523">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QVIEW_.PRG" name="skipper" args="<n>, <cFILT> " scope="PUBLIC" type="ptFunction" line="536">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINST_.PRG" name="qinstcrc" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINST_.PRG" name="j_ret_string" args=" " scope="PUBLIC" type="ptFunction" line="5">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QLOGIN1.PRG" name="i_check_user" args="<cSENHA> " scope="PUBLIC" type="ptFunction" line="87">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QLOGIN1.PRG" name="i_logout" args=" " scope="PUBLIC" type="ptFunction" line="122">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QLOGIN1.PRG" name="qlogin" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QLOGIN1.PRG" name="i_e_senha_admin" args="<cSENHA> " scope="PUBLIC" type="ptFunction" line="69">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QLOGIN2.PRG" name="ctrl_admin" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QBUSCAI.PRG" name="qbuscaind" args="<cINDICE>, <dDATA>, <lFLAG> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QFIELDS.PRG" name="qpublicfields" args="<cPREFIX> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QFIELDS.PRG" name="qinitfields" args="<cPREFIX> " scope="PUBLIC" type="ptFunction" line="19">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QFIELDS.PRG" name="qreleasefields" args="<cPREFIX> " scope="PUBLIC" type="ptFunction" line="10">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QFIELDS.PRG" name="qcopyfields" args="<cPREFIX> " scope="PUBLIC" type="ptFunction" line="40">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QFIELDS.PRG" name="qreplacefields" args="<cPREFIX> " scope="PUBLIC" type="ptFunction" line="48">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QBACKUP.PRG" name="i_backup" args=" " scope="PUBLIC" type="ptFunction" line="83">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QBACKUP.PRG" name="i_restore" args=" " scope="PUBLIC" type="ptFunction" line="110">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QBACKUP.PRG" name="qbackup" args=" " scope="PUBLIC" type="ptFunction" line="4">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINDEXC.PRG" name="qindexcontrol" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSCREEN.PRG" name="qrbloc" args="<nTOP>, <nLEFT>, <sBLOCO>, <nSHADOW> " scope="PUBLIC" type="ptFunction" line="8">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSCREEN.PRG" name="qreadglo" args="<cBLOC>, <cGLO> " scope="PUBLIC" type="ptFunction" line="46">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSCREEN.PRG" name="qinverc" args="<nTOP>, <nLEFT>, <nBOTTOM>, <nRIGHT> " scope="PUBLIC" type="ptFunction" line="93">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSCREEN.PRG" name="qlbloc" args="<nTOP>, <nLEFT>, <cBLOC>, <cGLO>, <nSHADOW> " scope="PUBLIC" type="ptFunction" line="30">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSCREEN.PRG" name="qsbloc" args="<nTOP>, <nLEFT>, <nBOTTOM>, <nRIGHT> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QKEYOFF.PRG" name="qkeyoff" args=" " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSELEMP.PRG" name="qselect_emp" args=" " scope="PUBLIC" type="ptFunction" line="7">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSELEMP.PRG" name="qseldirect" args="<cPARM1> " scope="PUBLIC" type="ptFunction" line="254">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSELEMP.PRG" name="i_index_seletivo" args=" " scope="PUBLIC" type="ptFunction" line="241">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSELEMP.PRG" name="qmarcaemp" args=" " scope="PUBLIC" type="ptFunction" line="274">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSELEMP.PRG" name="i_base_de_dados" args=" " scope="PUBLIC" type="ptFunction" line="150">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSELEMP.PRG" name="i_liberacao" args=" " scope="PUBLIC" type="ptFunction" line="121">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSELEMP.PRG" name="i_cria_base" args="<cPATH> " scope="PUBLIC" type="ptFunction" line="168">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSELEMP.PRG" name="i_tem255" args=" " scope="PUBLIC" type="ptFunction" line="325">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSELEMP.PRG" name="i_inic_var_inst" args=" " scope="PUBLIC" type="ptFunction" line="103">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSELEMP.PRG" name="i_marc_sn" args="<nTECLA> " scope="PUBLIC" type="ptFunction" line="335">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCLEAR_.PRG" name="QCLEAR" args="<nTopLin>, <nTopCol>, <nBottomLin>, <nBottomCol>, <cAttr> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QBUSCA_.PRG" name="qbusca_sup" args="<cATUAL> " scope="PUBLIC" type="ptFunction" line="4">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QFLOCK_.PRG" name="qflock" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QABREV_.PRG" name="qabrev" args="<cVAR>, <cOPCOES>, <aVETOR> " scope="PUBLIC" type="ptFunction" line="4">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMENSA_.PRG" name="qmensa" args="<cSTRING>, <cCONTROL> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QDRIVE_.PRG" name="qdrive" args="<str> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QRLOCK_.PRG" name="qunlock" args=" " scope="PUBLIC" type="ptFunction" line="14">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QRLOCK_.PRG" name="qrlock" args="<nRECNO> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINKEY_.PRG" name="qinkey" args="<nSecs> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\duview_.prg" name="duview" args="<nLIN>, <nCOL>, <zGET>, <cPIC>, <cVAL>, <cWHE>, <cCOR>, <aVET>, <cARE>, <aFUN>, <cFIL>, <cMEN>, <cKOR> " scope="PUBLIC" type="ptFunction" line="48">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\duview_.prg" name="boblock" args="<cFIELD> " scope="PUBLIC" type="ptFunction" line="560">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\duview_.prg" name="duskipper" args="<n>, <cFILT> " scope="PUBLIC" type="ptFunction" line="573">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\duview_.prg" name="dublock" args="<cFIELD> " scope="PUBLIC" type="ptFunction" line="529">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\duview_.prg" name="du_pesq" args="<oVIEW>, <aFUNCOES>, <cAREA>, <nLEFT>, <nRIGHT> " scope="PUBLIC" type="ptFunction" line="443">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\duview_.prg" name="duviewx" args="<aESTRUCT>, <cAREA>, <aFUNCOES>, <cFILTRO>, <cMENSAGEM>, <cKOLOR> " scope="PUBLIC" type="ptFunction" line="77">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\duview_.prg" name="dudo_get" args="<oVIEW> " scope="PUBLIC" type="ptFunction" line="614">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\duview_.prg" name="dumontaview" args="<nTOP>, <nLEFT>, <nBOTTOM>, <nRIGHT> " scope="PUBLIC" type="ptFunction" line="744">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\duview_.prg" name="ducentraview" args="<aVETOR>, <nLEFT>, <nRIGHT> " scope="PUBLIC" type="ptFunction" line="702">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\duview_.prg" name="duinstoggle" args=" " scope="PUBLIC" type="ptFunction" line="689">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QEXTEN_.PRG" name="qextenso" args="<nVALOR>, <cTIPO> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QEXTEN_.PRG" name="i_ext" args="<cCENTENA> " scope="PUBLIC" type="ptFunction" line="48">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSTRUCT.PRG" name="IQ_ESDBF" args=" " scope="PUBLIC" type="ptFunction" line="7">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSTRUCT.PRG" name="F_ESC_DRI" args=" " scope="PUBLIC" type="ptFunction" line="28">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSTRUCT.PRG" name="f_esc_dbf" args="<C_MOD>, <C_ELE>, <C_POS> " scope="PUBLIC" type="ptFunction" line="49">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINVER_.PRG" name="qinver" args="<nLIN>, <nCOL>, <nQUANT> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_NOALIAS" args=" " scope="PUBLIC" type="ptConstant" line="34">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_NOVARMETHOD" args=" " scope="PUBLIC" type="ptConstant" line="35">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_CREATE" args=" " scope="PUBLIC" type="ptConstant" line="37">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_NOFUNC" args=" " scope="PUBLIC" type="ptConstant" line="31">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_NOMETHOD" args=" " scope="PUBLIC" type="ptConstant" line="32">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_NOVAR" args=" " scope="PUBLIC" type="ptConstant" line="33">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_OPEN" args=" " scope="PUBLIC" type="ptConstant" line="38">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_PRINT" args=" " scope="PUBLIC" type="ptConstant" line="42">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_UNSUPPORTED" args=" " scope="PUBLIC" type="ptConstant" line="44">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_LIMIT" args=" " scope="PUBLIC" type="ptConstant" line="45">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_CLOSE" args=" " scope="PUBLIC" type="ptConstant" line="39">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_READ" args=" " scope="PUBLIC" type="ptConstant" line="40">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_WRITE" args=" " scope="PUBLIC" type="ptConstant" line="41">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="ES_CATASTROPHIC" args=" " scope="PUBLIC" type="ptConstant" line="17">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_ARG" args=" " scope="PUBLIC" type="ptConstant" line="21">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_BOUND" args=" " scope="PUBLIC" type="ptConstant" line="22">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="ES_WHOCARES" args=" " scope="PUBLIC" type="ptConstant" line="14">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="ES_WARNING" args=" " scope="PUBLIC" type="ptConstant" line="15">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="ES_ERROR" args=" " scope="PUBLIC" type="ptConstant" line="16">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_STROVERFLOW" args=" " scope="PUBLIC" type="ptConstant" line="23">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_SYNTAX" args=" " scope="PUBLIC" type="ptConstant" line="27">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_COMPLEXITY" args=" " scope="PUBLIC" type="ptConstant" line="28">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_MEM" args=" " scope="PUBLIC" type="ptConstant" line="30">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_NUMOVERFLOW" args=" " scope="PUBLIC" type="ptConstant" line="24">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_ZERODIV" args=" " scope="PUBLIC" type="ptConstant" line="25">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_NUMERR" args=" " scope="PUBLIC" type="ptConstant" line="26">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_CORRUPTION" args=" " scope="PUBLIC" type="ptConstant" line="46">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_APPENDLOCK" args=" " scope="PUBLIC" type="ptConstant" line="54">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="NTRIM" args="<n> " scope="PUBLIC" type="ptPseudoFUNC" line="63">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_UNLOCKED" args=" " scope="PUBLIC" type="ptConstant" line="52">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_READONLY" args=" " scope="PUBLIC" type="ptConstant" line="53">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="q_error" args="<e> " scope="PUBLIC" type="ptFunction" line="81">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="ErrorSys" args=" " scope="PUBLIC" type="ptProcedure" line="68">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="i_traduz_erro" args="<oERRO> " scope="PUBLIC" type="ptFunction" line="292">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="errormessage" args="<e> " scope="PUBLIC" type="ptFunction" line="245">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_SHARED" args=" " scope="PUBLIC" type="ptConstant" line="51">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_DATAWIDTH" args=" " scope="PUBLIC" type="ptConstant" line="48">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_NOTABLE" args=" " scope="PUBLIC" type="ptConstant" line="49">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="_rescue" args=" " scope="PUBLIC" type="ptFunction" line="526">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_DATATYPE" args=" " scope="PUBLIC" type="ptConstant" line="47">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="i_protec" args=" " scope="PUBLIC" type="ptFunction" line="464">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="ca_error" args="<e> " scope="PUBLIC" type="ptFunction" line="324">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="EG_NOORDER" args=" " scope="PUBLIC" type="ptConstant" line="50">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QERRSYS.PRG" name="i_prot_adic" args=" " scope="PUBLIC" type="ptFunction" line="494">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QPEDEDAT.PRG" name="qpededata" args="<cMENSAGEM>, <dDATA> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QGIRABAR.PRG" name="qgirabarra" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAGENDA_.PRG" name="i_pega_data" args="<dDATA> " scope="PUBLIC" type="ptFunction" line="49">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAGENDA_.PRG" name="edit_agenda" args=" " scope="PUBLIC" type="ptFunction" line="53">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAGENDA_.PRG" name="qagenda" args=" " scope="PUBLIC" type="ptFunction" line="3">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAGENDA_.PRG" name="i_calend" args=" " scope="PUBLIC" type="ptFunction" line="12">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAGENDA_.PRG" name="monta_c" args=" " scope="PUBLIC" type="ptFunction" line="84">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAGENDA_.PRG" name="stuff" args=" " scope="PUBLIC" type="ptFunction" line="134">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAGENDA_.PRG" name="centro_c" args="<CAMP>, <DATA_C> " scope="PUBLIC" type="ptFunction" line="120">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAGENDA_.PRG" name="diad" args=" " scope="PUBLIC" type="ptFunction" line="109">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QACHOIC_.PRG" name="qachoice" args="<nLIN>, <nCOL>, <sBLOC>, <cSTART>, <nSHADOW> " scope="PUBLIC" type="ptFunction" line="3">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_CONF.PRG" name="qad_conf" args=" " scope="PUBLIC" type="ptFunction" line="4">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\IQ_DEBUG.PRG" name="iq_debug" args=" " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_ESTA.PRG" name="i_check_ativ" args="<aATIV> " scope="PUBLIC" type="ptFunction" line="153">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_ESTA.PRG" name="i_check_prog" args="<aPROG> " scope="PUBLIC" type="ptFunction" line="174">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_ESTA.PRG" name="qad_esta" args=" " scope="PUBLIC" type="ptFunction" line="4">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_ESTA.PRG" name="i_cons_stat" args="<dINICIO>, <dFINAL>, <cUSRNUM> " scope="PUBLIC" type="ptFunction" line="39">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_SENH.PRG" name="qad_senh" args=" " scope="PUBLIC" type="ptFunction" line="4">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSAVEARR.PRG" name="qsavearray" args="<aVET>, <cNOME> " scope="PUBLIC" type="ptFunction" line="3">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QSAVEARR.PRG" name="save_array" args="<aVET> " scope="PUBLIC" type="ptFunction" line="9">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_MANU.PRG" name="ymanud" args=" " scope="PUBLIC" type="ptFunction" line="51">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_MANU.PRG" name="ymanub" args=" " scope="PUBLIC" type="ptFunction" line="35">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_MANU.PRG" name="ymanuw" args="<nTECLA> " scope="PUBLIC" type="ptFunction" line="24">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_MANU.PRG" name="qad_chk_idt" args="<cIDENT>, <nRECNO> " scope="PUBLIC" type="ptFunction" line="125">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_MANU.PRG" name="ymanua" args=" " scope="PUBLIC" type="ptFunction" line="88">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_MANU.PRG" name="ymanue" args=" " scope="PUBLIC" type="ptFunction" line="108">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_MANU.PRG" name="ymanui" args=" " scope="PUBLIC" type="ptFunction" line="67">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_MANU.PRG" name="ymanu1" args=" " scope="PUBLIC" type="ptFunction" line="21">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_MANU.PRG" name="qad_manu" args=" " scope="PUBLIC" type="ptFunction" line="4">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_MANU.PRG" name="qad_chk_sen" args="<cSENHA>, <nRECNO> " scope="PUBLIC" type="ptFunction" line="137">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCONFPRN.PRG" name="i_conf_prn_escol" args=" " scope="PUBLIC" type="ptFunction" line="31">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCONFPRN.PRG" name="i_tela_prn" args=" " scope="PUBLIC" type="ptFunction" line="27">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCONFPRN.PRG" name="qconfprn" args=" " scope="PUBLIC" type="ptFunction" line="4">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QCONFPRN.PRG" name="i_test_prn" args="<nOPCAO> " scope="PUBLIC" type="ptFunction" line="42">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAPPEND_.PRG" name="qappend" args="<lFLAG> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_PERM.PRG" name="ypermdias" args="<cDIAS> " scope="PUBLIC" type="ptFunction" line="204">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_PERM.PRG" name="yph" args="<cHORARIO> " scope="PUBLIC" type="ptFunction" line="219">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_PERM.PRG" name="ypx" args="<cTECLA> " scope="PUBLIC" type="ptFunction" line="164">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_PERM.PRG" name="ypbot" args=" " scope="PUBLIC" type="ptFunction" line="153">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_PERM.PRG" name="yptop" args=" " scope="PUBLIC" type="ptFunction" line="142">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_PERM.PRG" name="ypermidt" args=" " scope="PUBLIC" type="ptFunction" line="135">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_PERM.PRG" name="ypermx" args=" " scope="PUBLIC" type="ptFunction" line="54">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_PERM.PRG" name="yptotal" args="<cOPCAO> " scope="PUBLIC" type="ptFunction" line="247">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_PERM.PRG" name="ypo" args=" " scope="PUBLIC" type="ptFunction" line="229">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_PERM.PRG" name="ypconfig" args="<cOPCAO> " scope="PUBLIC" type="ptFunction" line="276">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_PERM.PRG" name="qad_perm" args=" " scope="PUBLIC" type="ptFunction" line="5">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_PERM.PRG" name="qad_perm2" args=" " scope="PUBLIC" type="ptFunction" line="19">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\seekc_sl.prg" name="seekc_sl" args="<cSTR>, <XNIVEL>, <cSTR2> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\seekc_sl.prg" name="seekb_sl" args="<cSTR>, <XNIVEL>, <cSTR2> " scope="PUBLIC" type="ptFunction" line="35">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QLOGERRO.PRG" name="i_err_trace" args=" " scope="PUBLIC" type="ptFunction" line="49">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QLOGERRO.PRG" name="i_err_tela" args=" " scope="PUBLIC" type="ptFunction" line="65">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QLOGERRO.PRG" name="qlogerro" args=" " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QTIRAPON.PRG" name="qtiraponto" args="<cSTRING> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\ATCSC_SL.PRG" name="atcsc_sl" args="<nLIN>, <nCOL> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_HIST.PRG" name="zhist2" args=" " scope="PUBLIC" type="ptFunction" line="31">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_HIST.PRG" name="zhist1" args=" " scope="PUBLIC" type="ptFunction" line="27">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAD_HIST.PRG" name="qad_hist" args=" " scope="PUBLIC" type="ptFunction" line="4">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QDIFTIM_.PRG" name="qdiftime" args="<CL_START>, <CL_END> " scope="PUBLIC" type="ptFunction" line="22">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QDIGITO_.PRG" name="qdigito" args="<cSTRING> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\CHRSC_SL.PRG" name="chrsc_sl" args="<nLIN>, <nCOL>, <cSTR> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\seekl_sl.prg" name="seekl_sl" args="<cSTR>, <XNIVEL>, <cSTR2> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QRESTARR.PRG" name="qrestarray" args="<cNOME> " scope="PUBLIC" type="ptFunction" line="3">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QRESTARR.PRG" name="rest_array" args=" " scope="PUBLIC" type="ptFunction" line="11">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAUXPROG.PRG" name="i_ver_pub" args=" " scope="PUBLIC" type="ptFunction" line="102">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAUXPROG.PRG" name="i_ver_mem" args=" " scope="PUBLIC" type="ptFunction" line="108">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAUXPROG.PRG" name="i_ver_sit" args=" " scope="PUBLIC" type="ptFunction" line="114">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAUXPROG.PRG" name="i_ver_255" args=" " scope="PUBLIC" type="ptFunction" line="82">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAUXPROG.PRG" name="q_aux_prog" args=" " scope="PUBLIC" type="ptFunction" line="6">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAUXPROG.PRG" name="i_ver_var" args=" " scope="PUBLIC" type="ptFunction" line="24">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QAUXPROG.PRG" name="i_calc_var" args=" " scope="PUBLIC" type="ptFunction" line="47">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMACROS_.PRG" name="i_edita" args="<nPOS>, <cMACRO> " scope="PUBLIC" type="ptFunction" line="57">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMACROS_.PRG" name="qmacros" args=" " scope="PUBLIC" type="ptFunction" line="13">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMACROS_.PRG" name="i_f9" args=" " scope="PUBLIC" type="ptFunction" line="113">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QGETSEN_.PRG" name="qgetsenha" args="<nLIN>, <nCOL>, <nLEN> " scope="PUBLIC" type="ptFunction" line="4">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\ATNSC_SL.PRG" name="atnsc_sl" args="<nLIN>, <nCOL> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QINTCHR_.PRG" name="qintchr" args="<cSTRING>, <cCHAR> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMEMOUSR.PRG" name="i_aciona_edicao" args=" " scope="PUBLIC" type="ptFunction" line="36">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QMEMOUSR.PRG" name="qmemousr" args=" " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\SAYSC_SL.PRG" name="saysc_sl" args="<nLIN>, <nCOL>, <cVAR>, <nATRIB> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QGETPRO_.PRG" name="i_view" args=" " scope="PUBLIC" type="ptFunction" line="173">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QGETPRO_.PRG" name="i_qsys" args=" " scope="PUBLIC" type="ptFunction" line="180">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QGETPRO_.PRG" name="i_exec_scr_saver" args=" " scope="PUBLIC" type="ptFunction" line="224">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QGETPRO_.PRG" name="qquit" args=" " scope="PUBLIC" type="ptFunction" line="210">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QGETPRO_.PRG" name="qlogout" args=" " scope="PUBLIC" type="ptFunction" line="190">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QGETPRO_.PRG" name="i_getkey" args=" " scope="PUBLIC" type="ptFunction" line="70">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QGETPRO_.PRG" name="qgetprog" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QTOTCHR_.PRG" name="qtotchr" args="<cCHAR>, <cSTRING>, <lCASE> " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\POSCU_SL.PRG" name="Poscu_sl" args="<nLIN>, <nCOL> " scope="PUBLIC" type="ptFunction" line="0">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QM.PRG" name="qm2" args=" " scope="PUBLIC" type="ptFunction" line="5">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QM.PRG" name="qm1" args=" " scope="PUBLIC" type="ptFunction" line="1">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QM.PRG" name="qm4" args=" " scope="PUBLIC" type="ptFunction" line="13">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\QM.PRG" name="qm3" args=" " scope="PUBLIC" type="ptFunction" line="9">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q901.PRG" name="q_meter" args=" " scope="PUBLIC" type="ptFunction" line="404">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q901.PRG" name="trace_pack" args=" " scope="PUBLIC" type="ptFunction" line="413">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q901.PRG" name="do_index" args="<cCAMINHO>, <cDBF> " scope="PUBLIC" type="ptFunction" line="348">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q901.PRG" name="ctrl_selecao" args="<nMODO>, <nITEM>, <nLINHA> " scope="PUBLIC" type="ptFunction" line="214">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q901.PRG" name="i_all" args=" " scope="PUBLIC" type="ptFunction" line="298">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q901.PRG" name="do_pack" args="<cCAMINHO>, <cDBF> " scope="PUBLIC" type="ptFunction" line="314">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q901.PRG" name="q902" args=" " scope="PUBLIC" type="ptFunction" line="422">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q901.PRG" name="f_condicao_pack" args=" " scope="PUBLIC" type="ptFunction" line="341">
+   <tag filename="C:\QSYS_G\QlibSql\Harbour1.00\Q901.PRG" name="q901" args=" " scope="PUBLIC" type="ptFunction" line="8">
+</taglist>

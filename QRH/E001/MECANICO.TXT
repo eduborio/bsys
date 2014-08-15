@@ -1,0 +1,16 @@
+
+Estrutura do arquivo MECANICO.DBF
+16/09/04  -  09:58:10
+
+CODIGO     - C -   6 -   0
+NOME       - C -  30 -   0
+COD_FUN    - C -   6 -   0
+SALARIO    - N -   9 -   2
+
+Indexadores utilizados:
+
+01 - Codigo                         - MEC_COD  - CODIGO                                            
+02 - Nome do Mecanico               - MEC_NOM  - NOME                                              
+03 - Matricula do Funcionario       - MEC_MAT  - COD_FUN                                           
+
+

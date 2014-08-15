@@ -1,0 +1,14 @@
+
+Estrutura do arquivo EVCONT.DBF
+16/09/04  -  09:58:10
+
+EVENTO     - C -   3 -   0
+CONT_DB    - C -   6 -   0
+CONT_CR    - C -   6 -   0
+CCUSTO     - C -  10 -   0
+
+Indexadores utilizados:
+
+01 - C¢digo do Evento               - CO_EVENT - EVENTO                                            
+
+

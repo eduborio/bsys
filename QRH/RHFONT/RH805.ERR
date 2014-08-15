@@ -1,0 +1,33 @@
+312K available
+Compiling RH805.PRG
+RH805.PRG(21)  Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH805.PRG(22)  Warning C1004  Ambiguous reference, assuming memvar: 'SBLOCO3'
+RH805.PRG(23)  Warning C1004  Ambiguous reference, assuming memvar: 'FCOMBINA'
+RH805.PRG(76)  Warning C1004  Ambiguous reference, assuming memvar: 'NROW'
+RH805.PRG(90)  Warning C1004  Ambiguous reference, assuming memvar: 'NROW'
+RH805.PRG(91)  Warning C1004  Ambiguous reference, assuming memvar: 'NROW'
+RH805.PRG(95)  Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(96)  Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(97)  Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(98)  Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(138) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(139) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(140) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(141) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(142) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(154) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(156) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(157) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(167) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(168) Warning C1004  Ambiguous reference, assuming memvar: 'FCOMBINA'
+RH805.PRG(177) Warning C1001  RETURN statement with no value in function
+RH805.PRG(186) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(187) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(188) Warning C1004  Ambiguous reference, assuming memvar: 'NROW'
+RH805.PRG(188) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(190) Warning C1003  Ambiguous reference: 'NROW'
+RH805.PRG(191) Warning C1004  Ambiguous reference, assuming memvar: 'NROW'
+RH805.PRG(194) Warning C1004  Ambiguous reference, assuming memvar: 'NROW'
+RH805.PRG(194) Warning C1004  Ambiguous reference, assuming memvar: 'NROW'
+29 warnings                
+Code size 1848, Symbols 880, Constants 472

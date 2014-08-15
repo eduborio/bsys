@@ -1,0 +1,10 @@
+
+Estrutura do arquivo INTEGRA.DBF
+16/09/04  -  09:58:09
+
+LINHA      - C - 150 -   0
+
+Indexadores utilizados:
+
+
+

@@ -1,0 +1,70 @@
+238K available
+Compiling RH152.PRG
+RH152.PRG(29)  Warning C1003  Ambiguous reference: 'CODIGO'
+RH152.PRG(54)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH152.PRG(54)  Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH152.PRG(55)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH152.PRG(55)  Warning C1003  Ambiguous reference: 'XUSRA'
+RH152.PRG(56)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH152.PRG(72)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH152.PRG(75)  Warning C1003  Ambiguous reference: 'FFORMULA'
+RH152.PRG(75)  Warning C1004  Ambiguous reference, assuming memvar: 'FFORMULA'
+RH152.PRG(82)  Warning C1003  Ambiguous reference: 'XUSRIDT'
+RH152.PRG(82)  Warning C1004  Ambiguous reference, assuming memvar: 'FUSR_IDT'
+RH152.PRG(83)  Warning C1004  Ambiguous reference, assuming memvar: 'FULT_DATA'
+RH152.PRG(84)  Warning C1004  Ambiguous reference, assuming memvar: 'FULT_HORA'
+RH152.PRG(95)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH152.PRG(98)  Warning C1003  Ambiguous reference: 'FFORMULA'
+RH152.PRG(98)  Warning C1004  Ambiguous reference, assuming memvar: 'FFORMULA'
+RH152.PRG(105) Warning C1003  Ambiguous reference: 'XUSRIDT'
+RH152.PRG(105) Warning C1004  Ambiguous reference, assuming memvar: 'FUSR_IDT'
+RH152.PRG(106) Warning C1004  Ambiguous reference, assuming memvar: 'FULT_DATA'
+RH152.PRG(107) Warning C1004  Ambiguous reference, assuming memvar: 'FULT_HORA'
+RH152.PRG(118) Warning C1003  Ambiguous reference: 'COPCAO'
+RH152.PRG(121) Warning C1003  Ambiguous reference: 'XUSRIDT'
+RH152.PRG(133) Warning C1003  Ambiguous reference: 'COPCAO'
+RH152.PRG(137) Warning C1003  Ambiguous reference: 'COPCAO'
+RH152.PRG(141) Warning C1003  Ambiguous reference: 'COPCAO'
+RH152.PRG(145) Warning C1003  Ambiguous reference: 'COPCAO'
+RH152.PRG(165) Warning C1003  Ambiguous reference: 'FCODIGO'
+RH152.PRG(166) Warning C1003  Ambiguous reference: 'FDESCRICAO'
+RH152.PRG(167) Warning C1003  Ambiguous reference: 'FPARAMETER'
+RH152.PRG(169) Warning C1003  Ambiguous reference: 'FCODIGO'
+RH152.PRG(170) Warning C1003  Ambiguous reference: 'FCODIGO'
+RH152.PRG(177) Warning C1003  Ambiguous reference: 'FDESCRICAO'
+RH152.PRG(178) Warning C1003  Ambiguous reference: 'FPARAMETER'
+RH152.PRG(190) Warning C1003  Ambiguous reference: 'FFORMULA'
+RH152.PRG(191) Warning C1003  Ambiguous reference: 'FFORMULA'
+RH152.PRG(199) Warning C1003  Ambiguous reference: 'FFORMULA'
+RH152.PRG(200) Warning C1003  Ambiguous reference: 'FFORMULA'
+RH152.PRG(208) Warning C1003  Ambiguous reference: 'FFORMULA'
+RH152.PRG(209) Warning C1003  Ambiguous reference: 'FFORMULA'
+RH152.PRG(217) Warning C1003  Ambiguous reference: 'FFORMULA'
+RH152.PRG(225) Warning C1003  Ambiguous reference: 'FFORMULA'
+RH152.PRG(233) Warning C1003  Ambiguous reference: 'FFORMULA'
+RH152.PRG(263) Warning C1004  Ambiguous reference, assuming memvar: 'STELA'
+RH152.PRG(266) Warning C1003  Ambiguous reference: 'STELA'
+RH152.PRG(293) Warning C1001  RETURN statement with no value in function
+RH152.PRG(299) Warning C1004  Ambiguous reference, assuming memvar: 'STELA'
+RH152.PRG(302) Warning C1003  Ambiguous reference: 'STELA'
+RH152.PRG(303) Warning C1001  RETURN statement with no value in function
+RH152.PRG(327) Warning C1001  RETURN statement with no value in function
+RH152.PRG(330) Warning C1004  Ambiguous reference, assuming memvar: 'NBOT'
+RH152.PRG(330) Warning C1004  Ambiguous reference, assuming memvar: 'NTOP'
+RH152.PRG(334) Warning C1004  Ambiguous reference, assuming memvar: 'NTOP'
+RH152.PRG(336) Warning C1004  Ambiguous reference, assuming memvar: 'NBOT'
+RH152.PRG(339) Warning C1003  Ambiguous reference: 'NTOP'
+RH152.PRG(343) Warning C1004  Ambiguous reference, assuming memvar: 'NREC'
+RH152.PRG(352) Warning C1003  Ambiguous reference: 'NTOP'
+RH152.PRG(352) Warning C1003  Ambiguous reference: 'NBOT'
+RH152.PRG(355) Warning C1001  RETURN statement with no value in function
+RH152.PRG(362) Warning C1001  RETURN statement with no value in function
+RH152.PRG(369) Warning C1004  Ambiguous reference, assuming memvar: 'CPILHA'
+RH152.PRG(371) Warning C1001  RETURN statement with no value in function
+RH152.PRG(379) Warning C1003  Ambiguous reference: 'CPILHA'
+RH152.PRG(384) Warning C1001  RETURN statement with no value in function
+RH152.PRG(404) Warning C1001  RETURN statement with no value in function
+RH152.PRG(415) Warning C1001  RETURN statement with no value in function
+RH152.PRG(429) Warning C1001  RETURN statement with no value in function
+66 warnings                
+Code size 3727, Symbols 1488, Constants 1729

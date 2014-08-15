@@ -1,0 +1,17 @@
+
+Estrutura do arquivo GPS_ACU.DBF
+16/09/04  -  09:58:10
+
+COD_GPS    - C -   4 -   0
+VALOR_ACUM - N -  12 -   2
+TOT_SEG    - N -  12 -   2
+TOT_EMP    - N -  12 -   2
+TOT_TER    - N -  12 -   2
+TOT_DED    - N -  12 -   2
+TOT_SAL    - N -  12 -   2
+
+Indexadores utilizados:
+
+01 - C¢digo da GPS                  - GPSA_COD - COD_GPS                                           
+
+

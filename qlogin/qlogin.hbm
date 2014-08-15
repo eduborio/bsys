@@ -1,0 +1,9 @@
+# Nome do .Exe
+-oC:\Qsys\Qlogin\Qlogin.exe
+
+-lc:\hb30\lib\win\msvc\hbqsys.lib
+-lc:\hb30\lib\win\msvc\hbct.lib
+
+-incpath=c:\hb30\include
+
+qlogin

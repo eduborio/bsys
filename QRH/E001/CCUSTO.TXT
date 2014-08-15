@@ -1,0 +1,66 @@
+
+Estrutura do arquivo CCUSTO.DBF
+25/09/01  -  12:59:58
+
+CODIGO     - C -   8 -   0
+DESCRICAO  - C -  40 -   0
+SUPERIOR   - C -  10 -   0
+NOME_FAN   - C -  15 -   0
+C_LANCAM   - L -   1 -   0
+SERIE      - N -   1 -   0
+RECEITA    - N -  19 -   2
+DESPESA    - N -  19 -   2
+FLAG_IMP   - C -  11 -   0
+ORD_IMP    - C -   3 -   0
+CGC        - C -  14 -   0
+INSCRI_EST - C -  14 -   0
+ENDERECO   - C -  40 -   0
+BAIRRO     - C -  20 -   0
+CIDADE     - C -  15 -   0
+ESTADO     - C -   2 -   0
+CEP        - C -   5 -   0
+TELEFONE   - C -  11 -   0
+RAMAL      - C -   4 -   0
+RESPONSAVE - C -  40 -   0
+INSCRI_MUN - C -  14 -   0
+CONTAD     - C -  15 -   0
+DIGITOD    - C -   1 -   0
+BANCO_FGTS - C -   5 -   0
+BANCOFGTS  - C -   5 -   0
+AGENCIAFGT - C -   4 -   0
+AGENDVFGT  - C -   1 -   0
+CTA_FGTS   - C -  13 -   0
+CTA_FGTSDV - C -   1 -   0
+EMPREG     - C -  30 -   0
+ATIVID     - C -  10 -   0
+D_UTIL     - N -   2 -   0
+D_UTIL_P   - N -   2 -   0
+ATIV_IBGE  - C -   4 -   0
+NATUREZA   - C -   1 -   0
+N_PROPRIET - N -   2 -   0
+N_FAMILIA  - N -   2 -   0
+TROCA_END  - C -   1 -   0
+CODBANCO   - C -   5 -   0
+AGENCIA    - C -   4 -   0
+AGENDV     - C -   1 -   0
+COD_RE     - C -   6 -   0
+CONT_EST   - C -  15 -   0
+DIGI_EST   - C -   1 -   0
+COD_CLASS  - C -   3 -   0
+KIT_I_MS   - C -   3 -   0
+KIT_E_MS   - C -   3 -   0
+KIT_I_FR   - C -   3 -   0
+KIT_E_FR   - C -   3 -   0
+KIT_I_AD   - C -   3 -   0
+KIT_E_AD   - C -   3 -   0
+KIT_I_DT   - C -   3 -   0
+KIT_E_DT   - C -   3 -   0
+
+Indexadores utilizados:
+
+01 - C¢digo do Centro               - CC_CODIG - CODIGO                                            
+02 - Descri‡„o do Centro            - CC_DESCR - DESCRICAO                                         
+03 - Centro Associado               - CC_SUPER - SUPERIOR                                          
+04 - RIGHT(CODIGO,4)                - CC_CODRD - right(CODIGO,4)                                   
+
+

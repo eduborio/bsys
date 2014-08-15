@@ -1,0 +1,38 @@
+312K available
+Compiling RH171.PRG
+RH171.PRG(24)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH171.PRG(24)  Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH171.PRG(26)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH171.PRG(28)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH171.PRG(42)  Warning C1003  Ambiguous reference: 'XNIVEL'
+RH171.PRG(42)  Warning C1003  Ambiguous reference: 'XFLAG'
+RH171.PRG(46)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH171.PRG(47)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(48)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(48)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(49)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(49)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(50)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(50)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(51)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(51)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(56)  Warning C1003  Ambiguous reference: 'COPCAO'
+RH171.PRG(56)  Warning C1001  RETURN statement with no value in function
+RH171.PRG(63)  Warning C1003  Ambiguous reference: 'FUTIL'
+RH171.PRG(64)  Warning C1003  Ambiguous reference: 'FSABADO'
+RH171.PRG(73)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(74)  Warning C1004  Ambiguous reference, assuming memvar: 'XFLAG'
+RH171.PRG(78)  Warning C1003  Ambiguous reference: 'XNIVEL'
+RH171.PRG(78)  Warning C1003  Ambiguous reference: 'XNIVEL'
+RH171.PRG(79)  Warning C1003  Ambiguous reference: 'XNIVEL'
+RH171.PRG(81)  Warning C1001  RETURN statement with no value in function
+RH171.PRG(83)  Warning C1003  Ambiguous reference: 'XNIVEL'
+RH171.PRG(85)  Warning C1003  Ambiguous reference: 'XFLAG'
+RH171.PRG(85)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(85)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(85)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(85)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH171.PRG(90)  Warning C1001  RETURN statement with no value in function
+RH171.PRG(97)  Warning C1001  RETURN statement with no value in function
+34 warnings                
+Code size 923, Symbols 528, Constants 245

@@ -1,0 +1,219 @@
+#BCC
+VERSION=BCB.01
+!ifndef CC_DIR
+CC_DIR = $(MAKE_DIR)
+!endif
+
+!ifndef HB_DIR
+HB_DIR = $(HARBOUR_DIR)
+!endif
+ 
+RECURSE= NO 
+ 
+SHELL = 
+COMPRESS = YES
+EXTERNALLIB = YES
+XFWH = NO
+FILESTOADD =  1
+WARNINGLEVEL =  0
+USERDEFINE = 
+USERINCLUDE = 
+USERLIBS = c:\harbour-1.0.0\lib\hbct.lib
+EDITOR = edit
+GUI = NO
+MT = NO
+SRC02 = obj 
+PROJECT = c:\qsys_g\qes\qes_.exe $(PR) 
+OBJFILES = $(SRC02)\START_.obj //
+ $(SRC02)\ERRORSYS.obj //
+ $(SRC02)\ES101_.obj //
+ $(SRC02)\ES102_.obj //
+ $(SRC02)\ES103_.obj //
+ $(SRC02)\ES104_.obj //
+ $(SRC02)\ES105_.obj //
+ $(SRC02)\ES106_.obj //
+ $(SRC02)\ES107_.obj //
+ $(SRC02)\ES108_.obj //
+ $(SRC02)\ES109_.obj //
+ $(SRC02)\ES110_.obj //
+ $(SRC02)\ES111_.obj //
+ $(SRC02)\ES112_.obj //
+ $(SRC02)\ES113_.obj //
+ $(SRC02)\ES114_.obj //
+ $(SRC02)\ES201_.obj //
+ $(SRC02)\ES202_.obj //
+ $(SRC02)\ES203_.obj //
+ $(SRC02)\ES204_.obj //
+ $(SRC02)\ES205_.obj //
+ $(SRC02)\ES206_.obj //
+ $(SRC02)\ES207_.obj //
+ $(SRC02)\ES208_.obj //
+ $(SRC02)\ES209_.obj //
+ $(SRC02)\ES210_.obj //
+ $(SRC02)\ES211_.obj //
+ $(SRC02)\ES212_.obj //
+ $(SRC02)\ES213_.obj //
+ $(SRC02)\ES214_.obj //
+ $(SRC02)\ES215_.obj //
+ $(SRC02)\ES216_.obj //
+ $(SRC02)\ES301_.obj //
+ $(SRC02)\ES302_.obj //
+ $(SRC02)\ES303_.obj //
+ $(SRC02)\ES304_.obj //
+ $(SRC02)\ES305_.obj //
+ $(SRC02)\ES306_.obj //
+ $(SRC02)\ES401_.obj //
+ $(SRC02)\ES402_.obj //
+ $(SRC02)\ES403_.obj //
+ $(SRC02)\ES404_.obj //
+ $(SRC02)\ES405_.obj //
+ $(SRC02)\ES406_.obj //
+ $(SRC02)\ES410_.obj //
+ $(SRC02)\ES411_.obj //
+ $(SRC02)\ES412_.obj //
+ $(SRC02)\ES415_.obj //
+ $(SRC02)\ES450_.obj //
+ $(SRC02)\ES501_.obj //
+ $(SRC02)\ES502_.obj //
+ $(SRC02)\ES503_.obj //
+ $(SRC02)\ES504_.obj //
+ $(SRC02)\ES505_.obj //
+ $(SRC02)\ES506_.obj //
+ $(SRC02)\ES507_.obj //
+ $(SRC02)\ES508_.obj //
+ $(SRC02)\ES509_.obj //
+ $(SRC02)\ES510_.obj //
+ $(SRC02)\ES511_.obj //
+ $(SRC02)\ES512_.obj //
+ $(SRC02)\ES513_.obj //
+ $(SRC02)\ES514_.obj //
+ $(SRC02)\ES515_.obj //
+ $(SRC02)\ES516_.obj //
+ $(SRC02)\ES517_.obj //
+ $(SRC02)\ES519_.obj //
+ $(SRC02)\ES601_.obj //
+ $(SRC02)\ES801_.obj //
+ $(SRC02)\ES802_.obj //
+ $(SRC02)\FUNCOES_.obj //
+ $(SRC02)\NEW_EMP_.obj //
+ $(SRC02)\REALTIM.obj $(OB) 
+PRGFILES = START_.PRG //
+ ERRORSYS.PRG //
+ ES101_.PRG //
+ ES102_.PRG //
+ ES103_.PRG //
+ ES104_.PRG //
+ ES105_.PRG //
+ ES106_.PRG //
+ ES107_.PRG //
+ ES108_.PRG //
+ ES109_.PRG //
+ ES110_.PRG //
+ ES111_.PRG //
+ ES112_.PRG //
+ ES113_.PRG //
+ ES114_.PRG //
+ ES201_.PRG //
+ ES202_.PRG //
+ ES203_.PRG //
+ ES204_.PRG //
+ ES205_.PRG //
+ ES206_.PRG //
+ ES207_.PRG //
+ ES208_.PRG //
+ ES209_.PRG //
+ ES210_.PRG //
+ ES211_.PRG //
+ ES212_.PRG //
+ ES213_.PRG //
+ ES214_.PRG //
+ ES215_.PRG //
+ ES216_.PRG //
+ ES301_.PRG //
+ ES302_.PRG //
+ ES303_.PRG //
+ ES304_.PRG //
+ ES305_.PRG //
+ ES306_.PRG //
+ ES401_.PRG //
+ ES402_.PRG //
+ ES403_.PRG //
+ ES404_.PRG //
+ ES405_.PRG //
+ ES406_.PRG //
+ ES410_.PRG //
+ ES411_.PRG //
+ ES412_.PRG //
+ ES415_.PRG //
+ ES450_.PRG //
+ ES501_.PRG //
+ ES502_.PRG //
+ ES503_.PRG //
+ ES504_.PRG //
+ ES505_.PRG //
+ ES506_.PRG //
+ ES507_.PRG //
+ ES508_.PRG //
+ ES509_.PRG //
+ ES510_.PRG //
+ ES511_.PRG //
+ ES512_.PRG //
+ ES513_.PRG //
+ ES514_.PRG //
+ ES515_.PRG //
+ ES516_.PRG //
+ ES517_.PRG //
+ ES519_.PRG //
+ ES601_.PRG //
+ ES801_.PRG //
+ ES802_.PRG //
+ FUNCOES_.PRG //
+ NEW_EMP_.PRG //
+ REALTIM.PRG $(PS) 
+OBJCFILES = $(OBC) 
+CFILES = $(CF)
+RESFILES = 
+RESDEPEN = 
+TOPMODULE = START_.PRG
+LIBFILES =  hblang.lib hbvm.lib hbrtl.lib hbrdd.lib hbmacro.lib hbpp.lib rddntx.lib rddcdx.lib rddfpt.lib hbcommon.lib gtwin.lib hbcpage.lib hbpcre.lib hbhsx.lib hbsix.lib  hbqsql.lib
+EXTLIBFILES = hbqsql.lib
+DEFFILE = 
+HARBOURFLAGS =  -m  -w0
+CFLAG1 =  -OS $(SHELL)  $(CFLAGS) -d -c -L$(HB_DIR)\lib 
+CFLAG2 =  -I$(HB_DIR)\include;$(CC_DIR)\include
+RFLAGS = 
+LFLAGS = -L$(CC_DIR)\lib\obj;$(CC_DIR)\lib;$(HB_DIR)\lib -Gn -M -m -s -Tpe -x -ap
+IFLAGS = 
+LINKER = ilink32
+ 
+ALLOBJ = c0x32.obj $(OBJFILES) $(OBJCFILES)
+ALLRES = $(RESDEPEN)
+ALLLIB = $(USERLIBS) $(LIBFILES) import32.lib cw32.lib
+.autodepend
+ 
+#DEPENDS
+ 
+#COMMANDS
+.cpp.obj:
+$(CC_DIR)\BIN\bcc32 $(CFLAG1) $(CFLAG2) -o$* $**
+ 
+.c.obj:
+$(CC_DIR)\BIN\bcc32 -I$(HB_DIR)\include $(CFLAG1) $(CFLAG2) -o$* $**
+ 
+.prg.obj:
+$(HB_DIR)\bin\harbour -D__EXPORT__ -n -go -I$(HB_DIR)\include $(HARBOURFLAGS) -o$* $**
+ 
+.rc.res:
+$(CC_DIR)\BIN\brcc32 $(RFLAGS) $<
+ 
+#BUILD
+ 
+$(PROJECT): $(CFILES) $(OBJFILES) $(RESDEPEN) $(DEFFILE)
+    $(CC_DIR)\BIN\$(LINKER) @&&!  
+    $(LFLAGS) +
+    $(ALLOBJ), +
+    $(PROJECT),, +
+    $(ALLLIB), +
+    $(DEFFILE), +
+    $(ALLRES) 
+!

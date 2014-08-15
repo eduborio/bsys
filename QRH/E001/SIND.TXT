@@ -1,0 +1,32 @@
+
+Estrutura do arquivo SIND.DBF
+16/09/04  -  09:58:10
+
+CODIGO     - C -   2 -   0
+DESCRICAO  - C -  80 -   0
+ENDERECO   - C -  40 -   0
+BAIRRO     - C -  15 -   0
+CGM        - C -   6 -   0
+CEP        - C -   8 -   0
+DDD        - C -   4 -   0
+TELEFONE   - C -  20 -   0
+DATA_BASE  - D -   8 -   0
+CONTATO    - C -  20 -   0
+PISO       - N -   9 -   2
+KIT_I_MS   - C -   3 -   0
+KIT_E_MS   - C -   3 -   0
+KIT_I_FR   - C -   3 -   0
+KIT_E_FR   - C -   3 -   0
+KIT_I_AD   - C -   3 -   0
+KIT_E_AD   - C -   3 -   0
+KIT_I_DT   - C -   3 -   0
+KIT_E_DT   - C -   3 -   0
+CNPJ       - C -  18 -   0
+COD_ENTID  - C -  15 -   0
+
+Indexadores utilizados:
+
+01 - C¢digo Sindicato               - SI_CODIG - CODIGO                                            
+02 - Descri‡„o do Sindicato         - SI_DESCR - DESCRICAO                                         
+
+

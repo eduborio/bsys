@@ -1,0 +1,8 @@
+
+.PRG.OBJ:
+         \CLIPPER\BIN\CLIPPER $* /M
+
+
+QINDEX.OBJ    : QINDEX.PRG
+
+

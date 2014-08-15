@@ -1,0 +1,76 @@
+
+Estrutura do arquivo BASE.DBF
+16/09/04  -  09:58:10
+
+MATRICULA  - C -   6 -   0
+ANOMES     - C -   6 -   0
+SALARIO    - N -   9 -   2
+PROV_MS    - N -   9 -   2
+DESC_MS    - N -   9 -   2
+PROV_AD    - N -   9 -   2
+DESC_AD    - N -   9 -   2
+PROV_FR    - N -   9 -   2
+DESC_FR    - N -   9 -   2
+PROV_DT    - N -   9 -   2
+DESC_DT    - N -   9 -   2
+B_INSSMS   - N -   9 -   2
+T_INSSMS   - N -   9 -   2
+V_INSSMS   - N -   9 -   2
+P_INSSMS   - N -   5 -   2
+B_INSSDT   - N -   9 -   2
+T_INSSDT   - N -   9 -   2
+V_INSSDT   - N -   9 -   2
+P_INSSDT   - N -   5 -   2
+B_INSS13   - N -   9 -   2
+T_INSS13   - N -   9 -   2
+V_INSS13   - N -   9 -   2
+P_INSS13   - N -   5 -   2
+B_INSSFR   - N -   9 -   2
+T_INSSFR   - N -   9 -   2
+V_INSSFR   - N -   9 -   2
+P_INSSFR   - N -   5 -   2
+B_IRRFMS   - N -   9 -   2
+V_IRRFMS   - N -   9 -   2
+P_IRRFMS   - N -   5 -   2
+D_IRRFMS   - N -   9 -   2
+B_IRRFFR   - N -   9 -   2
+V_IRRFFR   - N -   9 -   2
+P_IRRFFR   - N -   5 -   2
+D_IRRFFR   - N -   9 -   2
+B_IRRFDT   - N -   9 -   2
+V_IRRFDT   - N -   9 -   2
+P_IRRFDT   - N -   5 -   2
+D_IRRFDT   - N -   9 -   2
+B_IRRF13   - N -   9 -   2
+V_IRRF13   - N -   9 -   2
+P_IRRF13   - N -   5 -   2
+D_IRRF13   - N -   9 -   2
+B_FGTSMS   - N -   9 -   2
+V_FGTSMS   - N -   9 -   2
+P_FGTSMS   - N -   5 -   2
+B_FGTSFR   - N -   9 -   2
+V_FGTSFR   - N -   9 -   2
+P_FGTSFR   - N -   5 -   2
+B_FGTSDT   - N -   9 -   2
+V_FGTSDT   - N -   9 -   2
+P_FGTSDT   - N -   5 -   2
+B_FGTS13   - N -   9 -   2
+V_FGTS13   - N -   9 -   2
+P_FGTS13   - N -   5 -   2
+B_SALFAM   - N -   9 -   2
+V_SALFAM   - N -   9 -   2
+DESC_DEP   - N -   9 -   2
+DES_MEDICA - N -   9 -   2
+PENSAO_JUD - N -   9 -   2
+AUX_NAT    - N -   9 -   2
+SAL_MAT    - N -   9 -   2
+H_EXTRAS   - N -   9 -   2
+B_SFIPMS   - N -   9 -   2
+B_SFIPDT   - N -   9 -   2
+
+Indexadores utilizados:
+
+01 - Matr¡cula + Ano + Mˆs          - BA_MATRI - MATRICULA + ANOMES                                
+02 - Ano + mes + Matricula          - BA_ANMES - ANOMES + MATRICULA                                
+
+

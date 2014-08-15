@@ -1,0 +1,32 @@
+238K available
+Compiling RH601.PRG
+RH601.PRG(11)  Warning C1003  Ambiguous reference: 'XDATASYS'
+RH601.PRG(11)  Warning C1004  Ambiguous reference, assuming memvar: 'CANOMES'
+RH601.PRG(12)  Warning C1003  Ambiguous reference: 'XDATASYS'
+RH601.PRG(12)  Warning C1004  Ambiguous reference, assuming memvar: 'CDATA_CONT'
+RH601.PRG(13)  Warning C1004  Ambiguous reference, assuming memvar: 'XNIVEL'
+RH601.PRG(15)  Warning C1004  Ambiguous reference, assuming memvar: 'NDOCNUM'
+RH601.PRG(19)  Warning C1004  Ambiguous reference, assuming memvar: 'AEVENTOS'
+RH601.PRG(24)  Warning C1004  Ambiguous reference, assuming memvar: 'CNUM_LOTE'
+RH601.PRG(57)  Warning C1003  Ambiguous reference: 'XANOMES'
+RH601.PRG(65)  Warning C1003  Ambiguous reference: 'XANOMES'
+RH601.PRG(73)  Warning C1003  Ambiguous reference: 'CANOMES'
+RH601.PRG(75)  Warning C1003  Ambiguous reference: 'CDATA_CONT'
+RH601.PRG(79)  Warning C1003  Ambiguous reference: 'XUSRNUM'
+RH601.PRG(86)  Warning C1003  Ambiguous reference: 'CANOMES'
+RH601.PRG(88)  Warning C1003  Ambiguous reference: 'CDATA_CONT'
+RH601.PRG(92)  Warning C1003  Ambiguous reference: 'XUSRNUM'
+RH601.PRG(99)  Warning C1003  Ambiguous reference: 'CANOMES'
+RH601.PRG(103) Warning C1003  Ambiguous reference: 'CDATA_CONT'
+RH601.PRG(107) Warning C1003  Ambiguous reference: 'XUSRNUM'
+RH601.PRG(114) Warning C1003  Ambiguous reference: 'CANOMES'
+RH601.PRG(117) Warning C1003  Ambiguous reference: 'CDATA_CONT'
+RH601.PRG(121) Warning C1003  Ambiguous reference: 'XUSRNUM'
+RH601.PRG(129) Warning C1003  Ambiguous reference: 'CANOMES'
+RH601.PRG(132) Warning C1003  Ambiguous reference: 'CDATA_CONT'
+RH601.PRG(136) Warning C1003  Ambiguous reference: 'XUSRNUM'
+RH601.PRG(145) Warning C1003  Ambiguous reference: 'CDATA_CONT'
+RH601.PRG(149) Warning C1003  Ambiguous reference: 'XUSRNUM'
+RH601.PRG(168) Warning C1001  RETURN statement with no value in function
+28 warnings                
+Code size 1868, Symbols 896, Constants 196

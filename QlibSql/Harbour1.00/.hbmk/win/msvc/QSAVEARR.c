@@ -1,0 +1,96 @@
+/*
+ * Harbour 2.0.0 (Rev. 13372)
+ * MinGW GNU C 4.4.1 (32-bit)
+ * Generated C source from "QSAVEARR.PRG"
+ */
+
+#include "hbvmpub.h"
+#include "hbinit.h"
+
+
+HB_FUNC( QSAVEARRAY );
+HB_FUNC_EXTERN( FCREATE );
+HB_FUNC_STATIC( SAVE_ARRAY );
+HB_FUNC_EXTERN( FCLOSE );
+HB_FUNC_EXTERN( LEN );
+HB_FUNC_EXTERN( FWRITE );
+HB_FUNC_EXTERN( STR );
+HB_FUNC_EXTERN( VALTYPE );
+HB_FUNC_EXTERN( DTOC );
+HB_FUNC_INITSTATICS();
+
+
+HB_INIT_SYMBOLS_BEGIN( hb_vm_SymbolInit_QSAVEARR )
+{ "QSAVEARRAY", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( QSAVEARRAY )}, NULL },
+{ "FCREATE", {HB_FS_PUBLIC}, {HB_FUNCNAME( FCREATE )}, NULL },
+{ "SAVE_ARRAY", {HB_FS_STATIC | HB_FS_LOCAL}, {HB_FUNCNAME( SAVE_ARRAY )}, NULL },
+{ "FCLOSE", {HB_FS_PUBLIC}, {HB_FUNCNAME( FCLOSE )}, NULL },
+{ "LEN", {HB_FS_PUBLIC}, {HB_FUNCNAME( LEN )}, NULL },
+{ "FWRITE", {HB_FS_PUBLIC}, {HB_FUNCNAME( FWRITE )}, NULL },
+{ "STR", {HB_FS_PUBLIC}, {HB_FUNCNAME( STR )}, NULL },
+{ "VALTYPE", {HB_FS_PUBLIC}, {HB_FUNCNAME( VALTYPE )}, NULL },
+{ "DTOC", {HB_FS_PUBLIC}, {HB_FUNCNAME( DTOC )}, NULL },
+{ "(_INITSTATICS00001)", {HB_FS_INITEXIT | HB_FS_LOCAL}, {hb_INITSTATICS}, NULL }
+HB_INIT_SYMBOLS_EX_END( hb_vm_SymbolInit_QSAVEARR, "QSAVEARR.PRG", 0x0, 0x0002 )
+
+#if defined( HB_PRAGMA_STARTUP )
+   #pragma startup hb_vm_SymbolInit_QSAVEARR
+#elif defined( HB_DATASEG_STARTUP )
+   #define HB_DATASEG_BODY    HB_DATASEG_FUNC( hb_vm_SymbolInit_QSAVEARR )
+   #include "hbiniseg.h"
+#endif
+
+HB_FUNC( QSAVEARRAY )
+{
+	static const HB_BYTE pcode[] =
+	{
+		13,0,2,116,9,0,36,5,0,176,1,0,95,2,
+		12,1,82,1,0,36,6,0,176,2,0,95,1,20,
+		1,36,7,0,176,3,0,103,1,0,20,1,36,8,
+		0,7
+	};
+
+	hb_vmExecute( pcode, symbols );
+}
+
+HB_FUNC_STATIC( SAVE_ARRAY )
+{
+	static const HB_BYTE pcode[] =
+	{
+		13,3,1,116,9,0,36,13,0,176,4,0,95,1,
+		12,1,80,2,36,14,0,176,5,0,103,1,0,106,
+		2,65,0,176,6,0,95,2,92,4,12,2,72,20,
+		2,36,16,0,122,165,80,4,26,239,0,36,17,0,
+		176,7,0,95,1,95,4,1,12,1,80,3,36,19,
+		0,95,3,106,2,65,0,8,28,15,176,2,0,95,
+		1,95,4,1,20,1,26,193,0,36,20,0,95,3,
+		106,2,67,0,8,28,41,176,5,0,103,1,0,106,
+		2,67,0,176,6,0,176,4,0,95,1,95,4,1,
+		12,1,92,4,12,2,72,95,1,95,4,1,72,20,
+		2,26,142,0,36,21,0,95,3,106,2,68,0,8,
+		28,27,176,5,0,103,1,0,106,2,68,0,176,8,
+		0,95,1,95,4,1,12,1,72,20,2,25,104,36,
+		22,0,95,3,106,2,76,0,8,28,34,176,5,0,
+		103,1,0,106,2,76,0,95,1,95,4,1,28,8,
+		106,2,84,0,25,6,106,2,70,0,72,20,2,25,
+		60,36,23,0,95,3,106,2,78,0,8,28,48,176,
+		5,0,103,1,0,106,2,78,0,176,6,0,176,4,
+		0,176,6,0,95,1,95,4,1,12,1,12,1,92,
+		2,12,2,72,176,6,0,95,1,95,4,1,12,1,
+		72,20,2,36,16,0,175,4,0,95,2,15,29,17,
+		255,36,26,0,7
+	};
+
+	hb_vmExecute( pcode, symbols );
+}
+
+HB_FUNC_INITSTATICS()
+{
+	static const HB_BYTE pcode[] =
+	{
+		117,9,0,1,0,7
+	};
+
+	hb_vmExecute( pcode, symbols );
+}
+

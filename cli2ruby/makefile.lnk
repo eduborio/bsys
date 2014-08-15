@@ -1,0 +1,6 @@
+-Lc:\borland\bcc55\lib\obj;c:\borland\bcc55\lib;\harbour-1.0.0\lib -Gn -M -m -s -Tpe -x -ap +
+c0x32.obj obj\CLI2RUBY.obj, +
+c:\qsys_g\cli2ruby\cli2ruby.exe,, +
+c:\harbour-1.0.0\lib\hbct.lib hblang.lib hbvm.lib hbrtl.lib hbrdd.lib hbmacro.lib hbpp.lib rddntx.lib rddcdx.lib rddfpt.lib hbcommon.lib gtwin.lib hbcpage.lib hbpcre.lib hbhsx.lib hbsix.lib  hbqsql.lib import32.lib cw32.lib, +
+, +
+

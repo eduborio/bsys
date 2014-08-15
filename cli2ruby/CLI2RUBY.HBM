@@ -1,0 +1,9 @@
+-oC:\Qsys_g\cli2ruby\Cli2ruby.exe
+
+-lhbqsys.lib
+
+-incpath=c:\vc\include;c:\hb20\include
+-libpath=c:\vc\include;c:\hb20\lib\win\msvc
+
+cli2ruby
+//errorsys

@@ -1,0 +1,58 @@
+
+Estrutura do arquivo CONFIG.DBF
+16/09/04  -  09:58:10
+
+DATASYS    - D -   8 -   0
+DATA_ATUAL - D -   8 -   0
+TIPO_MAT   - C -   1 -   0
+MATRICULA  - N -   6 -   0
+SINC_SAL   - C -   1 -   0
+AUTO_MS    - C -   1 -   0
+KIT_I_MS   - C -   3 -   0
+KIT_E_MS   - C -   3 -   0
+KIT_I_FR   - C -   3 -   0
+KIT_E_FR   - C -   3 -   0
+KIT_I_AD   - C -   3 -   0
+KIT_E_AD   - C -   3 -   0
+KIT_I_DT   - C -   3 -   0
+KIT_E_DT   - C -   3 -   0
+TIP_KIT    - C -   1 -   0
+BACKUP     - L -   1 -   0
+DUPLIC_FER - L -   1 -   0
+CAMPOADIC  - C -  20 -   0
+FC_HORA    - C -   1 -   0
+BANCO_FGTS - C -   8 -   0
+CONTA_FGTS - C -  13 -   0
+AGENC_SAL  - C -   3 -   0
+CONTA_SAL  - C -   7 -   0
+TIPO_CC    - C -   1 -   0
+CNAE       - C -   9 -   0
+DIAS_CTR   - N -   2 -   0
+MCC1       - C -  67 -   0
+MCC2       - C -  67 -   0
+CAGED      - C -   1 -   0
+DIRF       - C -   1 -   0
+REFGTS     - C -   1 -   0
+RAIS       - C -   1 -   0
+VALE       - N -   2 -   0
+GR_SIMPLES - C -   1 -   0
+MES_DTBASE - C -   2 -   0
+MUNIC_RAIS - C -   8 -   0
+NATU_JURID - C -   5 -   0
+PROPRIET   - C -   2 -   0
+CHAVE_PIB  - C -   6 -   0
+NUM_PIB    - N -   6 -   0
+PATHCONTA  - C -  30 -   0
+PATHSHARE  - C -  30 -   0
+LOTE_INTER - N -   3 -   0
+LOTE_CONT  - N -   5 -   0
+VERIF_GRPS - L -   1 -   0
+ALIQ       - C -   1 -   0
+COD_PROTO  - N -   6 -   0
+GRFC       - C -   1 -   0
+LUCAS      - C -   1 -   0
+
+Indexadores utilizados:
+
+
+

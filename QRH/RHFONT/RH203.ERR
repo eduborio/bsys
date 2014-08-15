@@ -1,0 +1,40 @@
+238K available
+Compiling RH203.PRG
+RH203.PRG(11)  Warning C1003  Ambiguous reference: 'ANOMES'
+RH203.PRG(11)  Warning C1003  Ambiguous reference: 'XANOMES'
+RH203.PRG(13)  Warning C1004  Ambiguous reference, assuming memvar: 'CAMBIENTE'
+RH203.PRG(14)  Warning C1003  Ambiguous reference: 'XDATASYS'
+RH203.PRG(14)  Warning C1004  Ambiguous reference, assuming memvar: 'CANOMES'
+RH203.PRG(15)  Warning C1004  Ambiguous reference, assuming memvar: 'CFIXA'
+RH203.PRG(17)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH203.PRG(34)  Warning C1004  Ambiguous reference, assuming memvar: 'CAMBIENTE'
+RH203.PRG(35)  Warning C1003  Ambiguous reference: 'XDATASYS'
+RH203.PRG(35)  Warning C1004  Ambiguous reference, assuming memvar: 'CANOMES'
+RH203.PRG(36)  Warning C1004  Ambiguous reference, assuming memvar: 'CFIXA'
+RH203.PRG(38)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH203.PRG(38)  Warning C1001  RETURN statement with no value in function
+RH203.PRG(39)  Warning C1001  RETURN statement with no value in function
+RH203.PRG(44)  Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH203.PRG(53)  Warning C1003  Ambiguous reference: 'CFIXA'
+RH203.PRG(53)  Warning C1003  Ambiguous reference: 'XSN'
+RH203.PRG(54)  Warning C1003  Ambiguous reference: 'CFIXA'
+RH203.PRG(54)  Warning C1004  Ambiguous reference, assuming memvar: 'CFIXA'
+RH203.PRG(55)  Warning C1003  Ambiguous reference: 'CFIXA'
+RH203.PRG(63)  Warning C1001  RETURN statement with no value in function
+RH203.PRG(69)  Warning C1004  Ambiguous reference, assuming memvar: 'NSOMAVAL'
+RH203.PRG(100) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH203.PRG(104) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH203.PRG(108) Warning C1003  Ambiguous reference: 'XDATASYS'
+RH203.PRG(118) Warning C1003  Ambiguous reference: 'CANOMES'
+RH203.PRG(118) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH203.PRG(119) Warning C1004  Ambiguous reference, assuming memvar: 'C_TMP'
+RH203.PRG(121) Warning C1004  Ambiguous reference, assuming memvar: 'C_TMP'
+RH203.PRG(124) Warning C1003  Ambiguous reference: 'C_TMP'
+RH203.PRG(125) Warning C1003  Ambiguous reference: 'CANOMES'
+RH203.PRG(127) Warning C1003  Ambiguous reference: 'CAMBIENTE'
+RH203.PRG(129) Warning C1003  Ambiguous reference: 'CFIXA'
+RH203.PRG(145) Warning C1004  Ambiguous reference, assuming memvar: 'NSOMAVAL'
+RH203.PRG(145) Warning C1004  Ambiguous reference, assuming memvar: 'NSOMAVAL'
+RH203.PRG(149) Warning C1003  Ambiguous reference: 'NSOMAVAL'
+36 warnings                
+Code size 1367, Symbols 816, Constants 457

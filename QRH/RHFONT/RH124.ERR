@@ -1,0 +1,31 @@
+312K available
+Compiling RH124.PRG
+RH124.PRG(17)  Warning C1004  Ambiguous reference, assuming memvar: 'CMESANO'
+RH124.PRG(21)  Warning C1003  Ambiguous reference: 'SITUACAO'
+RH124.PRG(60)  Warning C1001  RETURN statement with no value in function
+RH124.PRG(65)  Warning C1004  Ambiguous reference, assuming memvar: 'CANOMES'
+RH124.PRG(69)  Warning C1004  Ambiguous reference, assuming memvar: 'CTMP1'
+RH124.PRG(71)  Warning C1003  Ambiguous reference: 'CANOMES'
+RH124.PRG(72)  Warning C1003  Ambiguous reference: 'CTMP1'
+RH124.PRG(77)  Warning C1004  Ambiguous reference, assuming memvar: 'CTMP1'
+RH124.PRG(77)  Warning C1004  Ambiguous reference, assuming memvar: 'CTMP1'
+RH124.PRG(96)  Warning C1001  RETURN statement with no value in function
+RH124.PRG(116) Warning C1003  Ambiguous reference: 'CANOMES'
+RH124.PRG(117) Warning C1001  RETURN statement with no value in function
+RH124.PRG(123) Warning C1003  Ambiguous reference: 'CANOMES'
+RH124.PRG(124) Warning C1001  RETURN statement with no value in function
+RH124.PRG(132) Warning C1003  Ambiguous reference: 'COPCAO'
+RH124.PRG(132) Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'
+RH124.PRG(133) Warning C1003  Ambiguous reference: 'COPCAO'
+RH124.PRG(153) Warning C1003  Ambiguous reference: 'COPCAO'
+RH124.PRG(160) Warning C1001  RETURN statement with no value in function
+RH124.PRG(163) Warning C1003  Ambiguous reference: 'CANOMES'
+RH124.PRG(164) Warning C1001  RETURN statement with no value in function
+RH124.PRG(169) Warning C1001  RETURN statement with no value in function
+RH124.PRG(180) Warning C1003  Ambiguous reference: 'CANOMES'
+RH124.PRG(194) Warning C1003  Ambiguous reference: 'COPCAO'
+RH124.PRG(215) Warning C1003  Ambiguous reference: 'COPCAO'
+RH124.PRG(221) Warning C1003  Ambiguous reference: 'COPCAO'
+RH124.PRG(235) Warning C1001  RETURN statement with no value in function
+27 warnings                
+Code size 2012, Symbols 912, Constants 980

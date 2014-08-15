@@ -1,0 +1,16 @@
+
+C:\qsys_g\QPG\PGFONT>call "c:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" 
+Setting environment for using Microsoft Visual Studio 2008 x86 tools.
+
+C:\qsys_g\QPG\PGFONT>hbmk2 qpg.hbm -inc 
+hbmk2: Processando arquivo de configura‡Æo: c:\hb20\bin\hbmk.cfg
+hbmk2: Processando: QPG.HBC
+hbmk2: Linkando... C:\Qsys_g\Qpg\Qpg_.exe
+PG202_.obj : error LNK2005: _HB_FUN_F_VAL3 already defined in PG201_.obj
+PG202_.obj : error LNK2005: _HB_FUN_F_VAL4 already defined in PG201_.obj
+PG202_.obj : error LNK2005: _HB_FUN_I_CONTABIL already defined in PG201_.obj
+PG202_.obj : error LNK2005: _HB_FUN_MONTA_HIST already defined in PG201_.obj
+PG202_.obj : error LNK2005: _HB_FUN_MOSTRA_HIST already defined in PG201_.obj
+PG202_.obj : error LNK2005: _HB_FUN_I_HIST already defined in PG201_.obj
+PG202_.obj : error LNK2005: _HB_FUN_COMPLEMENTARES already defined in PG201_.obj
+C:\Qsys_g\Qpg\Qpg_.exe : fatal error LNK1169: one or more multiply defined symbols found

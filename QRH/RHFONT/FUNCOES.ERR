@@ -1,0 +1,77 @@
+238K available
+Compiling FUNCOES.PRG
+FUNCOES.PRG(69)    Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(76)    Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(83)    Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(89)    Warning C1003  Ambiguous reference: 'SITUACAO'
+FUNCOES.PRG(92)    Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(103)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(114)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(145)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(152)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(159)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(165)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(172)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(179)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(186)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(193)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(200)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(207)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(214)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(221)   Warning C1003  Ambiguous reference: 'ANOMES'
+FUNCOES.PRG(221)   Warning C1003  Ambiguous reference: 'XANOMES'
+FUNCOES.PRG(224)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(231)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(238)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(248)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(255)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(262)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(269)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(282)   Warning C1003  Ambiguous reference: 'XPATHCONTA'
+FUNCOES.PRG(292)   Warning C1003  Ambiguous reference: 'XPATHSHARE'
+FUNCOES.PRG(302)   Warning C1003  Ambiguous reference: 'ANOMES'
+FUNCOES.PRG(306)   Warning C1003  Ambiguous reference: 'FANOMES'
+FUNCOES.PRG(307)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(320)   Warning C1003  Ambiguous reference: 'ANOMES'
+FUNCOES.PRG(321)   Warning C1003  Ambiguous reference: 'ANOMES'
+FUNCOES.PRG(324)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(338)   Warning C1004  Ambiguous reference, assuming memvar: 'FANOMES'
+FUNCOES.PRG(342)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(348)   Warning C1003  Ambiguous reference: 'XDATASYS'
+FUNCOES.PRG(377)   Warning C1004  Ambiguous reference, assuming memvar: 'P_NIVEL_255'
+FUNCOES.PRG(377)   Warning C1004  Ambiguous reference, assuming memvar: 'P_NIVEL_255'
+FUNCOES.PRG(378)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(417)   Warning C1003  Ambiguous reference: 'CFORMULA'
+FUNCOES.PRG(417)   Warning C1004  Ambiguous reference, assuming memvar: 'CFORMULA'
+FUNCOES.PRG(418)   Warning C1003  Ambiguous reference: 'CFORMULA'
+FUNCOES.PRG(482)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(485)   Warning C1003  Ambiguous reference: 'ARQUIVO'
+FUNCOES.PRG(488)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(491)   Warning C1003  Ambiguous reference: 'ARQUIVO'
+FUNCOES.PRG(493)   Warning C1003  Ambiguous reference: 'V_CAMPOS'
+FUNCOES.PRG(493)   Warning C1003  Ambiguous reference: 'CAMPO'
+FUNCOES.PRG(493)   Warning C1003  Ambiguous reference: 'TIPO'
+FUNCOES.PRG(493)   Warning C1003  Ambiguous reference: 'TAMANHO'
+FUNCOES.PRG(493)   Warning C1003  Ambiguous reference: 'DECIMAL'
+FUNCOES.PRG(493)   Warning C1003  Ambiguous reference: 'DESCRICAO'
+FUNCOES.PRG(493)   Warning C1003  Ambiguous reference: 'DESCRICAO'
+FUNCOES.PRG(498)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(507)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(518)   Warning C1003  Ambiguous reference: 'V_CAMPOS'
+FUNCOES.PRG(521)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(538)   Warning C1003  Ambiguous reference: 'XDRV_RHX'
+FUNCOES.PRG(545)   Warning C1003  Ambiguous reference: 'XDRV_RHX'
+FUNCOES.PRG(552)   Warning C1003  Ambiguous reference: 'XDRV_RHX'
+FUNCOES.PRG(559)   Warning C1003  Ambiguous reference: 'XDRV_RHX'
+FUNCOES.PRG(566)   Warning C1003  Ambiguous reference: 'XDRV_RHX'
+FUNCOES.PRG(573)   Warning C1003  Ambiguous reference: 'XDRV_CONT'
+FUNCOES.PRG(580)   Warning C1003  Ambiguous reference: 'XDRV_ATIV'
+FUNCOES.PRG(587)   Warning C1003  Ambiguous reference: 'XDRV_RHX'
+FUNCOES.PRG(594)   Warning C1003  Ambiguous reference: 'XDRV_RHX'
+FUNCOES.PRG(601)   Warning C1003  Ambiguous reference: 'XDRV_RHX'
+FUNCOES.PRG(608)   Warning C1003  Ambiguous reference: 'XDRV_RHX'
+FUNCOES.PRG(615)   Warning C1003  Ambiguous reference: 'XDRV_RHX'
+FUNCOES.PRG(618)   Warning C1001  RETURN statement with no value in function
+FUNCOES.PRG(629)   Warning C1001  RETURN statement with no value in function
+73 warnings                
+Code size 5980, Symbols 2064, Constants 2292

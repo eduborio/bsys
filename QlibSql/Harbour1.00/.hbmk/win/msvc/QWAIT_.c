@@ -1,0 +1,54 @@
+/*
+ * Harbour 2.0.0 (Rev. 13372)
+ * MinGW GNU C 4.4.1 (32-bit)
+ * Generated C source from "QWAIT_.PRG"
+ */
+
+#include "hbvmpub.h"
+#include "hbinit.h"
+
+
+HB_FUNC( QWAIT );
+HB_FUNC_EXTERN( SETCURSOR );
+HB_FUNC_EXTERN( QSBLOC );
+HB_FUNC_EXTERN( QMENSA );
+HB_FUNC_EXTERN( SETPOS );
+HB_FUNC_EXTERN( QINKEY );
+HB_FUNC_EXTERN( QRBLOC );
+
+
+HB_INIT_SYMBOLS_BEGIN( hb_vm_SymbolInit_QWAIT_ )
+{ "QWAIT", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( QWAIT )}, NULL },
+{ "SETCURSOR", {HB_FS_PUBLIC}, {HB_FUNCNAME( SETCURSOR )}, NULL },
+{ "QSBLOC", {HB_FS_PUBLIC}, {HB_FUNCNAME( QSBLOC )}, NULL },
+{ "QMENSA", {HB_FS_PUBLIC}, {HB_FUNCNAME( QMENSA )}, NULL },
+{ "SETPOS", {HB_FS_PUBLIC}, {HB_FUNCNAME( SETPOS )}, NULL },
+{ "QINKEY", {HB_FS_PUBLIC}, {HB_FUNCNAME( QINKEY )}, NULL },
+{ "QRBLOC", {HB_FS_PUBLIC}, {HB_FUNCNAME( QRBLOC )}, NULL }
+HB_INIT_SYMBOLS_EX_END( hb_vm_SymbolInit_QWAIT_, "QWAIT_.PRG", 0x0, 0x0002 )
+
+#if defined( HB_PRAGMA_STARTUP )
+   #pragma startup hb_vm_SymbolInit_QWAIT_
+#elif defined( HB_DATASEG_STARTUP )
+   #define HB_DATASEG_BODY    HB_DATASEG_FUNC( hb_vm_SymbolInit_QWAIT_ )
+   #include "hbiniseg.h"
+#endif
+
+HB_FUNC( QWAIT )
+{
+	static const HB_BYTE pcode[] =
+	{
+		13,2,0,36,3,0,176,1,0,122,12,1,80,1,
+		36,4,0,176,2,0,92,24,92,11,92,24,92,79,
+		12,4,80,2,36,8,0,176,3,0,106,30,81,117,
+		97,108,113,117,101,114,32,116,101,99,108,97,32,112,
+		97,114,97,32,118,111,108,116,97,114,46,46,46,0,
+		20,1,36,10,0,176,4,0,92,24,92,79,20,2,
+		36,13,0,176,5,0,12,0,121,69,28,246,36,17,
+		0,176,6,0,92,24,92,11,95,2,20,3,36,18,
+		0,176,1,0,95,1,20,1,36,19,0,7
+	};
+
+	hb_vmExecute( pcode, symbols );
+}
+

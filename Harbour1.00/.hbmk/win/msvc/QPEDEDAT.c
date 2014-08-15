@@ -1,0 +1,59 @@
+/*
+ * Harbour 2.0.0 (Rev. 13372)
+ * MinGW GNU C 4.4.1 (32-bit)
+ * Generated C source from "QPEDEDAT.PRG"
+ */
+
+#include "hbvmpub.h"
+#include "hbinit.h"
+
+
+HB_FUNC( QPEDEDATA );
+HB_FUNC_EXTERN( QSBLOC );
+HB_FUNC_EXTERN( SETCURSOR );
+HB_FUNC_EXTERN( QLBLOC );
+HB_FUNC_EXTERN( QSAY );
+HB_FUNC_EXTERN( PAD );
+HB_FUNC_EXTERN( QGETX );
+HB_FUNC_EXTERN( QRBLOC );
+
+
+HB_INIT_SYMBOLS_BEGIN( hb_vm_SymbolInit_QPEDEDAT )
+{ "QPEDEDATA", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( QPEDEDATA )}, NULL },
+{ "QSBLOC", {HB_FS_PUBLIC}, {HB_FUNCNAME( QSBLOC )}, NULL },
+{ "SETCURSOR", {HB_FS_PUBLIC}, {HB_FUNCNAME( SETCURSOR )}, NULL },
+{ "QLBLOC", {HB_FS_PUBLIC}, {HB_FUNCNAME( QLBLOC )}, NULL },
+{ "XDRV_SH", {HB_FS_PUBLIC | HB_FS_MEMVAR}, {NULL}, NULL },
+{ "QSAY", {HB_FS_PUBLIC}, {HB_FUNCNAME( QSAY )}, NULL },
+{ "PAD", {HB_FS_PUBLIC}, {HB_FUNCNAME( PAD )}, NULL },
+{ "QGETX", {HB_FS_PUBLIC}, {HB_FUNCNAME( QGETX )}, NULL },
+{ "QRBLOC", {HB_FS_PUBLIC}, {HB_FUNCNAME( QRBLOC )}, NULL }
+HB_INIT_SYMBOLS_EX_END( hb_vm_SymbolInit_QPEDEDAT, "QPEDEDAT.PRG", 0x0, 0x0002 )
+
+#if defined( HB_PRAGMA_STARTUP )
+   #pragma startup hb_vm_SymbolInit_QPEDEDAT
+#elif defined( HB_DATASEG_STARTUP )
+   #define HB_DATASEG_BODY    HB_DATASEG_FUNC( hb_vm_SymbolInit_QPEDEDAT )
+   #include "hbiniseg.h"
+#endif
+
+HB_FUNC( QPEDEDATA )
+{
+	static const HB_BYTE pcode[] =
+	{
+		13,2,2,36,3,0,176,1,0,92,13,92,12,92,
+		16,92,70,12,4,80,3,36,4,0,176,2,0,122,
+		12,1,80,4,36,5,0,176,3,0,92,13,92,12,
+		106,9,80,69,68,69,68,65,84,65,0,109,4,0,
+		106,11,81,83,66,76,79,67,46,71,76,79,0,72,
+		20,4,36,6,0,176,5,0,92,14,92,15,176,6,
+		0,95,1,92,40,106,2,46,0,12,3,20,3,36,
+		7,0,176,7,0,92,14,92,57,96,2,0,100,100,
+		120,20,6,36,8,0,176,2,0,95,4,20,1,36,
+		9,0,176,8,0,92,13,92,12,95,3,20,3,36,
+		10,0,95,2,110,7
+	};
+
+	hb_vmExecute( pcode, symbols );
+}
+
