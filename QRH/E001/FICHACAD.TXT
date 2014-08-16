@@ -1,7 +1,0 @@
-
-Estrutura do arquivo FICHACAD.DBF
-16/09/04  -  09:58:10
-
-LINHA      - C - 400 -   0
-
-

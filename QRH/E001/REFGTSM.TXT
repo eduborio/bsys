@@ -1,7 +1,0 @@
-
-Estrutura do arquivo REFGTSM.DBF
-16/09/04  -  09:58:09
-
-LINHA      - C - 360 -   0
-
-
