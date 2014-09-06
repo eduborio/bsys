@@ -80,6 +80,40 @@ function getReceber(id)
    
 return json
 
+function getReceberVencido(id)
+
+  json := "receberList:["  
+
+  cCli := strzero(val(id),5)
+  
+  if ! quse("\QSYS_G\QRB\E004\","RECEBER")
+	 outstd("{erro:Error ao conectar ao sistema Cntas a Receber - Receber!}")
+     return 
+  endif	
+   
+  RECEBER->(dbsetorder(5))
+  
+  if RECEBER->(dbseek(cCli))
+
+	  do while ! RECEBER->(eof()) .and. RECEBER->cod_cli == cCli
+
+		 if RECEBER->Data_venc < date()
+			//nTotalVencido += RECEBER->Valor_liq
+			json += "{nome:"+left(RECEBER->Cliente,20)+",valor:"+alltrim(transform(RECEBER->Valor_liq,"@R 99999999.99"))+",Vencimento:"+ dtoc(RECEBER->Data_venc)+"},"
+		 endif
+
+		 RECEBER->(dbskip())
+
+	  enddo
+	  
+  endif	  
+  
+  json += "]"
+
+  RECEBER->(dbCloseArea())
+   
+return json
+
 
 function getDevolucoes(cCli)
 
