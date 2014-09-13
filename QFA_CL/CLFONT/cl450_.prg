@@ -1147,7 +1147,7 @@ static function sincronizaNFsQueForamCanceladasDepoisDaPrimeiraImportacao(oServe
 		 
 		 if FAT->Es == "E"
 			ENT->(dbsetorder(10))
-			if ENT->(dbseek(FAT->Num_fatura + left(FAT->Cod_cfop,4)) .and. ENT->(Qrlock())
+			if ENT->(dbseek(FAT->Num_fatura + left(FAT->Cod_cfop,4))) .and. ENT->(Qrlock())
 			
 			   if FAT->dt_emissao == ENT->data_lanc
 				   replace ENT->Vlr_cont with 0
