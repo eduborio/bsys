@@ -31,20 +31,20 @@ local nLerEndate := 0
 
      clear
 
-     nTamanho := len(CLI1->end_ent)
-     nPosicao := at(",",CLI1->End_ent)
+     nTamanho := len(CLI1->end_cob)
+     nPosicao := at(",",CLI1->End_cob)
      if nPosicao > 0
-        cNumero  := substr(CLI1->End_ent,nPosicao+1,nTamanho)
-        cEndNovo := substr(CLI1->End_ent,1,nPosicao-1)
+        cNumero  := substr(CLI1->End_cob,nPosicao+1,nTamanho)
+        cEndNovo := substr(CLI1->End_cob,1,nPosicao-1)
      endif
 
-     @ 07,10 say CLI1->NUmero
-     @ 08,10 say CLI1->Compl
+     @ 07,10 say CLI1->Num_cob
+     @ 08,10 say CLI1->Compl_cob
      @ 09,10 say CLI1->Codigo
      @ 10,10 say CLI1->Razao
      @ 11,10 say "         1         2         3         4         5         6"
      @ 12,10 say "123456789012345678901234567890123456789012345678901234567890"
-     @ 13,10 say CLI1->end_ent
+     @ 13,10 say CLI1->end_cob
      @ 14,10 say cNumero
 
      if qconf("O endereco esta OK ?")
@@ -59,8 +59,8 @@ local nLerEndate := 0
 
      if qconf("Deseja Gravar este endereco, ou mudar os dados ?")
         if CLI1->(qrlock())
-           replace CLI1->Numero  with alltrim(cNumero)
-           replace CLI1->End_ent with cEndNovo
+           replace CLI1->Num_cob  with alltrim(cNumero)
+           replace CLI1->End_cob with cEndNovo
            CLI1->(qunlock())
         endif
      else
@@ -73,13 +73,13 @@ local nLerEndate := 0
 
         if CLI1->(qrlock())
            if ! empty(cGetNumero)
-              replace CLI1->Numero  with cGetNumero
+              replace CLI1->Num_cob  with cGetNumero
            endif
            if ! empty(cGetCompl)
-              replace CLI1->Compl   with cGetCompl
+              replace CLI1->Compl_cob with cGetCompl
            endif
            if nLerEndAte > 0
-              replace CLI1->End_ent with left(CLI1->End_ent,nLerEndAte)
+              replace CLI1->End_cob with left(CLI1->End_cob,nLerEndAte)
            endif
            CLI1->(qunlock())
         endif
@@ -88,8 +88,8 @@ local nLerEndate := 0
 
      @ 20,10 say CLI1->Codigo
      @ 21,10 say CLI1->Razao
-     @ 22,10 say CLI1->end_ent
-     @ 23,10 say CLI1->Numero + " Compl.: "+CLI1->Compl
+     @ 22,10 say CLI1->end_cob
+     @ 23,10 say CLI1->Num_cob + " Compl.: "+CLI1->Compl_cob
      qinkey(0)
 
 

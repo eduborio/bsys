@@ -1043,7 +1043,7 @@ static function i_santander
 
 	  cIntegra += left(CLI1->Razao,40) 
 	  
-	  cIntegra += left(CLI1->End_cob,30) + CLI1->Numero + space(3)
+	  cIntegra += left(CLI1->End_cob,30) + CLI1->Num_cob + space(3)
 
 	  cIntegra += left(Cli1->Bairro_cob,12)
 
@@ -1448,7 +1448,7 @@ local nSEQ := 0
       cINTEG += cCGCCPF
       cINTEG += CLI1->Cgccpf
       cINTEG += left(CLI1->Razao,37)
-      cINTEG += left(CLI1->End_cob,37)
+      cINTEG += rtrim(left(CLI1->End_cob,29)) + ", " + left(CLI1->Num_cob,6)
       cINTEG += CLI1->Cep_cob
 
       CGM->(Dbseek(CLI1->Cgm_cob))

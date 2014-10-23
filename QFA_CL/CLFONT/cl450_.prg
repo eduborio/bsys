@@ -163,6 +163,8 @@ local area := ""
 		replace CLI1->Inscricao    with get(row,'inscricao_estadual')
 		replace CLI1->Rg           with get(row,'rg')
         replace CLI1->End_cob      with get(row,'logradouro_cobranca')		
+        replace CLI1->num_cob      with get(row,'numero_cobranca')		
+        replace CLI1->compl_cob    with get(row,'complemento_cobranca')		
         replace CLI1->Cgm_cob      with strzero(get(row,'id_municipio_cobranca'),6)
         replace CLI1->Cep_cob      with get(row,'cep_cobranca')		
         replace CLI1->Fone1		   with get(row,'telefone_entrega') 
@@ -1088,6 +1090,11 @@ static function sincronizaNFsQueForamCanceladasDepoisDaPrimeiraImportacao(oServe
 	 qmensa("Nao foi possivel abrir SAI do Fiscal!","BL")
 	 return .F.
   endif
+  
+  if ! quse(XDRV_RB,"RECEBER",{})
+	 qmensa("Nao foi possivel abrir RECEBER do Contas a Receber!","BL")
+	 return .F.
+  endif
    
    cQuery := "SELECT nf.id, nf.cancelada from nota_fiscal as nf "
    cQuery += "where exportado_pro_qsys = 1 and nf.cancelada = 1 and nf.data_emissao between 20140718 and 20181231" 
@@ -1174,7 +1181,7 @@ static function sincronizaNFsQueForamCanceladasDepoisDaPrimeiraImportacao(oServe
    enddo 
 
    SAI->(dbclosearea())
-  
+  RECEBER->(dbcloseArea())
 
 return
 
