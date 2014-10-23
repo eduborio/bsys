@@ -184,7 +184,7 @@ local cEFD := ""
       cEFD += "|"
       cEFD += "|"
       cEFD += "|A"
-      cEFD += "|1"
+      cEFD += "|0"
       cEFD += "|"+chr(13)+chr(10)
       nTot_lin++
       nTot_0000++
@@ -219,7 +219,7 @@ local cEFD := ""
       cEFD += "|"+rtrim(FILIAL->Bairro)
       cEFD += "|41"+rtrim(qtiraponto(FILIAL->Telefone))
       cEFD += "|41"+rtrim(qtiraponto(FILIAL->Telefone))
-      cEFD += "|contato@mantraco.org"
+      cEFD += "|contato@mantraco.com.br"
       cEFD += "|"+chr(13)+chr(10)
       nTot_lin++
       nTot_0000++
