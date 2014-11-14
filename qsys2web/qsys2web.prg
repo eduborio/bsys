@@ -1,12 +1,14 @@
 function main(funcao,filtro)
+
+    private XCOR_MENSA := "N/G"
     
 	if funcao == NIL
-		OUTSTD("Nenhuma parametro informado")
+		OUTSTD("Nenhum parametro informado")
 		return
 	endif   
 	
 	if filtro == NIL
-       OUTSTD("Nenhuma parametro informado")
+       OUTSTD("Nenhum parametro informado")
 	   return
 	endif   
 	
@@ -132,7 +134,7 @@ function getDevolucoes(cCli)
     endif	
 	
 	LANC->(dbsetorder(1))
-	PLAN->(dbseek(dbsetorder(1))
+	PLAN->(dbseek(dbsetorder(1)))
 	
 	if PLAN->(dbseek("2010502"))
 	    LANC->(dbsetorder(1))
@@ -146,7 +148,7 @@ function getDevolucoes(cCli)
 			      LANC->(dbskip())
 			   enddo
 			   
-      		   json += transform(LANC->Valor)
+      		   json += transform(LANC->Valor,"@ 99999999.99")
 			endif	
 				
 			PLAN->(dbskip())

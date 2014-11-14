@@ -67,8 +67,154 @@ static function i_verifica
    
    abreArquivos()
    verificaCanceladas(oServer)
+   verificaTodasNotasFiscais(oServer)
    dbCloseAll()
    
+return
+
+static function verificaTodasNotasFiscais(oServer)
+
+   local cQuery := ""
+   local oQuery
+   local row
+   local nCont := 1
+   local id := 0
+   local nFile := 0
+   local cBuffer := 0
+   local nIcmsWeb  := 0
+   local nIcmsQsys := 0
+   
+   
+   local aFiscal := {}
+   
+    //nFile := fcreate("c:\Qsystxt\Qsys_efd.txt",0)
+	//fclose(nfile)
+   
+	cQuery := "	select "
+	cQuery += "		item.id, "
+	cQuery += "		item.nota_fiscal_id, "
+	cQuery += "		nf.cfop_id as cfop, "
+	cQuery += "		nf.data_emissao as data_lanc, "
+	cQuery += "		sum(item.valor_unitario * item.quantidade), "
+	cQuery += "		nf.numero_nota as numero, "
+	cQuery += "		sum(item.base_ipi) as base_ipi, "
+	cQuery += "		sum(item.base_icms) as base_icms, "
+	cQuery += "		sum(item.valor_icms) as valor_icms, "
+	cQuery += "		sum(item.valor_ipi) as valor_ipi, "
+	cQuery += "		sum(item.valor_icmsst) as valor_st, "
+	cQuery += "		sum(item.base_icmsst) as base_st, "
+	cQuery += "		ifnull(sum((item.valor_unitario * item.quantidade) + item.valor_ipi + item.valor_icmsst),0) as valor_cont "
+	cQuery += "	from item_nota_fiscal as item "
+	cQuery += "	left join nota_fiscal as nf on nf.id = item.nota_fiscal_id "
+	cQuery += "	where nf.data_emissao between '2014-02-01' and '2014-12-31' "
+	cQuery += "	and nf.tipo_nota = 1 and nf.cfop_id in (5403,5102)"
+	cQuery += "	group by nota_fiscal_id "
+	cQuery += "	order by numero_nota "
+   
+    
+    oQuery := oServer:Query(cQuery)
+   
+	if oQuery:NetErr()
+	  Alert(oQuery:Error())
+	endif
+   
+    nCont := 1
+   
+   do while nCont <= oQuery:LastRec() 	 
+      row := oQuery:getRow(nCont)
+	  
+	  aadd(aFiscal,{  val( get(row,'numero') ) ,;
+	                  get(row,'base_icms')  , ;
+                      get(row,'valor_icms')	, ;
+					  get(row,'base_ipi')   , ;
+					  get(row,'valor_ipi')  , ;
+                      get(row,'base_st')	, ;
+					  get(row,'valor_st')	, ;
+					  get(row,'valor_cont') , ;
+					  "WEB"  , ;
+					  strzero(get(row,'cfop'),4) ,;
+					  get(row,'data_lanc') })
+	  nCont++
+	  
+   enddo	  
+   
+   select SAI
+   
+   set softseek on
+   
+   SAI->(dbsetorder(2))
+   SAI->(dbgotop())
+   SAI->(dbseek("20140201"))
+   set softseek off
+   
+   do while ! SAI->(eof()) .and. SAI->Data_lanc <= ctod("31/12/2014")
+   
+   
+        if ! SAI->Cfop $ "5403-5102"
+		   SAI->(dbskip())
+           loop
+        endif		   
+   
+		aadd(aFiscal,{ val(  SAI->Num_nf  ) , ;
+	                  SAI->Icm_base  , ;
+                      SAI->Icm_vlr	, ;
+					  SAI->Ipi_base   , ;
+					  SAI->Ipi_vlr  , ;
+                      SAI->Icm_bc_s	, ;
+					  SAI->Icm_subst	, ;
+					  SAI->Vlr_cont , ;
+					  "QEF" , ;
+					  SAI->Cfop , ;
+					  SAI->Data_lanc})
+		
+		SAI->(dbskip())
+   enddo
+   
+   aFiscal := asort(aFiscal,,,{|x,y| x[1] < y[1]})
+   
+   nFile := fcreate("c:\Qsystxt\test.java",0)
+   
+   nCont := 1
+   
+   cBuffer := "Numero" + chr(9) + "Data emissao" + chr(9) + "Valor Contabil" + chr(9) + "Base Icms" + chr(9) + "Valor Icms" + chr(9) + "Base Ipi" + chr(9)+"Valor ipi" + chr(9) + "Base ST" + chr(9) + "valor ST" + chr(9) + "SYS" + chr(13) + chr(10)
+   
+   for nCont := 1 to len(aFiscal)
+		
+		cBuffer += strzero(aFiscal[nCont,1],6) + chr(9)
+		cBuffer += dtoc(aFiscal[nCont,11]) + chr(9)
+		cBuffer += alltrim(transform(aFiscal[nCont,8],"@E 999999999.99")) + chr(9)
+		cBuffer += alltrim(transform(aFiscal[nCont,2],"@E 999999999.99")) + chr(9)
+		cBuffer += alltrim(transform(aFiscal[nCont,3],"@E 999999999.99")) + chr(9)
+		cBuffer += alltrim(transform(aFiscal[nCont,4],"@E 999999999.99")) + chr(9)
+		cBuffer += alltrim(transform(aFiscal[nCont,5],"@E 999999999.99")) + chr(9)
+		cBuffer += alltrim(transform(aFiscal[nCont,6],"@E 999999999.99")) + chr(9)
+		cBuffer += alltrim(transform(aFiscal[nCont,7],"@E 999999999.99")) + chr(9)
+		cBuffer += aFiscal[nCont,10] + chr(9)
+		cBuffer += aFiscal[nCont,9] + chr(13) + chr(10)
+		
+		if aFiscal[nCont,9] == "WEB"
+		   nIcmsWeb += aFiscal[nCont,3]
+		endif
+		
+		if aFiscal[nCont,9] == "QEF"
+		   nIcmsQsys += aFiscal[nCont,3]
+		endif
+		
+		if mod(nCont,2) == 0
+		   cBuffer += chr(13) + chr(10)
+		endif   
+		
+   next
+   
+   cBuffer += chr(13) + chr(10)
+   cBuffer += chr(13) + chr(10)
+   cBuffer += "Icms" + chr(9) + chr(9)+alltrim(transform(nIcmsQsys,"@E 9999999999999.99")) + chr(13) + chr(10)
+   cBuffer += "Icms" + chr(9)  + chr(9)+alltrim(transform(nIcmsWeb,"@E 9999999999999.99")) + chr(13) + chr(10)
+   cBuffer += "Total" +chr(9)  + chr(9)+alltrim(transform(nIcmsWeb-nIcmsQsys,"@E 9999999999999.99"))
+
+   fwrite(nFile,cBuffer,len(cBuffer))   
+   fclose(nfile)
+
 return
 
 

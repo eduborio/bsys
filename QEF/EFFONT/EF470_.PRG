@@ -37,12 +37,15 @@ private nTOT_E    := 0
 private nTOT_G    := 0
 private nTOT_H    := 0
 private nTOT_1    := 0
+private nTOT_9    := 0
+private nTOT_99   := 0
 private nTOT_C100 := 0
 private nTOT_C170 := 0
 private nTOT_C190 := 0
 private nTOT_D100 := 0
 private nTOT_D190 := 0
 private nTOT_E510 := 0
+private nTOT_E520 := 0
 private aDados := {}
 private aIpi   := {}
 
@@ -710,10 +713,12 @@ local nCont := 0
 			 nTot_E++
 			 nTot_E510++
 
-			 cEFD := "|E510"
+			 cEFD += "|E510"
 			 cEFD += "|"+aIpi[nCont,1] 
 			 cEFD += "|"+aIpi[nCont,2]
-			 cEFD += "|"+dtoSped(dFIM) 
+			 cEFD += "|"+alltrim(transform(aIpi[nCont,3],"@E 999999999.99"))
+			 cEFD += "|"+alltrim(transform(aIpi[nCont,4],"@E 999999999.99"))
+			 cEFD += "|"+alltrim(transform(aIpi[nCont,5],"@E 999999999.99"))
 			 cEFD += "|"+chr(13)+chr(10)
 		 next 	 
 
@@ -723,20 +728,23 @@ local nCont := 0
 
 return
 
-static function i_ipiPorCfop(nFile){
+static function i_registro_E520(nFile)
+local cEFD := ""
+local nCont := 0
 
-	select SAI
-   if val(left(CONFIG->Anomes,4)) < 2003
-      SAI->(dbsetorder(3))                  // Mes do lancamento + Codigos Fiscais
-      SAI->(dbgotop())
-   else
-      SAI->(dbsetfilter({||SAI->Data_Lanc >= dDATA_INI .and. SAI->Data_Lanc <= dDATA_FIM},'SAI->Data_Lanc >= dDATA_INI .and. SAI->Data_Lanc <= dDATA_FIM'))
-      SAI->(dbsetorder(8))                  // Mes do lancamento + Codigos Fiscais
-      SAI->(dbgotop())
+			 ntot_lin++
+			 nTot_E++
+			 nTot_E520++
 
+			 cEFD += "|E520"
+			 cEFD += "|EM construcao"
+			 cEFD += "|"+chr(13)+chr(10)
 
-}
+         fwrite(nFile,cEFD,len(cEFD))
 
+         cEFD := ""
+
+return
 
 static function i_registro_E990(nFile)
 local cEFD := ""
@@ -1489,7 +1497,7 @@ local cModelo := ""
 						aIpi[nKey,4] := aIpi[nKey,4] + SAI->ipi_base
 						aIpi[nKey,5] := aIpi[nKey,5] + SAI->ipi_vlr
 					else
-						add(aIpi,{{SAI->cfop,"50",SAI->Vlr_cont,SAI->Ipi_base,SAI->Ipi_vlr}})
+						aadd(aIpi,{SAI->cfop,"50",SAI->Vlr_cont,SAI->Ipi_base,SAI->Ipi_vlr})
 					endif
 
 					
