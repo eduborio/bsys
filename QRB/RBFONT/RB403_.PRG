@@ -1448,7 +1448,7 @@ local nSEQ := 0
       cINTEG += cCGCCPF
       cINTEG += CLI1->Cgccpf
       cINTEG += left(CLI1->Razao,37)
-      cINTEG += rtrim(left(CLI1->End_cob,29)) + ", " + left(CLI1->Num_cob,6)
+      cINTEG += left(CLI1->End_cob,29) + ", " + left(CLI1->Num_cob,6)
       cINTEG += CLI1->Cep_cob
 
       CGM->(Dbseek(CLI1->Cgm_cob))
