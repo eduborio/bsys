@@ -97,6 +97,7 @@ static function verificaTodasNotasFiscais(oServer)
 	cQuery += "		nf.data_emissao as data_lanc, "
 	cQuery += "		sum(item.valor_unitario * item.quantidade), "
 	cQuery += "		nf.numero_nota as numero, "
+	cQuery += "		nf.cancelada as cancelada, "
 	cQuery += "		sum(item.base_ipi) as base_ipi, "
 	cQuery += "		sum(item.base_icms) as base_icms, "
 	cQuery += "		sum(item.valor_icms) as valor_icms, "
@@ -106,7 +107,7 @@ static function verificaTodasNotasFiscais(oServer)
 	cQuery += "		ifnull(sum((item.valor_unitario * item.quantidade) + item.valor_ipi + item.valor_icmsst),0) as valor_cont "
 	cQuery += "	from item_nota_fiscal as item "
 	cQuery += "	left join nota_fiscal as nf on nf.id = item.nota_fiscal_id "
-	cQuery += "	where nf.data_emissao between '2014-02-01' and '2014-12-31' "
+	cQuery += "	where nf.data_emissao between '2014-02-01' and '2014-10-31' "
 	cQuery += "	and nf.tipo_nota = 1 and nf.cfop_id in (5403,5102)"
 	cQuery += "	group by nota_fiscal_id "
 	cQuery += "	order by numero_nota "
@@ -131,9 +132,10 @@ static function verificaTodasNotasFiscais(oServer)
                       get(row,'base_st')	, ;
 					  get(row,'valor_st')	, ;
 					  get(row,'valor_cont') , ;
-					  "WEB"  , ;
-					  strzero(get(row,'cfop'),4) ,;
-					  get(row,'data_lanc') })
+					  "NFE"  , ;
+					  iif(get(row,'valor_st') > 0,"5403",strzero(get(row,'cfop'),4)) ,;
+					  get(row,'data_lanc'),;
+					  get(row,'cancelada')    })
 	  nCont++
 	  
    enddo	  
@@ -147,7 +149,7 @@ static function verificaTodasNotasFiscais(oServer)
    SAI->(dbseek("20140201"))
    set softseek off
    
-   do while ! SAI->(eof()) .and. SAI->Data_lanc <= ctod("31/12/2014")
+   do while ! SAI->(eof()) .and. SAI->Data_lanc <= ctod("31/10/2014")
    
    
         if ! SAI->Cfop $ "5403-5102"
@@ -163,9 +165,10 @@ static function verificaTodasNotasFiscais(oServer)
                       SAI->Icm_bc_s	, ;
 					  SAI->Icm_subst	, ;
 					  SAI->Vlr_cont , ;
-					  "QEF" , ;
+					  "LIVRO" , ;
 					  SAI->Cfop , ;
-					  SAI->Data_lanc})
+					  SAI->Data_lanc, ;
+					  0})
 		
 		SAI->(dbskip())
    enddo
@@ -190,13 +193,21 @@ static function verificaTodasNotasFiscais(oServer)
 		cBuffer += alltrim(transform(aFiscal[nCont,6],"@E 999999999.99")) + chr(9)
 		cBuffer += alltrim(transform(aFiscal[nCont,7],"@E 999999999.99")) + chr(9)
 		cBuffer += aFiscal[nCont,10] + chr(9)
-		cBuffer += aFiscal[nCont,9] + chr(13) + chr(10)
+		cBuffer += aFiscal[nCont,9] + chr(9)
 		
-		if aFiscal[nCont,9] == "WEB"
-		   nIcmsWeb += aFiscal[nCont,3]
+		if aFiscal[nCont,9] == "NFE"
+			cBuffer += iif(aFiscal[nCont,12] == 1,"Cancelada","") + chr(13) +chr(10)
+		else
+			cBuffer += iif(aFiscal[nCont,8]  == 0, "Cancelada","") + chr(13) +chr(10)
 		endif
 		
-		if aFiscal[nCont,9] == "QEF"
+		if aFiscal[nCont,9] == "NFE"
+		   if aFiscal[nCont,12] == 0
+				nIcmsWeb += aFiscal[nCont,3]
+		   endif		
+		endif
+		
+		if aFiscal[nCont,9] == "LIVRO"
 		   nIcmsQsys += aFiscal[nCont,3]
 		endif
 		
@@ -208,9 +219,9 @@ static function verificaTodasNotasFiscais(oServer)
    
    cBuffer += chr(13) + chr(10)
    cBuffer += chr(13) + chr(10)
-   cBuffer += "Icms" + chr(9) + chr(9)+alltrim(transform(nIcmsQsys,"@E 9999999999999.99")) + chr(13) + chr(10)
-   cBuffer += "Icms" + chr(9)  + chr(9)+alltrim(transform(nIcmsWeb,"@E 9999999999999.99")) + chr(13) + chr(10)
-   cBuffer += "Total" +chr(9)  + chr(9)+alltrim(transform(nIcmsWeb-nIcmsQsys,"@E 9999999999999.99"))
+   cBuffer += chr(9) + chr(9) + "Icms Livro" + chr(9) +alltrim(transform(nIcmsQsys,"@E 9999999999999.99")) + chr(13) + chr(10)
+   cBuffer += chr(9) + chr(9) + "Icms NFes"  + chr(9) +alltrim(transform(nIcmsWeb,"@E 9999999999999.99")) + chr(13) + chr(10)
+   cBuffer += chr(9) + chr(9) + "Diferença" +chr(9)  + chr(9)+alltrim(transform(nIcmsWeb-nIcmsQsys,"@E 9999999999999.99"))
 
    fwrite(nFile,cBuffer,len(cBuffer))   
    fclose(nfile)

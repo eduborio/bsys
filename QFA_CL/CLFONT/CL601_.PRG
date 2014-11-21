@@ -1010,12 +1010,12 @@ static function i_calc_val
    nISS_VLR := nISS
 
    nICMS_RED := 0
-   if left(FAT->Cod_cfop,1) == "5"  .and. CLI1->Isento == "S"
-      nICMS_VLR := (nICMS_VLR - (nICMS_VLR * 0.33333) )
-      nICMS_RED := 33.333
-   else
-      nICMS_VLR  := nICMS_VLR
-   endif
+   //if left(FAT->Cod_cfop,1) == "5"  .and. CLI1->Isento == "S"
+   //   nICMS_VLR := (nICMS_VLR - (nICMS_VLR * 0.33333) )
+   //   nICMS_RED := 33.333
+   //else
+   //   nICMS_VLR  := nICMS_VLR
+   //endif
 
 
    CLI1->(dbseek(FAT->Cod_cli)) // procura a aliquota do lucro no cliente da nota
