@@ -48,6 +48,7 @@ private nTOT_E510 := 0
 private nTOT_E520 := 0
 private aDados := {}
 private aIpi   := {}
+private aIpiEntradas   := {}
 
 
 private nFile   := 0
@@ -123,6 +124,7 @@ static function i_inicializacao
    
    aDados := {}
    aIpi   := {}
+   aIpiEntradas  := {}
 
 return .T.
 
@@ -170,6 +172,9 @@ local cEFD := ""
 	  
 	  i_registro_9001(nFile)
 	  i_registro_9900(nFile)
+	  
+	  i_registro_9990(nFile)
+	  i_registro_9999(nFile)
 
       FAT->(dbclosearea())
       ITEN_FAT->(dbclosearea())
@@ -505,6 +510,7 @@ local nCont := 1
             fwrite(nFile,cEFD,len(cEFD))
             ntot_lin++
             nTot_C++
+			nTot_C170++
             nCONT++
 
             ITEN_FAT->(dbskip())
@@ -626,8 +632,6 @@ return
 static function i_registro_D190(nFile)
 local cEFD := ""
 local nTotal_prod := 0
-
-            
             cEFD := "|D190"
             cEFD += "|000"
             cEFD += "|"+alltrim(ENT->cfop)
@@ -643,17 +647,12 @@ local nTotal_prod := 0
             ntot_lin++
             nTot_D++
             nTot_D190++
-
-
             cEFD := ""
-
-
 return
 
 
 static function i_registro_D990(nFile)
 local cEFD := ""
-
 
          ntot_lin++
          nTot_D++
@@ -672,12 +671,11 @@ return
 static function i_registro_E001(nFile)
 local cEFD := ""
 
-
          ntot_lin++
          nTot_E++
 
          cEFD := "|E001"
-         cEFD += "|1"
+         cEFD += "|0"
          cEFD += "|"+chr(13)+chr(10)
 
          fwrite(nFile,cEFD,len(cEFD))
@@ -709,17 +707,35 @@ local cEFD := ""
 local nCont := 0
 
          for nCont := 1 to len(aIpi)
-			 ntot_lin++
-			 nTot_E++
-			 nTot_E510++
+			 if aIpi[nCont,5] > 0
+				 ntot_lin++
+				 nTot_E++
+				 nTot_E510++
 
-			 cEFD += "|E510"
-			 cEFD += "|"+aIpi[nCont,1] 
-			 cEFD += "|"+aIpi[nCont,2]
-			 cEFD += "|"+alltrim(transform(aIpi[nCont,3],"@E 999999999.99"))
-			 cEFD += "|"+alltrim(transform(aIpi[nCont,4],"@E 999999999.99"))
-			 cEFD += "|"+alltrim(transform(aIpi[nCont,5],"@E 999999999.99"))
-			 cEFD += "|"+chr(13)+chr(10)
+				 cEFD += "|E510"
+				 cEFD += "|"+aIpi[nCont,1] 
+				 cEFD += "|"+aIpi[nCont,2]
+				 cEFD += "|"+alltrim(transform(aIpi[nCont,3],"@E 999999999.99"))
+				 cEFD += "|"+alltrim(transform(aIpi[nCont,4],"@E 999999999.99"))
+				 cEFD += "|"+alltrim(transform(aIpi[nCont,5],"@E 999999999.99"))
+				 cEFD += "|"+chr(13)+chr(10)
+			 endif 	 
+		 next 	 
+		 
+		 for nCont := 1 to len(aIpiEntradas)
+			 if aIpiEntradas[nCont,5] > 0
+				 ntot_lin++
+				 nTot_E++
+				 nTot_E510++
+
+				 cEFD += "|E510"
+				 cEFD += "|"+aIpiEntradas[nCont,1] 
+				 cEFD += "|"+aIpiEntradas[nCont,2]
+				 cEFD += "|"+alltrim(transform(aIpiEntradas[nCont,3],"@E 999999999.99"))
+				 cEFD += "|"+alltrim(transform(aIpiEntradas[nCont,4],"@E 999999999.99"))
+				 cEFD += "|"+alltrim(transform(aIpiEntradas[nCont,5],"@E 999999999.99"))
+				 cEFD += "|"+chr(13)+chr(10)
+			 endif 	 
 		 next 	 
 
          fwrite(nFile,cEFD,len(cEFD))
@@ -731,14 +747,43 @@ return
 static function i_registro_E520(nFile)
 local cEFD := ""
 local nCont := 0
+local nTotalDoIpiSaidas   := 0
+local nTotalDoIpiEntradas := 0
+local isSaldoCredor := .F.
+local nSaldoCredor := 0
+local nSaldoDevedor := 0
 
-			 ntot_lin++
-			 nTot_E++
-			 nTot_E520++
+         for nCont := 1 to len(aIpi)
+			 if aIpi[nCont,5] > 0
+				nTotalDoIpiSaidas += aIpi[nCont,5]
+			 endif 	 
+		 next 	
 
-			 cEFD += "|E520"
-			 cEFD += "|EM construcao"
-			 cEFD += "|"+chr(13)+chr(10)
+		for nCont := 1 to len(aIpiEntradas)
+			 if aIpiEntradas[nCont,5] > 0
+				nTotalDoIpiEntradas += aIpiEntradas[nCont,5]
+			 endif 	 
+		 next 			 
+		 
+		 ntot_lin++
+		 nTot_E++
+		 nTot_E520++
+		 
+		 if nTotalDoIpiEntradas >= nTotalDoIpiSaidas
+			nSaldoCredor := nTotalDoIpiEntradas - nTotalDoIpiSaidas
+		 else
+			nSaldoDevedor := nTotalDoIpiSaidas - nTotalDoIpiEntradas
+		 endif
+		 
+		 cEFD += "|E520"
+		 cEFD += "|" //Saldo Credor Anterior
+		 cEFD += "|"+alltrim(transform(nTotalDoIpiSaidas,"@E 999999999.99"))
+		 cEFD += "|"+alltrim(transform(nTotalDoIpiEntradas,"@E 999999999.99"))
+		 cEFD += "|" //Outros Debitos
+		 cEFD += "|" //Outros Creditos
+		 cEFD += "|"+alltrim(transform(nSaldoCredor,"@E 999999999.99")) 
+		 cEFD += "|"+alltrim(transform(nSaldoDevedor,"@E 999999999.99")) 
+		 cEFD += "|"+chr(13)+chr(10)
 
          fwrite(nFile,cEFD,len(cEFD))
 
@@ -902,61 +947,215 @@ return
 static function i_registro_9900(nFile)
 local cEFD := ""
 
-
          ntot_lin++
          nTot_9++
          nTot_99++
-
          cEFD := "|9900|0000|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|0001|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|0005|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|0100|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|0150|"+ alltrim(str(nTOT_0150)) +"|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|0190|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|0200|"+ alltrim(str(nTOT_0200)) +"|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|0990|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|1001|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|1010|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|1990|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|9001|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|9990|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|9999|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|C001|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|C100|"+ alltrim(str(nTOT_C100)) +"|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|C170|"+ alltrim(str(nTOT_C170)) +"|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|C190|"+ alltrim(str(nTOT_C190)) +"|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|C990|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|D001|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|D100|"+ alltrim(str(nTOT_D100)) +"|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|D190|"+ alltrim(str(nTOT_D190)) +"|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|D990|1|"+chr(13)+chr(10)
 		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|E001|1|"+chr(13)+chr(10)
 		 //cEFD += "|9900|E100|1|"+chr(13)+chr(10)
 		 //cEFD += "|9900|E110|1|"+chr(13)+chr(10)
 		 //cEFD += "|9900|E111|1|"+chr(13)+chr(10)
 		 //cEFD += "|9900|E116|1|"+chr(13)+chr(10)
 		 
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|E500|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|E510|"+ alltrim(str(nTOT_E510)) +"|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|E520|1|"+chr(13)+chr(10)
-		 cEFD += "|9900|E530|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|E990|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|G001|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|G990|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|H001|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|H990|1|"+chr(13)+chr(10)
 		 
-		 
-		 
-		 
-		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
+		 cEFD += "|9900|9900|"+ alltrim(str(nTOT_99))+"|"+chr(13)+chr(10)
 
          fwrite(nFile,cEFD,len(cEFD))
 
          cEFD := ""
 
 return
+
+static function i_registro_9990(nFile)
+local cEFD := ""
+
+         ntot_lin++
+         nTot_9++
+         nTot_9++
+
+         cEFD := "|9990"
+         cEFD += "|"+alltrim(str(nTOT_9))
+         cEFD += "|"+chr(13)+chr(10)
+
+         fwrite(nFile,cEFD,len(cEFD))
+
+         cEFD := ""
+
+return
+
+static function i_registro_9999(nFile)
+local cEFD := ""
+
+         ntot_lin++
+
+         cEFD := "|9999"
+         cEFD += "|"+alltrim(str(nTOT_lin))
+         cEFD += "|"+chr(13)+chr(10)
+
+         fwrite(nFile,cEFD,len(cEFD))
+         cEFD := ""
+
+return
+
+		 
+
 
 
 static function cadClientes
@@ -1489,7 +1688,7 @@ local cModelo := ""
                 cEFD += "|"
                 cEFD += "|"+chr(13)+chr(10)
 				
-				if SAI->Ipi_vlr > 0
+				//if SAI->Ipi_vlr > 0
 				    nKey := ascan(aIpi,{|ckey| cKey[1] == SAI->Cfop})
 					
 					if nKey > 0
@@ -1499,9 +1698,7 @@ local cModelo := ""
 					else
 						aadd(aIpi,{SAI->cfop,"50",SAI->Vlr_cont,SAI->Ipi_base,SAI->Ipi_vlr})
 					endif
-
-					
-				endif	
+				//endif	
 
                 fwrite(nFile,cEFD,len(cEFD))
                 ntot_lin++
@@ -1654,10 +1851,21 @@ local cCFOPS := "13-23-31"
                 cEFD += "|"
                 cEFD += "|"
                 cEFD += "|"+chr(13)+chr(10)
+				
+				 nKey := ascan(aIpiEntradas,{|ckey| cKey[1] == ENT->Cfop})
+					
+					if nKey > 0
+						aIpiEntradas[nKey,3] := aIpiEntradas[nKey,3] + ENT->Vlr_cont
+						aIpiEntradas[nKey,4] := aIpiEntradas[nKey,4] + ENT->ipi_base
+						aIpiEntradas[nKey,5] := aIpiEntradas[nKey,5] + ENT->ipi_vlr
+					else
+						aadd(aIpiEntradas,{ENT->cfop,"00",ENT->Vlr_cont,ENT->Ipi_base,ENT->Ipi_vlr})
+					endif
 
                 fwrite(nFile,cEFD,len(cEFD))
                 ntot_lin++
                 nTot_C++
+				nTot_C100++
 
                 i_registro_c190_entradas(nFile)
             else
@@ -1700,6 +1908,7 @@ local cCFOPS := "13-23-31"
                 fwrite(nFile,cEFD,len(cEFD))
                 ntot_lin++
                 nTot_C++
+				nTot_C100++
 
             endif
 
@@ -1723,12 +1932,13 @@ local cCFOPS := "31"
          IMPORT->(dbsetorder(4)) 
 
          ENT->(dbclearfilter())
-         ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. (left(cfop,2) == cCfops)})) // somente importacao
+         ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. (left(ENT->cfop,2) == cCfops)})) // somente importacao
          ENT->(dbsetorder(2))
          ENT->(dbgotop())
 
 
          do while ! ENT->(Eof())
+		 
 		 
 		 
             if ! IMPORT->(dbseek(ENT->Num_nf))
@@ -1743,17 +1953,13 @@ local cCFOPS := "31"
                 cEFD += "|F"+ENT->Cod_forn
                 cEFD += "|55"
 
-                if FAT->Cancelado
-                   cEFD += "|02"
-                else
-                   cEFD += "|00"
-                endif
+                cEFD += "|00"
 
                 cEFD += "|1" //Serie
                 cEFD += "|000"+ENT->Num_nf
                 cEFD += "|"+IMPORT->NFe
-                cEFD += "|"+dtosped(IMPORT->Dt_emissao)
-                cEFD += "|"+dtosped(IMPORT->Dt_emissao)
+                cEFD += "|"+dtosped(ENT->Data_emis)
+                cEFD += "|"+dtosped(ENT->Data_emis)
                 cEFD += "|"+alltrim(transform(ENT->Vlr_cont,"@E 999999999.99"))
 
                 //if DUP_FAT->(dbseek(FAT->codigo+"01"))
@@ -1792,10 +1998,21 @@ local cCFOPS := "31"
                 cEFD += "|"
                 cEFD += "|"
                 cEFD += "|"+chr(13)+chr(10)
+				
+				nKey := ascan(aIpiEntradas,{|ckey| cKey[1] == ENT->Cfop})
+					
+					if nKey > 0
+						aIpiEntradas[nKey,3] := aIpiEntradas[nKey,3] + ENT->Vlr_cont
+						aIpiEntradas[nKey,4] := aIpiEntradas[nKey,4] + ENT->ipi_base
+						aIpiEntradas[nKey,5] := aIpiEntradas[nKey,5] + ENT->ipi_vlr
+					else
+						aadd(aIpiEntradas,{ENT->cfop,"00",ENT->Vlr_cont,ENT->Ipi_base,ENT->Ipi_vlr})
+					endif
 
                 fwrite(nFile,cEFD,len(cEFD))
                 ntot_lin++
                 nTot_C++
+				nTot_C100++
 
                 i_registro_c190_entradas(nFile)
             else
@@ -1838,6 +2055,7 @@ local cCFOPS := "31"
                 fwrite(nFile,cEFD,len(cEFD))
                 ntot_lin++
                 nTot_C++
+				nTot_C100++
 
             endif
 
@@ -1945,10 +2163,22 @@ local cCFOPS := "13-23-31"
                 cEFD += "|"
                 cEFD += "|"
                 cEFD += "|"+chr(13)+chr(10)
+				
+				nKey := ascan(aIpiEntradas,{|ckey| cKey[1] == ENT->Cfop})
+					
+					if nKey > 0
+						aIpiEntradas[nKey,3] := aIpiEntradas[nKey,3] + ENT->Vlr_cont
+						aIpiEntradas[nKey,4] := aIpiEntradas[nKey,4] + ENT->ipi_base
+						aIpiEntradas[nKey,5] := aIpiEntradas[nKey,5] + ENT->ipi_vlr
+					else
+						aadd(aIpiEntradas,{ENT->cfop,"00",ENT->Vlr_cont,ENT->Ipi_base,ENT->Ipi_vlr})
+					endif
 
                 fwrite(nFile,cEFD,len(cEFD))
                 ntot_lin++
                 nTot_C++
+			    nTot_C100++
+				
 				if FAT->(dbseek(ENT->Num_nf + CLI1->Codigo))
                    i_registro_c170(nFile)
 				endif   
@@ -1993,6 +2223,7 @@ local cCFOPS := "13-23-31"
                 fwrite(nFile,cEFD,len(cEFD))
                 ntot_lin++
                 nTot_C++
+				nTot_C100++
 
             endif
 
@@ -2060,6 +2291,16 @@ local cCFOPS := "13-23"
                 cEFD += "|"
                 cEFD += "|"
                 cEFD += "|"+chr(13)+chr(10)
+				
+				nKey := ascan(aIpiEntradas,{|ckey| cKey[1] == ENT->Cfop})
+					
+					if nKey > 0
+						aIpiEntradas[nKey,3] := aIpiEntradas[nKey,3] + ENT->Vlr_cont
+						aIpiEntradas[nKey,4] := aIpiEntradas[nKey,4] + ENT->ipi_base
+						aIpiEntradas[nKey,5] := aIpiEntradas[nKey,5] + ENT->ipi_vlr
+					else
+						aadd(aIpiEntradas,{ENT->cfop,"00",ENT->Vlr_cont,ENT->Ipi_base,ENT->Ipi_vlr})
+					endif
 
                 fwrite(nFile,cEFD,len(cEFD))
                 ntot_lin++
