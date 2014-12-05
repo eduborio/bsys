@@ -408,7 +408,7 @@ static function i_impressao
 
    do while ! ENT->(eof())   // condicao principal de loop
 
-      qgirabarra()
+      //qgirabarra()
 
       if XPAGINA == 0 .or. prow() > K_MAX_LIN
 
@@ -435,7 +435,7 @@ static function i_impressao
          fCOD_FISC := ENT->COD_FISC
          do while fCOD_FISC = ENT->COD_FISC
 
-            qgirabarra()
+           // qgirabarra()
 
             if eval(bENT_FILTRO)
 
@@ -463,7 +463,7 @@ static function i_impressao
 
                      if OUTENT->(dbseek(dtos(ENT->Data_lanc)+ENT->NUM_NF+ENT->SERIE+ENT->FILIAL))
                         for nCONT := 1 to 5
-                             qgirabarra()
+                            // qgirabarra()
                              aOUTALIQ[nCONT,1] := OUTENT->Icm_Base
                              aOUTALIQ[nCONT,2] := OUTENT->Icm_Aliq
                              aOUTALIQ[nCONT,3] := OUTENT->Icm_Vlr
@@ -496,7 +496,7 @@ static function i_impressao
 
                   if OUTENT->(dbseek(dtos(ENT->Data_lanc)+ENT->NUM_NF+ENT->SERIE+ENT->FILIAL))
                      for nCONT := 1 to 5
-                         qgirabarra()
+                         //qgirabarra()
                          aOUTALIQ[nCONT,1] := OUTENT->Icm_Base
                          aOUTALIQ[nCONT,2] := OUTENT->Icm_Aliq
                          aOUTALIQ[nCONT,3] := OUTENT->Icm_Vlr
@@ -520,7 +520,7 @@ static function i_impressao
          fCFOP     := ENT->Cfop
          do while fCFOP = ENT->CFOP
 
-            qgirabarra()
+            //qgirabarra()
 
             if eval(bENT_FILTRO)
 
@@ -548,7 +548,7 @@ static function i_impressao
 
                      if OUTENT->(dbseek(dtos(ENT->Data_lanc)+ENT->NUM_NF+ENT->SERIE+ENT->FILIAL))
                         for nCONT := 1 to 5
-                             qgirabarra()
+                            // qgirabarra()
                              aOUTALIQ[nCONT,1] := OUTENT->Icm_Base
                              aOUTALIQ[nCONT,2] := OUTENT->Icm_Aliq
                              aOUTALIQ[nCONT,3] := OUTENT->Icm_Vlr
@@ -581,7 +581,7 @@ static function i_impressao
 
                   if OUTENT->(dbseek(dtos(ENT->Data_lanc)+ENT->NUM_NF+ENT->SERIE+ENT->FILIAL))
                      for nCONT := 1 to 5
-                         qgirabarra()
+                         //qgirabarra()
                          aOUTALIQ[nCONT,1] := OUTENT->Icm_Base
                          aOUTALIQ[nCONT,2] := OUTENT->Icm_Aliq
                          aOUTALIQ[nCONT,3] := OUTENT->Icm_Vlr
@@ -652,7 +652,7 @@ static function i_impressao
 
          setprc(56,00)
 
-         if ! qlineprn() ; return ; endif
+         //if ! qlineprn() ; return ; endif
 
          lMUDOU_MES := .F.
 
@@ -831,7 +831,7 @@ static function i_busca_debito
 
    do while ! SAI->(eof())
 
-      qgirabarra()
+      //qgirabarra()
 
       if eval(bSAI_FILTRO)
 
@@ -840,7 +840,7 @@ static function i_busca_debito
 
          if OUTSAI->(dbseek(dtos(SAI->Data_lanc) + SAI->NUM_NF + SAI->SERIE + SAI->FILIAL))
             for nCONT := 1 to 5
-                 qgirabarra()
+                 //qgirabarra()
                  aOUTALIQ[nCONT,1] := OUTSAI->Icm_Base
                  aOUTALIQ[nCONT,2] := OUTSAI->Icm_Aliq
                  aOUTALIQ[nCONT,3] := OUTSAI->Icm_Vlr

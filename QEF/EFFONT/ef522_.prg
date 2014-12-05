@@ -194,7 +194,7 @@ static function i_impressao
 
          do while fCOD_FISC = SAI->COD_FISC
 
-            qgirabarra()
+            //qgirabarra()
 
             if eval(bFILTRO)
 
@@ -218,7 +218,7 @@ static function i_impressao
 
          do while fCFOP = SAI->CFOP
 
-            qgirabarra()
+            //qgirabarra()
 
             if eval(bFILTRO)
 
@@ -270,7 +270,7 @@ static function i_impressao
       fIPI_ISEN := 0
       fIPI_OUT  := 0
 
-      if ! qlineprn() ; return ; endif
+      //if ! qlineprn() ; return ; endif
 
    enddo
 

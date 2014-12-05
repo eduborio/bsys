@@ -93,7 +93,7 @@ static function verificaTodasNotasFiscais(oServer)
 	cQuery += "	from item_nota_fiscal as item "
 	cQuery += "	left join nota_fiscal as nf on nf.id = item.nota_fiscal_id "
 	cQuery += "	where nf.data_emissao between '2014-02-01' and '2014-10-31' "
-	cQuery += "	and nf.tipo_nota = 1 and nf.cfop_id in (5403,5102) and cancelada = 0"
+	cQuery += "	and nf.tipo_nota = 1 and nf.cfop_id in (5403,5102,5910) and cancelada = 0"
 	cQuery += "	group by nota_fiscal_id "
 	cQuery += "	order by numero_nota "
    
@@ -128,7 +128,7 @@ static function verificaTodasNotasFiscais(oServer)
    do while ! SAI->(eof()) .and. SAI->Data_lanc <= ctod("31/10/2014")
    
    
-        if ! SAI->Cfop $ "5403-5102"
+        if ! SAI->Cfop $ "5403-5102-5910"
 		   SAI->(dbskip())
            loop
         endif		   

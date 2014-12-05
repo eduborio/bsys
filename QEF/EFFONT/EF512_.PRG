@@ -220,7 +220,7 @@ static function i_impressao
 
    do while ! SAI->(eof())           // condicao principal de loop
 
-      qgirabarra()
+      //qgirabarra()
 
       if eval(bSAI_FILTRO)
          fTOT_DEB += SAI->IPI_VLR
@@ -263,7 +263,7 @@ static function i_impressao
 
          do while fCOD_FISC = ENT->COD_FISC
 
-            qgirabarra()
+            //qgirabarra()
 
             if eval(bENT_FILTRO)
 
@@ -287,7 +287,7 @@ static function i_impressao
 
          do while fCFOP = ENT->CFOP
 
-            qgirabarra()
+            //qgirabarra()
 
             if eval(bENT_FILTRO)
 
@@ -340,7 +340,7 @@ static function i_impressao
       fIPI_ISEN := 0
       fIPI_OUT  := 0
 
-      if ! qlineprn() ; return ; endif
+      //if ! qlineprn() ; return ; endif
 
    enddo
 

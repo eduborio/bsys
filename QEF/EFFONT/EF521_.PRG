@@ -349,11 +349,11 @@ static function i_impressao
       if val(left(CONFIG->Anomes,4)) < 2003
          do while fCOD_FISC = SAI->COD_FISC
 
-            qgirabarra()
+            //qgirabarra()
 
             if eval(bSAI_FILTRO)
 
-               qgirabarra()
+              // qgirabarra()
 
                if cTIPOPER == "1"
                   if nMES <> val(str(month(SAI->DATA_LANC),2))
@@ -397,7 +397,7 @@ static function i_impressao
 
                      if OUTSAI->(dbseek(dtos(SAI->Data_lanc) + SAI->NUM_NF + SAI->SERIE + SAI->FILIAL))
                         for nCONT := 1 to 5
-                             qgirabarra()
+                             //qgirabarra()
                              aOUTALIQ[nCONT,1] := OUTSAI->ICM_BASE
                              aOUTALIQ[nCONT,2] := OUTSAI->ICM_ALIQ
                              aOUTALIQ[nCONT,3] := OUTSAI->ICM_VLR
@@ -447,7 +447,7 @@ static function i_impressao
 
                   if OUTSAI->(dbseek(dtos(SAI->Data_lanc) + SAI->NUM_NF + SAI->SERIE + SAI->Filial))
                      for nCONT := 1 to 5
-                          qgirabarra()
+                         // qgirabarra()
                           aOUTALIQ[nCONT,1] := OUTSAI->ICM_BASE
                           aOUTALIQ[nCONT,2] := OUTSAI->ICM_ALIQ
                           aOUTALIQ[nCONT,3] := OUTSAI->ICM_VLR
@@ -470,11 +470,11 @@ static function i_impressao
       else
          do while fCFOP = SAI->CFOP
 
-            qgirabarra()
+            //qgirabarra()
 
             if eval(bSAI_FILTRO)
 
-               qgirabarra()
+              // qgirabarra()
 
                if cTIPOPER == "1"
                   if nMES <> val(str(month(SAI->DATA_LANC),2))
@@ -517,7 +517,7 @@ static function i_impressao
 
                      if OUTSAI->(dbseek(dtos(SAI->Data_lanc) + SAI->NUM_NF + SAI->SERIE + SAI->FILIAL))
                         for nCONT := 1 to 5
-                             qgirabarra()
+                             //qgirabarra()
                              aOUTALIQ[nCONT,1] := OUTSAI->ICM_BASE
                              aOUTALIQ[nCONT,2] := OUTSAI->ICM_ALIQ
                              aOUTALIQ[nCONT,3] := OUTSAI->ICM_VLR
@@ -568,7 +568,7 @@ static function i_impressao
 
                   if OUTSAI->(dbseek(dtos(SAI->Data_lanc) + SAI->NUM_NF + SAI->SERIE + SAI->Filial))
                      for nCONT := 1 to 5
-                          qgirabarra()
+                          //qgirabarra()
                           aOUTALIQ[nCONT,1] := OUTSAI->ICM_BASE
                           aOUTALIQ[nCONT,2] := OUTSAI->ICM_ALIQ
                           aOUTALIQ[nCONT,3] := OUTSAI->ICM_VLR
@@ -688,7 +688,7 @@ static function i_impressao
          // PARA IMPRESSAO DO CABECALHO ____________________________________
 
          setprc(56,00)
-         if ! qlineprn() ; return ; endif
+         //if ! qlineprn() ; return ; endif
          lMUDOU_MES := .F.
          loop
 
@@ -859,7 +859,7 @@ static function i_sai_icm_grava()
 
    ISS->(dbgotop())
    do while ! ISS->(eof())
-      qgirabarra()
+      //qgirabarra()
       if eval(bFILTRO)
          nCAMPO_06 += ISS->Vlr_cont
       endif
@@ -1030,7 +1030,7 @@ static function i_busca_credito
 
    do while ! ENT->(eof())   // condicao principal de loop
 
-      qgirabarra()
+      //qgirabarra()
 
       if eval(bENT_FILTRO)
 
@@ -1042,7 +1042,7 @@ static function i_busca_credito
 
          if OUTENT->(dbseek(dtos(ENT->Data_lanc)+ENT->Num_nf+ENT->Serie+ENT->Filial))
             for nCONT := 1 to 5
-                qgirabarra()
+                //qgirabarra()
                 aOUTALIQ[nCONT,1] := OUTENT->ICM_BASE
                 aOUTALIQ[nCONT,2] := OUTENT->ICM_ALIQ
                 aOUTALIQ[nCONT,3] := OUTENT->ICM_VLR
