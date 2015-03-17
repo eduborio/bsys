@@ -478,6 +478,10 @@ static function i_interface
   			   TIPOCONT->(Dbseek("010137")) // Conta De St DF
 			endif
 			
+			if CGM->Estado == "GO"
+  			   TIPOCONT->(Dbseek("010139")) // Conta De St DF
+			endif
+			
 			if right(alltrim(FAT->cod_cfop),3) $ "910" //Se for Remessa de bonificacao
 				
 				if CGM->Estado == "PR"
@@ -498,6 +502,10 @@ static function i_interface
 			
 				if CGM->Estado == "DF"
 					TIPOCONT->(Dbseek("010136")) // Conta De St DF
+				endif
+				
+				if CGM->Estado == "GO"
+					TIPOCONT->(Dbseek("010140")) // Conta De St DF
 				endif
 			
 			endif
@@ -525,7 +533,11 @@ static function i_interface
 			endif
 			
 			if CGM->Estado == "DF"
-			   TIPOCONT->(Dbseek("010138")) // Conta De St Rj
+			   TIPOCONT->(Dbseek("010138")) // Conta De St DF
+			endif
+			
+			if CGM->Estado == "GO"
+			   TIPOCONT->(Dbseek("010141")) // Conta De St GO
 			endif
             
          endif
