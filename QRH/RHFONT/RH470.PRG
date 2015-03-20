@@ -689,7 +689,14 @@ static function i_gravacao
 
              cRAIS := strzero(nSEQ,6) + FILIAL->Cgccpf + "0001" + cCGC + cTIPOI + cRESP + cENDRESP + strzero(nNUMERO,6) + cCOMPL + cBAIRRO
              cRAIS += CGM->Cep + CGM->Cod_rais + CGM->Municipio + CGM->Estado + left(cFONE,2) + right(cFONE,8) + " " + iif(cTP_DEC=="2","1","2")
-             cRAIS += iif(!empty(dDT_RET),qtiraponto(dtoc(dDT_RET)),"00000000") + qtiraponto(dtoc(Date())) + replicate(" ",311)
+             cRAIS += iif(!empty(dDT_RET),qtiraponto(dtoc(dDT_RET)),"00000000") + qtiraponto(dtoc(Date()))
+			 cRAIS += "mavali69@hotmail.com                         "
+			 cRAIS += "MARCIA VALERIA DE LIMA                              "
+			 cRAIS += replicate(" ",24)
+			 cRAIS += "96088575972"
+			 cRAIS += "            "
+			 cRAIS += "10081969"
+			 cRAIS += replicate(" ",159)
 			 cRAIS += chr(13)+chr(10)
 
              //RAIS->(qappend())
@@ -777,7 +784,8 @@ static function i_gravacao
           cRAIS += "2"
           cRAIS += replicate(space(1),14)
           cRAIS += "2"
-          cRAIS += replicate(space(1),99)
+          cRAIS += "01"
+          cRAIS += replicate(space(1),97)
 		  
 		  cRAIS += chr(13)+chr(10)
 
@@ -824,6 +832,11 @@ static function i_gravacao
                 endif
 
                 if SITUA->Vinculo == "G"
+                   FUN->(dbskip())
+                   loop
+                endif
+				
+				if SITUA->Vinculo == "F"
                    FUN->(dbskip())
                    loop
                 endif

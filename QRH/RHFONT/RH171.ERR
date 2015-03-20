@@ -1,4 +1,4 @@
-312K available
+276K available
 Compiling RH171.PRG
 RH171.PRG(24)  Warning C1003  Ambiguous reference: 'COPCAO'
 RH171.PRG(24)  Warning C1004  Ambiguous reference, assuming memvar: 'COPCAO'

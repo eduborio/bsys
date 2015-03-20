@@ -1,4 +1,4 @@
-312K available
+276K available
 Compiling RH510.PRG
 RH510.PRG(14)  Warning C1003  Ambiguous reference: 'XNIVEL'
 RH510.PRG(16)  Warning C1004  Ambiguous reference, assuming memvar: 'SBLOCO1'
