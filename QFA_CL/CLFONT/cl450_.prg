@@ -1091,6 +1091,11 @@ static function sincronizaNFsQueForamCanceladasDepoisDaPrimeiraImportacao(oServe
 	 return .F.
   endif
   
+  if ! quse(XDRV_EF,"ENT",{})
+	 qmensa("Nao foi possivel abrir SAI do Fiscal!","BL")
+	 return .F.
+  endif
+  
   if ! quse(XDRV_RB,"RECEBER",{})
 	 qmensa("Nao foi possivel abrir RECEBER do Contas a Receber!","BL")
 	 return .F.
@@ -1181,7 +1186,8 @@ static function sincronizaNFsQueForamCanceladasDepoisDaPrimeiraImportacao(oServe
    enddo 
 
    SAI->(dbclosearea())
-  RECEBER->(dbcloseArea())
+   ENT->(dbclosearea())
+   RECEBER->(dbcloseArea())
 
 return
 
