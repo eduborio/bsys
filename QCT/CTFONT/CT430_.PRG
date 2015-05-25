@@ -244,8 +244,16 @@ local cSPED := ""
       cSPED += "|"+alltrim(qtiraponto(FILIAL->Insc_estad))
       cSPED += "|"+CGM->Cod_rais //IBGE codigo
       cSPED += "|"              //Insc Municipal
-      cSPED += "|"              //OurInsc
-      cSPED += "|"              //Fim
+      cSPED += "|"              //Indcador Situacao Especial
+      cSPED += "|0"              //Indicador de perdido 0 - Inicio do Ano
+      cSPED += "|0"              //Indcador Se Tem a escrituracao tem NIRE
+      cSPED += "|0"              //Finalidade - 0 Original
+      cSPED += "|"               //HasCode
+      cSPED += "|"              //Nire da escrit sendo sbstituida
+      cSPED += "|0"              //Indicador grande porte
+      cSPED += "|0"              //Empresa nao part de SCP como socio ostensivo
+      cSPED += "|"              //Indicacao da SCP
+	  cSPED += "|"              //Fim
 
       nTOT_LIN++
 
@@ -287,22 +295,26 @@ local cSPED := ""
 
       nTOT_BLOCOI++
       nTOT_LIN++
-      cSPED := "|I010|G|1.00|" //Tipo de Arquivo G = Diario Geral
+      cSPED := "|I010|G|3.00|" //Tipo de Arquivo G = Diario Geral
 
       write(nFile,cSPED,len(cSPED))
       cSPED := ""
-
+	  
+	  cNIRE := strtran(alltrim(CONFIG->Num_junta),".","")
+	  
       nTOT_BLOCOI++
       nTOT_LIN++
       cSPED := "|I030|TERMO DE ABERTURA|"+alltrim(str(val(cLIVRO)))+"|DIARIO GERAL" //Termo de Abertura
       cSPED += "|1"
       cSPED += "|"+rtrim(FILIAL->Razao)
-      cSPED += "|"+alltrim(CONFIG->Num_junta)
+      //cSPED += "|"+cNIRE
+      cSPED += "|"
       cSPED += "|"+FILIAL->Cgccpf
       cSPED += "|"+data_sped(CONFIG->Data_junta)
       cSPED += "|"
       CGM->(Dbseek(FIlial->Cgm))
       cSPED += "|"+ rtrim(CGM->Municipio)
+      cSPED += "|"+data_sped(dFIM)
       cSPED += "|"
 
       write(nFile,cSPED,len(cSPED))
@@ -655,7 +667,7 @@ local cSPED := ""
    cSPED += "|"+alltrim(qtiraponto(CONFIG->Cpf_direto))
    cSPED += "|Diretor"
    cSPED += "|203"
-   cSPED += "||"
+   cSPED += "|||||||"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
 
@@ -667,7 +679,7 @@ local cSPED := ""
    cSPED += "|Contabilista"
    cSPED += "|900"
    cSPED += "|"+rtrim(FILIAL->Crc)
-   cSPED += "|"
+   cSPED += "||||||"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
 
@@ -1290,6 +1302,7 @@ local lSair := .T.
          if cChr == chr(10)
             fseek(nFile,nLineLen*-1,FS_RELATIVE)            //Achou eol, volta ao inicio do registro
             cLinha := freadstr(nFile,nLineLen)              // Le a linha toda - ptr esta posicionado no ultimo chr da linha
+			
 
             if left(cLinha,5) == "|I030"
                nBytesToRead := len(alltrim(str(nTOT_LIN)))     //encontra qntos chrs estao sendo sobrepostos com o novo valor
@@ -1299,12 +1312,14 @@ local lSair := .T.
                cWrite := "|I030|TERMO DE ABERTURA|"+alltrim(str(val(cLIVRO)))+"|DIARIO GERAL" //Termo de Abertura
                cWrite += "|"+alltrim(str(nTOT_LIN))
                cWrite += "|"+rtrim(FILIAL->Razao)
-               cWrite += "|"+alltrim(CONFIG->Num_junta)
+               //cWrite += "|"+strtran(alltrim(CONFIG->Num_junta),".","")
+               cWrite += "|"
                cWrite += "|"+FILIAL->Cgccpf
                cWrite += "|"+data_sped(CONFIG->Data_junta)
                cWrite += "|"
                CGM->(Dbseek(FIlial->Cgm))
                cWrite += "|"+ rtrim(CGM->Municipio)
+               cWrite += "|"+data_sped(dFIM)
                cWrite += "|"
                cWrite += chr(13)+chr(10)+cProxLine
                fseek(nFile,(nLineLen)*-1,FS_RELATIVE)
@@ -1383,12 +1398,14 @@ local nHnd := 0
          cWrite := "|I030|TERMO DE ABERTURA|"+alltrim(str(val(cLIVRO)))+"|DIARIO GERAL" //Termo de Abertura
          cWrite += "|"+alltrim(str(nTOT_LIN))
          cWrite += "|"+rtrim(FILIAL->Razao)
-         cWrite += "|"+alltrim(CONFIG->Num_junta)
+         //cWrite += "|"+strtran(alltrim(CONFIG->Num_junta),".","")
+         cWrite += "|"
          cWrite += "|"+FILIAL->Cgccpf
          cWrite += "|"+data_sped(CONFIG->Data_junta)
          cWrite += "|"
          CGM->(Dbseek(FIlial->Cgm))
          cWrite += "|"+ rtrim(CGM->Municipio)
+         cWrite += "|"+data_sped(dFIM)
          cWrite += "|"
 
          replace SPED->Linha with cWrite

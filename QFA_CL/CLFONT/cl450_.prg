@@ -200,7 +200,7 @@ local area := ""
 		
   	    regime_tributario++
 		
-		replace CLI1->Final         with "N"
+		replace CLI1->Final         with iif(final,"S","N")
 		
 		replace CLI1->Tributacao    with strzero(regime_tributario,1)
 		
