@@ -453,8 +453,7 @@ static function i_impressao
          if RESULTAD->Codigo == "1  "
             @ prow()+1,nCOL1 say RESULTAD->Titulo
             @ prow()  ,nCOL4 say transform(abs(nREC_OPER),"@E 9,999,999,999.99")
-
-
+			
          elseif RESULTAD->Codigo == "2  "
             @ prow()+1,nCOL1 say RESULTAD->Titulo
             @ prow()  ,nCOL4 say transform(abs(nDEDUCOES),"@E 9,999,999,999.99")

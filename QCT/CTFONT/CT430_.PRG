@@ -37,7 +37,11 @@ private nTOT_I150 := 0
 private nTOT_I155 := 0
 private nTOT_I200 := 0
 private nTOT_I250 := 0
+private nTOT_I350 := 0
+private nTOT_I355 := 0
+private nTOT_J005 := 0
 private nTOT_J100 := 0
+private nTOT_J150 := 0
 
 private sBLOC1  := qlbloc("B430B","QBLOC.GLO")
 private nFile   := 0
@@ -200,14 +204,18 @@ static function i_Diario_Geral
     nTOT_BLOCOJ := 0
 
     nTOT_I050 := 0
+    nTOT_I051 := 0
+    nTOT_I052 := 0
     nTOT_I150 := 0
     nTOT_I155 := 0
     nTOT_I200 := 0
     nTOT_I250 := 0
+    nTOT_I350 := 0
+    nTOT_I355 := 0
     nTOT_J100 := 0
+    nTOT_J150 := 0
     aAbertura := {}
     setSaldoAbertura("S") //Gera Saldo_ant no PLAN
-
 
     nFile := 0
 
@@ -218,15 +226,10 @@ static function i_Diario_Geral
     setSaldoAbertura("E") // Volta os valores ao Normal QSys Like
     delRegFantasma()
 
-
     Bloco_J()
     Bloco_9()
 
-
     geraTxt()
-
-
-
 
 return
 
@@ -325,6 +328,8 @@ local cSPED := ""
       rI150() //Periodos - Balancetes
 
       rI200() //Lancamentos e Partidas
+	  
+	  rI350()  // Saldos das contas de resultado antes do encerramento
 
 
       nTOT_BLOCOI++
@@ -334,6 +339,7 @@ local cSPED := ""
       cSPED := ""
 
 return
+
 
 static function rI050
 local cSPED := ""
@@ -373,17 +379,22 @@ local cNIVEL := ""
       endif
 
       cNIVEL := getNivel(PLAN->Codigo)
+	  cSuperior := alltrim(maskCod(searchSuperior(PLAN->Codigo),cNIVEL))
 
       cSPED := "|I050|"+data_sped(dINI)
       cSPED += "|"+cNATUREZA
       cSPED += "|"+cIndicador //Analit. ou Sintetica
       cSPED += "|"+cNivel
       cSPED += "|"+alltrim(maskCod(PLAN->Codigo,cNIVEL))
-      cSPED += "|"+alltrim(maskCod(searchSuperior(PLAN->Codigo),cNIVEL))
+      cSPED += "|"+cSuperior
       cSPED += "|"+rtrim(PLAN->Descricao)
       cSPED += "|" //Finaliza Reg
 
       write(nFile,cSPED,len(cSPED))
+	  
+	  if(cIndicador == "A")
+		  rI052(+alltrim(maskCod(PLAN->Codigo,cNIVEL)))
+	  endif	  
 
       cSPED := ""
 
@@ -395,6 +406,26 @@ local cNIVEL := ""
 
    enddo
 
+return
+
+static function rI052(cSuperior)
+local cSPED := ""
+local cNATUREZA := ""
+local cINDICADOR := ""
+local cNIVEL := ""
+
+      cSPED := "|I052"
+      cSPED += "| "//Cod Ccusto nao obrigatorio
+      cSPED += "|"+cSuperior
+      cSPED += "|" //Finaliza Reg
+
+      write(nFile,cSPED,len(cSPED))
+	  
+      cSPED := ""
+
+      nTOT_I052++
+      nTOT_BLOCOI++
+      nTOT_LIN++
 return
 
 
@@ -524,10 +555,12 @@ local nNUM_LANC := 0
           loop
        endif
 
+	   /*
        if LANC->num_lote == "*FECHA    "
           LANC->(dbskip())
           loop
        endif
+	   */
 
        nNUM_LANC++
        cSPED := "|I200|"+strzero(nNUM_LANC,5)+"|"+data_sped(LANC->Data_lanc)+"|"+i_valida(LANC->Valor,19)+"|"
@@ -624,6 +657,71 @@ local nNUM_LANC := 0
 
 return
 
+static function rI350
+local cSPED     := ""
+local cHIST     := ""
+local nNUM_LANC := 0
+
+    PLAN->(dbsetorder(3))
+
+    LANC->(dbsetorder(1)) //Dtos(data_lanc)
+    LANC->(dbgotop())
+	
+	cSPED := ""
+    nTOT_I350++
+    nTOT_BLOCOI++
+    nTOT_LIN++
+	cSPED := "|I350|3112"+CONFIG->Exercicio+"|"
+	write(nFile,cSPED,len(cSPED))
+
+    do While ! LANC->(eof())
+
+       if LANC->num_lote == "*FECHA    "
+	   
+			if ! empty(LANC->Cont_cr)
+                
+                if PLAN->(dbseek(LANC->Cont_cr))
+				
+				    if val(left(PLAN->Codigo,1)) > 2
+						cSPED := "|I355"
+						cSPED += "|"+alltrim(maskCod(PLAN->Codigo))
+						cSPED += "||"+i_valida(LANC->Valor,19)
+						cSPED += "|D|"
+						write(nFile,cSPED,len(cSPED))
+						cSPED := ""
+						nTOT_I355++
+						nTOT_BLOCOI++
+						nTOT_LIN++
+					endif	
+				endif
+             endif
+			 
+			 if ! empty(LANC->Cont_db)
+                
+                if PLAN->(dbseek(LANC->Cont_db))
+				
+				    if val(left(PLAN->Codigo,1)) > 2
+						cSPED := "|I355"
+						cSPED += "|"+alltrim(maskCod(PLAN->Codigo))
+						cSPED += "||"+i_valida(LANC->Valor,19)
+						cSPED += "|C|"
+						write(nFile,cSPED,len(cSPED))
+						cSPED := ""
+						nTOT_I355++
+						nTOT_BLOCOI++
+						nTOT_LIN++
+					endif	
+				endif
+             endif
+	   
+       endif
+	   LANC->(dbskip())
+			
+	enddo	   
+	   
+	   
+return	   
+
 static function Bloco_J
 local cSPED := ""
 
@@ -634,26 +732,31 @@ local cSPED := ""
    cSPED := ""
 
 
-   //if CONFIG->Zerou_resu == "S"
-    //  nTOT_LIN++
-    //  nTOT_BLOCOJ++
-    //  cSPED := "|J005"
-    //  cSPED := "|"+data_sped(dINI)
-    //  cSPED := "|"+data_sped(dFIM)
-    //  cSPED := "|1"
-    //  cSPED := "|BALANCO|"//+"BALANCO PATRIMONIAL ENCERRADO EM "+dtoc(dFIM)+" C.N.P.J. "+transf(FILIAL->Cgccpf,"@R 99.999.999/9999-99")+"|"
-    //  write(nFile,cSPED,len(cSPED))
-    //  cSPED := ""
+      nTOT_LIN++
+	  nTOT_J005++
+      nTOT_BLOCOJ++
+      cSPED := "|J005"
+      cSPED += "|"+data_sped(dINI)
+      cSPED += "|"+data_sped(dFIM)
+      cSPED += "|1"
+      cSPED += "| |"
+      write(nFile,cSPED,len(cSPED))
+      cSPED := ""
 
-      //balanco()
-  //endif
+      balanco()
+	  
+	  if CONFIG->Mantra == "S"
+	      dre_mantra()
+	  else
+		  dre_romero()	
+	  endif
 
 
    nTOT_LIN++
    nTOT_BLOCOJ++
    cSPED := "|J900|TERMO DE ENCERRAMENTO|"+alltrim(str(val(cLIVRO)))+"|DIARIO GERAL"
    cSPED += "|"+rtrim(FILIAL->Razao)
-   cSPED += "|1"
+   cSPED += "|1"//+alltrim(str(nTOT_BLOCOJ+)) 
    cSPED += "|"+data_sped(dINI)
    cSPED += "|"+data_sped(dFIM)
    cSPED += "|"
@@ -679,7 +782,7 @@ local cSPED := ""
    cSPED += "|Contabilista"
    cSPED += "|900"
    cSPED += "|"+rtrim(FILIAL->Crc)
-   cSPED += "||||||"
+   cSPED += "|contabil@contab.com.br|33333333|PR|||"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
 
@@ -758,6 +861,12 @@ local cSPED := ""
    cSPED := "|9900|I050|"+alltrim(str(nTOT_I050)) +"|"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
+   
+   nTOT_LIN++
+   nTOT_BLOCO9++
+   cSPED := "|9900|I052|"+alltrim(str(nTOT_I052)) +"|"
+   write(nFile,cSPED,len(cSPED))
+   cSPED := ""
 
    nTOT_LIN++
    nTOT_BLOCO9++
@@ -782,6 +891,18 @@ local cSPED := ""
    cSPED := "|9900|I250|"+alltrim(str(nTOT_I250)) +"|"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
+   
+   nTOT_LIN++
+   nTOT_BLOCO9++
+   cSPED := "|9900|I350|"+alltrim(str(nTOT_I350)) +"|"
+   write(nFile,cSPED,len(cSPED))
+   cSPED := ""
+   
+   nTOT_LIN++
+   nTOT_BLOCO9++
+   cSPED := "|9900|I355|"+alltrim(str(nTOT_I355)) +"|"
+   write(nFile,cSPED,len(cSPED))
+   cSPED := ""
 
    nTOT_LIN++
    nTOT_BLOCO9++
@@ -795,17 +916,23 @@ local cSPED := ""
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
 
-   //nTOT_LIN++
-   //nTOT_BLOCO9++
-   //cSPED := "|9900|J005|"+alltrim(str(1)) +"|"
-   //write(nFile,cSPED,len(cSPED))
-   //cSPED := ""
+   nTOT_LIN++
+   nTOT_BLOCO9++
+   cSPED := "|9900|J005|"+alltrim(str(nTOT_J005)) +"|"
+   write(nFile,cSPED,len(cSPED))
+   cSPED := ""
 
-   //nTOT_LIN++
-   //nTOT_BLOCO9++
-   //cSPED := "|9900|J100|"+alltrim(str(nTOT_J100)) +"|"
-   //write(nFile,cSPED,len(cSPED))
-   //cSPED := ""
+   nTOT_LIN++
+   nTOT_BLOCO9++
+   cSPED := "|9900|J100|"+alltrim(str(nTOT_J100)) +"|"
+   write(nFile,cSPED,len(cSPED))
+   cSPED := ""
+   
+   nTOT_LIN++
+   nTOT_BLOCO9++
+   cSPED := "|9900|J150|"+alltrim(str(nTOT_J150)) +"|"
+   write(nFile,cSPED,len(cSPED))
+   cSPED := ""
 
 
    nTOT_LIN++
@@ -834,7 +961,7 @@ local cSPED := ""
 
    nTOT_LIN++
    nTOT_BLOCO9++
-   cSPED := "|9900|9900|"+alltrim(str(21)) +"|"
+   cSPED := "|9900|9900|"+alltrim(str(27)) +"|"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
 
@@ -1412,10 +1539,17 @@ local nHnd := 0
          SPED->(Qunlock())
       endif
    endif
+   
+   
+   voltaLinhas := 33 
+   voltaLinhas := voltaLinhas *(-1)
+   
 
 
    SPED->(dbgobottom())
-   SPED->(dbskip(-27))
+   SPED->(dbskip(voltaLinhas))
+   alert(SPED->Linha)
+   
    if left(SPED->Linha,5) == "|J900"
       if SPED->(qrlock())
          cWRITE := "|J900|TERMO DE ENCERRAMENTO|"+alltrim(str(val(cLIVRO)))+"|DIARIO GERAL"
@@ -1456,30 +1590,41 @@ local cNIVEL := ""
 
    do while ! PLAN->(eof())
 
-       nTOT_LIN++
-       nTOT_BLOCOJ++
-       nTOT_J100++
-       cSPED := "|J100"
-       cSPED += "|"+alltrim(PLAN->Codigo)
-       cNIVEL := getNivel(PLAN->Codigo)
-       cSPED += "|"+cNIVEL
-       cSPED += "|"+left(PLAN->Codigo,1)
-       cSPED += "|"+ rtrim(PLAN->Descricao)
-       nValor := i_puxaatps()
-       cSPED += "|"+i_valida(nValor,19)
-       if nValor < 0
-          cSIT := "C"
-       else
-          cSIT := "D"
-       endif
-      cSPED += "|"+cSIT+"|"
-      write(nFILE,cSPED,len(cSPED))
+       cNIVEL := getNivel(PLAN->Codigo)       
+	   nValor := i_puxaatps()
+	   
+	   //if ! empty(PLAN->Reduzido)
+		//	PLAN->(dbskip())
+		//	loop
+	   //endif
+	     
+
+	   if nValor <> 0
+			cSPED := "|J100"
+			cSPED += "|"+maskCod(alltrim(PLAN->Codigo))
+			cSPED += "|"+cNIVEL
+			cSPED += "|"+left(PLAN->Codigo,1)
+			cSPED += "|"+ rtrim(PLAN->Descricao)
+       
+			cSPED += "|"+i_valida(iif(nValor < 0,nValor*(-1),nValor),19)
+			if nValor < 0
+				cSIT := "C"
+		    else
+				cSIT := "D"
+			endif
+			cSPED += "|"+cSIT
+			cSPED += "|"+i_valida(0,19)
+			cSPED += "|"+cSIT+"|"
+			write(nFILE,cSPED,len(cSPED))
+	 
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J100++
+		endif	
 
       PLAN->(dbskip())
 
    enddo
-
-
 
 return
 
@@ -1523,3 +1668,449 @@ static function i_puxaatps
    next
 return nSALDO
 
+static function dre_mantra
+
+return
+
+static function dre_romero
+   local nREC_LIQ := nREC_OPER := nDEDUCOES := 0
+   local nLUC_BRUTO := nCUST_OPER := 0
+   local nLUC_LIQ  := nLUC_BRUTO := nDESP_PESS := nDESP_ADM := nDESP_GER := nDESP_FIN := 0
+   local nRESULTADO := nLUC_LIQ := nREC_DESP := 0
+   local nLUCRO := nRESULTADO := nPROV_DIV := 0
+   local nDespesas := 0
+   local cSPED    := ""
+   local cCOMBINA := ""
+
+   cCOMBINA := ""
+   
+   PLAN->(dbclearfilter())
+   PLAN->(dbsetorder(3))
+   PLAN->(dbgotop())
+   
+   RESULTAD->(dbsetorder(1))
+   RESULTAD->(dbgotop())
+   
+   do while ! RESULTAD->(eof())
+
+      qgirabarra()
+      if left(RESULTAD->Codigo,1) == "1" .and. right(RESULTAD->Codigo,2) != "  "
+         cCOMBINA += alltrim(RESULTAD->Combina2)
+         nREC_OPER := nREC_OPER + i_maismenos(cCOMBINA)
+      endif
+
+      if left(RESULTAD->Codigo,1) == "2" .and. right(RESULTAD->Codigo,2) != "  "
+         cCOMBINA += alltrim(RESULTAD->Combina2)
+         nDEDUCOES += i_maismenos(cCOMBINA)
+      endif
+
+      if left(RESULTAD->Codigo,1) == "3" .and. right(RESULTAD->Codigo,2) != "  "
+         cCOMBINA += alltrim(RESULTAD->Combina2)
+         nCUST_OPER += i_maismenos(cCOMBINA)
+      endif
+
+      if left(RESULTAD->Codigo,1) == "4" .and. right(RESULTAD->Codigo,2) != "  "
+         cCOMBINA += alltrim(RESULTAD->Combina2)
+         nDESP_PESS += i_maismenos(cCOMBINA)
+      endif
+
+      if left(RESULTAD->Codigo,1) == "5" .and. right(RESULTAD->Codigo,2) != "  "
+         cCOMBINA += alltrim(RESULTAD->Combina2)
+         nDESP_ADM += i_maismenos(cCOMBINA)
+      endif
+
+      if left(RESULTAD->Codigo,1) == "6" .and. right(RESULTAD->Codigo,2) != "  "
+         cCOMBINA += alltrim(RESULTAD->Combina2)
+         nDESP_GER += i_maismenos(cCOMBINA)
+      endif
+
+      if left(RESULTAD->Codigo,1) == "7" .and. right(RESULTAD->Codigo,2) != "  "
+         cCOMBINA += alltrim(RESULTAD->Combina2)
+         nDESP_FIN += i_maismenos(cCOMBINA)
+      endif
+
+      if left(RESULTAD->Codigo,1) == "8" .and. right(RESULTAD->Codigo,2) != "  "
+         cCOMBINA += alltrim(RESULTAD->Combina2)
+         nREC_DESP += i_maismenos(cCOMBINA)
+      endif
+
+      if left(RESULTAD->Codigo,1) == "9" .and. right(RESULTAD->Codigo,2) != "  "
+         cCOMBINA += alltrim(RESULTAD->Combina2)
+         nPROV_DIV += i_maismenos(cCOMBINA)
+      endif
+
+      RESULTAD->(dbskip())
+      cCOMBINA := ""
+
+   enddo
+   
+   nREC_LIQ := nREC_OPER + nDEDUCOES
+   nLUC_BRUTO := nREC_LIQ + nCUST_OPER
+   nDespesas := (nDESP_PESS + nDESP_ADM + nDESP_GER + nDESP_FIN)
+   nLUC_LIQ  := nLUC_BRUTO + (nDESP_PESS + nDESP_ADM + nDESP_GER + nDESP_FIN)
+   nRESULTADO := nLUC_LIQ + nREC_DESP
+   nLUCRO := nRESULTADO + nPROV_DIV
+   
+   
+   
+   RESULTAD->(dbsetorder(1))
+   RESULTAD->(dbgotop())
+   do while ! RESULTAD->(eof())
+	  
+	  
+	  /*if RESULTAD->Codigo == "1  "
+	     cSPED := "|J150"	
+	     cSPED += "|3.01.01"	
+		 cSPED += "|3"
+         cSPED += "|RECEITAS"
+		 cSPED += "|"+i_valida(nREC_OPER,19)
+		 cSPED += "|"+"P"
+		 cSPED += "|"
+		
+		 write(nFILE,cSPED,len(cSPED))
+	     cSPED := ""
+		 nTOT_LIN++
+	     nTOT_BLOCOJ++
+		 nTOT_J150++
+      endif*/
+
+
+      if RESULTAD->Tipo == "1"
+
+         if RESULTAD->Codigo == "1  "
+            //@ prow()+1,nCOL1 say RESULTAD->Titulo
+            //@ prow()  ,nCOL4 say transform(abs(nREC_OPER),"@E 9,999,999,999.99")
+			
+			cSPED := "|J150"	
+			cSPED += "|3.01.01.01"
+			cSPED += "|0"			
+			cSPED += "|"+rtrim(RESULTAD->Titulo)
+			cSPED += "|"+i_valida(abs(nREC_OPER),19)
+			cSPED += "|"+"P"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+
+         elseif RESULTAD->Codigo == "2  "
+            //@ prow()+1,nCOL1 say RESULTAD->Titulo
+            //@ prow()  ,nCOL4 say transform(abs(nDEDUCOES),"@E 9,999,999,999.99")
+			cSPED := "|J150"	
+			cSPED += "|3.01.01.02"	
+			cSPED += "|0"
+			cSPED += "|"+rtrim(RESULTAD->Titulo)
+			cSPED += "|"+i_valida(abs(nDEDUCOES),19)
+			cSPED += "|"+"P"
+			cSPED += "|"
+			
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+
+         elseif RESULTAD->Codigo == "3  "
+            //@ prow()+1,03 say "(=)RECEITA LIQUIDA.................................................................."
+            //@ prow()  ,nCOL4 say transform(nREC_LIQ ,"@E@) 9,999,999,999.99")
+			cSPED := "|J150"	
+			cSPED += "|"	
+			cSPED += "|0"
+			cSPED += "|"+"(=)RECEITA LIQUIDA"
+			cSPED += "|"+i_valida(abs(nREC_LIQ),19)
+			cSPED += "|"+"P"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+			
+            //@ prow()+1,03 say "(-)CUSTOS"
+
+			cSPED := "|J150"	
+			cSPED += "|3.01.02"	
+			cSPED += "|0"
+			cSPED += "|"+"(-)CUSTOS"
+			cSPED += "|"+i_valida(0,19)
+			cSPED += "|"+"N"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+			
+			//@ prow()+1,nCOL1 say RESULTAD->Titulo
+			
+			cSPED := "|J150"	
+			cSPED += "|3.01.02.01"	
+			cSPED += "|0"
+			cSPED += "|"+rtrim(RESULTAD->Titulo)
+			cSPED += "|"+i_valida(abs(nCUST_OPER),19)
+			cSPED += "|"+"P"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+
+            //@ prow()  ,nCOL4 say transform(abs(nCUST_OPER),"@E 9,999,999,999.99")
+
+         elseif RESULTAD->Codigo == "4  "
+            //@ prow()+1,03 say "(=)LUCRO BRUTO......................................................................"
+            //@ prow()  ,nCOL4 say transform(nLUC_BRUTO     ,"@E@) 9,999,999,999.99")
+			cSPED := "|J150"	
+			cSPED += "|"	
+			cSPED += "|0"
+			cSPED += "|"+"(=)LUCRO BRUTO"
+			cSPED += "|"+i_valida(abs(nLUC_BRUTO),19)
+			cSPED += "|"+"P"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+			
+			/*
+            //@ prow()+1,03 say "DESPESAS"
+			cSPED := "|J150"	
+			cSPED += "|3.01.03"	
+			cSPED += "|3"
+			cSPED += "|"+"DESPESAS"
+			
+			cSPED += "|"+i_valida(abs(nDespesas),19)
+			cSPED += "|"+"N"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++*/
+            
+			
+			//@ prow()+1,nCOL1 say RESULTAD->Titulo
+			
+			cSPED := "|J150"	
+			cSPED += "|3.01.03.01"
+			cSPED += "|0"			
+			cSPED += "|"+rtrim(RESULTAD->Titulo)
+			
+			cSPED += "|"+i_valida(abs(nDESP_PESS),19)
+			cSPED += "|"+"P"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+
+            //@ prow()  ,nCOL4 say transform(abs(nDESP_PESS),"@E 9,999,999,999.99")
+
+         elseif RESULTAD->Codigo == "5  "
+            //@ prow()+1,nCOL1 say RESULTAD->Titulo
+            //@ prow()  ,nCOL4 say transform(abs(nDESP_ADM),"@E 9,999,999,999.99")
+			
+			cSPED := "|J150"	
+			cSPED += "|3.01.03.02"	
+			cSPED += "|0"
+			cSPED += "|"+rtrim(RESULTAD->Titulo)
+			
+			cSPED += "|"+i_valida(abs(nDESP_ADM),19)
+			cSPED += "|"+"P"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+
+         elseif RESULTAD->Codigo == "6  "
+            //@ prow()+1,nCOL1 say RESULTAD->Titulo
+            //@ prow()  ,nCOL4 say transform(abs(nDESP_GER),"@E 9,999,999,999.99")
+			cSPED := "|J150"	
+			cSPED += "|3.01.03.03"	
+			cSPED += "|0"
+			cSPED += "|"+rtrim(RESULTAD->Titulo)
+			
+			cSPED += "|"+i_valida(abs(nDESP_GER),19)
+			cSPED += "|"+"P"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+
+         elseif RESULTAD->Codigo == "7  "
+            //@ prow()+1,nCOL1 say RESULTAD->Titulo
+            //@ prow()  ,nCOL4 say transform(abs(nDESP_FIN),"@E 9,999,999,999.99")
+			cSPED := "|J150"	
+			cSPED += "|3.01.03.04"	
+			cSPED += "|0"
+			cSPED += "|"+rtrim(RESULTAD->Titulo)
+			
+			cSPED += "|"+i_valida(abs(nDESP_FIN),19)
+			cSPED += "|"+"P"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+
+         elseif RESULTAD->Codigo == "8  "
+            //@ prow()+1,03 say "(=)LUCRO LIQUIDO....................................................................."
+            //@ prow(),nCOL4 say transform(nLUC_LIQ ,"@E@) 9,999,999,999.99")
+			cSPED := "|J150"	
+			cSPED += "|"	
+			cSPED += "|0"
+			cSPED += "|"+"(=)LUCRO LIQUIDO"
+			
+			cSPED += "|"+i_valida(abs(nLUC_LIQ),19)
+			cSPED += "|"+"N"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+
+            //@ prow()+1,nCOL1 say RESULTAD->Titulo
+            //@ prow()  ,nCOL4 say transform(abs(nREC_DESP),"@E 9,999,999,999.99")
+			cSPED := "|J150"	
+			cSPED += "|3.01.03.05"	
+			cSPED += "|0"
+			cSPED += "|"+rtrim(RESULTAD->Titulo)
+			
+			cSPED += "|"+i_valida(abs(nREC_DESP),19)
+			cSPED += "|"+"P"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+
+         elseif RESULTAD->Codigo == "9  "
+            //@ prow()+1,03 say "(=)RESULTADO ANTES DAS PROVISOES/DIVIDENDOS............................................"
+            //@ prow(),nCOL4 say transform(nRESULTADO ,"@E@) 9,999,999,999.99")
+			cSPED := "|J150"	
+			cSPED += "|"	
+			cSPED += "|0"
+			cSPED += "|"+"(=)RESULTADO ANTES DAS PROVISOES/DIVIDENDOS"
+			
+			cSPED += "|"+i_valida(abs(nRESULTADO),19)
+			cSPED += "|"+"N"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+            
+			//@ prow()+1,nCOL1 say RESULTAD->Titulo
+            //@ prow()  ,nCOL4 say transform(abs(nPROV_DIV),"@E 9,999,999,999.99")
+			
+			cSPED := "|J150"	
+			cSPED += "|3.01.03.06"	
+			cSPED += "|0"
+			cSPED += "|"+rtrim(RESULTAD->Titulo)
+			
+			cSPED += "|"+i_valida(abs(nPROV_DIV),19)
+			cSPED += "|"+"N"
+			cSPED += "|"
+			write(nFILE,cSPED,len(cSPED))
+			cSPED := ""
+			nTOT_LIN++
+			nTOT_BLOCOJ++
+			nTOT_J150++
+         endif
+
+      else
+         i_compact()
+      endif
+	 
+	 
+   
+  	  RESULTAD->(dbskip())
+      cCOMBINA := ""
+   enddo
+   
+   //@ prow()+1,03 say "(=) LUCRO /PREJUIZO DO EXERCICIO........................................................."
+   //@ prow()  ,nCOL4 say transform(nLUCRO ,"@E@) 9,999,999,999.99")
+   cSPED := "|J150"	
+   cSPED += "|"	
+   cSPED += "|0"
+   cSPED += "|"+"(=) LUCRO /PREJUIZO DO EXERCICIO"
+	
+	cSPED += "|"+i_valida(abs(nLUCRO),19)
+	cSPED += "|"+"N"
+	cSPED += "|"
+	write(nFILE,cSPED,len(cSPED))
+	cSPED := ""
+	nTOT_LIN++
+	nTOT_BLOCOJ++
+	nTOT_J150++
+   
+return
+
+static function i_compact
+
+     local nSaldo := 0
+	 local cSinal := ""
+	 local nCTA   := space(6)
+     
+	 cSINAL := subs(RESULTAD->Combina2,1,1)
+     nCTA   := subs(RESULTAD->Combina2,2,6)
+
+	 PLAN->(dbclearfilter())
+     
+	 if PLAN->(dbseek(nCTA))
+	 
+	     
+         nSaldo := PLAN->Saldo_dre
+		 
+         if nSaldo <> 0  		 
+			 cSPED := "|J150"	
+			 cSPED += "|"+maskCod(alltrim(PLAN->Codigo))	
+			 cSPED += "|0"
+			 cSPED += "|"+rtrim(PLAN->Descricao)
+			 
+			 cSPED += "|"+i_valida(abs(nSaldo),19)
+			 
+			 cSPED += "|"+iif(nSaldo > 0,"D","R")
+			 cSPED += "|"
+			 write(nFILE,cSPED,len(cSPED))
+			 cSPED := ""
+			 nTOT_LIN++
+			 nTOT_BLOCOJ++
+			 nTOT_J150++
+		 endif	 
+	 endif
+
+
+return
+
+static function i_maismenos(cCOMBINA)
+   local zTMP := 0
+
+   for nCONTA = 1 to len(cCOMBINA) step 7
+       cSINAL := subs(cCOMBINA,nCONTA,1)
+       nCTA   := subs(cCOMBINA,nCONTA+1,6)
+	   
+       if PLAN->(dbseek(nCTA))
+          nSALDATU := PLAN->Saldo_dre
+          iif( cSINAL == "+" , zTMP += nSALDATU * -1 , zTMP -= nSALDATU * -1 )
+       endif
+      // if prow() > K_MAX_LIN
+      //    qpageprn()
+      //    qcabecprn(cTITULO1,132,.F.,cTITULO2)
+      //    @ prow()+1,00 say ""
+      // endif
+   next
+
+return zTMP
