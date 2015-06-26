@@ -222,12 +222,11 @@ static function i_Diario_Geral
     registro_0000()
     Bloco_0()
     Bloco_I()
-
-    setSaldoAbertura("E") // Volta os valores ao Normal QSys Like
-    delRegFantasma()
-
     Bloco_J()
     Bloco_9()
+	
+	setSaldoAbertura("E") // Volta os valores ao Normal QSys Like
+    delRegFantasma()
 
     geraTxt()
 
@@ -475,7 +474,7 @@ local cDEB,cCRE  := ""
             cSPED += "|"
 
             if nSALDO_ANT < 0
-               cSPED += "|"+i_valida(nSALDO_ANT*-1,19)
+               cSPED += "|"+i_valida(nSALDO_ANT*(-1),19)
                cSPED += "|C"
             else
                cSPED += "|"+i_valida(nSALDO_ANT,19)
@@ -499,11 +498,11 @@ local cDEB,cCRE  := ""
             nCreditos += PLAN->&cCRE
 
             cSPED += "|"+i_valida(nDebitos,19)
-            cSPED += "|"+i_valida((nCreditos)*-1,19)
+            cSPED += "|"+i_valida((nCreditos)*(-1),19)
             nSALDO_ATU := nSALDO_ANT + nDebitos + nCreditos
 
             if nSALDO_ATU < 0
-               cSPED += "|"+i_valida(nSALDO_ATU*-1,19)
+               cSPED += "|"+i_valida(nSALDO_ATU*(-1),19)
                cSPED += "|C"
             else
                cSPED += "|"+i_valida(nSALDO_ATU,19)
@@ -582,6 +581,10 @@ local nNUM_LANC := 0
 
           cHIST := ltrim(cHIST)
           cHIST := rtrim(cHIST)
+		  
+		  if empty(cHIST)
+			 cHist := "LANCAMENTO" 
+		  endif
 
           if ! empty(LANC->Cont_cr)
              cSPED := "|I250"
@@ -620,6 +623,10 @@ local nNUM_LANC := 0
 
              cHIST := ltrim(cHIST)
              cHIST := rtrim(cHIST)
+			 
+			 if empty(cHIST)
+				cHist := "LANCAMENTO" 
+		     endif
 
              if ! empty(ITN_LANC->Cont_cr)
                 cSPED := "|I250"
@@ -1592,6 +1599,7 @@ local cNIVEL := ""
 
        cNIVEL := getNivel(PLAN->Codigo)       
 	   nValor := i_puxaatps()
+	   nSaldo_ant := i_puxasaldo(1)
 	   
 	   //if ! empty(PLAN->Reduzido)
 		//	PLAN->(dbskip())
@@ -1613,7 +1621,13 @@ local cNIVEL := ""
 				cSIT := "D"
 			endif
 			cSPED += "|"+cSIT
-			cSPED += "|"+i_valida(0,19)
+			cSPED += "|"+i_valida(iif(nSaldo_ant < 0,nSaldo_ant*(-1),nSaldo_ant),19)
+			
+			if nSaldo_ant < 0
+				cSIT := "C"
+		    else
+				cSIT := "D"
+			endif
 			cSPED += "|"+cSIT+"|"
 			write(nFILE,cSPED,len(cSPED))
 	 
@@ -1668,9 +1682,7 @@ static function i_puxaatps
    next
 return nSALDO
 
-static function dre_mantra
 
-return
 
 static function dre_romero
    local nREC_LIQ := nREC_OPER := nDEDUCOES := 0
@@ -2114,3 +2126,299 @@ static function i_maismenos(cCOMBINA)
    next
 
 return zTMP
+
+static function dre_mantra
+	local cSPED    := ""
+	local nREC_LIQ := 0
+	local nLUCRO_BRUTO := 0
+	
+     PLAN->(dbclearfilter())
+     PLAN->(dbsetorder(1))
+     PLAN->(dbgotop())
+	 
+	 if PLAN->(dbseek("3010101"))
+		//alert("OK")
+		cSPED := "|J150"	
+		cSPED += "|3.01.01.01"
+		cSPED += "|0"			
+		cSPED += "|"+"RECEITAS OPERACIONAIS"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		imprimeSubContas("3010101")
+	endif	
+	
+	if PLAN->(dbseek("3010102"))
+		cSPED := "|J150"	
+		cSPED += "|3.01.01.02"
+		cSPED += "|0"			
+		cSPED += "|"+"DEDUCOES"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		imprimeSubContas("3010102")
+	endif
+	if PLAN->(dbseek("3010201"))
+		cSPED := "|J150"	
+		cSPED += "|3.01.02.01"
+		cSPED += "|0"			
+		cSPED += "|"+"IMPOSTOS"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		imprimeSubContas("3010201")
+	endif
+	
+	if PLAN->(dbseek("301"))
+		cSPED := "|J150"	
+		cSPED += "|"
+		cSPED += "|0"			
+		cSPED += "|"+"(=)RECEITA OPERACIONAL LIQUIDA"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		nREC_LIQ := abs(PLAN->Saldo_dre)
+	endif	
+	
+	if PLAN->(dbseek("3020201"))
+		cSPED := "|J150"	
+		cSPED += "|3.02.02.01"
+		cSPED += "|0"			
+		cSPED += "|"+"CUSTOS DOS ESTOQUES"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		imprimeSubContas("3020201")
+	endif
+	
+	if PLAN->(dbseek("3020401"))
+		cSPED := "|J150"	
+		cSPED += "|"		
+		cSPED += "|0"	
+		cSPED += "|"+"CUSTOS ESTOQUES/EXPEDICAO"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		imprimeSubContas("3020401")
+	endif
+	
+	if PLAN->(dbseek("3020403"))
+		cSPED := "|J150"	
+		cSPED += "|"		
+		cSPED += "|0"	
+		cSPED += "|"+"OUTROS CUSTOS"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		imprimeSubContas("3020403")
+	endif
+	
+	if PLAN->(dbseek("302")) // TOTAL DE CUSTOS
+		cSPED := "|J150"	
+		cSPED += "|"
+		cSPED += "|0"			
+		cSPED += "|"+"(=)LUCRO BRUTO"
+		cSPED += "|"+i_valida(nREC_LIQ - abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"N"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+	endif	
+	
+	if PLAN->(dbseek("30301"))
+		cSPED := "|J150"	
+		cSPED += "|"		
+		cSPED += "|0"	
+		cSPED += "|"+"DESPESAS COM PESSOAL"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		imprimeSubContas("30301")
+		nDespPessoal := abs(PLAN->Saldo_dre)
+	endif
+	
+	if PLAN->(dbseek("30302"))
+		cSPED := "|J150"	
+		cSPED += "|"		
+		cSPED += "|0"	
+		cSPED += "|"+"DESPESAS GERAIS"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		imprimeSubContas("30302")
+		nDespGer := abs(PLAN->Saldo_dre)
+	endif
+	
+	if PLAN->(dbseek("30303"))
+		cSPED := "|J150"	
+		cSPED += "|"		
+		cSPED += "|0"	
+		cSPED += "|"+"DESPESAS COM VENDAS"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		imprimeSubContas("30303")
+		nDespVendas := abs(PLAN->Saldo_dre)
+	endif
+	
+	if PLAN->(dbseek("304"))
+		cSPED := "|J150"	
+		cSPED += "|"		
+		cSPED += "|0"	
+		cSPED += "|"+"ENCARGOS FINANCEIROS LIQUIDOS"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		imprimeSubContas("304")
+		nEncFinan := abs(PLAN->Saldo_dre)
+	endif
+	
+	if PLAN->(dbseek("305"))
+		cSPED := "|J150"	
+		cSPED += "|"		
+		cSPED += "|0"	
+		cSPED += "|"+"DESPESAS TRIBUTARIAS"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		imprimeSubContas("305")
+		nDespTrib := abs(PLAN->Saldo_dre)
+	endif
+	
+	if PLAN->(dbseek("307"))
+		cSPED := "|J150"	
+		cSPED += "|"		
+		cSPED += "|0"	
+		cSPED += "|"+"PROVISOES PARA ENCERRAMENTO DO EXERCICIO"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"P"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+		imprimeSubContas("307")
+		nProvs := abs(PLAN->Saldo_dre)
+	endif
+	
+	if PLAN->(dbseek("3")) // LUCRO
+		cSPED := "|J150"	
+		cSPED += "|"
+		cSPED += "|0"			
+		cSPED += "|"+"(=)LUCRO DO EXERCICIO"
+		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+"N"
+		cSPED += "|"
+		write(nFILE,cSPED,len(cSPED))
+		cSPED := ""
+		nTOT_LIN++
+		nTOT_BLOCOJ++
+		nTOT_J150++
+	endif	
+
+return
+
+static function imprimeSubContas(contaPai)
+	local cSPED    := ""
+	local size := len(contaPai)
+	
+	if PLAN->(dbseek(contaPai))
+	
+		do while ! PLAN->(eof()) .and. left(PLAN->Codigo,size) == contaPai
+		
+			if empty(PLAN->Reduzido)
+			   PLAN->(dbskip())
+				loop
+			endif	
+			
+			if PLAN->Saldo_dre == 0
+			    PLAN->(dbskip())
+				loop
+			endif	
+			
+			 cSPED := "|J150"	
+			 cSPED += "|"+maskCod(alltrim(PLAN->Codigo))	
+			 cSPED += "|0"
+			 cSPED += "|"+rtrim(PLAN->Descricao)
+			 
+			 cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+			 
+			 cSPED += "|"+iif(PLAN->Saldo_dre > 0,"D","R")
+			 cSPED += "|"
+			 write(nFILE,cSPED,len(cSPED))
+			 cSPED := ""
+			 nTOT_LIN++
+			 nTOT_BLOCOJ++
+			 nTOT_J150++
+			
+			PLAN->(dbskip())
+		enddo
+	endif	
+
+
+
+return

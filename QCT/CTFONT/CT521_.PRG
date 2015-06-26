@@ -448,9 +448,15 @@ static function i_impr123
          exit
       endif
 
-      qgirabarra()
+      //qgirabarra()
 
-      if ! qlineprn() ; return ; endif
+      //if ! qlineprn() ; return ; endif
+	  
+	  if mod(PLAN->(recno()),250) == 0
+         if ! qlineprn() ; return ; endif
+     	 qgirabarra()
+		 qmensa("Imprimindo Conta: " + ct_convcod(PLAN->Codigo))
+	  endif
 
       // CABECALHO SE NECESSARIO ____________________________________________
 
@@ -462,7 +468,7 @@ static function i_impr123
          exit
       endif
 
-      qmensa("Processando Conta: " + ct_convcod(PLAN->Codigo))
+      //qmensa("Processando Conta: " + ct_convcod(PLAN->Codigo))
 
       if cTIPO $ "1*2*3"
 
@@ -611,9 +617,15 @@ static function i_impr4
          exit
       endif
 
-      qgirabarra()
+      //qgirabarra()
 
-      if ! qlineprn() ; return ; endif
+      //if ! qlineprn() ; return ; endif
+	  
+	  if mod(PLAN->(recno()),250) == 0
+         if ! qlineprn() ; return ; endif
+     	 qgirabarra()
+		 qmensa("Imprimindo Conta: " + ct_convcod(PLAN->Codigo))
+	  endif
 
       // CABECALHO SE NECESSARIO ____________________________________________
 

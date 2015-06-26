@@ -149,9 +149,9 @@ static function i_imprime
 
    do while ! LANC->(eof()) .and. LANC->Data_lanc <= dFIM .and. qcontprn()
 
-      qmensa("Imprimindo Lancamento: "+LANC->Num_lanc+" "+cMODELO)
+      //qmensa("Imprimindo Lancamento: "+LANC->Num_lanc+" "+cMODELO)
 
-      if ! qlineprn() ; return ; endif
+      //if ! qlineprn() ; return ; endif
 
       // CABECALHO SE NECESSARIO ____________________________________________
 
