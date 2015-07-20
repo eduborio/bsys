@@ -1834,7 +1834,8 @@ local nReg := 0
 
          cIntegra += left(CLI1->Razao,40)
 
-         cIntegra += left(CLI1->End_cob,38) //+ CLI1->Numero + space(1)
+		 cIntegra += left(CLI1->End_cob,30) + ", " + left(CLI1->Num_cob,6)
+         //cIntegra += left(CLI1->End_cob,38) //+ CLI1->Numero + space(1)
 		 
 		 cIntegra += "  "
 
