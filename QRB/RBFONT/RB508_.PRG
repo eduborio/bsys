@@ -413,8 +413,10 @@ local cRet := "    "
       if cRet == "0399"
          cRET := "HSBC"
       endif
-
-
+	  
+	  if cRet == "0246"
+         cRET := "ABC"
+      endif
 
    else
       cRet := "    "

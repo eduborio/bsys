@@ -1,4 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 // SISTEMA....: SISTEMA DE CONTAS A RECEBER
 // OBJETIVO...: ENVIO DE DOCUMENTOS PARA O BANCO
 // ANALISTA...:
@@ -110,6 +111,10 @@ local cRet := "    "
 	  
 	  if cRet == "0399"
          cRET := "HSBC"
+      endif
+	  
+	  if cRet == "0246"
+         cRET := "ABC "
       endif
 
    else
@@ -359,6 +364,8 @@ static function i_gera_arq
           i_Banco_do_Brasil()
 		case BANCO->Banco == "0399"
           i_hsbc()
+		case BANCO->Banco == "0246"
+          i_abc()
         otherwise
           qmensa("Layout de Banco nao encontrado!","B")
           return .F.
@@ -1876,6 +1883,150 @@ local nReg := 0
      RECEBER->(dbgoto(nReg))
 
      cFileName := "Remessa Hsbc - "+strzero(year(date()),4)+ " "+strzero(month(date()),2)+" "+strzero(day(date()),2)+ " - " + left(time(),2)+" "+substr(time(),4,2)+".txt"
+
+     nFile := fcreate("C:\qsystxt\"+cFileName,0)
+
+     fwrite(nFile,cIntegra,len(cIntegra))
+
+     fClose(nFile)
+
+return
+
+static function i_abc
+	local cIntegra := ""
+	local nLin := 0
+	local cCarteira := ""
+	local cConta    := ""
+	local cAgencia   := ""
+	local cFilename  := ""
+	local nFile := 0
+	local nReg := 0
+	local idDaEmpresaNoBanco := "00019070022160090000"
+	local nomeDaEmpresa := "MANTRACO DO BRASIL COM. LTDA  "
+	local nomeDoBanco   := "ABC BRASIL S.A."
+
+      LAYOUT->(dbseek(fCod_layout))
+      cAgencia := LAYOUT->Ag_cede
+      cConta := "00"+left(LAYOUT->Conta_cede,7)
+      cCarteira := LAYOUT->Carteira
+      nREG := RECEBER->(recno())
+
+     ////////////////////////////////////////////////////
+     // Registro Tipo 0__________________________________
+
+     nLIN++
+     cIntegra += "0"
+     cIntegra += "1"
+     cIntegra += "REMESSA"
+     cIntegra += "01"
+     cIntegra += "COBRANCA"
+     cIntegra += space(7)
+     cIntegra += idDaEmpresaNoBanco
+     cIntegra += nomeDaEmpresa
+	 cIntegra += "246"
+	 cIntegra += nomeDoBanco
+     cIntegra += dtItau(date())
+     cIntegra += space(294)
+     cIntegra += strzero(nLIN,6)+Chr(13)+chr(10)
+
+     ///////////////////////////////////////////////////
+     // Registro 1_____________________________________
+
+     RECEBER->(dbgotop())
+     do while ! RECEBER->(eof())
+
+        qgirabarra()
+
+        if RECEBER->Marcar != "*"
+           RECEBER->(dbskip())
+           loop
+        endif
+
+
+         cIntegra += "1"
+         cIntegra += "02"   //Tipo cnpj
+         cIntegra += FILIAL->Cgccpf  //Cnpj da Empresa
+         cIntegra += idDaEmpresaNoBanco
+		 cIntegra += RECEBER->Fatura+space(12)
+		 cIntegra += "00000000"
+		 cIntegra += "             "
+		 cIntegra += space(24)
+		 cIntegra += "1"  //Carteira
+		 cIntegra += "01" //Remessa  - Tipo do movimento
+		 cIntegra += left(RECEBER->Fatura,10)
+		 cIntegra += dtItau(RECEBER->Data_venc)
+		 cIntegra += convValor(RECEBER->VAlor_liq,13)
+		 cIntegra += "246"
+		 cIntegra += "00000"
+		 cIntegra += "01"
+         cIntegra += "N"
+		 cIntegra +=  dtItau(RECEBER->Data_emiss)
+		 cIntegra += "0000"
+		 cIntegra +=  convValor(RECEBER->Valor_liq*0.0033,13)
+		 cIntegra += replicate("0",6) //data limite desconto
+		 cIntegra += replicate("0",13) //vlr desconto
+		 cIntegra += replicate("0",13) //iof se seguro
+		 cIntegra += replicate("0",13) //valor abatimento
+
+         CLI1->(Dbseek(RECEBER->Cod_cli))
+
+         if len(CLI1->Cgccpf) == 14
+            cCGCCPF := "02"
+         else
+            cCGCCPF := "01"
+         endif
+
+         cIntegra += cCgcCpf
+         if cCgccpf == "02"
+            cIntegra += CLI1->Cgccpf
+         else
+            cIntegra += "000"+left(CLI1->Cgccpf,11)
+         endif
+
+         cIntegra += left(CLI1->Razao,30)
+
+         cIntegra += space(10)
+
+         cIntegra += left(CLI1->End_cob,30) + CLI1->Num_cob + space(3)
+
+         cIntegra += left(Cli1->Bairro_cob,12)
+
+         cIntegra += Cli1->cep_cob
+
+         CGM->(dbseek(CLI1->Cgm_cob))
+         cIntegra += left(CGM->Municipio,15)
+
+         cIntegra += CGM->Estado
+
+         cIntegra += nomeDaEmpresa
+         
+		 cIntegra += space(10)
+
+         cIntegra += "05"// prazo protesto
+         cIntegra += "1"// Moeda
+		 
+         nLin ++
+
+         cIntegra += strzero(nLin,6)+chr(13)+chr(10)
+
+
+         //cFileName := "Remessa ABC - "+strzero(year(date()),4)+ " "+strzero(month(date()),2)+" "+strzero(day(date()),2)+ " - " + left(time(),2)+" "+substr(time(),4,2)+".txt"
+
+
+         if RECEBER->(qrlock())
+            replace RECEBER->Marcar with " "
+            RECEBER->(Qunlock())
+         endif
+
+         RECEBER->(dbskip())
+     enddo
+
+     nLin++
+     cIntegra += "9"+space(393)+strzero(nLin,6)+chr(13)+chr(10)
+
+     RECEBER->(dbgoto(nReg))
+
+     cFileName := "Remessa ABC - "+strzero(year(date()),4)+ " "+strzero(month(date()),2)+" "+strzero(day(date()),2)+ " - " + left(time(),2)+" "+substr(time(),4,2)+".txt"
 
      nFile := fcreate("C:\qsystxt\"+cFileName,0)
 
