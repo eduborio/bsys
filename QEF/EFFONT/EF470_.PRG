@@ -196,7 +196,7 @@ static function i_registro_0000(nFile)
 local cEFD := ""
 
       cEFD := "|0000"
-      cEFD += "|008"
+      cEFD += "|010"
       cEFD += "|0"
       cEFD += "|"+dtoSped(dINI)
       cEFD += "|"+dtoSped(dFIM)

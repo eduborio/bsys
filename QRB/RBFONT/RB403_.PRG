@@ -366,6 +366,8 @@ static function i_gera_arq
           i_hsbc()
 		case BANCO->Banco == "0246"
           i_abc()
+	    case BANCO->Banco == "0247"
+          i_abc_240()
         otherwise
           qmensa("Layout de Banco nao encontrado!","B")
           return .F.
@@ -1728,8 +1730,14 @@ return
 static function dtItau(dData)
 return strzero(day(dData),2)+strzero(month(dData),2)+right(strzero(year(dData),4),2)
 
+static function hora()
+return left(time(),2)+substr(time(),4,2)+substr(time(),7,2);
+
 static function dtSantander(dData)
 return strzero(day(dData),2)+strzero(month(dData),2)+right(strzero(year(dData),4),2)
+
+static function dtDDMMAAAA(dData)
+return strzero(day(dData),2)+strzero(month(dData),2)+strzero(year(dData),4)
 
 static function i_hsbc
 local cIntegra := ""
@@ -2008,6 +2016,185 @@ static function i_abc
          nLin ++
 
          cIntegra += strzero(nLin,6)+chr(13)+chr(10)
+
+
+         //cFileName := "Remessa ABC - "+strzero(year(date()),4)+ " "+strzero(month(date()),2)+" "+strzero(day(date()),2)+ " - " + left(time(),2)+" "+substr(time(),4,2)+".txt"
+
+
+         if RECEBER->(qrlock())
+            replace RECEBER->Marcar with " "
+            RECEBER->(Qunlock())
+         endif
+
+         RECEBER->(dbskip())
+     enddo
+
+     nLin++
+     cIntegra += "9"+space(393)+strzero(nLin,6)+chr(13)+chr(10)
+
+     RECEBER->(dbgoto(nReg))
+
+     cFileName := "Remessa ABC - "+strzero(year(date()),4)+ " "+strzero(month(date()),2)+" "+strzero(day(date()),2)+ " - " + left(time(),2)+" "+substr(time(),4,2)+".txt"
+
+     nFile := fcreate("C:\qsystxt\"+cFileName,0)
+
+     fwrite(nFile,cIntegra,len(cIntegra))
+
+     fClose(nFile)
+
+return
+
+static function i_abc_240
+	local cIntegra := ""
+	local nLin := 0
+	local nLinLote := 0
+	local cCarteira := ""
+	local cConta    := ""
+	local cAgencia   := ""
+	local cFilename  := ""
+	local nFile := 0
+	local nReg := 0
+	local idDaEmpresaNoBanco := "00019070022160090000"
+	local nomeDaEmpresa := "MANTRACO DO BRASIL COM. LTDA  "
+	local nomeDoBanco   := "ABC BRASIL S.A."
+
+      LAYOUT->(dbseek(fCod_layout))
+      cAgencia := LAYOUT->Ag_cede
+      cConta := "00"+left(LAYOUT->Conta_cede,7)
+      cCarteira := LAYOUT->Carteira
+      nREG := RECEBER->(recno())
+
+     ////////////////////////////////////////////////////
+     // Registro Tipo 0__________________________________
+
+     //nLIN++
+     cIntegra += "   "
+     cIntegra += "0000"
+     cIntegra += "0"
+     cIntegra += replicate(" ",9) 
+     cIntegra += "1"
+     cIntegra += "07069809000119"
+     cIntegra += idDaEmpresaNoBanco
+     cIntegra += idDaEmpresaNoBanco
+     cIntegra += nomeDaEmpresa
+	 cIntegra += "ABC BRASIL S.A.               "
+	 cIntegra += replicate(" ",10)
+	 cIntegra += "1"
+     cIntegra += dtItau(date())
+     cIntegra += hora()
+     cIntegra += strzero(nLIN,6)
+	 cIntegra += "040"
+	 cIntegra += "01600"
+	 cIntegra += replicate(" ",20)
+	 cIntegra += replicate(" ",20)
+	 cIntegra += replicate(" ",11)
+	 cIntegra += replicate(" ",3)
+	 cIntegra += replicate("0",3)
+	 cIntegra += replicate(" ",2)
+	 cIntegra += replicate(" ",10)+Chr(13)+chr(10)
+	 
+	 ////////////////////////////////////////////////////
+     // Registro Tipo 1__________________________________
+
+     //nLIN++
+     cIntegra += "246"
+     cIntegra += "0001"
+     cIntegra += "1"
+     cIntegra += "R"
+     cIntegra += "01"
+     cIntegra += "  "
+     cIntegra += "030"
+     cIntegra += " "
+	 cIntegra += "1"
+     cIntegra += "007069809000119"
+	 cIntegra += idDaEmpresaNoBanco
+	 cIntegra += idDaEmpresaNoBanco
+     cIntegra += nomeDaEmpresa
+	 cIntegra += replicate(" ",40)
+	 cIntegra += replicate(" ",40)
+	 cIntegra += "00000001"
+	 cIntegra += dtItau(date())
+	 cIntegra += "00000000"
+	 cIntegra += replicate(" ",33)+Chr(13)+chr(10)
+
+     ///////////////////////////////////////////////////
+     // Registro 1_____________________________________
+
+     RECEBER->(dbgotop())
+     do while ! RECEBER->(eof())
+
+        qgirabarra()
+
+        if RECEBER->Marcar != "*"
+           RECEBER->(dbskip())
+           loop
+        endif
+		
+		
+		 nLIN++
+		 cIntegra += "246"
+		 cIntegra += "0001"
+		 cIntegra += "3"
+		 cIntegra += strzero(nLIN,5)
+		 cIntegra += "P"
+		 cIntegra += " "
+		 cIntegra += "01"
+		 cIntegra += idDaEmpresaNoBanco
+		 cIntegra += "3"
+		 cIntegra += "112"
+		 cIntegra += "00"
+		 cIntegra += "112"
+		 cIntegra += replicate("0",11)
+		 cIntegra += "1"
+		 cIntegra += "1"
+		 cIntegra += "2"
+		 cIntegra += "1"
+		 cIntegra += "1"
+		 cIntegra += left(RECEBER->Fatura,10)+"     "
+		 cIntegra += dtDDMMAAAA(RECEBER->Data_venc)
+		 cIntegra += convValor(RECEBER->VAlor_liq,13)
+		 cIntegra += cAgencia
+		 cIntegra += "02" //Duplicata Mercantil
+		 cIntegra += "N" 
+		 cIntegra +=  dtDDMMAAAA(RECEBER->Data_emiss)
+		 cIntegra +=  "1" // Juros por dia
+		 cIntegra +=  dtDDMMAAAA(RECEBER->Data_venc+1)
+		 cIntegra += convValor(0.033,13)
+		 cIntegra +=  "1" // Desconto
+		 cIntegra +=  "        " // Dt Desc
+		 cIntegra +=  "0000000000000" // Vlr Desconto
+		 cIntegra +=  "0000000000000" //Iof
+		 cIntegra +=  "0000000000000" // Abatimento		 
+		 cIntegra +=  "2" // Tipo Prpstesto	 
+		 cIntegra +=  "05" // Dias
+		 cIntegra +=  "2" // Dias
+		 cIntegra +=  "000" // Dias
+		 cIntegra +=  "09" // Real
+		 cIntegra +=  "0000000000" // Real
+		 cIntegra +=  " " +chr(13)+chr(10)
+
+		 /*
+         cIntegra += left(CLI1->End_cob,30) + CLI1->Num_cob + space(3)
+         cIntegra += left(Cli1->Bairro_cob,12)
+
+         cIntegra += Cli1->cep_cob
+
+         CGM->(dbseek(CLI1->Cgm_cob))
+         cIntegra += left(CGM->Municipio,15)
+
+         cIntegra += CGM->Estado
+
+         cIntegra += nomeDaEmpresa
+         
+		 cIntegra += space(10)
+
+         cIntegra += "05"// prazo protesto
+         cIntegra += "1"// Moeda
+		 
+         nLin ++
+
+         cIntegra += strzero(nLin,6)+chr(13)+chr(10)
+		 */
 
 
          //cFileName := "Remessa ABC - "+strzero(year(date()),4)+ " "+strzero(month(date()),2)+" "+strzero(day(date()),2)+ " - " + left(time(),2)+" "+substr(time(),4,2)+".txt"

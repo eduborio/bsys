@@ -285,7 +285,6 @@ static function i_interface
 		 replace SH_EFFAT->Icm_aliq   with nALIQ
          replace SH_EFFAT->Icm_vlr    with nICMS_VLR
          replace SH_EFFAT->Ipi_vlr    with nIPI_VLR
-         replace SH_EFFAT->Icm_red    with nICMS_RED
 		 replace SH_EFFAT->Icm_red    with nICMS_RED
 		 
 		 replace SH_EFFAT->Icm_bc_s   with FAT->BaseSt
@@ -1025,12 +1024,12 @@ static function i_calc_val
   
 
    //Isento equals consumidor final  
-   if left(FAT->Cod_cfop,1) $ "5"  .and. CLI1->Final == "N"
-      nICMS_VLR := (nICMS_VLR - (nICMS_VLR * 0.33333) )
-      nICMS_RED := 33.333
-   else
-      nICMS_VLR  := nICMS_VLR
-   endif
+   //if left(FAT->Cod_cfop,1) $ "5"  .and. CLI1->Final == "N"
+   //   nICMS_VLR := (nICMS_VLR - (nICMS_VLR * 0.33333) )
+   //   nICMS_RED := 33.333
+   //else
+   //   nICMS_VLR  := nICMS_VLR
+   //endif
 
 
    CLI1->(dbseek(FAT->Cod_cli)) // procura a aliquota do lucro no cliente da nota
