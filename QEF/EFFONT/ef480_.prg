@@ -41,6 +41,7 @@ private nTOT_G    := 0
 private nTOT_H    := 0
 private nTOT_1    := 0
 private nTOT_C100 := 0
+private nTOT_C120 := 0
 private nTOT_C170 := 0
 private nTOT_D100 := 0
 private nTOT_D010 := 0
@@ -453,7 +454,7 @@ static function i_registro_C100(nFile)
 
     saidasNfe()
     entradasNfe()
-	//entradasNfeImport()
+	entradasNfeImport()
 	entradasNf()
 	
 	
@@ -531,20 +532,8 @@ local nCont := 1
             cEFD += "|"+alltrim(transform(nIPI_ALIQ,"@E 9999999999.99"))
             cEFD += "|"+alltrim(transform(nIPI_Vlr,"@E 9999999999.99"))
 			
-			if left(FAT->Cod_Cfop,3) $ "591-691-594-694-191-291-194-294"
-				cEFD += "|"+iif(FAT->ES=="S","49","98") // CST PIS
-				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) // Base do Pis
-				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) //  aliq do Pis
-				cEFD += "|"
-				cEFD += "|"
-				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) // Vlr do Pis
-				cEFD += "|"+iif(FAT->ES=="S","49","98") // CST COFINS
-				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) // Base do Cofins
-				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) //  aliq do Cofins
-				cEFD += "|"
-				cEFD += "|"
-				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) // Vlr do Cofins
-			else
+			if left(FAT->Cod_Cfop,4) $ "1910-2910-5910-6910-5102-6102-2202-1202-2411-1411-5403-6403-5110-6110"
+			
 				cEFD += "|"+iif(FAT->ES=="S","01","50") // CST PIS
 				cEFD += "|"+alltrim(transform(nCONTR_BASE,"@E 9999999999.99")) // Base do Pis
 				cEFD += "|"+alltrim(transform(1.65,"@E 9999999999.99")) //  aliq do Pis
@@ -557,6 +546,19 @@ local nCont := 1
 				cEFD += "|"
 				cEFD += "|"
 				cEFD += "|"+alltrim(transform((nCONTR_BASE * 0.076),"@E 9999999999.99")) // Vlr do Cofins
+			else
+				cEFD += "|"+iif(FAT->ES=="S","49","98") // CST PIS
+				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) // Base do Pis
+				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) //  aliq do Pis
+				cEFD += "|"
+				cEFD += "|"
+				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) // Vlr do Pis
+				cEFD += "|"+iif(FAT->ES=="S","49","98") // CST COFINS
+				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) // Base do Cofins
+				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) //  aliq do Cofins
+				cEFD += "|"
+				cEFD += "|"
+				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) // Vlr do Cofins
 
 			endif	
             cEFD += "|"
@@ -1212,14 +1214,14 @@ local oQuery
 
 
          FAT->(dbclearfilter())
-         FAT->(Dbsetfilter({|| Dt_emissao >= dINI .and. dt_emissao <= dFIM .and. ES == "E" .and. empty(NFe) }))
+         FAT->(Dbsetfilter({|| Dt_emissao >= dINI .and. dt_emissao <= dFIM }))
          FAT->(dbsetorder(9))
          FAT->(Dbgotop())
 
          ITEN_FAT->(dbsetorder(2))
 
          ENT->(dbclearfilter())
-		 ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. cfop $ "1202-2202-1411-2411-6915-5915-6916-5916-2915-1915" })) // nao puxar fretes e importação
+		 ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. (!left(cfop,2) $ cCfops) })) // nao puxar fretes e importação
          ENT->(dbsetorder(2))
          ENT->(dbgotop())
 
@@ -1233,7 +1235,7 @@ local oQuery
             endif
 			
 
-            if ! FAT->(dbseek(ENT->Num_nf+cModelo))
+            if ! FAT->(dbseek(ENT->Num_nf))
                  ENT->(dbskip())
                  loop
             endif
@@ -1319,9 +1321,12 @@ local oQuery
    
   	     do while nCont <= oQuery:LastRec() 	 
 		    row := oQuery:getRow(nCont)
-		    aadd(aPROD,strzero(get(row,'codigo'),5))
+		    aadd(aPROD,get(row,'codigo'))
+			qmensa(get(row,'codigo'),"L")
 		    nCont++
 	     enddo 	
+		 
+		 oServer:close()
 		 
 		 //////////////////////////////////////////////////////////
 		 // Ordena e Agrupa________________________________________
@@ -1444,12 +1449,12 @@ local nCofins := 0
                 cEFD += "|"+alltrim(transform(SAI->Icm_subst,"@E 99999999999.99"))
                 cEFD += "|"+alltrim(transform(SAI->Ipi_vlr,"@E 99999999999.99"))
 				
-				if left(SAI->Cfop,3) $ "591-691-594-694"
-					cEFD += "|"+alltrim(transform(0,"@E 99999999999.99")) // PIS
-					cEFD += "|"+alltrim(transform(0,"@E 99999999999.99")) // COFINS
-				else
+				if left(SAI->Cfop,4) $ "5910-6910-5102-6102-5403-6403-6110-5110"
 					cEFD += "|"+alltrim(transform(round(nPis,2),"@E 99999999999.99")) // PIS
 					cEFD += "|"+alltrim(transform(round(nCofins,2),"@E 99999999999.99")) // COFINS
+				else
+					cEFD += "|"+alltrim(transform(0,"@E 99999999999.99")) // PIS
+					cEFD += "|"+alltrim(transform(0,"@E 99999999999.99")) // COFINS
 				endif	
                
 			   cEFD += "|"
@@ -1628,7 +1633,7 @@ local cCFOPS := "13-23-31"
                 nTot_C++
                 nTot_C100++
 				
-				if FAT->(dbseek(ENT->Num_nf + CLI1->Codigo))
+				if FAT->(dbseek(ENT->Num_nf + "55"))
                    i_registro_c170(nFile)
 				endif  
 
@@ -1690,45 +1695,67 @@ return
 
 static function entradasNfeImport
 local cEFD := ""
-local nTotal_prod := 0
+local nTotProd := 0
+local nIpi := 0
 local cModelo := ""
 local cCFOPS := "31"
+local oServer, oRow
+local oQuery
+local nCont := 0
+local cQuery :=  ""
 
-         IMPORT->(dbsetorder(4)) 
+		 oServer := TMySQLServer():New(XSERVER, "root", "borios")
+		 if oServer:NetErr()
+			Alert(oServer:Error())
+		 endif
 
-         ENT->(dbclearfilter())
-         ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. (left(cfop,2) == cCfops)})) // somente importacao
-         ENT->(dbsetorder(2))
-         ENT->(dbgotop())
-
-
-         do while ! ENT->(Eof())
+		 oServer:SelectDB("comercial")	
 		 
+		 cQuery := " select imp.* , "
+		 cQuery +=  "	   sum(round (quantidade * valor_unitario,2)) as produtos, "
+		 cQuery +=  "	   sum(round(base_ipi * (aliquota_ipi/100),2)) as valor_ipi,  "
+		 cQuery +=  "	   sum(round(base_icms,2)) as base_icms,  "
+		 cQuery +=  "	   sum(round(base_ipi * (aliquota_icms/100),2)) as valor_icms,  "
+		 cQuery +=  "	   sum(round(base_pis * (aliquota_pis/100),2)) as valor_pis,  "
+		 cQuery +=  "	   sum(round(base_cofins * (aliquota_cofins/100),2)) as valor_cofins  "
+		 cQuery +=  " from importacao imp "
+		 cQuery +=  " join item_importacao item on item.importacao_id = imp.id "
+		 cQuery +=  " where data_emissao between " + dtos(dINI) + " and " + dtos(dFIM) 
+		 cQuery +=  " group by imp.id; "
 		 
-            if ! IMPORT->(dbseek(ENT->Num_nf))
-               ENT->(dbskip())
-               loop
-            endif
-
-            if ! IMPORT->Cancelado
-
-                cEFD := "|C100"
+		 oQuery := oServer:Query(cQuery)
+   
+	     if oQuery:NetErr()
+		    Alert(oQuery:Error())
+	     endif
+   
+         nCont := 1
+   
+  	     do while nCont <= oQuery:LastRec() 	
+				row := oQuery:getRow(nCont)
+                
+				cEFD := "|C100"
                 cEFD += "|0|0"//0 - Entrada 1 - Saida|  0 - Emissao propria 1 - Terceiros
-                cEFD += "|F"+ENT->Cod_forn
+                cEFD += "|F"+strzero(get(row,'fornecedor_id'),5)
                 cEFD += "|55"
 
-                if FAT->Cancelado
-                   cEFD += "|02"
-                else
+               // if FAT->Cancelado
+               //    cEFD += "|02"
+               // else
                    cEFD += "|00"
-                endif
+               // endif
 
                 cEFD += "|1" //Serie
-                cEFD += "|000"+ENT->Num_nf
-                cEFD += "|"+IMPORT->NFe
-                cEFD += "|"+dtosped(IMPORT->Dt_emissao)
-                cEFD += "|"+dtosped(IMPORT->Dt_emissao)
-                cEFD += "|"+alltrim(transform(ENT->Vlr_cont,"@E 999999999.99"))
+                cEFD += "|"+alltrim(get(row,'numero_nota'))
+                cEFD += "|"+get(row,'chave_nfe')
+                cEFD += "|"+dtosped(get(row,'data_emissao'))
+                cEFD += "|"+dtosped(get(row,'data_emissao'))
+				
+				nTotProd := get(row,'produtos') 
+				nIpi     := get(row,'valor_ipi')
+				nValorContabil := nTotProd + nIpi
+				
+                cEFD += "|"+alltrim(transform(nValorContabil,"@E 999999999.99"))
 
                 //if DUP_FAT->(dbseek(FAT->codigo+"01"))
                 //   cEFD += "|1"
@@ -1739,30 +1766,19 @@ local cCFOPS := "31"
                 cEFD += "|"
                 cEFD += "|"
 
-                nTotal_prod := 0
-
-                ITEN_IMP->(dbseek(IMPORT->Codigo))
-                Do while ! ITEN_IMP->(eof()) .and. ITEN_IMP->Cod_ped == IMPORT->Codigo
-
-                   nTotal_prod += ITEN_IMP->quant * ITEN_IMP->preco
-
-
-                   ITEN_IMP->(dbskip())
-                enddo
-
-                cEFD += "|"+alltrim(transform(round(nTotal_prod,2),"@E 99999999999.99"))
+                cEFD += "|"+alltrim(transform(get(row,'produtos'),"@E 99999999999.99"))
                 cEFD += "|0"//+FAT->Frete
                 cEFD += "|"
                 cEFD += "|"
                 cEFD += "|"
 
-                cEFD += "|"+alltrim(transform(ENT->Icm_base,"@E 99999999999.99"))
-                cEFD += "|"+alltrim(transform(ENT->Icm_vlr,"@E 99999999999.99"))
+                cEFD += "|"+alltrim(transform(get(row,'base_icms'),"@E 99999999999.99"))
+                cEFD += "|"+alltrim(transform(get(row,'valor_icms'),"@E 99999999999.99"))
                 cEFD += "|"
                 cEFD += "|"
-                cEFD += "|"+alltrim(transform(ENT->Ipi_vlr,"@E 99999999999.99"))
-                cEFD += "|"
-                cEFD += "|"
+                cEFD += "|"+alltrim(transform(get(row,'valor_ipi'),"@E 99999999999.99"))
+                cEFD += "|"+alltrim(transform(get(row,'valor_pis'),"@E 99999999999.99"))
+                cEFD += "|"+alltrim(transform(get(row,'valor_cofins'),"@E 99999999999.99"))
                 cEFD += "|"
                 cEFD += "|"
                 cEFD += "|"+chr(13)+chr(10)
@@ -1771,9 +1787,12 @@ local cCFOPS := "31"
                 ntot_lin++
                 nTot_C++
                 nTot_C100++
+				
+				i_registro_C120(nFile,row)
+				i_registro_C170_import(nFile,oServer,get(row,'id'))
 
-                i_registro_c190_entradas(nFile)
-            else
+               // i_registro_c190_entradas(nFile)
+            /*else
                 cEFD := "|C100"
                 cEFD += "|0|0"
                 cEFD += "|"
@@ -1816,14 +1835,123 @@ local cCFOPS := "31"
                 nTot_C100++
 
             endif
+			*/
 
-            ENT->(dbskip())
+             nCont++
 
          enddo
 
 
          cEFD := ""
+		 oServer:close()
 
+
+
+return
+
+static function i_registro_C120(nFile,row)
+
+local cEFD := ""
+
+         ntot_lin++
+		 ntot_C++
+		 ntot_C120++
+
+         cEFD := "|C120"
+         cEFD += "|0" //Documento de Importacao DI
+		 cEFD += "|"+alltrim(str(val(get(row,'numero_di'))))
+		 cEFD += "|"+alltrim(transform(get(row,'valor_pis'),"@E 99999999999.99"))
+		 cEFD += "|"+alltrim(transform(get(row,'valor_cofins'),"@E 99999999999.99"))
+         cEFD += "|"
+         cEFD += "|"+chr(13)+chr(10) 
+
+         fwrite(nFile,cEFD,len(cEFD))
+
+         cEFD := ""
+
+return
+
+static function i_registro_C170_Import(nFile,oServer,id)
+local cEFD := ""
+local nTotal_prod := 0
+local cQuery := ""
+local oQuery
+local row
+local nCont := 1
+         
+		 cQuery := "    SELECT prod.referencia_brasil as referencia  , "
+		 cQuery += " 		   prod.descricao as descricao,	"
+		 cQuery += "			   item.*, "
+		 cQuery += "			   round(item.base_icms * (item.aliquota_icms/100),2) as valor_icms,	 "
+		 cQuery += "			   round(item.base_ipi * (item.aliquota_ipi/100),2) as valor_ipi,	"
+		 cQuery += "			   round(item.base_pis * (item.aliquota_pis/100),2) as valor_pis,	"
+		 cQuery += "			   round(item.base_cofins * (item.aliquota_cofins/100),2) as valor_cofins	"
+		 cQuery += "		FROM comercial.item_importacao item "
+		 cQuery += "		join produtos prod on prod.id = item.produto_id "
+		 cQuery += " where item.importacao_id =" + alltrim(str(id)) 
+
+         oQuery := oServer:Query(cQuery)
+   
+		 if oQuery:NetErr()
+		    Alert(oQuery:Error())
+		 endif
+		   
+		 nCont := 1
+		   
+		 do while nCont <= oQuery:LastRec() 	 
+		    row := oQuery:getRow(nCont)
+
+            cEFD := "|C170"
+            cEFD += "|"+strzero(nCont,3)
+            cEFD += "|"+alltrim(get(row,'referencia'))
+            cEFD += "|"+rtrim(get(row,'descricao'))
+            cEFD += "|"+alltrim(transform(get(row,'quantidade'),"@R 999999999"))
+            cEFD += "|000001"
+            cEFD += "|"+alltrim(transform(round(get(row,'quantidade')*get(row,'valor_unitario'),2),"@E 99999999999.99"))
+            cEFD += "|" // Desconto
+            cEFD += "|0"
+            cEFD += "|100"
+            cEFD += "|"+"3102"
+            cEFD += "|"
+            cEFD += "|"+alltrim(transform(get(row,'base_icms'),"@E 9999999999.99"))
+            cEFD += "|"+alltrim(transform(get(row,'aliquota_icms'),"@E 9999999999.99"))
+            cEFD += "|"+alltrim(transform(get(row,'valor_icms') ,"@E 9999999999.99"))
+            cEFD += "|"
+            cEFD += "|"
+            cEFD += "|"
+            cEFD += "|0"
+            cEFD += "|00"//+right(ITEN_FAT->cod_sit,2)
+            cEFD += "|"
+            cEFD += "|"+alltrim(transform(get(row,'base_ipi'),"@E 9999999999.99"))
+            cEFD += "|"+alltrim(transform(get(row,'aliquota_ipi'),"@E 9999999999.99"))
+            cEFD += "|"+alltrim(transform(get(row,'valor_ipi'),"@E 9999999999.99"))
+			
+			cEFD += "|"+"50" // CST PIS
+			cEFD += "|"+alltrim(transform(get(row,'base_pis'),"@E 9999999999.99")) // Base do Pis
+			cEFD += "|"+alltrim(transform(get(row,'aliquota_pis'),"@E 9999999999.99")) //  aliq do Pis
+			cEFD += "|"
+			cEFD += "|"
+			cEFD += "|"+alltrim(transform(get(row,'valor_pis'),"@E 9999999999.99")) // Vlr do Pis
+			cEFD += "|"+"50" // CST COFINS
+			cEFD += "|"+alltrim(transform(get(row,'base_cofins'),"@E 9999999999.99")) // Base do Cofins
+			cEFD += "|"+alltrim(transform(get(row,'aliquota_cofins'),"@E 9999999999.99")) //  aliq do Cofins
+			cEFD += "|"
+			cEFD += "|"
+			cEFD += "|"+alltrim(transform(get(row,'valor_cofins'),"@E 9999999999.99")) // Vlr do Cofins
+
+            cEFD += "|"
+            cEFD += "|"+chr(13)+chr(10)
+
+            fwrite(nFile,cEFD,len(cEFD))
+            ntot_lin++
+            nTot_C++
+            nTot_C170++
+            nCONT++
+
+         enddo
+
+
+         cEFD := ""
 
 
 return
@@ -2153,6 +2281,7 @@ local aTotalRegistros :=  {}
     aadd(aTotalRegistros,{"C001",1})
     aadd(aTotalRegistros,{"C010",1})
     aadd(aTotalRegistros,{"C100",nTot_C100})
+    aadd(aTotalRegistros,{"C120",nTot_C120})
     aadd(aTotalRegistros,{"C170",nTot_C170})
     aadd(aTotalRegistros,{"C990",1})
     aadd(aTotalRegistros,{"D001",1})
@@ -2219,6 +2348,9 @@ local cEFD := ""
          cEFD := ""
 
 return
+
+static function get(row,campo)
+return  row:fieldget(campo)
 
 
 
