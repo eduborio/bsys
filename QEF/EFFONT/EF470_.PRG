@@ -36,9 +36,12 @@ private nTOT_D    := 0
 private nTOT_E    := 0
 private nTOT_G    := 0
 private nTOT_H    := 0
+private nTOT_H005 := 0
+private nTOT_H010 := 0
 private nTOT_1    := 0
 private nTOT_9    := 0
 private nTOT_99   := 0
+private nTOT_K    := 0
 private nTOT_C100 := 0
 private nTOT_C170 := 0
 private nTOT_C190 := 0
@@ -164,7 +167,16 @@ local cEFD := ""
       i_registro_G990(nFile)
 
       i_registro_H001(nFile)    //Abre Bloco H
+	  
+	  if month(dIni) == 2
+		 i_registro_H005(nFile)
+		 i_registro_H010(nFile)
+	  endif	
+	  
       i_registro_H990(nFile)
+	  
+	  i_registro_K001(nFile)
+	  i_registro_K990(nFile)
 	  
 	  i_registro_1001(nFile)
 	  i_registro_1010(nFile)
@@ -322,31 +334,29 @@ local nCont := 0
       for nCont := 1 to len(aPROD)
 
          if PROD->(dbseek(aPROD[nCONT]))
-
-
-         cEFD := "|0200"
-         if empty(PROD->cod_fabr) .and. empty(PROD->cod_ass)
-            cEFD += "|"+alltrim(qtiraponto(right(PROD->Codigo,5)))
-         else
-            cEFD += "|"+alltrim(qtiraponto(PROD->Cod_fabr))
-         endif
-         cEFD += "|"+rtrim(PROD->Descricao)
-         cEFD += "|"+alltrim(PROD->cod_barras)
-         cEFD += "|"
-         cEFD += "|000001"
-         cEFD += "|00"
-         CLASSIF->(dbseek(PROD->cod_class))
-         cEFD += "|"+alltrim(qtiraponto(CLASSIF->Descricao))
-         cEFD += "|"
-         cEFD += "|"+alltrim(qtiraponto(left(CLASSIF->Descricao,2)))
-         cEFD += "|"
-         cEFD += "|18,00"
-         cEFD += "|"+chr(13)+chr(10)
-         fwrite(nFile,cEFD,len(cEFD))
-         cEFD := ""
-         nTot_lin++
-         nTot_0000++
-         nTot_0200++
+			 cEFD := "|0200"
+			 //if empty(PROD->cod_fabr) .and. empty(PROD->cod_ass)
+			 cEFD += "|"+ltrim(rtrim(PROD->cod_fabr))
+			 //else
+			 //   cEFD += "|"+alltrim(qtiraponto(PROD->Cod_fabr))
+			 //endif
+			 cEFD += "|"+ltrim(rtrim(PROD->Descricao))
+			 cEFD += "|"+alltrim(PROD->cod_barras)
+			 cEFD += "|"
+			 cEFD += "|000001"
+			 cEFD += "|00"
+			 CLASSIF->(dbseek(PROD->cod_class))
+			 cEFD += "|"+alltrim(qtiraponto(CLASSIF->Descricao))
+			 cEFD += "|"
+			 cEFD += "|"+alltrim(qtiraponto(left(CLASSIF->Descricao,2)))
+			 cEFD += "|"
+			 cEFD += "|18,00"
+			 cEFD += "|"+chr(13)+chr(10)
+			 fwrite(nFile,cEFD,len(cEFD))
+			 cEFD := ""
+			 nTot_lin++
+			 nTot_0000++
+			 nTot_0200++
          endif
 
 
@@ -776,11 +786,11 @@ local nSaldoDevedor := 0
 		 endif
 		 
 		 cEFD += "|E520"
-		 cEFD += "|" //Saldo Credor Anterior
+		 cEFD += "|0,00" //Saldo Credor Anterior
 		 cEFD += "|"+alltrim(transform(nTotalDoIpiSaidas,"@E 999999999.99"))
 		 cEFD += "|"+alltrim(transform(nTotalDoIpiEntradas,"@E 999999999.99"))
-		 cEFD += "|" //Outros Debitos
-		 cEFD += "|" //Outros Creditos
+		 cEFD += "|0,00" //Outros Debitos
+		 cEFD += "|0,00" //Outros Creditos
 		 cEFD += "|"+alltrim(transform(nSaldoCredor,"@E 999999999.99")) 
 		 cEFD += "|"+alltrim(transform(nSaldoDevedor,"@E 999999999.99")) 
 		 cEFD += "|"+chr(13)+chr(10)
@@ -847,12 +857,16 @@ return
 static function i_registro_H001(nFile)
 local cEFD := ""
 
-
          ntot_lin++
          nTot_H++
 
          cEFD := "|H001"
-         cEFD += "|1"
+		 
+		 if month(dIni) == 2
+			cEFD += "|0"
+		 else
+			cEFD += "|1"
+		 endif	
          cEFD += "|"+chr(13)+chr(10)
 
          fwrite(nFile,cEFD,len(cEFD))
@@ -861,10 +875,113 @@ local cEFD := ""
 
 return
 
+static function i_registro_H005(nFile)
+local cEFD := ""
+local oServer, oQuery, row
+local nTotalEstoque := 0
+
+         ntot_lin++
+         nTot_H++
+         nTot_H005++
+		 
+			oServer := TMySQLServer():New(XSERVER, "root", "borios")
+			 if oServer:NetErr()
+				Alert(oServer:Error())
+			 endif
+
+			 oServer:SelectDB("comercial")
+			 
+			 cQuery := "SELECT sum(quantidade * i.preco_custo) as total from invent i "
+			 cQuery += " join produtos prod on prod.id = i.produto_id "
+			 cQuery += " where quantidade > 0 "
+             cQuery += " and prod.referencia_brasil not like 'PEX%' " 
+			 cQuery += " and prod.referencia_brasil != 'CAT' " 			 
+			 oQuery := oServer:Query(cQuery)
+	   
+			 if oQuery:NetErr()
+				Alert(oQuery:Error())
+			 endif
+	   
+			 nCont := 1
+	   
+			 do while nCont <= oQuery:LastRec() 	 
+				row := oQuery:getRow(nCont)
+				nTotalEstoque+= get(row,'total') 
+				nCont++
+			 enddo 	
+			 
+			 oServer:close()
+
+         cEFD := "|H005"
+		 cEFD += "|"+"31122015"
+		 cEFD += "|"+alltrim(transform(nTotalEstoque,"@E 9999999999.99"))
+		 cEFD += "|"+"01"
+         cEFD += "|"+chr(13)+chr(10)
+         fwrite(nFile,cEFD,len(cEFD))
+         cEFD := ""
+
+return
+
+static function i_registro_H010(nFile)
+local cEFD := ""
+local oServer, oQuery, row
+local nTotalEstoque := 0
+
+         
+		 
+			oServer := TMySQLServer():New(XSERVER, "root", "borios")
+			 if oServer:NetErr()
+				Alert(oServer:Error())
+			 endif
+
+			 oServer:SelectDB("comercial")
+			 
+			 cQuery := "SELECT prod.referencia_brasil as referencia, i.* from invent i" 
+			 cQuery += " left outer join produtos prod on prod.id = i.produto_id " 
+			 cQuery += " where quantidade > 0 " 
+			 cQuery += " and prod.referencia_brasil not like 'PEX%' " 
+			 cQuery += " and prod.referencia_brasil != 'CAT' " 		
+			 oQuery := oServer:Query(cQuery)
+	   
+			 if oQuery:NetErr()
+				Alert(oQuery:Error())
+			 endif
+	   
+			 nCont := 1
+	   
+			 do while nCont <= oQuery:LastRec() 	 
+				row := oQuery:getRow(nCont)
+				
+				cEFD := "|H010"
+				cEFD += "|"+alltrim(get(row,'referencia'))
+				cEFD += "|"+"000001"
+				cEFD += "|"+alltrim(transform(get(row,'quantidade'),"@E 9999999999.999"))
+				cEFD += "|"+alltrim(transform(get(row,'preco_custo'),"@E 9999999999.999999"))
+				cEFD += "|"+alltrim(transform(get(row,'preco_custo')*get(row,'quantidade'),"@E 9999999999.99"))
+				cEFD += "|"+"0"
+				cEFD += "|"
+				cEFD += "|"
+				cEFD += "|101060100021"
+				cEFD += "|"
+				cEFD += "|"+chr(13)+chr(10)
+				fwrite(nFile,cEFD,len(cEFD))
+				cEFD := ""
+				
+				ntot_lin++
+				nTot_H++
+				nTot_H010++
+				nCont++
+			 enddo 	
+			 
+		oServer:close()
+
+         
+
+return
+
 
 static function i_registro_H990(nFile)
 local cEFD := ""
-
 
          ntot_lin++
          nTot_H++
@@ -895,6 +1012,8 @@ local cEFD := ""
 
 return
 
+
+
 static function i_registro_1010(nFile)
 local cEFD := ""
 
@@ -920,6 +1039,38 @@ local cEFD := ""
 
          cEFD := "|1990"
          cEFD += "|"+alltrim(str(nTOT_1))
+         cEFD += "|"+chr(13)+chr(10)
+
+         fwrite(nFile,cEFD,len(cEFD))
+
+         cEFD := ""
+
+return
+
+static function i_registro_K001(nFile)
+local cEFD := ""
+
+         ntot_lin++
+		 ntot_K++
+
+         cEFD := "|K001"
+         cEFD += "|1" //Com dados
+         cEFD += "|"+chr(13)+chr(10)
+
+         fwrite(nFile,cEFD,len(cEFD))
+
+         cEFD := ""
+
+return
+
+static function i_registro_K990(nFile)
+local cEFD := ""
+
+         ntot_lin++
+         nTot_K++
+
+         cEFD := "|K990"
+         cEFD += "|"+alltrim(str(nTOT_K))
          cEFD += "|"+chr(13)+chr(10)
 
          fwrite(nFile,cEFD,len(cEFD))
@@ -1110,7 +1261,27 @@ local cEFD := ""
 		 ntot_lin++
          nTot_9++
          nTot_99++
+		 cEFD += "|9900|H005|"+ alltrim(str(nTOT_H005)) +"|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
+		 cEFD += "|9900|H010|"+ alltrim(str(nTOT_H010)) +"|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
 		 cEFD += "|9900|H990|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
+		 cEFD += "|9900|K001|1|"+chr(13)+chr(10)
+		 
+		 ntot_lin++
+         nTot_9++
+         nTot_99++
+		 cEFD += "|9900|K990|1|"+chr(13)+chr(10)
 		 
 		 ntot_lin++
          nTot_9++
@@ -1180,7 +1351,7 @@ local nCONT := 0
 		 	 
 		 cEFD := "|0150"
          cEFD += "|C"+CLI1->Codigo
-         cEFD += "|"+rtrim(CLI1->Razao)
+         cEFD += "|"+ltrim(rtrim(CLI1->Razao))
          cEFD += "|1058"
 
          if len(alltrim(CLI1->Cgccpf)) == 14
@@ -1199,10 +1370,10 @@ local nCONT := 0
          CGM->(dbseek(CLI1->Cgm_ent))
          cEFD += "|"+getMunicipioId(CGM->Cod_rais,CGM->Municipio)
          cEFD += "|"
-         cEFD += "|"+rtrim(CLI1->End_ent)
+         cEFD += "|"+ltrim(rtrim(CLI1->End_ent))
          cEFD += "|"+alltrim(CLI1->numero)
-         cEFD += "|"+rtrim(qtiraponto(CLI1->compl))
-         cEFD += "|"+rtrim(qtiraponto(CLI1->Bairro_ent))
+         cEFD += "|"+ltrim(rtrim(qtiraponto(CLI1->compl)))
+         cEFD += "|"+ltrim(rtrim(qtiraponto(CLI1->Bairro_ent)))
          cEFD += "|"+chr(13)+chr(10)
          nTot_lin++
          nTot_0000++
@@ -1261,10 +1432,10 @@ local cCNPJ := ""
          //CGM->(dbseek(FORN->Cgm_ent))
          cEFD += "|"+getMunicipioId(CGM->Cod_rais,CGM->Municipio)
          cEFD += "|"
-         cEFD += "|"+rtrim(FORN->End_ent)
+         cEFD += "|"+ltrim(rtrim(FORN->End_ent))
          cEFD += "|"+alltrim(FORN->numero)
-         cEFD += "|"+rtrim(qtiraponto(FORN->compl))
-         cEFD += "|"+rtrim(qtiraponto(FORN->Bairro_ent))
+         cEFD += "|"+ltrim(rtrim(qtiraponto(FORN->compl)))
+         cEFD += "|"+ltrim(rtrim(qtiraponto(FORN->Bairro_ent)))
          cEFD += "|"+chr(13)+chr(10)
          nTot_lin++
          nTot_0000++
@@ -1523,6 +1694,7 @@ local aPROD := {}
 local aRet  := {}
 local cPROD := ""
 local nCont := 0
+local oServer, oQuery, row
 
 
          FAT->(dbclearfilter())
@@ -1568,6 +1740,36 @@ local nCont := 0
             ENT->(dbskip())
 
          enddo
+		 
+		 if month(dFim) == 2
+			 oServer := TMySQLServer():New(XSERVER, "root", "borios")
+			 if oServer:NetErr()
+				Alert(oServer:Error())
+			 endif
+
+			 oServer:SelectDB("comercial")
+			 
+			 cQuery := " SELECT lpad(prod.id,5,'0') as codigo, i.* from invent i " 
+			 cQuery += " join produtos prod on prod.id = i.produto_id where quantidade > 0 " 
+			 cQuery += " and prod.referencia_brasil not like 'PEX%' " 
+			 cQuery += " and prod.referencia_brasil != 'CAT' " 
+			 oQuery := oServer:Query(cQuery)
+	   
+			 if oQuery:NetErr()
+				Alert(oQuery:Error())
+			 endif
+	   
+			 nCont := 1
+	   
+			 do while nCont <= oQuery:LastRec() 	 
+				row := oQuery:getRow(nCont)
+				aadd(aPROD,get(row,'codigo'))
+				nCont++
+			 enddo 	
+			 
+			 oServer:close()
+		 endif
+		 
 		 
          aPROD := asort(aPROD,,,{|x,y| x < y})
 
@@ -1714,7 +1916,7 @@ local cModelo := ""
 
                 cEFD += "|02"
 
-                cEFD += "|" //Serie
+                cEFD += "|1" //Serie
                 cEFD += "|000"+SAI->Num_nf
                 cEFD += "|"+FAT->NFe
                 cEFD += "|"
@@ -2322,6 +2524,9 @@ local cCFOPS := "13-23"
 
 
 return
+
+static function get(row,campo)
+return  row:fieldget(campo)
 
 
 

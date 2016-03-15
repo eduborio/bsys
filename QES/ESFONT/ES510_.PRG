@@ -202,15 +202,12 @@ static function i_impressao
    // INICIALIZA PROCESSO DE IMPRESSAO ______________________________________
     lTEM := .F.
 	
-	if cSintetico == "S"
-	   alert(XSERVER)
 	   oServer := TMySQLServer():New(XSERVER, "root", "borios")
 	   if oServer:NetErr()
 	      Alert(oServer:Error())
 	   endif
 
 	   oServer:SelectDB("comercial")
-	endif   
    
    if ! qinitprn() ; return ; endif
    qmensa("Aguarde... Processando ...")
@@ -490,6 +487,10 @@ static function i_impressao
               @ prow()+1,00 say "  "+chr(9)+zPROD+chr(9)+" "+chr(9)+" "+chr(9)+transf(nQTD_ENT,"@R 999999")+chr(9)+transf(nQTD_VEND,"@R 999999")+chr(9)+chr(9)+transf(nCUSTO_COR,"@E 999,999.99")+chr(9)+transf(nVLR_ESTQ,"@E 999,999.99")+chr(9)+transf(nSALDO_COR,"@E 999,999.99")
               @ prow(),pcol() say chr(9)+chr(9)+chr(9)+transf(nEST_INI,"@E 999,999.99")+chr(9)+transf(nVLR_ENT,"@E 999,999.99")+chr(9)+transf(nVLR_VEND,"@E 999,999.99")+chr(9)+transf((nEST_INI+nVLR_ENT)-nVLR_VEND,"@E 999,999.99")+chr(9)+transf(nVLR_ESTQ,"@E 999,999.99")+chr(9)+transf(((nEST_INI+nVLR_ENT)-nVLR_VEND)-nVLR_ESTQ,"@E 999,999.99")
 			  
+			  if month(dFim) == 12
+				gravaNaWeb(oServer,cProd,nCUSTO_COR,nSALDO_COR,dFIM,"1")
+			  endif
+			  
 			  if cSINTETICO == "S"
 			     INVENT->(dbsetorder(4))
 				 INVENT->(dbseek(cProd))
@@ -619,8 +620,11 @@ static function i_impressao
              if ESANT->(dbseek(right(PROD->Codigo,5)))
                 @ prow()+1,00 say "  "+chr(9)+rtrim(PROD->Cod_fabr) + "/ "+rtrim(PROD->Cod_ass)+"    "+rtrim(PROD->Descricao)+"        "+rtrim(PROD->Marca)+chr(9)+" "+chr(9)+" "+chr(9)+"Qtde Saida"+chr(9)+transf(0,"@R 999999")+chr(9)+transf(0,"@E 999,999.99")+chr(9)+transf(ESANT->Quantidade*ESANT->Preco_cust,"@E 999,999.99")+chr(9)+transf(ESANT->preco_cust,"@E 999,999.99")+chr(9)+transf(ESANT->Quantidade,"@E 999,999.99")
                 nVLR_ESTQ_TOT += (ESANT->Quantidade * ESANT->Preco_cust)
+				if month(dFim) == 12
+					gravaNaWeb(oServer,right(PROD->Codigo,5),ESANT->preco_cust,ESANT->Quantidade,dFIM,"0")
+			    endif
 				if cSINTETICO == "S"
-					gravaNoMysql(oServer,right(PROD->Codigo,5),ESANT->preco_cust)
+					//gravaNoMysql(oServer,right(PROD->Codigo,5),ESANT->preco_cust)
 				endif	
              endif
           endif
@@ -1176,6 +1180,31 @@ static function gravaNoMysql(oServer,cProd,nPrecoCusto)
    cQuery := "update "
    cQuery += " custo_qsys_vs_web "
    cQuery += " set custo_qsys = " +alltrim(transform(nPrecoCusto,"@R 9999999999.99"))
+   cQuery += " where produto_id = " + alltrim(str(val(cProd)))
+   
+   //alert(cQuery)
+   
+   oQuery := oServer:Query(cQuery)
+   
+   if oQuery:NetErr()
+      Alert(oQuery:Error())
+   endif
+   
+
+return
+
+static function gravaNaWeb(oServer,cProd,nPrecoCusto,nQuantidade,dIni,cMov)
+   local oRow
+   local oQuery
+   local cQuery := ""
+   
+   
+   cQuery := "update "
+   cQuery += " invent "
+   cQuery += " set preco_custo = " +alltrim(transform(nPrecoCusto,"@R 9999999999.99"))
+   cQuery += ", quantidade = " +alltrim(transform(nQuantidade,"@R 9999999999.99"))
+   cQuery += ", movimentou = " + cMov 
+	
    cQuery += " where produto_id = " + alltrim(str(val(cProd)))
    
    //alert(cQuery)
