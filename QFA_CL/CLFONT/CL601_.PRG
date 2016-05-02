@@ -118,12 +118,12 @@ static function i_interface
       endif
 
 
-      qmensa("Aguarde... Intefaceando com Contas a Receber...")
-
+      //qmensa("Aguarde... Intefaceando com Contas a Receber...")
+		
       if ! FAT->Cancelado
-
-         fu_abre_farec()
-
+			
+         //fu_abre_farec()
+			
          if CONFIG->Modelo_fat == "1"
 
             i_calc_val()
@@ -136,103 +136,105 @@ static function i_interface
 		 
 		 nST := FAT->St
 		 
+		
+		 //if nST > 0 .and. left(FAT->cod_cfop,1) $ "5-6-7"
 		 
-		 if nST > 0 .and. left(FAT->cod_cfop,1) $ "5-6-7"
-		 
-	        CLI1->(dbseek(FAT->cod_cli))
-			CGM->(dbseek(CLI1->cgm_ent))
+	       CLI1->(dbseek(FAT->cod_cli))
+		   CGM->(dbseek(CLI1->cgm_ent))
 			
-			if ! left(FAT->cod_cfop,4) $ "5910-6910" .and. CGM->Estado != "MG"		
-				if SH_FAREC->(qappend())
-					replace SH_FAREC->Data_lanc   with  FAT->Dt_emissao
-					replace SH_FAREC->Cod_cli     with  FAT->Cod_cli
-					replace SH_FAREC->CCusto      with  FAT->C_custo
-					replace SH_FAREC->Filial      with  FAT->Filial
-					replace SH_FAREC->Data_emiss  with  FAT->Dt_emissao
-					replace SH_FAREC->Especie     with  "01"
-					replace SH_FAREC->Serie       with  "01"
-					replace SH_FAREC->Tipo_cont   with  FAT->Tiposub
-					replace SH_FAREC->Historico   with  "SUBSTITUICAO TRIBUTARIA"
-					replace SH_FAREC->Data_venc   with  FAT->Dt_emissao + 15
+		//	if ! left(FAT->cod_cfop,4) $ "5910-6910" .and. CGM->Estado != "MG"		
+		//		if SH_FAREC->(qappend())
+		//			replace SH_FAREC->Data_lanc   with  FAT->Dt_emissao
+		//			replace SH_FAREC->Cod_cli     with  FAT->Cod_cli
+		//			replace SH_FAREC->CCusto      with  FAT->C_custo
+		//			replace SH_FAREC->Filial      with  FAT->Filial
+		//			replace SH_FAREC->Data_emiss  with  FAT->Dt_emissao
+		//			replace SH_FAREC->Especie     with  "01"
+		//			replace SH_FAREC->Serie       with  "01"
+		//			replace SH_FAREC->Tipo_cont   with  FAT->Tiposub
+		//			replace SH_FAREC->Historico   with  "SUBSTITUICAO TRIBUTARIA"
+		//			replace SH_FAREC->Data_venc   with  FAT->Dt_emissao + 15
+		//   		replace SH_FAREC->Valor       with  FAT->St
 
-					replace SH_FAREC->Valor       with  FAT->St
+		//			replace SH_FAREC->Fatura      with  FAT->Num_fatura+"/ST"
+		//			replace SH_FAREC->Num_titulo  with  FAT->Num_fatura+"/ST"
+		//			replace SH_FAREC->Cliente     with  FAT->Cliente
+		//			replace SH_FAREC->Tipo_doc    with  FAT->Tipo_doc
+		//		endif	
+        //     endif
+		//endif
+			
 
-					replace SH_FAREC->Fatura      with  FAT->Num_fatura+"/ST"
-					replace SH_FAREC->Num_titulo  with  FAT->Num_fatura+"/ST"
-					replace SH_FAREC->Cliente     with  FAT->Cliente
-					replace SH_FAREC->Tipo_doc    with  FAT->Tipo_doc
-				endif	
-             endif
-		endif	   
+		
+         //DUP_FAT->(dbsetorder(1))
+         //DUP_FAT->(dbgotop())
+         //if DUP_FAT->(dbseek(FAT->Codigo+"01"))
+         //   do while  ! DUP_FAT->(eof()) .and. left(DUP_FAT->Num_fat,5) == FAT->Codigo
+         //      if SH_FAREC->(qappend())
+         //         replace SH_FAREC->Data_lanc   with  FAT->Dt_emissao
+         //         replace SH_FAREC->Cod_cli     with  FAT->Cod_cli
+         //         replace SH_FAREC->CCusto      with  FAT->C_custo
+         //         replace SH_FAREC->Filial      with  FAT->Filial
+         //         replace SH_FAREC->Data_emiss  with  FAT->Dt_emissao
+         //         replace SH_FAREC->Especie     with  "01"
+         //         replace SH_FAREC->Serie       with  "01"
+         //         replace SH_FAREC->Tipo_cont   with  FAT->Tiposub
+         //         replace SH_FAREC->Historico   with  FAT->Obs
+         //         replace SH_FAREC->Data_venc   with  DataVenc()
 
+         //         if CONFIG->Modelo_2 == "7"
+         //            if FAT->Vezes > 1
+         //               replace SH_FAREC->Valor       with  nVAL / FAT->Vezes
+         //            else
+         //               replace SH_FAREC->Valor       with  nVAL
+         //            endif
+         //         else
+         //            replace SH_FAREC->Valor       with  DUP_FAT->Valor
+         //         endif
 
-         DUP_FAT->(dbsetorder(1))
-         DUP_FAT->(dbgotop())
-         if DUP_FAT->(dbseek(FAT->Codigo+"01"))
-            do while  ! DUP_FAT->(eof()) .and. left(DUP_FAT->Num_fat,5) == FAT->Codigo
-               if SH_FAREC->(qappend())
-                  replace SH_FAREC->Data_lanc   with  FAT->Dt_emissao
-                  replace SH_FAREC->Cod_cli     with  FAT->Cod_cli
-                  replace SH_FAREC->CCusto      with  FAT->C_custo
-                  replace SH_FAREC->Filial      with  FAT->Filial
-                  replace SH_FAREC->Data_emiss  with  FAT->Dt_emissao
-                  replace SH_FAREC->Especie     with  "01"
-                  replace SH_FAREC->Serie       with  "01"
-                  replace SH_FAREC->Tipo_cont   with  FAT->Tiposub
-                  replace SH_FAREC->Historico   with  FAT->Obs
-                  replace SH_FAREC->Data_venc   with  DataVenc()
+         //         replace SH_FAREC->Fatura      with  FAT->Num_fatura+"/"+right(DUP_FAT->Num_fat,2)
+         //         replace SH_FAREC->Num_titulo  with  FAT->Num_fatura+"/"+right(DUP_FAT->Num_fat,2)
+         //         replace SH_FAREC->Cliente     with  FAT->Cliente
+         //         replace SH_FAREC->Tipo_doc    with  FAT->Tipo_doc
+         //      endif
+         //      DUP_FAT->(dbskip())
+         //   enddo
+         //else
+         //   if CONFIG->Modelo_fat != "1"
+         //      if SH_FAREC->(qappend())
+         //         replace SH_FAREC->Data_lanc   with  FAT->Dt_emissao
+         //         replace SH_FAREC->Cod_cli     with  FAT->Cod_cli
+         //         replace SH_FAREC->CCusto      with  FAT->C_custo
+         //         replace SH_FAREC->Filial      with  FAT->Filial
+         //         replace SH_FAREC->Data_emiss  with  FAT->Dt_emissao
+         //         replace SH_FAREC->Especie     with  "01"
+         //         replace SH_FAREC->Serie       with  "01"
+         //         replace SH_FAREC->Tipo_cont   with  FAT->Tiposub
+         //         replace SH_FAREC->Historico   with  FAT->Obs
+         //         DUP_FAT->(Dbseek(FAT->Codigo))
+         //         replace SH_FAREC->Data_venc   with  FAT->Dt_emissao
 
-                  if CONFIG->Modelo_2 == "7"
-                     if FAT->Vezes > 1
-                        replace SH_FAREC->Valor       with  nVAL / FAT->Vezes
-                     else
-                        replace SH_FAREC->Valor       with  nVAL
-                     endif
-                  else
-                     replace SH_FAREC->Valor       with  DUP_FAT->Valor
-                  endif
-
-                  replace SH_FAREC->Fatura      with  FAT->Num_fatura+"/"+right(DUP_FAT->Num_fat,2)
-                  replace SH_FAREC->Num_titulo  with  FAT->Num_fatura+"/"+right(DUP_FAT->Num_fat,2)
-                  replace SH_FAREC->Cliente     with  FAT->Cliente
-                  replace SH_FAREC->Tipo_doc    with  FAT->Tipo_doc
-               endif
-               DUP_FAT->(dbskip())
-            enddo
-         else
-            if CONFIG->Modelo_fat != "1"
-               if SH_FAREC->(qappend())
-                  replace SH_FAREC->Data_lanc   with  FAT->Dt_emissao
-                  replace SH_FAREC->Cod_cli     with  FAT->Cod_cli
-                  replace SH_FAREC->CCusto      with  FAT->C_custo
-                  replace SH_FAREC->Filial      with  FAT->Filial
-                  replace SH_FAREC->Data_emiss  with  FAT->Dt_emissao
-                  replace SH_FAREC->Especie     with  "01"
-                  replace SH_FAREC->Serie       with  "01"
-                  replace SH_FAREC->Tipo_cont   with  FAT->Tiposub
-                  replace SH_FAREC->Historico   with  FAT->Obs
-                  DUP_FAT->(Dbseek(FAT->Codigo))
-                  replace SH_FAREC->Data_venc   with  FAT->Dt_emissao
-
-                  replace SH_FAREC->Valor       with  calc_clari()
-                  if FAT->No_nf
-                    replace SH_FAREC->Fatura      with  "PED "+FAT->Codigo
-                    replace SH_FAREC->Num_titulo  with  "PED "+FAT->Codigo
-                  else
-                    replace SH_FAREC->Fatura      with  FAT->Num_fatura+"/01"
-                    replace SH_FAREC->Num_titulo  with  FAT->Num_fatura+"/01"
-                  endif
-                  replace SH_FAREC->Cliente     with  FAT->Cliente
-                  replace SH_FAREC->Tipo_doc    with  FAT->Tipo_doc
-               endif
-           endif
-         endif
-         SH_FAREC->(dbclosearea())
-
-         if FAT->(qrlock())
-            replace FAT->Interface with .T.
-            FAT->(qunlock())
-         endif
+         //         replace SH_FAREC->Valor       with  calc_clari()
+         //         if FAT->No_nf
+         //           replace SH_FAREC->Fatura      with  "PED "+FAT->Codigo
+         //           replace SH_FAREC->Num_titulo  with  "PED "+FAT->Codigo
+         //         else
+         //           replace SH_FAREC->Fatura      with  FAT->Num_fatura+"/01"
+         //           replace SH_FAREC->Num_titulo  with  FAT->Num_fatura+"/01"
+         //         endif
+         //         replace SH_FAREC->Cliente     with  FAT->Cliente
+         //        replace SH_FAREC->Tipo_doc    with  FAT->Tipo_doc
+         //      endif
+         //  endif
+         //endif
+		 
+         //SH_FAREC->(dbclosearea())
+		
+         //if FAT->(qrlock())
+         //   replace FAT->Interface with .T.
+         //   FAT->(qunlock())
+         //endif
+		 
       endif
 
       if FAT->Fiscal .or. empty(FAT->Num_fatura)
@@ -244,7 +246,7 @@ static function i_interface
          FAT->(Dbskip())
          loop
       endif
-
+		
 
       qmensa("Aguarde... Intefaceando com Escrita Fiscal...")
 

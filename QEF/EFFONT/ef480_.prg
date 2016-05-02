@@ -462,6 +462,120 @@ static function i_registro_C100(nFile)
 
 return
 
+static function i_registro_C170_nfe(nFile,oServer,id)
+local cEFD := ""
+local nTotal_prod := 0
+local cQuery := ""
+local oQuery
+local row
+local nCont := 1
+         
+		 cQuery := "    SELECT prod.referencia_brasil as referencia  , "
+		 cQuery += " 		   prod.descricao as descricao,	"
+		 cQuery += " 		   nf.cfop_id as cfop,	"
+		 cQuery += "			   item.*, "
+		 cQuery += "			   item.base_icms     as base_icms,	 "
+		 cQuery += "			   item.aliquota_icms as aliquota_icms,	 "
+		 cQuery += "			   item.valor_icms as valor_icms,	 "
+		 cQuery += "			   item.base_ipi     as base_ipi,	 "
+		 cQuery += "			   item.aliquota_ipi as aliquota_ipi,	 "
+		 cQuery += "			   item.valor_ipi as valor_ipi,	 "
+		 cQuery += "			   item.base_pis     as base_pis,	 "
+		 cQuery += "			   item.aliquota_pis as aliquota_pis,	 "
+		 cQuery += "			   item.base_cofins     as base_cofins,	 "
+		 cQuery += "			   item.aliquota_cofins as aliquota_cofins,	 "
+		 cQuery += "			   item.valor_icmsst as valor_st,	 "
+		 cQuery += "			   round(item.quantidade * item.valor_unitario,2) as valor_produtos	 "
+		 cQuery += "		FROM item_nota_fiscal item "
+		 cQuery += "		JOIN nota_fiscal nf on nf.id = item.nota_fiscal_id "
+		 cQuery += "		join produtos prod on prod.id = item.produto_id "
+		 cQuery += " where item.nota_fiscal_id =" + alltrim(str(id)) 
+
+         oQuery := oServer:Query(cQuery)
+   
+		 if oQuery:NetErr()
+		    Alert(oQuery:Error())
+		 endif
+		   
+		 nCont := 1
+		   
+		 do while nCont <= oQuery:LastRec() 	 
+		    row := oQuery:getRow(nCont)
+
+            cEFD := "|C170"
+            cEFD += "|"+strzero(nCont,3)
+            cEFD += "|"+alltrim(get(row,'referencia'))
+            cEFD += "|"+rtrim(get(row,'descricao'))
+            cEFD += "|"+alltrim(transform(get(row,'quantidade'),"@R 999999999"))
+            cEFD += "|000001"
+            cEFD += "|"+alltrim(transform(get(row,'valor_produtos'),"@E 99999999999.99"))
+            cEFD += "|" // Desconto
+            cEFD += "|0"
+            cEFD += "|100"
+            cEFD += "|"+alltrim(str(get(row,'cfop')))
+            cEFD += "|"
+            cEFD += "|"+alltrim(transform(get(row,'base_icms'),"@E 9999999999.99"))
+            cEFD += "|"+alltrim(transform(get(row,'aliquota_icms'),"@E 9999999999.99"))
+            cEFD += "|"+alltrim(transform(get(row,'valor_icms') ,"@E 9999999999.99"))
+            cEFD += "|"
+            cEFD += "|"
+            cEFD += "|"
+            cEFD += "|0"
+            cEFD += "|00"//+right(ITEN_FAT->cod_sit,2)
+            cEFD += "|"
+            cEFD += "|"+alltrim(transform(get(row,'base_ipi'),"@E 9999999999.99"))
+            cEFD += "|"+alltrim(transform(get(row,'aliquota_ipi'),"@E 9999999999.99"))
+            cEFD += "|"+alltrim(transform(get(row,'valor_ipi'),"@E 9999999999.99"))
+			
+			if alltrim(str(get(row,'cfop'))) $ "1910-2910-2202-1202-2411-1411"
+				cEFD += "|"+"50" // CST PIS
+				nBasePis := (get(row,'base_pis') - get(row,'valor_st')) 
+				nValorPis := nBasePis * (get(row,'aliquota_pis')/100)
+				nValorCofins := nBasePis * (get(row,'aliquota_cofins')/100)
+				cEFD += "|"+alltrim(transform(nBasePis,"@E 9999999999.99")) // Base do Pis
+				cEFD += "|"+alltrim(transform(get(row,'aliquota_pis'),"@E 9999999999.99")) //  aliq do Pis
+				cEFD += "|"
+				cEFD += "|"
+				cEFD += "|"+alltrim(transform(nValorPis,"@E 9999999999.99")) // Vlr do Pis
+				
+				cEFD += "|"+"50" // CST COFINS
+				cEFD += "|"+alltrim(transform(nBasePis,"@E 9999999999.99")) // Base do Cofins
+				cEFD += "|"+alltrim(transform(get(row,'aliquota_cofins'),"@E 9999999999.99")) //  aliq do Cofins
+				cEFD += "|"
+				cEFD += "|"
+				cEFD += "|"+alltrim(transform(nValorCofins,"@E 9999999999.99")) // Vlr do Cofins
+			else	
+				cEFD += "|"+"98" // CST PIS
+				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) // Base do Pis
+				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) //  aliq do Pis
+				cEFD += "|"
+				cEFD += "|"
+				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) // Vlr do Pis
+				cEFD += "|98" // CST COFINS
+				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) // Base do Cofins
+				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) //  aliq do Cofins
+				cEFD += "|"
+				cEFD += "|"
+				cEFD += "|"+alltrim(transform(0,"@E 9999999999.99")) // Vlr do Cofins
+			endif
+			
+
+            cEFD += "|"
+            cEFD += "|"+chr(13)+chr(10)
+
+            fwrite(nFile,cEFD,len(cEFD))
+            ntot_lin++
+            nTot_C++
+            nTot_C170++
+            nCONT++
+
+         enddo
+
+
+		 oServer:close()
+         cEFD := ""
+
+return
 
 static function i_registro_C170(nFile)
 local cEFD := ""
@@ -1531,6 +1645,17 @@ local cEFD := ""
 local nTotal_prod,nPis,nCofins := 0
 local cModelo := ""
 local cCFOPS := "13-23-31"
+local oServer, oRow
+local oQuery
+local nCont := 0
+local cQuery :=  ""
+
+		 oServer := TMySQLServer():New(XSERVER, "root", "borios")
+		 if oServer:NetErr()
+			Alert(oServer:Error())
+		 endif
+
+		 oServer:SelectDB("comercial")	
 
          FAT->(dbclearfilter())
          FAT->(Dbsetfilter({|| Dt_emissao >= dINI .and. dt_emissao <= dFIM .and. ES == "E" .and. ! empty(NFe) }))
@@ -1592,7 +1717,7 @@ local cCFOPS := "13-23-31"
 				nPis := 0
 				nCofins := 0
 
-                ITEN_FAT->(dbseek(FAT->Codigo))
+				ITEN_FAT->(dbseek(FAT->Codigo))
                 Do while ! ITEN_FAT->(eof()) .and. ITEN_FAT->Num_fat == FAT->Codigo
 
                    nTotal_prod += ITEN_FAT->quantidade * ITEN_FAT->vl_unitar
@@ -1602,7 +1727,6 @@ local cCFOPS := "13-23-31"
 
                    ITEN_FAT->(dbskip())
                 enddo
-
                 cEFD += "|"+alltrim(transform(round(nTotal_prod,2),"@E 99999999999.99"))
                 cEFD += "|0"//+FAT->Frete
                 cEFD += "|"
@@ -1615,12 +1739,17 @@ local cCFOPS := "13-23-31"
                 cEFD += "|"
                 cEFD += "|"+alltrim(transform(ENT->Ipi_vlr,"@E 99999999999.99"))
                 
-				if left(SAI->Cfop,3) $ "191-291-194-294"
+				if left(ENT->Cfop,3) $ "191-291-194-294"
 					cEFD += "|"+alltrim(transform(0,"@E 99999999999.99")) // PIS
 					cEFD += "|"+alltrim(transform(0,"@E 99999999999.99")) // COFINS
 				else
-					cEFD += "|"+alltrim(transform(round(nPis,2),"@E 99999999999.99")) // PIS
-					cEFD += "|"+alltrim(transform(round(nCofins,2),"@E 99999999999.99")) // COFINS
+					if(left(ENT->Cfop,4) $ "2202-1202-2411-1411")
+						cEFD += "|"+alltrim(transform(round( (ENT->Icm_base - ENT->Icm_subst) * 0.0165,2),"@E 99999999999.99")) // PIS
+						cEFD += "|"+alltrim(transform(round((ENT->Icm_base - ENT->Icm_subst) * 0.0760,2),"@E 99999999999.99")) // COFINS
+					else	
+						cEFD += "|"+alltrim(transform(round( nPis,2),"@E 99999999999.99")) // PIS
+						cEFD += "|"+alltrim(transform(round( nCofins,2),"@E 99999999999.99")) // COFINS
+					endif	
 				endif	
 				
                 
@@ -1634,7 +1763,7 @@ local cCFOPS := "13-23-31"
                 nTot_C100++
 				
 				if FAT->(dbseek(ENT->Num_nf + "55"))
-                   i_registro_c170(nFile)
+                   i_registro_c170_nfe(nFile,oServer,FAT->NFWeb_id)
 				endif  
 
                 //i_registro_c190_entradas(nFile)
@@ -2210,12 +2339,12 @@ local cEFD := ""
 
          cEFD := "|D101"
          cEFD += "|0" //Tipo  do Frete
-		 cEFD += "|"+alltrim(transform(ENT->Icm_base,"@E 99999999999.99"))
+		 cEFD += "|"+alltrim(transform(ENT->Vlr_cont,"@E 99999999999.99"))
 		 cEFD += "|50"
 		 cEFD += "|14" //Transporte de Cargas
-		 cEFD += "|"+alltrim(transform(ENT->Icm_base,"@E 99999999999.99"))
+		 cEFD += "|"+alltrim(transform(ENT->Vlr_cont,"@E 99999999999.99"))
          cEFD += "|"+alltrim(transform(1.65,"@E 99999999.99"))
-		 cEFD += "|"+alltrim(transform(round(ENT->Icm_base * 0.0165,2),"@E 99999999999.99"))
+		 cEFD += "|"+alltrim(transform(round(ENT->Vlr_cont * 0.0165,2),"@E 99999999999.99"))
          cEFD += "|"
          cEFD += "|"+chr(13)+chr(10) 
 
@@ -2234,12 +2363,12 @@ local cEFD := ""
 
          cEFD := "|D105"
          cEFD += "|0" //Tipo  do Frete
-		 cEFD += "|"+alltrim(transform(ENT->Icm_base,"@E 99999999999.99"))
+		 cEFD += "|"+alltrim(transform(ENT->Vlr_cont,"@E 99999999999.99"))
 		 cEFD += "|50"
 		 cEFD += "|14" //Transporte de Cargas
-		 cEFD += "|"+alltrim(transform(ENT->Icm_base,"@E 99999999999.99"))
+		 cEFD += "|"+alltrim(transform(ENT->Vlr_cont,"@E 99999999999.99"))
          cEFD += "|"+alltrim(transform(7.60,"@E 99999999.99"))
-		 cEFD += "|"+alltrim(transform(round(ENT->Icm_base * 0.076,2),"@E 99999999999.99"))
+		 cEFD += "|"+alltrim(transform(round(ENT->Vlr_cont * 0.076,2),"@E 99999999999.99"))
          cEFD += "|"
          cEFD += "|"+chr(13)+chr(10) 
 

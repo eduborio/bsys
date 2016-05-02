@@ -487,9 +487,9 @@ static function i_impressao
               @ prow()+1,00 say "  "+chr(9)+zPROD+chr(9)+" "+chr(9)+" "+chr(9)+transf(nQTD_ENT,"@R 999999")+chr(9)+transf(nQTD_VEND,"@R 999999")+chr(9)+chr(9)+transf(nCUSTO_COR,"@E 999,999.99")+chr(9)+transf(nVLR_ESTQ,"@E 999,999.99")+chr(9)+transf(nSALDO_COR,"@E 999,999.99")
               @ prow(),pcol() say chr(9)+chr(9)+chr(9)+transf(nEST_INI,"@E 999,999.99")+chr(9)+transf(nVLR_ENT,"@E 999,999.99")+chr(9)+transf(nVLR_VEND,"@E 999,999.99")+chr(9)+transf((nEST_INI+nVLR_ENT)-nVLR_VEND,"@E 999,999.99")+chr(9)+transf(nVLR_ESTQ,"@E 999,999.99")+chr(9)+transf(((nEST_INI+nVLR_ENT)-nVLR_VEND)-nVLR_ESTQ,"@E 999,999.99")
 			  
-			  if month(dFim) == 12
+			  //if month(dFim) == 12
 				gravaNaWeb(oServer,cProd,nCUSTO_COR,nSALDO_COR,dFIM,"1")
-			  endif
+			  //endif
 			  
 			  if cSINTETICO == "S"
 			     INVENT->(dbsetorder(4))
@@ -620,9 +620,9 @@ static function i_impressao
              if ESANT->(dbseek(right(PROD->Codigo,5)))
                 @ prow()+1,00 say "  "+chr(9)+rtrim(PROD->Cod_fabr) + "/ "+rtrim(PROD->Cod_ass)+"    "+rtrim(PROD->Descricao)+"        "+rtrim(PROD->Marca)+chr(9)+" "+chr(9)+" "+chr(9)+"Qtde Saida"+chr(9)+transf(0,"@R 999999")+chr(9)+transf(0,"@E 999,999.99")+chr(9)+transf(ESANT->Quantidade*ESANT->Preco_cust,"@E 999,999.99")+chr(9)+transf(ESANT->preco_cust,"@E 999,999.99")+chr(9)+transf(ESANT->Quantidade,"@E 999,999.99")
                 nVLR_ESTQ_TOT += (ESANT->Quantidade * ESANT->Preco_cust)
-				if month(dFim) == 12
+				//if month(dFim) == 12
 					gravaNaWeb(oServer,right(PROD->Codigo,5),ESANT->preco_cust,ESANT->Quantidade,dFIM,"0")
-			    endif
+			    //endif
 				if cSINTETICO == "S"
 					//gravaNoMysql(oServer,right(PROD->Codigo,5),ESANT->preco_cust)
 				endif	
@@ -1198,15 +1198,15 @@ static function gravaNaWeb(oServer,cProd,nPrecoCusto,nQuantidade,dIni,cMov)
    local oQuery
    local cQuery := ""
    
+   cQuery :=  " insert into invent (id,quantidade,preco_custo,qtde_web,preco_custo_web,movimentou) "
+   cQuery +=  " values("+ alltrim(str(val(cProd)))+","+alltrim(transform(nQuantidade,"@R 9999999999")) +","+alltrim(transform(nPrecoCusto,"@R 9999999999.99")) +",0,0,"+ cMov+")"
+   cQuery +=  " ON DUPLICATE KEY UPDATE quantidade = values(quantidade), preco_custo = VALUES(preco_custo), movimentou = values(movimentou) "
    
-   cQuery := "update "
-   cQuery += " invent "
-   cQuery += " set preco_custo = " +alltrim(transform(nPrecoCusto,"@R 9999999999.99"))
-   cQuery += ", quantidade = " +alltrim(transform(nQuantidade,"@R 9999999999.99"))
-   cQuery += ", movimentou = " + cMov 
-	
-   cQuery += " where produto_id = " + alltrim(str(val(cProd)))
-   
+   //cQuery := "update "
+   //cQuery += " invent "
+   //cQuery += " set preco_custo = " +alltrim(transform(nPrecoCusto,"@R 9999999999.99"))
+   //cQuery += ", quantidade = " +alltrim(transform(nQuantidade,"@R 9999999999.99"))
+   //cQuery += ", movimentou = " + cMov   //cQuery += " where id = " + alltrim(str(val(cProd)))
    //alert(cQuery)
    
    oQuery := oServer:Query(cQuery)
