@@ -1,7 +1,6 @@
 # Nome do .Exe
 -oC:\Qsys_g\Qef\Qef_.exe
 
-
 -lc:\hb30\lib\win\msvc\hbqsys.lib
 -lc:\hb30\lib\win\msvc\hbct.lib
 -lc:\hb30\lib\win\msvc\libmysql.lib

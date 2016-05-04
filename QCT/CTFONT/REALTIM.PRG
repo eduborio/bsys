@@ -1,9 +1,9 @@
 /////////////////////////////////////////////////////////////////////////////
 // SISTEMA....: SISTEMA DE ESCRITA FISCAL
 // OBJETIVO...: INTERFACE CONTABIL
-// ANALISTA...: LUCINEIDE VILAR POSSEBOM
-// PROGRAMADOR: A MESMA
-// INICIO.....: ABRIL DE 1998
+// ANALISTA...: EDUARDO BORIO
+// PROGRAMADOR: 
+// INICIO.....: 
 // OBS........:
 function realtime
 
@@ -93,8 +93,16 @@ else
    //SH_PROCT->(__dbPack())
 
    i_interface()  // INTERFACE COM ENTRADAS E SAIDAS
+   
+   
+   
+   if XEMPRESA == "001"
+     i_RecebimentosWeb()
+   endif	  
+   
+	dbcloseall()
 
-   return
+	return
 
 endif
 
@@ -222,6 +230,24 @@ static function i_propaga ( cOPT )
      if ! empty(LOTE->Cont_cr)
         ct_prop_saldo(LOTE->Cont_cr,LOTE->Valor,"CR"+strzero(month(LOTE->Data_lanc),2))
         CONFIG->&("CR"+strzero(month(LOTE->Data_lanc),2))+=LOTE->Valor*-1
+     endif
+     CONFIG->(qunlock())
+  endif
+
+return
+
+static function i_propaga_web ( conta_db, conta_cr, data,valor )
+
+  // ATUALIZA SALDOS NA INCLUSAO ________________________________________
+
+  if CONFIG->(qrlock())
+     if ! empty(conta_db)
+        ct_prop_saldo(conta_db,valor,"DB"+strzero(month(data),2))
+        CONFIG->&("DB"+strzero(month(data),2))+=valor
+     endif
+     if ! empty(conta_cr)
+        ct_prop_saldo(conta_cr,valor,"CR"+strzero(month(data),2))
+        CONFIG->&("CR"+strzero(month(data),2))+=valor*-1
      endif
      CONFIG->(qunlock())
   endif
@@ -460,9 +486,7 @@ local nNUM_LOTE
       qmensa("")
 
    endif
-
-
-   Dbcloseall()
+   
 
 return
 
@@ -536,3 +560,201 @@ local lTEM := .F.
    next
 
 return
+
+function i_RecebimentosWeb()
+
+local oServer, oRow
+local oQuery
+local nCont := 0
+local cQuery :=  ""
+		
+		 oServer := TMySQLServer():New(XSERVER, "root", "borios")
+		 if oServer:NetErr()
+			Alert(oServer:Error())
+		 endif
+
+		 oServer:SelectDB("comercial")	
+		 
+		 cQuery := " select rec.*,b.conta_contabil, cli.conta_contabil as cli_conta, cli.nome as cli_nome from receber rec "
+		 cQuery += " join bancos b on b.id = rec.banco_id "
+		 cQuery += " join clientes cli on cli.id = rec.cliente_id "
+		 cQuery += " where recebido = 1 and contabil_baixa = 0 "
+		 
+		 oQuery := oServer:Query(cQuery)
+		 
+		  if oQuery:NetErr()
+		    Alert(oQuery:Error())
+	     endif
+   
+         nCont := 1
+   
+  	     do while nCont <= oQuery:LastRec() 	
+			row := oQuery:getRow(nCont)
+			
+			processaRecebimento(row)
+			processaJuros(row)
+			processaDesconto(row)
+			marcaComoContabilizado(oServer,get(row,'id'))
+				
+			nCont++
+		 enddo
+
+		 CONFIG->(dbclosearea())		
+return
+
+static function processaRecebimento(row)
+	local conta_db := ""
+	local conta_cr := ""
+	nNUM_LANC := CONFIG->Num_lanc
+	
+	if LANC->(qrlock()) .and. LANC->(qappend())
+       replace LANC->Data_lanc with get(row,'recebimento')
+	   
+       replace LANC->Cont_cr   with get(row,'cli_conta')
+	   conta_cr := get(row,'cli_conta')
+	   
+	   //alert(VALTYPE(get(row,'tipo')))
+	   
+	   //tipo := str(get(row,'tipo'))
+	   
+	   if get(row,'tipo') == 2
+		  replace LANC->Cont_db   with "001392"
+		  conta_db := "001392"
+       else 
+		  replace LANC->Cont_db   with get(row,'conta_contabil')
+		  conta_db := get(row,'conta_contabil')	
+	   endif	  
+	  
+       replace LANC->Filial    with "0001"
+       replace LANC->Centro    with ""
+       replace LANC->Valor     with get(row,'valor')
+       replace LANC->Num_lote  with "WB"+strzero(day(date()),2)+strzero(month(date()),2)+strzero(year(date()),4)
+       replace LANC->Num_lanc  with strzero(nNUM_LANC:=nNUM_LANC + 1,5)  // numero do lancamento
+       replace LANC->Num_doc   with substr(get(row,'fatura'),3,10)
+       replace LANC->Hist_comp with "REC " + substr(get(row,'fatura'),3,10) + " "+left(get(row,'cli_nome'),40)
+	   replace LANC->web_tab   with "receber"
+	   replace LANC->web_id    with get(row,'id')
+
+       //if ct_trava_prop(conta_db,conta_cr)
+          i_propaga_web(conta_db,conta_cr,get(row,'recebimento'),get(row,'valor'))
+       //endif
+
+       LANC->(qunlock())
+    endif
+	
+	if CONFIG->(qrlock())
+         replace CONFIG->Num_lanc with nNUM_LANC
+         CONFIG->(qunlock())
+    endif
+return
+
+static function processaJuros(row)
+
+	local conta_db := ""
+	local conta_cr := ""
+	
+	if get(row,'juros') > 0
+		
+		nNUM_LANC := CONFIG->Num_lanc
+		
+		if LANC->(qrlock()) .and. LANC->(qappend())
+		   replace LANC->Data_lanc with get(row,'recebimento')
+		   
+		   replace LANC->Cont_cr   with "032190"
+		   conta_cr := "032190"
+		   
+		   if get(row,'tipo') == 2
+			  replace LANC->Cont_db   with "001392"
+			  conta_db := "001392"
+		   else
+			  replace LANC->Cont_db   with get(row,'conta_contabil')	
+			  conta_db := get(row,'conta_contabil')	
+		   endif
+		   
+		   replace LANC->Filial    with "0001"
+		   replace LANC->Centro    with ""
+		   replace LANC->Valor     with get(row,'juros')
+		   replace LANC->Num_lote  with "WB"+strzero(day(date()),2)+strzero(month(date()),2)+strzero(year(date()),4)
+		   replace LANC->Num_lanc  with strzero(nNUM_LANC:=nNUM_LANC + 1,5)  // numero do lancamento
+		   replace LANC->Num_doc   with substr(get(row,'fatura'),3,10)
+		   replace LANC->Hist_comp with "REC JUROS NF " + substr(get(row,'fatura'),3,10) + " "+left(get(row,'cli_nome'),40)
+		   replace LANC->web_tab   with "receber"
+	       replace LANC->web_id    with get(row,'id')
+
+		   //if ct_trava_prop(conta_db,conta_cr)
+			  i_propaga_web(conta_db,conta_cr,get(row,'recebimento'),get(row,'desconto'))
+		   //endif
+
+		   LANC->(qunlock())
+		endif
+		
+		if CONFIG->(qrlock())
+			 replace CONFIG->Num_lanc with nNUM_LANC
+			 CONFIG->(qunlock())
+		endif
+	endif	
+return
+
+static function processaDesconto(row)
+
+	local conta_db := ""
+	local conta_cr := ""
+	
+	if(get(row,'desconto') > 0)
+		
+		nNUM_LANC := CONFIG->Num_lanc
+		
+		if LANC->(qrlock()) .and. LANC->(qappend())
+		
+		   
+		   
+		   replace LANC->Data_lanc with get(row,'recebimento')
+		   
+		   replace LANC->Cont_cr   with get(row,'cli_conta')
+		   conta_cr := get(row,'cli_conta')
+		   
+ 		   replace LANC->Cont_db   with "006602"
+		   conta_db := "006602"
+		   
+		   replace LANC->Filial    with "0001"
+		   replace LANC->Centro    with ""
+		   replace LANC->Valor     with get(row,'desconto')
+		   replace LANC->Num_lote  with "WB"+strzero(day(date()),2)+strzero(month(date()),2)+strzero(year(date()),4)
+		   replace LANC->Num_lanc  with strzero(nNUM_LANC:=nNUM_LANC + 1,5)  // numero do lancamento
+		   replace LANC->Num_doc   with substr(get(row,'fatura'),3,10)
+		   replace LANC->Hist_comp with "DESC. NF " + substr(get(row,'fatura'),3,10) + " "+left(get(row,'cli_nome'),40)
+		   replace LANC->web_tab   with "receber"
+	       replace LANC->web_id    with get(row,'id')
+
+		   //if ct_trava_prop(conta_db,conta_cr)
+			  i_propaga_web(conta_db,conta_cr,get(row,'recebimento'),get(row,'desconto'))
+		   //endif
+
+		   LANC->(qunlock())
+		endif
+		
+		if CONFIG->(qrlock())
+			 replace CONFIG->Num_lanc with nNUM_LANC
+			 CONFIG->(qunlock())
+		endif
+	endif	
+return
+
+static function marcaComoContabilizado(oServer,id)
+   local cQuery := ""
+   local oQuery
+   local row
+   local nCont := 1
+   
+   cQuery := " update receber set contabil_baixa = 1 "
+   cQuery += " where id =" + alltrim(str(id))
+   oQuery := oServer:Query(cQuery)
+   
+   if oQuery:NetErr()
+      Alert(oQuery:Error())
+   endif
+   
+return
+
+static function get(row,campo)
+return  row:fieldget(campo)

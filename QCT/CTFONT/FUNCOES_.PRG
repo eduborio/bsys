@@ -233,7 +233,7 @@ function ct_trava_prop ( cCONTADB , cCONTACR )
 
        if ! empty(cCODDB) .and. cCODDB <> cCONTADB
           if ! PLAN->(dbseek(cCODDB))
-             qmensa("Conta sintetica nao encontrada !","B")
+             qmensa("Conta sintetica nao encontrada " + cCONTADB +" !","B")
              return .F.
           else
              if ! PLAN->(qrlock(recno()))
@@ -244,7 +244,7 @@ function ct_trava_prop ( cCONTADB , cCONTACR )
 
        if ! empty(cCODCR) .and. cCODCR <> cCONTACR
           if ! PLAN->(dbseek(cCODCR))
-             qmensa("Conta sintetica nao encontrada !","B")
+             qmensa("Conta sintetica nao encontrada "+ cCONTACR+" !","B")
              return .F.
           else
              if ! PLAN->(qrlock(recno()))
