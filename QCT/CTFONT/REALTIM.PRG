@@ -576,7 +576,7 @@ local cQuery :=  ""
 		 oServer:SelectDB("comercial")	
 		 
 		 cQuery := " select rec.*,b.conta_contabil, cli.conta_contabil as cli_conta, cli.nome as cli_nome from receber rec "
-		 cQuery += " join bancos b on b.id = rec.banco_id "
+		 cQuery += " left outer join bancos b on b.id = rec.banco_id "
 		 cQuery += " join clientes cli on cli.id = rec.cliente_id "
 		 cQuery += " where recebido = 1 and contabil_baixa = 0 "
 		 
@@ -613,7 +613,7 @@ static function processaRecebimento(row)
        replace LANC->Cont_cr   with get(row,'cli_conta')
 	   conta_cr := get(row,'cli_conta')
 	   
-	   //alert(VALTYPE(get(row,'tipo')))
+	   alert(VALTYPE(get(row,'tipo')))
 	   
 	   //tipo := str(get(row,'tipo'))
 	   
