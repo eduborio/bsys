@@ -25,9 +25,9 @@ private cDRIVE     // drive para gravacao
 private cCAGED     // string de montagem de cada linha
 
 
-private dDATA_INI   := ctod("01/01/2014")
-private dINI_SIM    := ctod("01/01/2014")
-private dDATA_FIM   := ctod("31/12/2014")
+private dDATA_INI   := ctod("01/01/2015")
+private dINI_SIM    := ctod("01/01/2015")
+private dDATA_FIM   := ctod("31/12/2015")
 private dDATA_EMIS                  // Data de emissao
 private dDATA_VENC                  // Data de vencimento
 private bSAI_FILTRO
@@ -687,23 +687,23 @@ static function i_gravacao
 
          // VERIFICA SE FOI EXECUTADOS AS APURACOES ATNTES DE EMITIR ESTA OPCAO _____
 
-         dDATA_INI := ctod("01/01/2014")
+         dDATA_INI := ctod("01/01/2015")
 
          dDATA_EMIS  := date()
          nVAL_EST    := 0
          dDATA_VENC  := ctod("")
          dDATA_INVE  := ctod("")
 
-         dDATA_INI   := ctod("01/01/2014")
+         dDATA_INI   := ctod("01/01/2015")
 
-         dDATA1_INI  := ctod("01/01/2014")
+         dDATA1_INI  := ctod("01/01/2015")
 
          if CONFIG->Tipo_est == "D"
-            dDATA_FIM   := ctod("31/12/2014")
-            dDATA1_FIM  := ctod("31/12/2014")
+            dDATA_FIM   := ctod("31/12/2015")
+            dDATA1_FIM  := ctod("31/12/2015")
          else
-            dDATA_FIM   := ctod("31/12/2014")
-            dDATA1_FIM  := ctod("31/12/2014")
+            dDATA_FIM   := ctod("31/12/2015")
+            dDATA1_FIM  := ctod("31/12/2015")
          endif
 
          fOUT_BASES := 0
@@ -1569,7 +1569,7 @@ static function i_gravacao
          ///////////////////////////////////////////////////////////////////////////////////////
          // GRAVA OS DADOS NO ARQUIVO DFCGI.DBF __________________________________________________
          //REGISTRO TIPO 1
-         cDFCGI := "1" + "21" + left(FILIAL->Insc_estad,10) + FILIAL->Cgccpf+ "201412"+ "C"
+         cDFCGI := "1" + "21" + left(FILIAL->Insc_estad,10) + FILIAL->Cgccpf+ "201512"+ "C"
          cDFCGI += CFGDISQ->Crc_contab +"     " +"8" + space(59)
          cDFCGI += strzero(nLINHA,3)
          nLINHA := 0
@@ -2845,7 +2845,7 @@ static function i_inicializacao
    //ENT->(dbSetFilter({|| alltrim(Filial) $ FILIAL->Codigo}, 'alltrim(Filial) $ FILIAL->Codigo'))
    bENT_FILTRO  := { || ENT->DATA_LANC >= dDATA_INI .and. ENT->DATA_LANC <= dDATA_FIM }
    bSAI_FILTRO  := { || SAI->DATA_LANC >= dDATA_INI .and. SAI->DATA_LANC <= dDATA_FIM }
-   bFILTRO_SNAC := { || SAI->DATA_LANC >= ctod("01/01/2014") .and. SAI->DATA_LANC <= dDATA_FIM }
+   bFILTRO_SNAC := { || SAI->DATA_LANC >= ctod("01/01/2015") .and. SAI->DATA_LANC <= dDATA_FIM }
 
    // ESTABELECE RELACOES ENTRE ARQUIVOS ___________________________________
 
@@ -3458,18 +3458,18 @@ static function i_impressao
    SAI->(Dbgotop())
 
    set softseek on
-   SAI->(dbseek(dtos(ctod("01/01/2014"))))
+   SAI->(dbseek(dtos(ctod("01/01/2015"))))
    set softseek off
 
    do while !SAI->(eof())
 
 
-         if SAI->Data_lanc < ctod("01/01/2014")
+         if SAI->Data_lanc < ctod("01/01/2015")
             SAI->(dbskip())
             loop
          endif
 
-         if SAI->Data_lanc > ctod("31/12/2014")
+         if SAI->Data_lanc > ctod("31/12/2015")
             SAI->(dbskip())
             loop
          endif
