@@ -646,18 +646,18 @@ static function i_impre_xls
 
       // CABECALHO SE NECESSARIO ____________________________________________
 
-      if XPAGINA == 0 .or. prow() > K_MAX_LIN
-         if XPAGINA == 0
-            if nPAG <= 0
-               XPAGINA := 1
-            else
-               XPAGINA := --nPAG
-            endif
-         endif
+      if XPAGINA == 0 //.or. prow() > K_MAX_LIN
+         //if XPAGINA == 0
+          //  if nPAG <= 0
+          //     XPAGINA := 1
+          //  else
+          //     XPAGINA := --nPAG
+          //  endif
+         //endif
          qpageprn()
          //qcabecprn(cTITULO,132)
-         @ prow()+1,0 say " "+chr(9)+cTITULO
-         @ prow()+1,0 say "CONTA"+chr(9)+"DESCRICAO DA CONTA"+chr(9)+"SALDO ANTERIOR"+chr(9)+"DEBITO"+chr(9)+"CREDITO"+chr(9)+"SALDO ATUAL"
+         @ prow()+1,0 say " "+chr(9)+chr(9)+cTITULO
+         @ prow()+1,0 say "CONTA"+chr(9)+"COD. REDUZIDO"+chr(9)+"DESCRICAO DA CONTA"+chr(9)+"SALDO ANTERIOR"+chr(9)+"DEBITO"+chr(9)+"CREDITO"+chr(9)+"SALDO ATUAL"
          //@ prow()+1,0 say replicate("-",132)
       endif
 
@@ -694,7 +694,7 @@ static function i_impre_xls
             i_grupo_xls()
          endif
 
-         @ prow()+1,00 say ct_convcod(PLAN->Codigo) //+ iif( ( CONFIG->Mantra == "S" .and. CLI1->(dbseek(PLAN->Reduzido))  ),  " - Cod. Cli.: "+CLI1->Codigo ,"")
+         @ prow()+1,00 say ct_convcod(PLAN->Codigo) + chr(9) + PLAN->Reduzido //+ iif( ( CONFIG->Mantra == "S" .and. CLI1->(dbseek(PLAN->Reduzido))  ),  " - Cod. Cli.: "+CLI1->Codigo ,"")
          lPRIM := .F.
 
       endif
@@ -744,10 +744,10 @@ static function i_impre_xls
    enddo
 
    @ prow()+1,0 say ""
-   @ prow()+1,0 say " "+chr(9) + "SUB-TOTAIS..: " + chr(9)+""+chr(9)+transform(nS_TOTDB,"@E 999,999,999,999.99") + chr(9) + transform(nS_TOTCR,"@E 999,999,999,999.99")
+   @ prow()+1,0 say " "+chr(9) + chr(9)+"SUB-TOTAIS..: " + chr(9)+""+chr(9)+transform(nS_TOTDB,"@E 999,999,999,999.99") + chr(9) + transform(nS_TOTCR,"@E 999,999,999,999.99")
    nS_TOTDB := nS_TOTCR := 0
    @ prow()+1,0 say ""
-   @ prow()+1,0 say "" +chr(9)+ "TOTAIS GERAIS: " +chr(9)+""+chr(9)+ transform(nTOTDB,"@E 999,999,999,999.99") + chr(9) + transform(nTOTCR,"@E 999,999,999,999.99")
+   @ prow()+1,0 say "" +chr(9)+ chr(9)+"TOTAIS GERAIS: " +chr(9)+""+chr(9)+ transform(nTOTDB,"@E 999,999,999,999.99") + chr(9) + transform(nTOTCR,"@E 999,999,999,999.99")
 
    // FINALIZA ______________________________________________________________
    //@ prow()+3,011 say "___________________________________                                     ____________________________________"

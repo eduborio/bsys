@@ -5,8 +5,6 @@
 
 -lc:\hb30\lib\win\msvc\hbqsys.lib
 -lc:\hb30\lib\win\msvc\hbct.lib
--lc:\hb30\lib\win\msvc\hbblat.lib
--lc:\hb30\lib\win\msvc\blat.lib
 -lc:\hb30\lib\win\msvc\libmysql.lib
 -lc:\hb30\lib\win\msvc\hbmysql.lib
 

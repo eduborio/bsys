@@ -2145,7 +2145,7 @@ static function dre_mantra
 		cSPED += "|"+"RECEITAS OPERACIONAIS"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2163,7 +2163,7 @@ static function dre_mantra
 		cSPED += "|"+"DEDUCOES"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2180,7 +2180,7 @@ static function dre_mantra
 		cSPED += "|"+"IMPOSTOS"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2198,7 +2198,7 @@ static function dre_mantra
 		cSPED += "|"+"(=)RECEITA OPERACIONAL LIQUIDA"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2216,7 +2216,7 @@ static function dre_mantra
 		cSPED += "|"+"CUSTOS DOS ESTOQUES"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2234,7 +2234,7 @@ static function dre_mantra
 		cSPED += "|"+"CUSTOS ESTOQUES/EXPEDICAO"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2252,7 +2252,7 @@ static function dre_mantra
 		cSPED += "|"+"OUTROS CUSTOS"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2270,7 +2270,7 @@ static function dre_mantra
 		cSPED += "|"+"(=)LUCRO BRUTO"
 		cSPED += "|"+i_valida(nREC_LIQ - abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"N"
-		cSPED += "|"+i_valida(nREC_LIQ - abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(0,19)
 		cSPED += "|"+"N"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2287,7 +2287,7 @@ static function dre_mantra
 		cSPED += "|"+"DESPESAS COM PESSOAL"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2306,7 +2306,7 @@ static function dre_mantra
 		cSPED += "|"+"DESPESAS GERAIS"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2325,7 +2325,7 @@ static function dre_mantra
 		cSPED += "|"+"DESPESAS COM VENDAS"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2344,7 +2344,7 @@ static function dre_mantra
 		cSPED += "|"+"ENCARGOS FINANCEIROS LIQUIDOS"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2363,7 +2363,7 @@ static function dre_mantra
 		cSPED += "|"+"DESPESAS TRIBUTARIAS"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2382,7 +2382,7 @@ static function dre_mantra
 		cSPED += "|"+"PROVISOES PARA ENCERRAMENTO DO EXERCICIO"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"P"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))
@@ -2401,7 +2401,7 @@ static function dre_mantra
 		cSPED += "|"+"(=)LUCRO DO EXERCICIO"
 		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 		cSPED += "|"+"N"
-		cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"N"
 		cSPED += "|"
 		write(nFILE,cSPED,len(cSPED))

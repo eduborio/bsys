@@ -98,6 +98,7 @@ else
    
    if XEMPRESA == "001"
      i_RecebimentosWeb()
+	 i_ImportaTxtWeb()
    endif	  
    
 	dbcloseall()
@@ -599,7 +600,7 @@ local cQuery :=  ""
 			nCont++
 		 enddo
 
-		 CONFIG->(dbclosearea())		
+		 //CONFIG->(dbclosearea())		
 return
 
 static function processaRecebimento(row)
@@ -613,7 +614,7 @@ static function processaRecebimento(row)
        replace LANC->Cont_cr   with get(row,'cli_conta')
 	   conta_cr := get(row,'cli_conta')
 	   
-	   alert(VALTYPE(get(row,'tipo')))
+	   //alert(VALTYPE(get(row,'tipo')))
 	   
 	   //tipo := str(get(row,'tipo'))
 	   
@@ -755,6 +756,95 @@ static function marcaComoContabilizado(oServer,id)
    endif
    
 return
+
+function i_ImportaTxtWeb()
+
+local oServer, oRow
+local oQuery
+local nCont := 0
+local cQuery :=  ""
+		
+		 oServer := TMySQLServer():New(XSERVER, "root", "borios")
+		 if oServer:NetErr()
+			Alert(oServer:Error())
+		 endif
+
+		 oServer:SelectDB("comercial")	
+		 
+		 cQuery := " select * from contabilidade cont "
+		 cQuery += " where contabilizado = 0 "
+		 
+		 oQuery := oServer:Query(cQuery)
+		 
+		  if oQuery:NetErr()
+		    Alert(oQuery:Error())
+	     endif
+   
+         nCont := 1
+   
+  	     do while nCont <= oQuery:LastRec() 	
+			row := oQuery:getRow(nCont)
+			
+			processaContabilidade(row)
+			marcaComoContabilizadoTxt(oServer,get(row,'id'))
+				
+			nCont++
+		 enddo
+
+		 CONFIG->(dbclosearea())		
+return
+
+static function processaContabilidade(row)
+	local conta_db := ""
+	local conta_cr := ""
+	nNUM_LANC := CONFIG->Num_lanc
+	
+	if LANC->(qrlock()) .and. LANC->(qappend())
+       replace LANC->Data_lanc with get(row,'lancamento')
+	   
+       replace LANC->Cont_cr   with get(row,'contaDebito')
+  	   replace LANC->Cont_db   with get(row,'contaCred')
+	  
+       replace LANC->Filial    with "0001"
+       replace LANC->Centro    with ""
+       replace LANC->Valor     with get(row,'valor')
+       replace LANC->Num_lote  with "WB"+strzero(day(date()),2)+strzero(month(date()),2)+strzero(year(date()),4)
+       replace LANC->Num_lanc  with strzero(nNUM_LANC:=nNUM_LANC + 1,5)  // numero do lancamento
+       replace LANC->Num_doc   with ""
+       replace LANC->Hist_comp with get(row,'historico')
+	   replace LANC->web_tab   with "contabilidade"
+	   replace LANC->web_id    with get(row,'id')
+
+       //if ct_trava_prop(conta_db,conta_cr)
+          i_propaga_web(conta_db,conta_cr,get(row,'lancamento'),get(row,'valor'))
+       //endif
+
+       LANC->(qunlock())
+    endif
+	
+	if CONFIG->(qrlock())
+         replace CONFIG->Num_lanc with nNUM_LANC
+         CONFIG->(qunlock())
+    endif
+return
+
+static function marcaComoContabilizadoTxt(oServer,id)
+   local cQuery := ""
+   local oQuery
+   local row
+   local nCont := 1
+   
+   cQuery := " update contabilidade set contabilizado = 1 "
+   cQuery += " where id =" + alltrim(str(id))
+   oQuery := oServer:Query(cQuery)
+   
+   if oQuery:NetErr()
+      Alert(oQuery:Error())
+   endif
+   
+return
+
+
 
 static function get(row,campo)
 return  row:fieldget(campo)

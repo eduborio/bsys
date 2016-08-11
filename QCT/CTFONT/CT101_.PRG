@@ -11,14 +11,14 @@ function ct101
 
 NAT_CONT->(dbsetorder(3))
 
-   if ! empty(CONFIG->Mantra)
-      if ! quse(XDRV_TS,"PLAN_FIN",{""},,"PLAN_FIN")
-         qmensa("Arquivo Fluxo de Caixa nao pode ser aberto!","BL")
-         return .F.
-      endif
+   //if ! empty(CONFIG->Mantra)
+   //   if ! quse(XDRV_TS,"PLAN_FIN",{""},,"PLAN_FIN")
+   //      qmensa("Arquivo Fluxo de Caixa nao pode ser aberto!","BL")
+    //     return .F.
+    //  endif
 
-      PLAN_FIN->(dbsetorder(3))
-   endif
+    //  PLAN_FIN->(dbsetorder(3))
+  // endif
 
 
 PLAN->(qview({{"ct_convcod(Codigo)/C¢digo"   ,1},;
@@ -26,9 +26,9 @@ PLAN->(qview({{"ct_convcod(Codigo)/C¢digo"   ,1},;
              {"ct_convcod(Reduzido)/Cod.Red.",3}},"P",;
              {NIL,"c101a",NIL,NIL},;
               NIL,q_msg_acesso_usr()))
-   if ! empty(CONFIG->Mantra)
-      PLAN_FIN->(dbclosearea())
-   endif
+   //if ! empty(CONFIG->Mantra)
+   //   PLAN_FIN->(dbclosearea())
+   //endif
 return
 /////////////////////////////////////////////////////////////////////////////
 // FUNCAO PARA DESLOCAR EM ARVORE A DESCRICAO DOS CENTROS DE CUSTO __________
@@ -115,11 +115,11 @@ static function i_edicao
    aadd(aEDICAO,{{ || qesco(-1,0,@fCENT_CUSTO  ,sBLOC1                      ) } ,"CENT_CUSTO"})
    aadd(aEDICAO,{{ || qesco(-1,0,@fLANC_INDEX  ,sBLOC1                      ) } ,"LANC_INDEX"})
    aadd(aEDICAO,{{ || qesco(-1,0,@fMAT_FILIAL  ,sBLOC1                      ) } ,"MAT_FILIAL"})
-   if ! empty(CONFIG->Mantra)
+   //if ! empty(CONFIG->Mantra)
 
-   aadd(aEDICAO,{{||view_planfin(-1,0,@fPlan_fin                             )},"PLAN_FIN"  })
-   aadd(aEDICAO,{{ || NIL                                                     } ,NIL        })
-   endif
+   //aadd(aEDICAO,{{||view_planfin(-1,0,@fPlan_fin                             )},"PLAN_FIN"  })
+   //aadd(aEDICAO,{{ || NIL                                                     } ,NIL        })
+   //endif
 
    aadd(aEDICAO,{{ || lCONF := qconf("Confirma "+iif(cOPCAO=="I","inclus„o","altera‡„o")+" ?") },NIL})
 

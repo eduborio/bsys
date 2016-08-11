@@ -142,7 +142,7 @@ function i_515c
 
    if cOPCAO == "M"
       alert("Enviar Mail")
-      blat()
+      //blat()
    endif
 
 
@@ -2063,10 +2063,10 @@ local eol            := chr(13) + chr(10)
          imprimirDanfePdf("ENT.TXT")
 
          if CONFIG->Modelo_fat == "1"
-            blat()
+            //blat()
 			if TRANSP->(dbseek(FAT->cod_transp))
 	           if ! empty(TRANSP->Email)
-			      blatTransp()
+			      //blatTransp()
 			   endif	  
 			endif
          endif
@@ -2851,105 +2851,6 @@ static function i_baixa_mantra(nQTY,nLOCAL,nTERCEIROS) //Executa estoques...
 return
 
 
-static function blat
-LOCAL nRet
-LOCAL oBlat := HBBlat():New()
-
-
-   CLI1->(dbseek(FAT->Cod_cli))
-
-   if ! empty(CLI1->eMail) .and. ! empty(FAT->NFe)
-
-
-
-   WITH OBJECT oBlat
-      :cFrom                   := alltrim(CONFIG->Mail)
-      :cTo                     := alltrim(CLI1->email)
-	  //if TRANSP->(dbseek(FAT->Cod_transp))
-	  //  :cCC                     := alltrim(TRANSP->email)
-	  //endif 	
-      :cUserAUTH               := alltrim(CONFIG->Auth)
-      :cPasswordAUTH           := alltrim(CONFIG->pw)
-      :cBodyFile               := "bodymail.txt"
-      :cServerSMTP             := alltrim(CONFIG->Server)
-      :cSubject                := "NFe Mantra Brasil"
-
-      :aAttachBinFiles         := {Config->Unidade+":\Qsys_g\Qfa_cl\Nfe\Autorizadas\"+FAT->NFe+".pdf",Config->Unidade+":\Qsys_g\Qfa_cl\Nfe\Autorizadas\"+FAT->NFe+"-NFe.xml"}
-
-      :cLogFile                := "log.txt"
-
-   END
-
-   // ? "Checking options ..."
-   //oBlat:Check()
-   //?
-   //? "Command .........: ", oBlat:GetCommand()  // Not necessary - this show complete command line sent to blat
-
-   qmensa("enviando email ...")
-
-   nRet := oBlat:Send()
-
-   //alert(oBlat:ErrorString())
-
-   // Blat error
-   //? "Blat Error ......: ", oBlat:BlatError()
-   //? "Blat Error String: ", oBlat:BlatErrorString()
-
-   //?
-     alert(IIF( nRet == 0, "Email para o cliente Enviado com sucesso!", "Falha no envio do Email para o cliente!" ))
-   //?
-   endif
-
-RETURN
-
-static function blatTransp
-LOCAL nRet
-LOCAL oBlat := HBBlat():New()
-
-
-   CLI1->(dbseek(FAT->Cod_cli))
-   
-   TRANSP->(dbseek(FAT->Cod_transp))
-
-   if ! empty(TRANSP->eMail) .and. ! empty(FAT->NFe)
-
-   WITH OBJECT oBlat
-      :cFrom                   := alltrim(CONFIG->Mail)
-      :cTo                     := alltrim(TRANSP->email)
-      :cUserAUTH               := alltrim(CONFIG->Auth)
-      :cPasswordAUTH           := alltrim(CONFIG->pw)
-      :cBodyFile               := "bodymail.txt"
-      :cServerSMTP             := alltrim(CONFIG->Server)
-      :cSubject                := "NFe Mantra Brasil"
-
-      :aAttachBinFiles         := {Config->Unidade+":\Qsys_g\Qfa_cl\Nfe\Autorizadas\"+FAT->NFe+".pdf",Config->Unidade+":\Qsys_g\Qfa_cl\Nfe\Autorizadas\"+FAT->NFe+"-NFe.xml"}
-
-      :cLogFile                := "log.txt"
-
-   END
-
-   // ? "Checking options ..."
-   //oBlat:Check()
-   //?
-   //? "Command .........: ", oBlat:GetCommand()  // Not necessary - this show complete command line sent to blat
-
-   qmensa("enviando email ...")
-
-   nRet := oBlat:Send()
-
-   //alert(oBlat:ErrorString())
-
-   // Blat error
-   //? "Blat Error ......: ", oBlat:BlatError()
-   //? "Blat Error String: ", oBlat:BlatErrorString()
-
-   //?
-     alert(IIF( nRet == 0, "Email para transportadora Enviado com sucesso!", "Falha no envio do Email para transportadora!" ))
-   //?
-   endif
-
-RETURN
-
 
 static function getNFe(cTipo)
 local cNFE   := ""
@@ -3457,10 +3358,10 @@ local cEstados := ""
          imprimirDanfePdf("ENT.TXT")
 
          if CONFIG->Modelo_fat == "1"
-            blat()
+            //blat()
 			if TRANSP->(dbseek(FAT->cod_transp))
 	           if ! empty(TRANSP->Email)
-			      blatTransp()
+			      //blatTransp()
 			   endif	  
 			endif
          endif
@@ -3982,10 +3883,10 @@ local nST := 0
          imprimirDanfePdf("ENT.TXT")
 
          if CONFIG->Modelo_fat == "1"
-            blat()
+            //blat()
 			if TRANSP->(dbseek(FAT->cod_transp))
 	           if ! empty(TRANSP->Email)
-			      blatTransp()
+			      //blatTransp()
 			   endif	  
 			endif
          endif

@@ -1,7 +1,7 @@
-call "%VC%\vcvarsall.bat"
+call "%VC10%\vcvarsall.bat"
 @echo off
 set path2=%path%
-set path=%path%;c:\hb20\bin;%VC%\bin
+set path=%path%;c:\hb30\bin;%VC10%\bin
 @echo on
 
 hbmk2 qts.hbm -inc
