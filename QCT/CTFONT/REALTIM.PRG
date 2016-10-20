@@ -802,8 +802,8 @@ static function processaContabilidade(row)
 	if LANC->(qrlock()) .and. LANC->(qappend())
        replace LANC->Data_lanc with get(row,'lancamento')
 	   
-       replace LANC->Cont_cr   with get(row,'contaDebito')
-  	   replace LANC->Cont_db   with get(row,'contaCred')
+       replace LANC->Cont_db   with get(row,'contaDebito')
+  	   replace LANC->Cont_cr   with get(row,'contaCred')
 	  
        replace LANC->Filial    with "0001"
        replace LANC->Centro    with ""

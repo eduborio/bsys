@@ -681,7 +681,7 @@ local nNotaFiscalId := 0
 
 	if NUM_PEDI->(qrlock())
        replace NUM_PEDI->Pedido with NUM_PEDI->Pedido + 1
-	   fCODIGO := strzero(NUM_PEDI->Pedido,5)
+	   fCODIGO := strzero(NUM_PEDI->Pedido,6)
 	   NUM_PEDI->(qunlock())
 	endif	 
 	  
