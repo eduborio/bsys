@@ -340,7 +340,7 @@ local nCont := 0
 			 //else
 			 //   cEFD += "|"+alltrim(qtiraponto(PROD->Cod_fabr))
 			 //endif
-			 cEFD += "|"+ltrim(rtrim(PROD->Descricao))
+			 cEFD += "|"+strtran(ltrim(rtrim(PROD->Descricao)),"|","")
 			 cEFD += "|"+alltrim(PROD->cod_barras)
 			 cEFD += "|"
 			 cEFD += "|000001"
@@ -454,7 +454,7 @@ local nCont := 1
             cEFD := "|C170"
             cEFD += "|"+strzero(nCont,3)
             cEFD += "|"+alltrim(qtiraponto(PROD->Cod_fabr))
-            cEFD += "|"+rtrim(PROD->Descricao)
+            cEFD += "|"+strtran(rtrim(PROD->Descricao),"|"," ")
             cEFD += "|"+alltrim(transform(ITEN_FAT->Quantidade,"@R 999999999"))
             cEFD += "|000001"
             cEFD += "|"+alltrim(transform(ITEN_FAT->Quantidade * ITEN_FAT->Vl_unitar,"@E 99999999999.99"))
