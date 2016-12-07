@@ -983,7 +983,7 @@ static function i_historico
    if (HIST->(dbseek(LANC->Hp2)),cHIST += rtrim(HIST->Descricao)+" ",NIL)
    if (HIST->(dbseek(LANC->Hp3)),cHIST += rtrim(HIST->Descricao)+" ",NIL)
    cHIST += rtrim(LANC->Hist_comp)
-return alltrim(cHIST)
+return strtran(alltrim(cHIST),chr(013),"")
 
 /////////////////////////////////////////////////////////////////////////////
 // VIEW PADRAO PARA PLANO DE CONTAS RETORNANDO CODIGO REDUZIDO ______________
