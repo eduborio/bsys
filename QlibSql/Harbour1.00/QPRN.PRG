@@ -462,7 +462,7 @@ function qcabecprn ( cSTRING, nLENGHT, dDATA , cSTRING2 )
       @ prow()  ,nLENGHT-16                     say left(time(),5)
    endif
 
-   @ prow()  ,nLENGHT-11                     say "Pag.: "
+   @ prow()  ,nLENGHT-11                     say "Fls.: "
    @ prow()  ,nLENGHT-04                     say strzero(XPAGINA,4,0)
    @ prow()+1,0                              say replicate("=",nLENGHT)
    @ prow()+1,0                              say "|"
