@@ -488,7 +488,7 @@ static function i_impressao
               @ prow(),pcol() say chr(9)+chr(9)+chr(9)+transf(nEST_INI,"@E 999,999.99")+chr(9)+transf(nVLR_ENT,"@E 999,999.99")+chr(9)+transf(nVLR_VEND,"@E 999,999.99")+chr(9)+transf((nEST_INI+nVLR_ENT)-nVLR_VEND,"@E 999,999.99")+chr(9)+transf(nVLR_ESTQ,"@E 999,999.99")+chr(9)+transf(((nEST_INI+nVLR_ENT)-nVLR_VEND)-nVLR_ESTQ,"@E 999,999.99")
 			  
 			  //if month(dFim) == 12
-				gravaNaWeb(oServer,cProd,nCUSTO_COR,nSALDO_COR,dFIM,"1")
+			  //gravaNaWeb(oServer,cProd,nCUSTO_COR,nSALDO_COR,dFIM,"1")
 			  //endif
 			  
 			  if cSINTETICO == "S"
@@ -621,10 +621,10 @@ static function i_impressao
                 @ prow()+1,00 say "  "+chr(9)+rtrim(PROD->Cod_fabr) + "/ "+rtrim(PROD->Cod_ass)+"    "+rtrim(PROD->Descricao)+"        "+rtrim(PROD->Marca)+chr(9)+" "+chr(9)+" "+chr(9)+"Qtde Saida"+chr(9)+transf(0,"@R 999999")+chr(9)+transf(0,"@E 999,999.99")+chr(9)+transf(ESANT->Quantidade*ESANT->Preco_cust,"@E 999,999.99")+chr(9)+transf(ESANT->preco_cust,"@E 999,999.99")+chr(9)+transf(ESANT->Quantidade,"@E 999,999.99")
                 nVLR_ESTQ_TOT += (ESANT->Quantidade * ESANT->Preco_cust)
 				//if month(dFim) == 12
-					gravaNaWeb(oServer,right(PROD->Codigo,5),ESANT->preco_cust,ESANT->Quantidade,dFIM,"0")
+				//	gravaNaWeb(oServer,right(PROD->Codigo,5),ESANT->preco_cust,ESANT->Quantidade,dFIM,"0")
 			    //endif
 				if cSINTETICO == "S"
-					//gravaNoMysql(oServer,right(PROD->Codigo,5),ESANT->preco_cust)
+					gravaNoMysql(oServer,right(PROD->Codigo,5),ESANT->preco_cust)
 				endif	
              endif
           endif
