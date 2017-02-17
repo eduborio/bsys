@@ -208,7 +208,7 @@ static function i_registro_0000(nFile)
 local cEFD := ""
 
       cEFD := "|0000"
-      cEFD += "|010"
+      cEFD += "|011"
       cEFD += "|0"
       cEFD += "|"+dtoSped(dINI)
       cEFD += "|"+dtoSped(dFIM)
@@ -335,11 +335,7 @@ local nCont := 0
 
          if PROD->(dbseek(aPROD[nCONT]))
 			 cEFD := "|0200"
-			 //if empty(PROD->cod_fabr) .and. empty(PROD->cod_ass)
 			 cEFD += "|"+ltrim(rtrim(PROD->cod_fabr))
-			 //else
-			 //   cEFD += "|"+alltrim(qtiraponto(PROD->Cod_fabr))
-			 //endif
 			 cEFD += "|"+strtran(ltrim(rtrim(PROD->Descricao)),"|","")
 			 cEFD += "|"+alltrim(PROD->cod_barras)
 			 cEFD += "|"
@@ -351,6 +347,7 @@ local nCont := 0
 			 cEFD += "|"+alltrim(qtiraponto(left(CLASSIF->Descricao,2)))
 			 cEFD += "|"
 			 cEFD += "|18,00"
+			 cEFD += "|"
 			 cEFD += "|"+chr(13)+chr(10)
 			 fwrite(nFile,cEFD,len(cEFD))
 			 cEFD := ""

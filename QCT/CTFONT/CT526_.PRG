@@ -141,11 +141,11 @@ static function i_impressao
 
        if nCONT = 1
           @ 05,00  say space(47)+"T E R M O   D E   A B E R T U R A"
-          @ 05,119 say "Pag.: 0001"
+          @ 05,119 say "Fls.: 0001"
           dAUX := dDT_EMISAB
        else
           @ 05,00  say space(41)+"T E R M O   D E   E N C E R R A M E N T O"
-          @ 05,119 say "Pag.: " + strzero(nPAGFIM,4)
+          @ 05,119 say "Fls.: " + strzero(nPAGFIM,4)
           dAUX := dDT_EMISFX
        endif
 

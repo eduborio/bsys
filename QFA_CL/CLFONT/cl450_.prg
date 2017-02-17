@@ -78,6 +78,9 @@ static function i_importa
    qmensa(" sincronizando ajustes...")
    processaMoviment(oServer)
    
+   qmensa(" sincronizando fretes...")
+   processaFrete(oServer)
+   
 return
 
 static function processaClientes(oServer)
@@ -1267,5 +1270,112 @@ static function marcaMovimentComoExportado(oServer,id)
    
 return
 
+static function processaFrete(oServer)
+   local cQuery := ""
+   local oQuery
+   local row
+   local nCont := 1
+   local id := 0
+   
+   if ! quse(XDRV_CL,"FRETE",{})
+	 qmensa("Nao foi possivel abrir Frete!","BL")
+	 return .F.
+  endif
+   
+   
+   FORN->(dbsetorder(3))
+   
+   cQuery := " select f.*, t.cnpj as tr_cnpj, forn.cnpj as fr_cnpj from fretes f"
+   cQuery += " left outer join transportadoras t on t.id = f.transportadora_id "
+   cQuery += " left outer join fornecedores forn on forn.id = f.fornecedor_id "
+   cQuery += " where importadoQSys = 0 " 
+   
+   oQuery := oServer:Query(cQuery)
+   
+   if oQuery:NetErr()
+      Alert(oQuery:Error())
+   endif
+   
+   nCont := 1
+   
+   do while nCont <= oQuery:LastRec() 	 
+      row := oQuery:getRow(nCont)
+	  
+      criaFrete(row,oServer)
+	  
+	  nCont++
 
+   enddo 	  
+   
+   FRETE->(dbclosearea())
+   
+   
+return
 
+static function criaFrete(row,oSv)
+local fCodigo := ""
+local nFreteId := 0
+
+	if CONFIG->(qrlock())
+       replace CONFIG->cod_frete with CONFIG->cod_frete + 1
+	   fCODIGO := strzero(CONFIG->cod_frete,5)
+	   CONFIG->(qunlock())
+	endif	 
+
+	nFreteId  := get(row,'id')
+	
+	if FRETE->(qappend()) 
+       replace FRETE->Codigo     with fCodigo
+       replace FRETE->Num_fatura with right(alltrim(get(row,'numero')),6)
+	   replace FRETE->conhec     with get(row,'numero')
+	   replace FRETE->serie      with "51"
+	   replace FRETE->especie    with "17"
+	   replace FRETE->serienfe   with get(row,'serie')
+	   replace FRETE->modelo     with get(row,'modelo')
+	   replace FRETE->chave      with get(row,'chaveCte')
+	   replace FRETE->cod_cli    with strzero(get(row,'cliente_id'),5)
+	   
+	   if ! empty(get(row,'tr_cnpj'))
+		   cnpj = get(row,'tr_cnpj')
+		else
+		   cnpj = get(row,'fr_cnpj')
+		endif	
+	   	   
+	   if FORN->(dbseek(cnpj))
+		  replace FRETE->cod_forn   with FORN->codigo
+	   endif
+	   
+	   replace FRETE->tipocont   with get(row,'tipocont')
+	   replace FRETE->cfop       with strzero(get(row,'cfop_id'),4)
+	   replace FRETE->base_icm   with get(row,'baseIcms')
+	   replace FRETE->aliq_icm   with get(row,'aliquotaIcms')
+	   replace FRETE->vlr_icm    with get(row,'valorIcms')
+	   replace FRETE->vlr_total  with get(row,'valorDoFrete')
+	   replace FRETE->dt_emissao with get(row,'emissao')
+	   replace FRETE->dt_lanc    with get(row,'lancamento')
+	   replace FRETE->fiscal     with .F.
+	   replace FRETE->pagar      with .F.
+	   replace FRETE->contabil   with .F.
+	   replace FRETE->faz_inter  with "S"
+	   replace FRETE->Idweb      with nFreteId
+    endif
+	 
+	marcaFreteComoExportado(oSv,nFreteId)
+	
+return
+
+static function marcaFreteComoExportado(oServer,id)
+   local cQuery := ""
+   local oQuery
+   local row
+   local nCont := 1
+   
+   cQuery := " update fretes set importadoQsys = 1 "
+   cQuery += " where id =" + alltrim(str(id))
+   oQuery := oServer:Query(cQuery)
+   
+   if oQuery:NetErr()
+      Alert(oQuery:Error())
+   endif
+   
+return
