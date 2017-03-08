@@ -78,6 +78,9 @@ static function i_importa
    qmensa(" sincronizando ajustes...")
    processaMoviment(oServer)
    
+    qmensa(" sincronizando transformacao...")
+   processaTransform(oServer)
+   
    qmensa(" sincronizando fretes...")
    processaFrete(oServer)
    
@@ -1261,6 +1264,80 @@ static function marcaMovimentComoExportado(oServer,id)
    local nCont := 1
    
    cQuery := " update ajuste_saldo_estoque set exportado_pro_qsys = 1 "
+   cQuery += " where id =" + alltrim(str(id))
+   oQuery := oServer:Query(cQuery)
+   
+   if oQuery:NetErr()
+      Alert(oQuery:Error())
+   endif
+   
+return
+
+static function processaTransform(oServer)
+   local cQuery := ""
+   local oQuery
+   local row
+   local nCont := 1
+   local id := 0
+   
+   if ! quse(XDRV_ES,"TRANSFER",{})
+	 qmensa("Nao foi possivel abrir transfer!","BL")
+	 return .F.
+  endif
+   
+   cQuery := "SELECT tr.*, prod.preco_custo from transforma_produto as tr "
+   cQuery += "left outer join produtos prod on prod.id = tr.produto_id " 
+   cQuery += "where exportado_pro_qsys = 0 " 
+   
+   oQuery := oServer:Query(cQuery)
+   
+   if oQuery:NetErr()
+      Alert(oQuery:Error())
+   endif
+   
+   nCont := 1
+   
+   do while nCont <= oQuery:LastRec() 	 
+      row := oQuery:getRow(nCont)
+	  
+      criaTransform(row,oServer)
+	  
+	  nCont++
+
+   enddo 	  
+   
+   TRANSFER->(dbclosearea())
+   
+   
+return
+
+static function criaTransform(row,oSv)
+local fCodigo := ""
+local nAjusteId := 0
+
+	nAjusteId  := get(row,'id')
+
+	if TRANSFER->(qappend()) 
+       replace TRANSFER->Data       with get(row,'data')
+	   replace TRANSFER->Filial     with "0001"
+	   replace TRANSFER->Cod_prod   with strzero(get(row,'produto_id'),5)
+	   replace TRANSFER->quantidade with get(row,'quantidade')
+	   replace TRANSFER->preco_cust with get(row,'precoCusto')
+	   replace TRANSFER->Tipo       with get(row,'tipo')
+	   replace TRANSFER->Observacao with get(row,'observacoes')
+    endif
+	 
+	marcaTransformComoExportado(oSv,nAjusteId)
+	
+return
+
+static function marcaTransformComoExportado(oServer,id)
+   local cQuery := ""
+   local oQuery
+   local row
+   local nCont := 1
+   
+   cQuery := " update transforma_produto set exportado_pro_qsys = 1 "
    cQuery += " where id =" + alltrim(str(id))
    oQuery := oServer:Query(cQuery)
    

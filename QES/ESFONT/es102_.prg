@@ -50,7 +50,7 @@ function c102c
    local nCURSOR := setcursor(1)
    parameters cOPCAO
    cOPCAO := upper(chr(cOPCAO))
-   if cOPCAO $ "I-C"
+   if cOPCAO $ "C"
       qlbloc(11,6,"B102A","QBLOC.GLO",1)
       qmensa(qabrev(cOPCAO,"IA",{"Inclus„o... <ESC - Cancela>","Altera‡„o... <ESC - Cancela>"}))
       i_edicao()
@@ -86,7 +86,7 @@ static function i_edicao
    // CONSULTA OU EXCLUSAO __________________________________________________
 
    if cOPCAO == "C" ; qwait()      ; return ; endif
-   if cOPCAO == "E" ; i_exclusao() ; return ; endif
+   //if cOPCAO == "E" ; i_exclusao() ; return ; endif
 
    fDATA  := cDATA
 
@@ -127,7 +127,8 @@ static function i_edicao
 
    if ! lCONF ; return ; endif
 
-   if MOVIMENT->(iif(cOPCAO=="I",qappend(),qrlock()))
+   
+   if MOVIMENT->(iif(cOPCAO=="VI",qappend(),qrlock()))
 
       // AGORA GRAVA E DESTRAVA ARQUIVO _____________________________________
 
@@ -154,7 +155,7 @@ static function i_edicao
 
    else
 
-      iif(cOPCAO=="I",qm1(),qm2())
+      //iif(cOPCAO=="I",qm1(),qm2())
 
    endif
 
@@ -163,7 +164,7 @@ static function i_edicao
    cDATA  := fDATA
 
 
-   if cOPCAO == "I" ; keyboard "I" ; endif
+   //if cOPCAO == "I" ; keyboard "I" ; endif
 
 return
 

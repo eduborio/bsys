@@ -138,9 +138,6 @@ return .T.
 static function i_inicializacao
 
    // CRIA TITULO DO RELATORIO ______________________________________________
-   
-   
-
 
    cTITULO := "Razao por Produto " +" de " + dtoc(dINI) + " a " + dtoc(dFIM)
 
@@ -294,6 +291,39 @@ static function i_impressao
          nVALOR := 0
          nDESC := 0
    enddo
+  
+   TRANSFER->(dbsetorder(TRANSFER->(OrdCount()))) // data de emissao
+   TRANSFER->(dbgotop())
+   
+   do while ! TRANSFER->(eof())
+
+        if TRANSFER->Data < dINI .or. TRANSFER->Data > dFIM
+            TRANSFER->(dbSkip())
+            Loop
+         endif
+
+         if TRANSFER->Tipo == "E"
+            cDESCRICAO := "TENT"
+			cTIPO := "T"
+			nTransferPrecoCusto := TRANSFER->preco_cust
+         else
+            cDESCRICAO := "TSAI"
+			cTIPO :=  "B"
+			nTransferPrecoCusto := 0
+         endif
+
+         if ESTMP->(qappend())
+            replace ESTMP->Data       with TRANSFER->Data
+            replace ESTMP->Produto    with right(TRANSFER->Cod_prod,5)
+            replace ESTMP->Quantidade with TRANSFER->Quantidade
+			replace ESTMP->Cfop       with cDescricao
+            replace ESTMP->Es         with cTIPO
+			replace ESTMP->Preco_cust with nTransferPrecoCusto
+			replace ESTMP->cod_fc     with cDescricao   
+         endif
+
+         TRANSFER->(dbskip())
+   enddo
 
 
    do while ! PEDIDO->(eof())  .and. PEDIDO->Data_ped >= dINI .and. PEDIDO->Data_ped <= dFIM  // condicao principal de loop
@@ -335,8 +365,7 @@ static function i_impressao
 
    ESTMP->(Dbgotop())
    ESTMP->(Dbsetorder(1))
-   //classifica a matriz por descricao do produto
-   //asFAT := asort(aFAT,,,{|x,y| x[2] + x[1] + x[3] < y[2] + y[1] + y[3]  })
+
    if lTEM
        cPROD := ESTMP->Produto
        
@@ -378,7 +407,11 @@ static function i_impressao
                     CLI1->(dbseek(ESTMP->Cod_fc))
                     @ prow()  ,pcol()+1 say left(CLI1->Razao,35)+chr(9)
                  else
-                    @ prow()  ,pcol()+1 say "Saida sem Contabilizacao"+chr(9)
+					if ESTMP->Cfop == "TSAI"
+						@ prow()  ,pcol()+1 say "Saida Transformacao "+chr(9)
+					else	
+						@ prow()  ,pcol()+1 say "Saida sem Contabilizacao"+chr(9)
+					endif	
                  endif
                  @ prow()  ,pcol()+1 say ESTMP->Cfop+chr(9)
                  @ prow()  ,pcol()+1 say transf(nSALDO_COR,"@E 999999")+chr(9)
@@ -411,7 +444,7 @@ static function i_impressao
            else // Quando Entra Mercadoria
               nQTD_ENT += ESTMP->Quantidade
 
-              if ESTMP->Es == "C" // Se For Compra Faz Media Ponderada do Preco de Custo
+              if ESTMP->Es $ "C-T" // Se For Compra Faz Media Ponderada do Preco de Custo
                  nCUSTO_COR := ( (nSALDO_COR * nCUSTO_COR) + (ESTMP->Quantidade*ESTMP->Preco_cust) ) / (nSALDO_COR+ESTMP->Quantidade)
                  nCUSTO_COR := round(nCUSTO_COR,2)
               Endif
@@ -428,6 +461,8 @@ static function i_impressao
                     if ESTMP->Es == "C"
                        FORN->(DbSeek(ESTMP->Cod_fc))
                        @ prow()  ,pcol()+1 say FORN->Razao+chr(9)
+					else
+					   @ prow()  ,pcol()+1 say "Entrada - Transformacao"+chr(9)
                     endif
                  endif
                  @ prow()  ,pcol()+1 say ESTMP->Cfop+chr(9)
@@ -814,6 +849,37 @@ static function i_sald_anter
 
          MOVIMENT->(dbskip())
    enddo
+   
+   TRANSFER->(dbsetorder(TRANSFER->(OrdCount()))) // data de emissao
+   TRANSFER->(dbgotop())
+
+   do while ! TRANSFER->(eof())
+
+         if TRANSFER->Data >= dINI
+            TRANSFER->(dbSkip())
+            Loop
+         endif
+
+         if TRANSFER->Tipo == "E"
+            cDESCRICAO := "TENT"
+			cTIPO := "T"
+			nTransferPrecoCusto := TRANSFER->preco_cust
+         else
+            cDESCRICAO := "TSAI"
+			cTIPO :=  "B"
+			nTransferPrecoCusto := 0
+         endif
+
+         if ESTMP->(qappend())
+            replace ESTMP->Data       with TRANSFER->Data
+            replace ESTMP->Produto    with right(TRANSFER->Cod_prod,5)
+            replace ESTMP->Quantidade with TRANSFER->Quantidade
+            replace ESTMP->Es         with cTIPO
+			replace ESTMP->Preco_cust with nTransferPrecoCusto
+         endif
+
+         TRANSFER->(dbskip())
+   enddo
 
    PEDIDO->(dbsetorder(PEDIDO->(OrdCount())))
    PEDIDO->(Dbgotop())
@@ -864,8 +930,8 @@ static function i_sald_anter
 
           nSALDO_COR := nSALDO_COR - ESTMP->Quantidade
        else
-          if ESTMP->Es $ "E-C"
-             if ESTMP->Es == "C"
+          if ESTMP->Es $ "E-C-T"
+             if ESTMP->Es $ "C-T"
                 nCUSTO_COR := ( (nSALDO_COR * nCUSTO_COR) + (ESTMP->Quantidade*ESTMP->Preco_cust) ) / (nSALDO_COR+ESTMP->Quantidade)
                 nCUSTO_COR := round(nCUSTO_COR,2)
              Endif
@@ -943,6 +1009,11 @@ local cTime := ""
       qmensa("N„o foi poss¡vel abrir AVARIADO.DBF !! Tente novamente.")
       return
    endif
+   
+   if ! quse(XDRV_ES,"TRANSFER")
+      qmensa("N„o foi poss¡vel abrir TRANSFER.DBF !! Tente novamente.")
+      return
+   endif
 
    select FAT
 
@@ -994,6 +1065,15 @@ local cTime := ""
    endif
    dbsetindex(XDRV_ES + "es510E.TMP")
    
+   select TRANSFER
+
+   if empty(cProd)
+      index on data     tag UM TO (XDRV_ES + "ES510Z.TMP")
+   else	  
+      index on cod_prod tag UM TO (XDRV_ES + "ES510Z.TMP")
+   endif
+   dbsetindex(XDRV_ES + "es510Z.TMP")
+   
    select AVARIADO
 
    if empty(cProd)
@@ -1020,6 +1100,8 @@ static function erase_index
    erase(XDRV_ES+"ES510C.TMP")
    erase(XDRV_ES+"ES510D.TMP")
    erase(XDRV_ES+"ES510E.TMP")
+   erase(XDRV_ES+"ES510F.TMP")
+   erase(XDRV_ES+"ES510Z.TMP")
    erase(XDRV_ES+"COD_PROD.TMP")
 
    if neterr()
@@ -1030,8 +1112,6 @@ static function erase_index
 return
 
 static function estoquePorProduto
-
-
 
 
 return

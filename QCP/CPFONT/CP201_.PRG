@@ -111,10 +111,10 @@ function i_201b
 
    //iif(cOPCAO=="O",i_imp_protocolo(),nil)
 
-   if cOPCAO $ "E" .and. PEDIDO->Interface
-      qmensa("Foi feito interface, acesso proibido !","B")
-      return ""
-   endif
+   //if cOPCAO $ "E" .and. PEDIDO->Interface
+   //   qmensa("Foi feito interface, acesso proibido !","B")
+   //   return ""
+   //endif
 
    if (cOPCAO $ XUSRA .and. cTIPO == "1") .or. ( cOPCAO == "C" .and. cTIPO == "2" )
 
@@ -900,7 +900,7 @@ static function i_parcelas
 
    if ! empty(PEDIDO->Numero_nf)  .and.;
       ! empty(PEDIDO->Data_emiss)
-      i_interface()
+      //i_interface()
    endif
 
    if cOPCAO <> "I"
