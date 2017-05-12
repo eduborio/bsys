@@ -455,7 +455,7 @@ static function i_interface
 	  CLI1->(dbseek(FAT->Cod_cli))
 	  CGM->(dbseek(CLI1->Cgm_ent))
 
-	  if FAT->St > 0 .and. ! left(FAT->cod_cfop,4) $ "5910-6910" .and. CGM->Estado != "MG"
+	  if FAT->St > 0 
 	 
    	     if FAT->Es == "S"// "510-610-540-640"
 		 
@@ -480,7 +480,11 @@ static function i_interface
 			endif
 			
 			if CGM->Estado == "GO"
-  			   TIPOCONT->(Dbseek("010139")) // Conta De St DF
+  			   TIPOCONT->(Dbseek("010139")) // Conta De St GO
+			endif
+			
+			if CGM->Estado == "MG"
+  			   TIPOCONT->(Dbseek("010143")) // Conta De St MG
 			endif
 			
 			if right(alltrim(FAT->cod_cfop),3) $ "910" //Se for Remessa de bonificacao
@@ -507,6 +511,10 @@ static function i_interface
 				
 				if CGM->Estado == "GO"
 					TIPOCONT->(Dbseek("010140")) // Conta De St DF
+				endif
+				
+				if CGM->Estado == "MG"
+					TIPOCONT->(Dbseek("010144")) // Conta De St MG
 				endif
 			
 			endif
@@ -539,6 +547,10 @@ static function i_interface
 			
 			if CGM->Estado == "GO"
 			   TIPOCONT->(Dbseek("010141")) // Conta De St GO
+			endif
+			
+			if CGM->Estado == "MG"
+			   TIPOCONT->(Dbseek("010145")) // Conta De St MG
 			endif
             
          endif

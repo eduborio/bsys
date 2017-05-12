@@ -159,11 +159,16 @@ static function i_impressao
        @ 10,128 say "="
        @ 11,00  say "="+"                         de " + XRAZAO
        @ 11,128 say "="
-       @ 12,00  say "="
-       @ 12,128 say "="
+	   if nCONT = 1
+		  @ 12,00  say "="+"                         que servira de livro diario da empresa na data de encerramento do exercicio social " + dtoc(dDT_EMISFX)
+	      @ 12,128 say "="
+	   else
+		  @ 12,00  say "="+"                         que serviu de livro diario da empresa no periodo de " + dtoc(dDT_EMISAB) + " a " + dtoc(dDT_EMISFX)
+	      @ 12,128 say "="	
+	   endif	
        @ 13,00  say "="+"                         com sede em " + alltrim(CGM->Municipio) + " - " + CGM->Estado
        @ 13,128 say "="
-       @ 14,00  say "="
+       @ 14,00  say "="                          
        @ 14,128 say "="
        @ 15,00  say "="+"                         na " + rtrim(XENDERECO) +  ", " + XNUMERO + " - " + XBAIRRO + " CEP: "+transf(XCEP,"@R 99.999-999")
        @ 15,128 say "="

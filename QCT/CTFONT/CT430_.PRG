@@ -770,6 +770,17 @@ local cSPED := ""
    cSPED += "|"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
+   
+   nTOT_LIN++
+   nTOT_BLOCOJ++
+   cSPED := "|J930"
+   cSPED += "|"+"Mantraco do Brasil"
+   cSPED += "|"+"07069809000119"
+   cSPED += "|Signatario da ECD com e-CNPJ ou e-PJ"
+   cSPED += "|001"
+   cSPED += "|||||||S|"
+   write(nFile,cSPED,len(cSPED))
+   cSPED := ""
 
    nTOT_LIN++
    nTOT_BLOCOJ++
@@ -778,7 +789,7 @@ local cSPED := ""
    cSPED += "|"+alltrim(qtiraponto(CONFIG->Cpf_direto))
    cSPED += "|Diretor"
    cSPED += "|203"
-   cSPED += "|||||||"
+   cSPED += "|||||||N|"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
 
@@ -790,7 +801,7 @@ local cSPED := ""
    cSPED += "|Contabilista"
    cSPED += "|900"
    cSPED += "|"+rtrim(FILIAL->Crc)
-   cSPED += "|contabil@contab.com.br|33333333|PR|||"
+   cSPED += "|contabil@contab.com.br|33333333|PR|||N|"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
 
@@ -951,7 +962,7 @@ local cSPED := ""
 
    nTOT_LIN++
    nTOT_BLOCO9++
-   cSPED := "|9900|J930|"+alltrim(str(2)) +"|"
+   cSPED := "|9900|J930|"+alltrim(str(3)) +"|"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
 
@@ -1480,7 +1491,7 @@ local nBytestoRead := 0
 local cProxLine := 0
 local lSair := .T.
 
-      fseek(nFile,-1200,FS_END)
+      fseek(nFile,-1500,FS_END)
       do while lsair
 
          cChr := freadstr(nfile,1)
@@ -1549,7 +1560,7 @@ local nHnd := 0
    endif
    
    
-   voltaLinhas := 33 
+   voltaLinhas := 34 
    voltaLinhas := voltaLinhas *(-1)
    
 

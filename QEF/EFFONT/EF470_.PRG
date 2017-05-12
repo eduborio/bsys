@@ -168,10 +168,10 @@ local cEFD := ""
 
       i_registro_H001(nFile)    //Abre Bloco H
 	  
-	  if month(dIni) == 2
-		 i_registro_H005(nFile)
-		 i_registro_H010(nFile)
-	  endif	
+	  //if month(dIni) == 2
+		// i_registro_H005(nFile)
+		 //i_registro_H010(nFile)
+	  //endif	
 	  
       i_registro_H990(nFile)
 	  
@@ -858,9 +858,10 @@ local cEFD := ""
          nTot_H++
 
          cEFD := "|H001"
+
 		 
 		 if month(dIni) == 2
-			cEFD += "|0"
+			cEFD += "|1"
 		 else
 			cEFD += "|1"
 		 endif	
@@ -1738,6 +1739,7 @@ local oServer, oQuery, row
 
          enddo
 		 
+		 /*
 		 if month(dFim) == 2
 			 oServer := TMySQLServer():New(XSERVER, "root", "borios")
 			 if oServer:NetErr()
@@ -1766,7 +1768,7 @@ local oServer, oQuery, row
 			 
 			 oServer:close()
 		 endif
-		 
+		 */
 		 
          aPROD := asort(aPROD,,,{|x,y| x < y})
 

@@ -1,0 +1,87 @@
+Application Internal Error - c:\qsys\qsys2web\qsys2web.exe
+Terminated at: 2014.11.14 15:27:47
+Unrecoverable error 9001: Error recovery failure
+Called from QMENSA(11) in QMENSA_.PRG
+Called from QUSE(50) in QUSE_.PRG
+Called from GETRECEBER(54) in qsys2web.prg
+Called from MAIN(31) in qsys2web.prg
+------------------------------------------------------------------------
+Application Internal Error - C:\Qsys\qsys2web\qsys2web.exe
+Terminated at: 2014.11.14 15:29:39
+Unrecoverable error 9001: Error recovery failure
+Called from QMENSA(11) in QMENSA_.PRG
+Called from QUSE(50) in QUSE_.PRG
+Called from GETRECEBER(54) in qsys2web.prg
+Called from MAIN(31) in qsys2web.prg
+------------------------------------------------------------------------
+Application Internal Error - C:\Qsys\qsys2web\qsys2web.exe
+Terminated at: 2014.11.14 15:35:17
+Unrecoverable error 9001: Error recovery failure
+Called from QMENSA(11) in QMENSA_.PRG
+Called from QUSE(50) in QUSE_.PRG
+Called from GETRECEBER(54) in qsys2web.prg
+Called from MAIN(31) in qsys2web.prg
+------------------------------------------------------------------------
+Application Internal Error - C:\Qsys\mydb\mydb.exe
+Terminated at: 2017.04.10 15:56:20
+Unrecoverable error 9001: Error recovery failure
+Called from MYSQL_SELECT_DB(0)
+Called from TMYSQLSERVER:SELECTDB(0) in hbmysql\tmysql.prg
+Called from MAIN(39) in mydb.prg
+------------------------------------------------------------------------
+Application Internal Error - C:\Qsys\mydb\mydb.exe
+Terminated at: 2017.04.10 15:57:21
+Unrecoverable error 9001: Error recovery failure
+Called from MYSQL_SELECT_DB(0)
+Called from TMYSQLSERVER:SELECTDB(0) in hbmysql\tmysql.prg
+Called from MAIN(39) in mydb.prg
+------------------------------------------------------------------------
+Application Internal Error - C:\Qsys\mydb\mydb.exe
+Terminated at: 2017.04.10 15:58:11
+Unrecoverable error 9001: Error recovery failure
+Called from MYSQL_SELECT_DB(0)
+Called from TMYSQLSERVER:SELECTDB(0) in hbmysql\tmysql.prg
+Called from MAIN(39) in mydb.prg
+------------------------------------------------------------------------
+Application Internal Error - C:\Qsys\mydb\mydb.exe
+Terminated at: 2017.04.10 15:58:18
+Unrecoverable error 9001: Error recovery failure
+Called from MYSQL_SELECT_DB(0)
+Called from TMYSQLSERVER:SELECTDB(0) in hbmysql\tmysql.prg
+Called from MAIN(39) in mydb.prg
+------------------------------------------------------------------------
+Application Internal Error - C:\Qsys\mydb\mydb.exe
+Terminated at: 2017.04.10 15:59:10
+Unrecoverable error 9001: Error recovery failure
+Called from MYSQL_SELECT_DB(0)
+Called from TMYSQLSERVER:SELECTDB(0) in hbmysql\tmysql.prg
+Called from MAIN(39) in mydb.prg
+------------------------------------------------------------------------
+Application Internal Error - C:\Qsys\mydb\mydb.exe
+Terminated at: 2017.04.10 16:10:53
+Unrecoverable error 9001: Error recovery failure
+Called from MYSQL_SELECT_DB(0)
+Called from TMYSQLSERVER:SELECTDB(0) in hbmysql\tmysql.prg
+Called from MAIN(36) in mydb.prg
+------------------------------------------------------------------------
+Application Internal Error - C:\Qsys\mydb\mydb.exe
+Terminated at: 2017.04.10 16:16:37
+Unrecoverable error 9001: Error recovery failure
+Called from MYSQL_SELECT_DB(0)
+Called from TMYSQLSERVER:SELECTDB(0) in hbmysql\tmysql.prg
+Called from MAIN(36) in mydb.prg
+------------------------------------------------------------------------
+Application Internal Error - C:\Qsys\mydb\mydb.exe
+Terminated at: 2017.04.10 16:20:42
+Unrecoverable error 9001: Error recovery failure
+Called from MYSQL_SELECT_DB(0)
+Called from TMYSQLSERVER:SELECTDB(0) in hbmysql\tmysql.prg
+Called from MAIN(36) in mydb.prg
+------------------------------------------------------------------------
+Application Internal Error - C:\Qsys\mydb\mydb.exe
+Terminated at: 2017.04.10 16:20:51
+Unrecoverable error 9001: Error recovery failure
+Called from MYSQL_SELECT_DB(0)
+Called from TMYSQLSERVER:SELECTDB(0) in hbmysql\tmysql.prg
+Called from MAIN(36) in mydb.prg
+------------------------------------------------------------------------

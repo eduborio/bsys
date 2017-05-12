@@ -40,6 +40,7 @@ static function i_importa
    PROD->(dbsetorder(4))
    
    oServer := TMySQLServer():New(XSERVER, "root", "borios")
+   
    if oServer:NetErr()
       Alert(oServer:Error())
    endif
