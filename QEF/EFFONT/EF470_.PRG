@@ -56,7 +56,7 @@ private aIpiEntradas   := {}
 
 private nFile   := 0
 private cBuffer := ""
-
+private cFILIAL   
 
 private aEDICAO := {}             // vetor para os campos de entrada de dados
 
@@ -64,6 +64,8 @@ private aEDICAO := {}             // vetor para os campos de entrada de dados
 
 aadd(aEDICAO,{{ || qgetx(-1,0,@dINI)            } , "INI"    })
 aadd(aEDICAO,{{ || qgetx(-1,0,@dFIM)            } , "FIM"    })
+aadd(aEDICAO,{{ || view_filial(-1,0,@cFILIAL ,"9999"              ) } ,"FILIAL"    })
+aadd(aEDICAO,{{ || NIL                                              } ,NIL         }) // descricao do filial
 
 aadd(aEDICAO,{{ || lCONF := qconf("Confirma Exportacao de Arquivo SPED Fiscal ?") },NIL})
 
@@ -75,6 +77,7 @@ do while .T.
    dINI    := ctod("")
    dFIM    := ctod("")
    cDRIVE := ""
+   cFILIAL     := "    "
 
    // SEGUNDO LOOP PARA ENTRADA DOS DADOS ___________________________________
 
@@ -97,6 +100,18 @@ enddo
 static function i_critica ( cCAMPO )
 
    do case
+	  case cCAMPO == "FILIAL"
+
+           if empty(cFILIAL) ; return .F. ; endif
+
+           qrsay(XNIVEL,cFILIAL:=strzero(val(cFILIAL),4))
+
+           if FILIAL->(dbseek(cFILIAL))
+              qrsay(XNIVEL+1,left(FILIAL->Razao,26))
+           else
+              qmensa("Filial n„o encontrada !","B")
+              return .F.
+           endif
 
       case cCAMPO == "INI"
            dFIM := qfimmes(dINI)
@@ -140,6 +155,7 @@ local cEFD := ""
 
       i_registro_0000(nFILE)
 
+	  
       i_registro_0001(nFile)    //Abertura do bloco 0
       i_registro_0005(nFile)
       i_registro_0100(nFile)
@@ -168,6 +184,7 @@ local cEFD := ""
 
       i_registro_H001(nFile)    //Abre Bloco H
 	  
+	    
 	  //if month(dIni) == 2
 		// i_registro_H005(nFile)
 		 //i_registro_H010(nFile)
@@ -1332,7 +1349,7 @@ local cEFD := ""
 local nCONT := 0
 
       FAT->(dbclearfilter())
-      FAT->(dbsetfilter({|| ES == "S" .and. dt_emissao >= dINI .and. dt_emissao <= dFIM .and. !empty(NFe) .and. !Cancelado} ))
+      FAT->(dbsetfilter({|| ES == "S" .and. dt_emissao >= dINI .and. dt_emissao <= dFIM .and. !empty(NFe) .and. !Cancelado .and. Filial == cFilial} ))
       FAT->(dbsetorder(6))
       FAT->(dbgotop())
 
@@ -1717,7 +1734,7 @@ local oServer, oQuery, row
             endif
 			
 
-            if ! FAT->(dbseek(ENT->Num_nf+cModelo))
+            if ! FAT->(dbseek(ENT->Num_nf+cModelo+ENT->Filial))
                  ENT->(dbskip())
                  loop
             endif
@@ -1806,13 +1823,13 @@ local cModelo := ""
 
 
          FAT->(dbclearfilter())
-         FAT->(Dbsetfilter({|| Dt_emissao >= dINI .and. dt_emissao <= dFIM .and. ES == "S" .and. ! empty(NFe) }))
+         FAT->(Dbsetfilter({|| Dt_emissao >= dINI .and. dt_emissao <= dFIM .and. ES == "S" .and. ! empty(NFe)  .and. Filial == cFilial }))
          FAT->(dbsetorder(9))
          FAT->(Dbgotop())
 
          ITEN_FAT->(dbsetorder(2))
 
-         SAI->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM}))
+         SAI->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. Filial == cFilial}))
          SAI->(dbsetorder(2))
          SAI->(dbgotop())
 
@@ -1827,7 +1844,7 @@ local cModelo := ""
             endif
 			
 
-            if ! FAT->(dbseek(SAI->Num_nf+cModelo))
+            if ! FAT->(dbseek(SAI->Num_nf+cModelo+SAI->Filial))
                SAI->(dbskip())
                loop
             endif
@@ -1966,17 +1983,17 @@ static function entradasNfe
 local cEFD := ""
 local nTotal_prod := 0
 local cModelo := ""
-local cCFOPS := "13-23-31"
+local cCFOPS := "135-235-310-240"
 
          FAT->(dbclearfilter())
-         FAT->(Dbsetfilter({|| Dt_emissao >= dINI .and. dt_emissao <= dFIM .and. ES == "E" .and. ! empty(NFe) }))
+         FAT->(Dbsetfilter({|| Dt_emissao >= dINI .and. dt_emissao <= dFIM .and. ES == "E" .and. ! empty(NFe) .and. Filial == cFilial }))
          FAT->(dbsetorder(9))
          FAT->(Dbgotop())
 
          ITEN_FAT->(dbsetorder(2))
 
          ENT->(dbclearfilter())
-		 ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. (!left(cfop,2) $ cCfops)})) // nao puxar fretes e importação
+		 ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. (!left(cfop,3) $ cCfops) .and. Filial == cFilial})) // nao puxar fretes e importação
          ENT->(dbsetorder(2))
          ENT->(dbgotop())
 
@@ -1991,7 +2008,7 @@ local cCFOPS := "13-23-31"
             endif
 			
 
-            if ! FAT->(dbseek(ENT->Num_nf+cModelo))
+            if ! FAT->(dbseek(ENT->Num_nf+cModelo+ENT->Filial))
                ENT->(dbskip())
                loop
             endif
@@ -2133,7 +2150,7 @@ local cCFOPS := "31"
          IMPORT->(dbsetorder(4)) 
 
          ENT->(dbclearfilter())
-         ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. (left(ENT->cfop,2) == cCfops)})) // somente importacao
+         ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. (left(ENT->cfop,2) == cCfops) .and. Filial == cFilial})) // somente importacao
          ENT->(dbsetorder(2))
          ENT->(dbgotop())
 
@@ -2275,18 +2292,18 @@ static function entradasNf
 local cEFD := ""
 local nTotal_prod := 0
 local cModelo := ""
-local cCFOPS := "13-23-31"
+local cCFOPS := "135-235-310-240"
 
          FAT->(dbclearfilter())
-         FAT->(Dbsetfilter({|| Dt_emissao >= dINI-150 .and. dt_emissao <= dFIM .and. ES == "E" }))
-		 //FAT->(Dbsetfilter({|| ES == "E" .and. empty(NFe) }))
+         FAT->(Dbsetfilter({|| Dt_emissao >= dINI-150 .and. dt_emissao <= dFIM .and. ES == "E" .and. Filial == cFilial}))
+		 FAT->(Dbsetfilter({|| ES == "E" .and. empty(NFe) }))
          FAT->(dbsetorder(3))
          FAT->(Dbgotop())
 
          ITEN_FAT->(dbsetorder(2))
 
          ENT->(dbclearfilter())
-		 ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. (!left(cfop,2) $ cCfops)})) // nao puxar fretes e importação
+		 ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. (!left(cfop,3) $ cCfops) .and. Filial == cFilial})) // nao puxar fretes, Transferencias e importação
          ENT->(dbsetorder(2))
          ENT->(dbgotop())
 
@@ -2298,7 +2315,7 @@ local cCFOPS := "13-23-31"
             CLI1->(dbsetorder(3))
 			CLI1->(dbseek(FORN->cgccpf))
 			
-			if FAT->(dbseek(ENT->Num_nf + CLI1->Codigo))
+			if FAT->(dbseek(ENT->Num_nf + CLI1->Codigo + ENT->Filial))
                if !empty(FAT->Nfe)
                   ENT->(dbskip())
                   loop
@@ -2337,7 +2354,7 @@ local cCFOPS := "13-23-31"
 
                 nTotal_prod := 0
                 
-				if FAT->(dbseek(ENT->Num_nf + CLI1->Codigo))
+				if FAT->(dbseek(ENT->Num_nf + CLI1->Codigo + ENT->Filial))
                    ITEN_FAT->(dbseek(FAT->Codigo))
                    Do while ! ITEN_FAT->(eof()) .and. ITEN_FAT->Num_fat == FAT->Codigo
 
@@ -2380,7 +2397,7 @@ local cCFOPS := "13-23-31"
                 nTot_C++
 			    nTot_C100++
 				
-				if FAT->(dbseek(ENT->Num_nf + CLI1->Codigo))
+				if FAT->(dbseek(ENT->Num_nf + CLI1->Codigo + ENT->Filial))
                    i_registro_c170(nFile)
 				endif   
                 i_registro_c190_entradas(nFile)
@@ -2446,7 +2463,7 @@ local cModelo := ""
 local cCFOPS := "13-23"
 
          ENT->(dbclearfilter())
-		 ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. (left(cfop,2) $ cCfops)})) // somente fretes
+		 ENT->(dbsetfilter({|| Data_lanc >= dINI .and. Data_lanc <= dFIM .and. (left(cfop,2) $ cCfops) .and. Filial == cFilial})) // somente fretes
          ENT->(dbsetorder(2))
          ENT->(dbgotop())
 
@@ -2471,7 +2488,7 @@ local cCFOPS := "13-23"
                 cEFD += "|" //Serie
 				cEFD += "|" //SubSerie
 				
-                cEFD += "|000"+ENT->Num_nf
+                cEFD += "|"+strzero(val(ENT->Num_nf),9)
                 cEFD += "|" //chave CTe
                 cEFD += "|"+dtosped(ENT->Data_emis)
                 cEFD += "|"+dtosped(ENT->Data_lanc)

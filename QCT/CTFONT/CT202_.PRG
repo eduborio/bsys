@@ -354,7 +354,7 @@ static function i_critica ( cCAMPO )
                  return .F.
               endif
 
-             if cLANCFILIAL == "S"
+             if cLANCFILIAL == "S" .and. cOPCAO == "A"
                 fFILIAL := "0001"
              else
                 fFILIAL := "    "

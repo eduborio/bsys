@@ -487,6 +487,10 @@ static function i_interface
   			   TIPOCONT->(Dbseek("010143")) // Conta De St MG
 			endif
 			
+			if CGM->Estado == "SP"
+  			   TIPOCONT->(Dbseek("010147")) // Conta De St MG
+			endif
+			
 			if right(alltrim(FAT->cod_cfop),3) $ "910" //Se for Remessa de bonificacao
 				
 				if CGM->Estado == "PR"
@@ -515,6 +519,10 @@ static function i_interface
 				
 				if CGM->Estado == "MG"
 					TIPOCONT->(Dbseek("010144")) // Conta De St MG
+				endif
+				
+				if CGM->Estado == "SP"
+					TIPOCONT->(Dbseek("010148")) // Conta De St MG
 				endif
 			
 			endif
@@ -551,6 +559,10 @@ static function i_interface
 			
 			if CGM->Estado == "MG"
 			   TIPOCONT->(Dbseek("010145")) // Conta De St MG
+			endif
+			
+			if CGM->Estado == "SP"
+			   TIPOCONT->(Dbseek("010149")) // Conta De St MG
 			endif
             
          endif
@@ -1115,7 +1127,7 @@ local zNUM  := 0
 
           endif
 
-          replace SH_PROCT->Filial     with  "0001"
+          replace SH_PROCT->Filial     with  (cARQ)->Filial
           replace SH_PROCT->Num_doc    with  (cARQ)->Num_fatura
 
           if (cARQ) == "FAT"
@@ -1419,7 +1431,7 @@ static function i_frete
            replace FRETE->Fiscal with .T.
 
            replace SH_FICOM->Data_lanc  with FRETE->Dt_Lanc
-           replace SH_FICOM->Filial     with "0001"
+           replace SH_FICOM->Filial     with FRETE->Filial
            replace SH_FICOM->Num_nf     with FRETE->Num_fatura
            replace SH_FICOM->Especie    with FRETE->Especie
            replace SH_FICOM->Serie      with FRETE->Serie
@@ -1488,7 +1500,7 @@ static function i_frete
 
               endif
 
-              replace SH_PROCT->Filial     with  "0001"
+              replace SH_PROCT->Filial     with  FRETE->Filial
 
               replace SH_PROCT->Valor      with  FRETE->Vlr_Total
               replace SH_PROCT->Num_doc    with  FRETE->Num_fatura

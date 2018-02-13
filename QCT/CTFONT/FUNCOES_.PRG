@@ -417,10 +417,10 @@ function i_saldfil
 
    do while ! LANC->(eof()) .and. LANC->Filial == cFILIAL
 
-//      if month(LANC->Data_lanc) != nMES
-//         LANC->(dbskip())
-//         loop
-//      endif
+      //if month(LANC->Data_lanc) != nMES
+      //  LANC->(dbskip())
+      //   loop
+      //endif
 
       qgirabarra()
 
@@ -487,7 +487,7 @@ function ct_prop_ce ( cCONTA , nVALOR , cMACRO )
    if PLAN->(dbseek(padr(cCONTA,12," ")))
       if PLAN->(qrlock(recno()))
 
-         if ! empty(cCENTRO) .and. month(LANC->Data_lanc) != nMES
+         if (! empty(cCENTRO) .or. ! empty(cFILIAL) ).and. month(LANC->Data_lanc) != nMES
             if month(LANC->Data_lanc) < nMES
                PLAN->Saantce := PLAN->Saantce + nVALOR * nNEG
             endif

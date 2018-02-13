@@ -1,4 +1,4 @@
-\qsys_g\qutil\qbloc b*.rrb qbloc
+\qsys\qutil\qbloc b*.rrb qbloc
 copy qbloc.glo \qsys_g\qef
 del *.blo
 del *.glo

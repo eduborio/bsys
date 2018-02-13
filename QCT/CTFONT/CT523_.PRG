@@ -83,9 +83,9 @@ static function i_critica ( cCAMPO )
            endif
            qrsay(XNIVEL,strzero(nMES,2))
       case cCAMPO == "PAG"
-           if CONFIG->Lanccent != "S"
-              XNIVEL+=2
-           endif
+           //if CONFIG->Lanccent != "S"
+           //   XNIVEL+=2
+           //endif
       case cCAMPO == "FILIAL"
            if ! empty(cFILIAL)
               if ! FILIAL->(dbseek(cFILIAL))
@@ -163,36 +163,37 @@ static function i_inicializacao
   //
   // endif
  //
-  // if ! empty(cFILIAL)
-  //    select PLAN
-  //    qmensa("Filtrando Lan‡amentos com Filial. Aguarde...")
-  //    if PLAN->(qflock())
-  //       replace all PLAN->Saantce with 0,PLAN->Dbce with 0,PLAN->Crce with 0
-  //       PLAN->(qunlock())
-  //    endif
-  //    if ! empty(cFILIAL)
-  //       LANC->(dbsetorder(9))
-  //       LANC->(dbseek(cFILIAL))
-  //    endif
-  //
- //     do while ! LANC->(eof()) .and. LANC->Filial == cFILIAL
- //        if month(LANC->Data_lanc) == nMES
- //           lACHOU := .T.
- //           exit
- //        endif
- //        LANC->(dbskip())
- //     enddo
- //
-  //    if lACHOU
-  //       i_saldfil()
- //     else
- //        qmensa("Sem Lan‡amentos por Filial para o Exerc¡cio !!","B")
- //        return .F.
- //     endif
- //
- //  endif
- //
- //  qmensa()
+   if ! empty(cFILIAL)
+      select PLAN
+      qmensa("Filtrando Lan‡amentos com Filial. Aguarde...")
+      if PLAN->(qflock())
+         replace all PLAN->Saantce with 0,PLAN->Dbce with 0,PLAN->Crce with 0
+         PLAN->(qunlock())
+      endif
+      
+	  if ! empty(cFILIAL)
+         LANC->(dbsetorder(9))
+         LANC->(dbseek(cFILIAL))
+      endif
+  
+      //do while ! LANC->(eof()) .and. LANC->Filial == cFILIAL
+      //   if month(LANC->Data_lanc) == nMES
+      //      lACHOU := .T.
+      //     exit
+      //   endif
+      //   LANC->(dbskip())
+      //enddo
+ 
+      //if lACHOU
+         i_saldfil()
+	  //else
+      //   qmensa("Sem Lan‡amentos por Filial para o Exerc¡cio !!","B")
+      //   return .F.
+      //endif
+ 
+   endif
+ 
+   qmensa()
 
 return .T.
 
@@ -284,10 +285,10 @@ static function i_impre_prn
             loop
          endif
       else
- //        if PLAN->Saantce + PLAN->Crce + PLAN->Dbce = 0
- //           PLAN->(dbskip())
- //           loop
- //        endif
+         if PLAN->Saantce + PLAN->Crce + PLAN->Dbce = 0
+            PLAN->(dbskip())
+            loop
+         endif
       endif
 
       if right(PLAN->Codigo,5) == " " .and. ! PLAN->(eof()) .and. ! lPRIM
@@ -299,7 +300,7 @@ static function i_impre_prn
       if empty(cCENTRO) .and. empty(cFILIAL)
          nSALDATU := nSALDANT + PLAN->&cDEB + PLAN->&cCRE
       else
- //        nSALDATU := PLAN->Saantce + PLAN->Crce + PLAN->Dbce
+         nSALDATU := PLAN->Saantce + PLAN->Crce + PLAN->Dbce
       endif
 
       if cTIPO == "A" .or. (cTIPO == "S" .and. ! right(PLAN->Codigo,5) != " ")
@@ -442,10 +443,10 @@ static function i_impre_spool
             loop
          endif
       else
-   //      if PLAN->Saantce + PLAN->Crce + PLAN->Dbce = 0
-   //         PLAN->(dbskip())
-   //         loop
-    //     endif
+         if PLAN->Saantce + PLAN->Crce + PLAN->Dbce = 0
+            PLAN->(dbskip())
+            loop
+         endif
       endif
 
       if right(PLAN->Codigo,5) == " " .and. ! PLAN->(eof()) .and. ! lPRIM
@@ -456,7 +457,7 @@ static function i_impre_spool
       if empty(cCENTRO) .and. empty(cFILIAL)
          nSALDATU := nSALDANT + PLAN->&cDEB + PLAN->&cCRE
       else
-  //       nSALDATU := PLAN->Saantce + PLAN->Crce + PLAN->Dbce
+         nSALDATU := PLAN->Saantce + PLAN->Crce + PLAN->Dbce
       endif
 
       if cTIPO == "A" .or. (cTIPO == "S" .and. ! right(PLAN->Codigo,5) != " ")
@@ -536,6 +537,20 @@ return
 // PUXA SALDO ATE MES REQUERIDO _____________________________________________
 
 static function i_puxasaldo
+
+       local  nCONT
+
+       nSALDANT := PLAN->Saldo_ant
+       for nCONT = 1 to nMES
+           cDEB := "DB"+strzero(nCONT,2)
+           cCRE := "CR"+strzero(nCONT,2)
+           if nCONT != nMES
+              nSALDANT := nSALDANT + PLAN->&cDEB + PLAN->&cCRE
+           endif
+       next
+return
+
+static function i_puxasaldoFili
 
        local  nCONT
 
@@ -671,10 +686,10 @@ static function i_impre_xls
             loop
          endif
       else
-  //       if PLAN->Saantce + PLAN->Crce + PLAN->Dbce = 0
-  //          PLAN->(dbskip())
-  //          loop
-  //       endif
+         if PLAN->Saantce + PLAN->Crce + PLAN->Dbce = 0
+            PLAN->(dbskip())
+            loop
+         endif
       endif
 
       if right(PLAN->Codigo,5) == " " .and. ! PLAN->(eof()) .and. ! lPRIM
@@ -686,7 +701,7 @@ static function i_impre_xls
       if empty(cCENTRO) .and. empty(cFILIAL)
          nSALDATU := nSALDANT + PLAN->&cDEB + PLAN->&cCRE
       else
-  //       nSALDATU := PLAN->Saantce + PLAN->Crce + PLAN->Dbce
+         nSALDATU := PLAN->Saantce + PLAN->Crce + PLAN->Dbce
       endif
 
       if cTIPO == "A" .or. (cTIPO == "S" .and. ! right(PLAN->Codigo,5) != " ")
@@ -770,7 +785,7 @@ static function i_grupo_xls
       @ prow()+1,0 say ""+chr(9)+ "SUB-TOTAIS..: " + chr(9)+chr(9)+transform(nS_TOTDB,"@E 999,999,999,999.99") + chr(9) + transform(nS_TOTCR,"@E 999,999,999,999.99")
       nS_TOTDB := nS_TOTCR := 0
       qpageprn()
-      @ prow()+1,0 say "CONTA"+chr(9)+"DESCRICAO DA CONTA"+chr(9)+"SALDO ANTERIOR"+chr(9)+"DEBITO"+chr(9)+"CREDITO"+chr(9)+"SALDO ATUAL"
+      @ prow()+1,0 say "CONTA"+chr(9)+"Cod. Reduzido" + chr(9)+ "DESCRICAO DA CONTA"+chr(9)+"SALDO ANTERIOR"+chr(9)+"DEBITO"+chr(9)+"CREDITO"+chr(9)+"SALDO ATUAL"
       @ prow()+1,0 say ""
    endif
 

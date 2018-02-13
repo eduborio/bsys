@@ -720,7 +720,7 @@ local xmlNfe := ""
 
 	replace FAT->Cod_cli     with strzero(get(row,'cliente_id'),5)
     replace FAT->Dt_emissao  with get(row,'data_emissao')
-	replace FAT->Filial      with "0001"
+	replace FAT->Filial      with strzero(get(row,'empresa_id'),4)
 	replace FAT->C_custo     with "0005"
 	
 	fCod_cfop   := strzero(get(row,'cfop_id'),4)
@@ -1412,6 +1412,7 @@ local nFreteId := 0
 	   replace FRETE->modelo     with get(row,'modelo')
 	   replace FRETE->chave      with get(row,'chaveCte')
 	   replace FRETE->cod_cli    with strzero(get(row,'cliente_id'),5)
+	   replace FRETE->filial     with strzero(get(row,'empresa_id'),4)
 	   
 	   if ! empty(get(row,'tr_cnpj'))
 		   cnpj = get(row,'tr_cnpj')

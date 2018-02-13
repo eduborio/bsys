@@ -14,8 +14,6 @@
 -lhbzebra 
 -lpng 
 
--incpath=c:\hb30\include;c:\hbnfe\include
-
 CL101_
 CL102_
 CL103_
@@ -101,7 +99,6 @@ CL511_
 CL512_
 CL513_
 CL514_
-CL515_
 CL516_
 CL517_
 CL518_
@@ -185,24 +182,3 @@ funcoes_
 realtim
 new_emp_
 errorsys
-NFeFont\hbNFe
-NFeFont\hbNFeAssina
-NFeFont\hbNFeCancela
-NFeFont\hbNFeCCe
-NFeFont\hbNFeConsulta
-NFeFont\hbNFeConsultaCadastro
-NFeFont\hbNFeCreator
-NFeFont\hbNFeDanfe
-NFeFont\hbNFeDanfeCCe
-NFeFont\hbNFeEmail
-NFeFont\hbNFeEvento
-NFeFont\hbNFeFuncoes
-#NFeFont\hbNFeIniToXML
-NFeFont\hbNFeInutiliza
-NFeFont\hbNFeRecepcaoLote
-NFeFont\hbNFeRetornoRecepcao
-NFeFont\hbNFeManifestacaoDestinatario
-NFeFont\hbNFeSemCurl
-NFeFont\hbNFeStatus
-NFeFont\hbNFeValida
-NFeFont\W32OLE

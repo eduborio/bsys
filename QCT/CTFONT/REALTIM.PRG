@@ -59,17 +59,17 @@ if ! quse( XDRV_CTX,"HIST",{"HI_CODIG","HI_DESCR"})
    return
 endif
 
-if CONFIG->Inter_fisc == "S" // INTERFACE SOMENTE COM A ESCRITA FISCAL
+   if CONFIG->Inter_fisc == "S" // INTERFACE SOMENTE COM A ESCRITA FISCAL
 
-   if ! quse( XDRV_EF,"SH_EFCON",NIL,"E")
-      qmensa("N„o foi poss¡vel abrir arquivo SH_EFCON.DBF !! Tente novamente.")
-      CONFIG->(dbclosearea())
-      LOTE->(dbclosearea())
-      HIST->(dbclosearea())
-      return
-   endif
+   //if ! quse( XDRV_EF,"SH_EFCON",NIL,"E")
+   //   qmensa("N„o foi poss¡vel abrir arquivo SH_EFCON.DBF !! Tente novamente.")
+   //   CONFIG->(dbclosearea())
+   //   LOTE->(dbclosearea())
+   //   HIST->(dbclosearea())
+   //   return
+   //endif
 
-   i_qef()
+   //i_qef()
 
 else
 
@@ -81,14 +81,14 @@ else
       return
    endif
 
-   if ! quse( XDRV_EF,"SH_EFCON",NIL,"E")
-      qmensa("N„o foi poss¡vel abrir arquivo SH_EFCON.DBF !! Tente novamente.")
-      CONFIG->(dbclosearea())
-      LOTE->(dbclosearea())
-      HIST->(dbclosearea())
-      SH_PROCT->(dbclosearea())
-      return
-   endif
+   //if ! quse( XDRV_EF,"SH_EFCON",NIL,"E")
+    //  qmensa("N„o foi poss¡vel abrir arquivo SH_EFCON.DBF !! Tente novamente.")
+     // CONFIG->(dbclosearea())
+     // /LOTE->(dbclosearea())
+     // HIST->(dbclosearea())
+     // SH_PROCT->(dbclosearea())
+     // return
+   //endif
 
    //SH_PROCT->(__dbPack())
 
@@ -98,8 +98,10 @@ else
    
    if XEMPRESA == "001"
      i_RecebimentosWeb()
-	 i_ImportaTxtWeb()
+	 
    endif	  
+   
+   i_ImportaTxtWeb()
    
 	dbcloseall()
 
@@ -391,6 +393,7 @@ local nNUM_LOTE
 
    endif
 
+   /*
    SH_EFCON->(Dbgotop())
 
    while ! SH_EFCON->(eof())
@@ -431,7 +434,7 @@ local nNUM_LOTE
       SH_EFCON->(Dbskip())
 
    enddo
-
+ */
    if nTOT_DEB <> nTOT_CRE
 
       alert("LOTE Nr. " + cLOTE + " n„o est  fechado ! ;; Verifique na op‡„o <203> !",{"OK"})
@@ -783,10 +786,18 @@ local cQuery :=  ""
          nCont := 1
    
   	     do while nCont <= oQuery:LastRec() 	
+			
 			row := oQuery:getRow(nCont)
 			
-			processaContabilidade(row)
-			marcaComoContabilizadoTxt(oServer,get(row,'id'))
+			if year(get(row,'lancamento')) == 2018 .and. XEMPRESA == "001"
+			   processaContabilidade(row)
+			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
+			endif   
+			
+			if year(get(row,'lancamento')) == 2017 .and. XEMPRESA == "017"
+			   processaContabilidade(row)
+			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
+			endif
 				
 			nCont++
 		 enddo
@@ -805,7 +816,7 @@ static function processaContabilidade(row)
        replace LANC->Cont_db   with get(row,'contaDebito')
   	   replace LANC->Cont_cr   with get(row,'contaCred')
 	  
-       replace LANC->Filial    with "0001"
+       replace LANC->Filial    with strzero(val(get(row,'empresa')),4)
        replace LANC->Centro    with ""
        replace LANC->Valor     with get(row,'valor')
        replace LANC->Num_lote  with "WB"+strzero(day(date()),2)+strzero(month(date()),2)+strzero(year(date()),4)
