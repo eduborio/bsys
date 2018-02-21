@@ -93,19 +93,16 @@ else
    //SH_PROCT->(__dbPack())
 
    i_interface()  // INTERFACE COM ENTRADAS E SAIDAS
-   
-   
-   
+      
    if XEMPRESA == "001"
      i_RecebimentosWeb()
-	 
    endif	  
    
    i_ImportaTxtWeb()
    
-	dbcloseall()
+   dbcloseall()
 
-	return
+   return
 
 endif
 
@@ -579,9 +576,9 @@ local cQuery :=  ""
 
 		 oServer:SelectDB("comercial")	
 		 
-		 cQuery := " select rec.*,b.conta_contabil, cli.conta_contabil as cli_conta, cli.nome as cli_nome from receber rec "
+		 cQuery := " select rec.id as recId, rec.*,b.conta_contabil, cli.conta_contabil as cli_conta, cli.nome as cli_nome from receber rec "
 		 cQuery += " left outer join bancos b on b.id = rec.banco_id "
-		 cQuery += " join clientes cli on cli.id = rec.cliente_id "
+		 cQuery += " left outer join clientes cli on cli.id = rec.cliente_id "
 		 cQuery += " where recebido = 1 and contabil_baixa = 0 "
 		 
 		 oQuery := oServer:Query(cQuery)
@@ -598,7 +595,7 @@ local cQuery :=  ""
 			processaRecebimento(row)
 			processaJuros(row)
 			processaDesconto(row)
-			marcaComoContabilizado(oServer,get(row,'id'))
+			marcaComoContabilizado(oServer,get(row,'recId'))
 				
 			nCont++
 		 enddo

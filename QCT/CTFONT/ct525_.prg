@@ -10,12 +10,12 @@ function ct525
 
 #include "inkey.ch"
 #define K_MAX_LIN 57
+#define K9 chr(9)
 
 // DECLARACAO E INICIALIZACAO DE VARIAVEIS __________________________________
 
-local   bESCAPE := {||(XNIVEL==1 .and. !XFLAG) .or. empty(cTIPOR) .or. lastkey() = 27}
+local   bESCAPE := {|| lastkey() = 27}
 
-private sBLOCO1 := qlbloc("B524B","QBLOC.GLO") // bloco de opcao
 private aEDICAO := {}                          // vetor para os campos
 private cHIST                                  // historico
 private cTIPOR                                 // tipo de totalizacao
@@ -24,7 +24,7 @@ private dINI    := dFIM := CTOD("")            // datas inicio e final
 
 // CRIACAO DO VETOR DE BLOCOS _______________________________________________
 
-aadd(aEDICAO,{{ || qesco(-1,0,@cTIPOR,sBLOCO1) } , "ORDEM" })
+aadd(aEDICAO,{{ || NIL           } , NIL   })
 aadd(aEDICAO,{{ || qgetx(-1,0,@dINI)           } , "INI"   })
 aadd(aEDICAO,{{ || qgetx(-1,0,@dFIM)           } , "FIM"   })
 
@@ -53,8 +53,6 @@ enddo
 
 static function i_critica ( cCAMPO )
    do case
-      case cCAMPO == "ORDEM"
-           qrsay(XNIVEL,qabrev(cTIPOR,"ES",{"Emitir sub-totais p/ data","Somente Total Geral"}))
       case cCAMPO == "INI"
            if empty(dINI)
               return .F.
@@ -68,14 +66,6 @@ return .T.
 
 static function i_inicializacao
 
-   // CONSTROI VARIAVEL "cTITULO" ___________________________________________
-
-   cTITULO := "CONFERENCIA DE LANCAMENTOS    "
-   cTITULO += "( Periodo: " + dtoc(dINI) + " a " + dtoc(dFIM) + " )"
-
-   // SELECIONA ORDEM DO ARQUIVO PLAN _______________________________________
-
-   PLAN->(dbsetorder(03)) // reduzido
 
    qmensa()
 
@@ -86,67 +76,157 @@ return .T.
 
 static function i_imprime
 
-   // INICIALIZACOES DIVERSAS _______________________________________________
-
    local dDATALANC
-   private nTOTSUB := nTOTGER := 0.00
+   private nTOTSUB := 0.00
+   private nTOTGER := 0.00
+   
 
-   // INICIALIZA PROCESSO DE IMPRESSAO ______________________________________
+		if ! qinitprn() ; return ; endif
 
-   if ! qinitprn() ; return ; endif
+		 oServer := TMySQLServer():New(XSERVER, "root", "borios")
+		 if oServer:NetErr()
+			Alert(oServer:Error())
+		 endif
 
-   @ prow(),pcol() say XCOND1
+		 oServer:SelectDB("comercial")
+		 
+		 cQuery := " select distinct(nf.id), if(nf.tipo_nota = 0, 'entrada','saida') as tipo,  nf.id, nf.data_emissao , nf.empresa_id, item.cfop_id as cfop_id, nf.numero_nota,cli.nome as cliNome, "
+		 cQuery += " sum(item.valor_unitario * item.quantidade) as produtos, "
+		 cQuery += " sum(item.valor_ipi) as valorIpi, "
+		 cQuery += " sum(item.valor_icmsst) as valorST "
+		 cQuery += " from nota_fiscal nf "
+		 cQuery += " join item_nota_fiscal item on item.nota_fiscal_id = nf.id "
+		 cQuery += " join clientes cli on cli.id = nf.cliente_id "
+		 cQuery += " where nf.data_emissao between "+ dtos(dIni) + " and " + dtos(dFim)
+		 cQuery += " and nf.cancelada = 0 "
+		 cQuery += " group by nf.id "
+		 cQuery += " order by nf.empresa_id, nf.tipo_nota, nf.data_emissao, nf.numero_nota "
+		 
+         oQuery := oServer:Query(cQuery)
+   
+	     if oQuery:NetErr()
+		    Alert(oQuery:Error())
+	     endif
+   
+		 alert(oQuery:LastRec())
+   
+         nCont := 1
+		 nContLanc := 0
+		 cDoc := "000000"
+		 
+		LANC->(dbsetorder(13))
+		LANC->(dbgotop())
+		PLAN->(dbsetorder(3))
+   
+  	     do while nCont <= oQuery:LastRec() 	 
+		    row := oQuery:getRow(nCont)
+			
+			
+			if mod(nCont,100) == 0
+				if ! qlineprn() ; return ; endif
+			endif
 
-   LANC->(dbseek(dINI,.T.))
-   dDATALANC := LANC->Data_lanc
+			if XPAGINA == 0 
+				@ prow()+1,0    say 'Empresa' 
+				@ prow(),pcol() say chr(9) +'Tipo'
+				@ prow(),pcol() say chr(9) +'Emissao'
+				@ prow(),pcol() say chr(9) +'Nota Fiscal'
+				@ prow(),pcol() say chr(9) +'Cfop'
+				@ prow(),pcol() say chr(9) +'Cliente'
+				@ prow(),pcol() say chr(9) +'Valor Total'
+				@ prow(),pcol() say chr(9) +'Icms ST'
+				@ prow(),pcol() say chr(9) +''
+				@ prow(),pcol() say chr(9) +'Numero Lcto'
+				@ prow(),pcol() say chr(9) +'Documento'
+				@ prow(),pcol() say chr(9) +'Cod. Debito'
+				@ prow(),pcol() say chr(9) +'Debito'
+				@ prow(),pcol() say chr(9) +'Cod. Credito'
+				@ prow(),pcol() say chr(9) +'Credito'
+				@ prow(),pcol() say chr(9) +'Historico'
+				@ prow(),pcol() say chr(9) +'Valor Contabil'
+				qpageprn()
+			endif
+		    
+			@ prow()+1,0    say get(row,'empresa_id')   
+			@ prow(),pcol() say K9 + get(row,'tipo')
+			@ prow(),pcol() say K9 + dtoc(get(row,'data_emissao'))
+			@ prow(),pcol() say K9 + get(row,'numero_nota')
+			@ prow(),pcol() say K9 + str(get(row,'cfop_id'))
+			@ prow(),pcol() say K9 + get(row,'cliNome')
+			@ prow(),pcol() say K9 + transform(abs(get(row,'produtos')),"@E 9,999,999,999.99")
+			@ prow(),pcol() say K9 + transform(abs(get(row,'valorST')),"@E 9,999,999,999.99")
+			@ prow(),pcol() say K9 + " "
+			
+			cDoc := strzero(val(get(row,'numero_nota')),6)
+					
+			if LANC->(dbseek(cDoc))
+				nContLanc := 0
+												
+				do while ! LANC->(eof()) .and. trim(LANC->Num_doc) == cDoc
+					
+					if nContLanc > 0 
+						@ prow()+1,0    say ' ' 
+						@ prow(),pcol() say K9 +' '
+						@ prow(),pcol() say K9 +' '
+						@ prow(),pcol() say K9 +' '
+						@ prow(),pcol() say K9 +' '
+						@ prow(),pcol() say K9 +' '
+						@ prow(),pcol() say K9 +' '
+						@ prow(),pcol() say K9 +' '
+						@ prow(),pcol() say K9 +' ' 
+					endif
+					
+					@ prow(), pcol() say K9 + LANC->Num_lanc
+					@ prow(), pcol() say K9 + LANC->Num_doc
+					@ prow(), pcol() say K9 + LANC->Cont_db
+					PLAN->(dbseek(LANC->Cont_db))
+					@ prow(), pcol() say K9 + PLAN->Descricao
+					@ prow(), pcol() say K9 + LANC->Cont_cr
+					PLAN->(dbseek(LANC->Cont_db))
+					@ prow(), pcol() say K9 + PLAN->Descricao
+					@ prow(), pcol() say K9 + LANC->Hist_comp
+					@ prow(), pcol() say K9+transform(abs(LANC->Valor),"@E 9,999,999,999.99")
 
-   // LOOP __________________________________________________________________
+					nContLanc++
+					LANC->(dbskip())
+				enddo
+			else
+					@ prow(), pcol() say K9 + ""
+					@ prow(), pcol() say K9 + ""
+					@ prow(), pcol() say K9 + ""
+					PLAN->(dbseek(LANC->Cont_db))
+					@ prow(), pcol() say K9 + ""
+					@ prow(), pcol() say K9 + ""
+					PLAN->(dbseek(LANC->Cont_db))
+					@ prow(), pcol() say K9 + ""
+					@ prow(), pcol() say K9 + ""
+					@ prow(), pcol() say K9 + ""
+					@ prow(), pcol() say K9 + "Nao Contabilizou"
+					@ prow(), pcol() say K9 + cDoc
+			endif	
+			
+		    nCont++
+	     enddo 	
+		 
+		 qstopprn(.F.)
+		 
+	oServer:close()
 
-   do while ! LANC->(eof()) .and. LANC->Data_lanc <= dFIM .and. qcontprn()
+   //LANC->(dbseek(dINI,.T.))
+   //dDATALANC := LANC->Data_lanc
 
-      qmensa("Imprimindo Lancamento: "+LANC->Num_lanc)
+ /*//  do while ! LANC->(eof()) .and. LANC->Data_lanc <= dFIM
+
 
       if ! qlineprn() ; return ; endif
 
-      // CABECALHO SE NECESSARIO ____________________________________________
-
-      if XPAGINA == 0 .or. prow() > K_MAX_LIN
+      if XPAGINA == 0 
          qpageprn()
-         qcabecprn(cTITULO,132)
          @ prow()+1,0 say "  Data        Ct.Db.    Descricao da Conta Deb.                    Documento          Valor"
-         @ prow()+1,0 say "  Lanc        Ct.Cr.    Descricao da Conta Cred.                   Historico"
-         @ prow()+1,0 say replicate("-",132)
       endif
 
-      // DADOS DE UMA LINHA _________________________________________________
 
-      @ prow()+1,1      say dtoc(LANC->Data_lanc)
-      PLAN->(dbseek(LANC->Cont_db))
-      @ prow(),pcol()+3 say ct_convcod(LANC->Cont_db) + "   " + iif(!empty(PLAN->Reduzido),PLAN->Descricao,space(38))
-      @ prow(),pcol()+3 say LANC->Num_doc + "     " + transform(LANC->Valor,"@E 9,999,999,999.99")
-      PLAN->(dbseek(LANC->Cont_cr))
-      @ prow()+1,2     say LANC->Num_lanc + "       " + ct_convcod(LANC->Cont_cr) + "   " + iif(!empty(PLAN->Reduzido),PLAN->Descricao,space(38)) + "   " + i_historico()
-
-      nTOTSUB += LANC->Valor
-      nTOTGER += LANC->Valor
-
-      LANC->(dbskip())
-
-      if LANC->data_lanc != dDATALANC .and. cTIPOR == "E"
-         @ prow()+2,58       say "Total do Dia:     "
-         @ prow()  ,pcol()+2 say transform(nTOTSUB,"@E 9,999,999,999.99")
-         @ prow()+1,pcol()   say ""
-         dDATALANC := LANC->Data_lanc
-         nTOTSUB := 0.00
-      endif
-   enddo
-
-   @ prow()+2,57     say "Total do Periodo: "
-   @ prow()  ,pcol() say transform(nTOTGER,"@E 999,999,999,999.99")
-
-   // FINALIZA ______________________________________________________________
-
-   qstopprn()
+   //qstopprn()*/
 
 return
 
@@ -160,4 +240,7 @@ static function i_historico
    if (HIST->(dbseek(LANC->Hp3)),cHIST += rtrim(HIST->Descricao),NIL)
    cHIST += rtrim(LANC->Hist_comp)
 return left(cHIST,65)
+
+static function get(row,campo)
+return  row:fieldget(campo)
 
