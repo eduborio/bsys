@@ -91,8 +91,8 @@ function f202a
 
    iif(cOPCAO=="Q",ct303(),)
 
-   if cOPCAO $ XUSRA + "D"
-      qlbloc(6,6,"B202B","QBLOC.GLO",1)
+   if cOPCAO $ XUSRA 
+	  qlbloc(6,6,"B202B","QBLOC.GLO",1)
       i_edicao()
    endif
    setcursor(nCURSOR)
@@ -175,7 +175,7 @@ static function i_edicao
       fARQ     := space(4)
    endif
 
-   if cOPCAO $ "ID"
+   if cOPCAO $ "I"
       fDATA_LANC := dULT_DATA
    endif
 
@@ -188,7 +188,7 @@ static function i_edicao
       iif ( XFLAG , XNIVEL++ , XNIVEL-- )
    enddo
 
-   if cOPCAO $ "ID"
+   if cOPCAO $ "I"
       dULT_DATA := fDATA_LANC
    endif
 
@@ -196,11 +196,11 @@ static function i_edicao
 
    if lCONF
 
-      if ct_trava_prop(fCONT_DB,fCONT_CR) .and. CONFIG->(qrlock()) .and. LANC->(iif(cOPCAO $ "ID",qappend(),qrlock()))
+      if ct_trava_prop(fCONT_DB,fCONT_CR) .and. CONFIG->(qrlock()) .and. LANC->(iif(cOPCAO $ "I",qappend(),qrlock()))
 
          i_propagacao(cOPCAO)
 
-         if cOPCAO $ "ID"
+         if cOPCAO $ "I"
             replace CONFIG->Num_lanc with CONFIG->Num_lanc + 1
             fNUM_LANC := strzero(CONFIG->Num_lanc,5)
          endif
@@ -211,7 +211,7 @@ static function i_edicao
 
       else
 
-         iif(cOPCAO $ "ID",qm1(),qm2())
+         iif(cOPCAO $ "I",qm1(),qm2())
 
       endif
 
