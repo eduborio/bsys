@@ -90,6 +90,8 @@ function f202a
    iif(cOPCAO=="H",ct_con_hist(),)
 
    iif(cOPCAO=="Q",ct303(),)
+   
+   iif(cOPCAO=="Z",i_troca_plan(),)
 
    if cOPCAO $ XUSRA 
 	  qlbloc(6,6,"B202B","QBLOC.GLO",1)
@@ -147,6 +149,7 @@ static function i_edicao
 
    if cOPCAO == "C" ; qwait()      ; return ; endif
    if cOPCAO == "E" ; i_exclusao() ; return ; endif
+   
 
    // CONTINUA EM LOOP SE FOR INCLUSAO ______________________________________
 
@@ -477,3 +480,48 @@ function view_pllanc (XX,YY,ZZ)
 
    PLAN->(dbClearFilter())
 return
+
+
+static function i_troca_plan()
+
+	PLAN->(Dbsetorder(1))
+	PLAN->(dbgotop())
+	
+	while ! PLAN->(eof())
+	
+		if PLAN->(qrlock())
+			replace PLAN->descricao with i_trocachr(PLAN->Descricao)
+			qmensa(PLAN->Descricao,"L")
+		endif	
+	
+		PLAN->(dbskip())
+	
+	enddo
+	
+	PLAN->(dbcommit())
+
+return
+
+static function i_trocachr(cTROCADO)
+
+   cTROCADO := strtran(cTROCADO,"Ç","C")
+   cTROCADO := strtran(cTROCADO,"ç","C")
+   cTROCADO := strtran(cTROCADO,"Ã","A")
+   cTROCADO := strtran(cTROCADO,"Õ","O")
+   cTROCADO := strtran(cTROCADO,"É","E")
+   cTROCADO := strtran(cTROCADO,"‡","C")
+   cTROCADO := strtran(cTROCADO,"c","C")
+   cTROCADO := strtran(cTROCADO,"€","C")
+
+return(cTROCADO)
+
+
+
+
+
+
+
+
+
+
+

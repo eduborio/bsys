@@ -409,3 +409,14 @@ static procedure retornaAoRegistro(nReg,nIndex)
    PLAN->(dbsetorder(nIndex))
 return
 
+
+static function i_trocachr(cTROCADO)
+
+   cTROCADO := strtran(cTROCADO,"Ç","C")
+   cTROCADO := strtran(cTROCADO,"ç","C")
+   cTROCADO := strtran(cTROCADO,"Ã","A")
+   cTROCADO := strtran(cTROCADO,"Õ","O")
+   cTROCADO := strtran(cTROCADO,"É","E")
+
+return(cTROCADO)
+
