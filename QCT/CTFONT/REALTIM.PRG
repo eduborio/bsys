@@ -59,9 +59,16 @@ if ! quse( XDRV_CTX,"HIST",{"HI_CODIG","HI_DESCR"})
    return
 endif
 
+if ! quse( XDRV_CT,"REFER",{"CODIGO","DESCRICAO"})
+   qmensa("N„o foi poss¡vel abrir arquivo REFER.DBF !! Tente novamente.")
+   CONFIG->(dbclosearea())
+   LOTE->(dbclosearea())
+   return
+endif
+
    if CONFIG->Inter_fisc == "S" // INTERFACE SOMENTE COM A ESCRITA FISCAL
 
-   //if ! quse( XDRV_EF,"SH_EFCON",NIL,"E")
+   //if ! quse( XDRV_EF,"SH_EFCON",NIL)
    //   qmensa("N„o foi poss¡vel abrir arquivo SH_EFCON.DBF !! Tente novamente.")
    //   CONFIG->(dbclosearea())
    //   LOTE->(dbclosearea())
@@ -94,11 +101,12 @@ else
 
    i_interface()  // INTERFACE COM ENTRADAS E SAIDAS
       
-   if XEMPRESA == "001"
-     i_RecebimentosWeb()
-   endif	  
+   //if XEMPRESA == "001"
+   //  i_RecebimentosWeb()
+   //endif	  
    
    i_ImportaTxtWeb()
+   i_Referenciado()
    
    dbcloseall()
 
@@ -243,7 +251,7 @@ static function i_propaga_web ( conta_db, conta_cr, data,valor )
   if CONFIG->(qrlock())
      if ! empty(conta_db)
         ct_prop_saldo(conta_db,valor,"DB"+strzero(month(data),2))
-        CONFIG->&("DB"+strzero(month(data),2))+=valor
+        CONFIG->&("DB"+strzero(month(data),2) )+= valor
      endif
      if ! empty(conta_cr)
         ct_prop_saldo(conta_cr,valor,"CR"+strzero(month(data),2))
@@ -823,12 +831,14 @@ static function processaContabilidade(row)
 	   replace LANC->web_tab   with "contabilidade"
 	   replace LANC->web_id    with get(row,'id')
 
-       //if ct_trava_prop(conta_db,conta_cr)
-          i_propaga_web(conta_db,conta_cr,get(row,'lancamento'),get(row,'valor'))
-       //endif
-
        LANC->(qunlock())
     endif
+	
+	LANC->(dbcommit())
+	
+	//if ct_trava_prop(LANC->cont_db,LANC->cont_cr)
+       i_propaga_web(LANC->cont_db,LANC->cont_cr,LANC->Data_lanc,LANC->Valor)
+    //endif
 	
 	if CONFIG->(qrlock())
          replace CONFIG->Num_lanc with nNUM_LANC
@@ -853,6 +863,79 @@ static function marcaComoContabilizadoTxt(oServer,id)
 return
 
 
+
+function i_Referenciado()
+
+local oServer, oRow
+local oQuery
+local nCont := 0
+local cQuery :=  ""
+		
+		 oServer := TMySQLServer():New(XSERVER, "root", "borios")
+		 if oServer:NetErr()
+			Alert(oServer:Error())
+		 endif
+
+		 oServer:SelectDB("comercial")	
+		 
+		 cQuery := " select * from plano_referencial ref where importado = 0 "
+		 
+		 oQuery := oServer:Query(cQuery)
+		 
+		  if oQuery:NetErr()
+		    Alert(oQuery:Error())
+	     endif
+   
+         nCont := 1
+   
+  	     do while nCont <= oQuery:LastRec() 	
+			
+			row := oQuery:getRow(nCont)
+			qmensa(get(row,'codigo')) 
+			processaReferenciado (row)
+			marcaReferenciadoComoImportado(oServer,get(row,'id'))
+				
+			nCont++
+		 enddo
+
+return
+
+static function processaReferenciado(row)
+	
+	if REFER->(qrlock()) .and. REFER->(qappend())
+
+		replace REFER->Codigo    with get(row,'codigo')
+		replace REFER->Descricao with get(row,'descricao')
+		replace REFER->Dt_ini    with get(row,'dt_ini')
+		replace REFER->Dt_fim    with get(row,'dt_fim')
+		replace REFER->Tipo      with get(row,'tipo')
+		replace REFER->Superior  with get(row,'conta_superior')
+		replace REFER->Nivel     with get(row,'nivel')
+		replace REFER->Natureza  with get(row,'natureza')
+		replace REFER->Orient    with get(row,'obs')
+
+        REFER->(qunlock())
+    endif
+	
+	REFER->(dbcommit())
+	
+return
+
+static function marcaReferenciadoComoImportado(oServer,id)
+   local cQuery := ""
+   local oQuery
+   local row
+   local nCont := 1
+   
+   cQuery := " update plano_referencial set importado = 1 "
+   cQuery += " where id =" + alltrim(str(id))
+   oQuery := oServer:Query(cQuery)
+   
+   if oQuery:NetErr()
+      Alert(oQuery:Error())
+   endif
+   
+return
 
 static function get(row,campo)
 return  row:fieldget(campo)

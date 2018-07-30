@@ -20,6 +20,10 @@ function view_planfin ( LL , CC , XX )
    PLAN_FIN->(qview(LL,CC,@XX,"@R 99999",NIL,.T.,NIL,{{"left(Descricao,40)/Descri‡„o",2},{"right(codigo,5)/C¢digo",3}},"C",{"keyb(right(Codigo,5))",NIL,NIL,NIL}))
 return
 
+function view_refer ( LL , CC , XX )
+   REFER->(qview(LL,CC,@XX,"",NIL,.T.,NIL,{{"Codigo/Codigo",1},{"left(descricao,34)/Descricao",2}},"C",{"keyb(Codigo)",NIL,NIL,NIL}))
+return
+
 // CODIGO E DESCRICAO DOS MUNICIPIOS __________________________________________
 
 function view_cgm ( LL , CC , XX )

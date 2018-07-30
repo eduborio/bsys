@@ -93,7 +93,7 @@ function f202a
    
    iif(cOPCAO=="Z",i_troca_plan(),)
 
-   if cOPCAO $ XUSRA 
+   if cOPCAO $ XUSRA  + "D"
 	  qlbloc(6,6,"B202B","QBLOC.GLO",1)
       i_edicao()
    endif
@@ -178,7 +178,7 @@ static function i_edicao
       fARQ     := space(4)
    endif
 
-   if cOPCAO $ "I"
+   if cOPCAO $ "ID"
       fDATA_LANC := dULT_DATA
    endif
 
@@ -191,7 +191,7 @@ static function i_edicao
       iif ( XFLAG , XNIVEL++ , XNIVEL-- )
    enddo
 
-   if cOPCAO $ "I"
+   if cOPCAO $ "ID"
       dULT_DATA := fDATA_LANC
    endif
 
@@ -199,11 +199,11 @@ static function i_edicao
 
    if lCONF
 
-      if ct_trava_prop(fCONT_DB,fCONT_CR) .and. CONFIG->(qrlock()) .and. LANC->(iif(cOPCAO $ "I",qappend(),qrlock()))
+      if ct_trava_prop(fCONT_DB,fCONT_CR) .and. CONFIG->(qrlock()) .and. LANC->(iif(cOPCAO $ "ID",qappend(),qrlock()))
 
          i_propagacao(cOPCAO)
 
-         if cOPCAO $ "I"
+         if cOPCAO $ "ID"
             replace CONFIG->Num_lanc with CONFIG->Num_lanc + 1
             fNUM_LANC := strzero(CONFIG->Num_lanc,5)
          endif
@@ -214,7 +214,7 @@ static function i_edicao
 
       else
 
-         iif(cOPCAO $ "I",qm1(),qm2())
+         iif(cOPCAO $ "ID",qm1(),qm2())
 
       endif
 
@@ -241,7 +241,7 @@ static function i_propagacao ( cOPT )
 
       // ATUALIZA SALDOS NA INCLUSAO E DUPLICACAO ___________________________
 
-      case cOPT $ "ID"
+      case cOPT $ "I"
            if ! empty(fCONT_DB)
               ct_prop_saldo(fCONT_DB,fVALOR,"DB"+strzero(month(fDATA_LANC),2))
               CONFIG->&("DB"+strzero(month(fDATA_LANC),2))+=fVALOR
