@@ -662,7 +662,7 @@ static function processaNotasFiscais(oServer)
    cQuery := "SELECT nf.*, c.codigo_contabil as subtipo, cli.nome as cliente from nota_fiscal as nf "
    cQuery += "left outer join clientes as cli on cli.id = nf.cliente_id "
    cQuery += "left outer join cfops as c on c.id = nf.cfop_id "
-   cQuery += "where exportado_pro_qsys = 0 " 
+   cQuery += "where exportado_pro_qsys = 0 and nf.empresa_id in (1,2) "  
    
    oQuery := oServer:Query(cQuery)
    
@@ -925,7 +925,7 @@ static function processaCompras(oServer)
    cQuery := "SELECT ped.*, forn.nome as fornecedor from compras as ped "
    cQuery += "left outer join fornecedores as forn on forn.id = ped.fornecedor_id "
    cQuery += "left outer join cfops as c on c.id = ped.cfop_id "
-   cQuery += "where exportado_pro_qsys = 0 " 
+   cQuery += "where exportado_pro_qsys = 0 and ped.empresa_id in (1,2)" 
    
    oQuery := oServer:Query(cQuery)
    
@@ -1109,7 +1109,7 @@ static function sincronizaNFsQueForamCanceladasDepoisDaPrimeiraImportacao(oServe
   endif
    
    cQuery := "SELECT nf.id, nf.cancelada from nota_fiscal as nf "
-   cQuery += "where exportado_pro_qsys = 1 and nf.cancelada = 1 and nf.data_emissao between 20140718 and 20181231" 
+   cQuery += "where exportado_pro_qsys = 1 and nf.cancelada = 1 and nf.data_emissao between 20140718 and 20201231 and nf.empresa_id in (1,2) " 
    
    oQuery := oServer:Query(cQuery)
    
@@ -1212,7 +1212,7 @@ static function processaMoviment(oServer)
    
    cQuery := "SELECT mov.*, prod.preco_custo from ajuste_saldo_estoque as mov "
    cQuery += "left outer join produtos prod on prod.id = mov.produto_id " 
-   cQuery += "where exportado_pro_qsys = 0 " 
+   cQuery += "where exportado_pro_qsys = 0 and mov.empresa_id in (1,2) " 
    
    oQuery := oServer:Query(cQuery)
    
@@ -1288,7 +1288,7 @@ static function processaTransform(oServer)
    
    cQuery := "SELECT tr.*, prod.preco_custo from transforma_produto as tr "
    cQuery += "left outer join produtos prod on prod.id = tr.produto_id " 
-   cQuery += "where exportado_pro_qsys = 0 " 
+   cQuery += "where exportado_pro_qsys = 0 and empresa_id in (1,2) " 
    
    oQuery := oServer:Query(cQuery)
    
@@ -1366,7 +1366,7 @@ static function processaFrete(oServer)
    cQuery := " select f.*, t.cnpj as tr_cnpj, forn.cnpj as fr_cnpj from fretes f"
    cQuery += " left outer join transportadoras t on t.id = f.transportadora_id "
    cQuery += " left outer join fornecedores forn on forn.id = f.fornecedor_id "
-   cQuery += " where importadoQSys = 0 " 
+   cQuery += " where importadoQSys = 0 and f.empresa_id in (1,2) " 
    
    oQuery := oServer:Query(cQuery)
    

@@ -108,7 +108,7 @@ static function verificaTodasNotasFiscais(oServer)
 	cQuery += "	from item_nota_fiscal as item "
 	cQuery += "	left join nota_fiscal as nf on nf.id = item.nota_fiscal_id "
 	cQuery += "	where nf.data_emissao between '2014-02-01' and '2014-10-31' "
-	cQuery += "	and nf.tipo_nota = 1 and nf.cfop_id in (5403,5102)"
+	cQuery += "	and nf.tipo_nota = 1 and nf.cfop_id in (5403,5102) and nf.empresa_id in (1,2) "
 	cQuery += "	group by nota_fiscal_id "
 	cQuery += "	order by numero_nota "
    
@@ -238,7 +238,7 @@ static function verificaCanceladas(oServer)
    local id := 0
    
    cQuery := "SELECT nf.id, nf.cancelada from nota_fiscal as nf "
-   cQuery += "where exportado_pro_qsys = 1 and nf.cancelada = 1 and nf.data_emissao between 20140101 and 20181231" 
+   cQuery += "where exportado_pro_qsys = 1 and nf.cancelada = 1 and nf.data_emissao between 20140101 and 20221231 and nf.empresa_id in (1,2) " 
    
    oQuery := oServer:Query(cQuery)
    
