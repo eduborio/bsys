@@ -3,7 +3,7 @@
 // OBJETIVO...: Exportar arquivo p/ SPED Contabil
 // ANALISTA...: EDUARDO AUGUSTO BORIO
 // PROGRAMADOR: EDUARDO AUGUSTO BORIO
-// INICIO.....: JULHO 2010
+// INICIO.....: MAIO 2018
 // OBS........:
 // ALTERACOES.:
 
@@ -392,8 +392,13 @@ local cNIVEL := ""
 
       write(nFile,cSPED,len(cSPED))
 	  
-	  if(cIndicador == "A")
-		  rI052(+alltrim(maskCod(PLAN->Codigo,cNIVEL)))
+	  if cIndicador == "A" 
+		
+		  qmensa(plan->refer)
+		  if  !empty(PLAN->Refer)
+			 rI051(alltrim(PLAN->Refer))
+		  endif	 
+		  rI052(alltrim(maskCod(PLAN->Codigo,cNIVEL)))
 	  endif	  
 
       cSPED := ""
@@ -406,6 +411,24 @@ local cNIVEL := ""
 
    enddo
 
+return
+
+static function rI051(cReferencial)
+local cSPED := ""
+
+      cSPED := "|I051"
+      cSPED += "|1"
+      cSPED += "|"
+      cSPED += "|"+cReferencial 
+      cSPED += "|"
+
+      write(nFile,cSPED,len(cSPED))
+	  
+      cSPED := ""
+
+      nTOT_I051++
+      nTOT_BLOCOI++
+      nTOT_LIN++
 return
 
 static function rI052(cSuperior)
@@ -891,6 +914,12 @@ local cSPED := ""
    
    nTOT_LIN++
    nTOT_BLOCO9++
+   cSPED := "|9900|I051|"+alltrim(str(nTOT_I051)) +"|"
+   write(nFile,cSPED,len(cSPED))
+   cSPED := ""
+   
+   nTOT_LIN++
+   nTOT_BLOCO9++
    cSPED := "|9900|I052|"+alltrim(str(nTOT_I052)) +"|"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
@@ -988,7 +1017,7 @@ local cSPED := ""
 
    nTOT_LIN++
    nTOT_BLOCO9++
-   cSPED := "|9900|9900|"+alltrim(str(27)) +"|"
+   cSPED := "|9900|9900|"+alltrim(str(28)) +"|"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
 
@@ -1568,7 +1597,7 @@ local nHnd := 0
    endif
    
    
-   voltaLinhas := 34 
+   voltaLinhas := 35 
    voltaLinhas := voltaLinhas *(-1)
    
 

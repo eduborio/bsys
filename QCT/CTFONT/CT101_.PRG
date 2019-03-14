@@ -93,8 +93,8 @@ static function i_edicao
       qrsay(XNIVEL++,qabrev(PLAN->Lanc_index,"NS",{"N„o","Sim"}))
       qrsay(XNIVEL++,qabrev(PLAN->Mat_filial,"NS",{"N„o","Sim"}))
       
-      qrsay(XNIVEL++,PLAN->Refer) ; REFER->(dbseek(alltrim(PLAN->Refer)))
-      qrsay(XNIVEL++,left(REFER->Descricao,34))
+      //qrsay(XNIVEL++,PLAN->Refer) ; REFER->(dbseek(alltrim(PLAN->Refer)))
+      //qrsay(XNIVEL++,left(REFER->Descricao,34))
       
    endif
 
@@ -115,7 +115,8 @@ static function i_edicao
    aadd(aEDICAO,{{ || qesco(-1,0,@fCENT_CUSTO  ,sBLOC1                      ) } ,"CENT_CUSTO"})
    aadd(aEDICAO,{{ || qesco(-1,0,@fLANC_INDEX  ,sBLOC1                      ) } ,"LANC_INDEX"})
    aadd(aEDICAO,{{ || qesco(-1,0,@fMAT_FILIAL  ,sBLOC1                      ) } ,"MAT_FILIAL"})
-   aadd(aEDICAO,{{||view_refer(-1,0,@fREFER                                   )},"REFER"  })
+   //aadd(aEDICAO,{{||view_refer(-1,0,@fREFER                                   )},"REFER"  })
+   aadd(aEDICAO,{{ || NIL                                                     } ,NIL        })
    aadd(aEDICAO,{{ || NIL                                                     } ,NIL        })
    aadd(aEDICAO,{{ || lCONF := qconf("Confirma "+iif(cOPCAO=="I","inclus„o","altera‡„o")+" ?") },NIL})
 

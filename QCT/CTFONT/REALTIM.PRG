@@ -59,12 +59,12 @@ if ! quse( XDRV_CTX,"HIST",{"HI_CODIG","HI_DESCR"})
    return
 endif
 
-if ! quse( XDRV_CT,"REFER",{"CODIGO","DESCRICAO"})
-   qmensa("N„o foi poss¡vel abrir arquivo REFER.DBF !! Tente novamente.")
-   CONFIG->(dbclosearea())
-   LOTE->(dbclosearea())
-   return
-endif
+//if ! quse( XDRV_CT,"REFER",{"CODIGO","DESCRICAO"})
+//   qmensa("N„o foi poss¡vel abrir arquivo REFER.DBF !! Tente novamente.")
+//   CONFIG->(dbclosearea())
+//   LOTE->(dbclosearea())
+//   return
+//endif
 
    if CONFIG->Inter_fisc == "S" // INTERFACE SOMENTE COM A ESCRITA FISCAL
 
@@ -101,12 +101,8 @@ else
 
    i_interface()  // INTERFACE COM ENTRADAS E SAIDAS
       
-   //if XEMPRESA == "001"
-   //  i_RecebimentosWeb()
-   //endif	  
-   
    i_ImportaTxtWeb()
-   i_Referenciado()
+   //i_Referenciado()
    
    dbcloseall()
 
@@ -794,12 +790,12 @@ local cQuery :=  ""
 			
 			row := oQuery:getRow(nCont)
 			
-			if year(get(row,'lancamento')) == 2018 .and. XEMPRESA == "001"
+			if year(get(row,'lancamento')) == 2019 .and. XEMPRESA == "001"
 			   processaContabilidade(row)
 			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
 			endif   
 			
-			if year(get(row,'lancamento')) == 2017 .and. XEMPRESA == "017"
+			if year(get(row,'lancamento')) == 2018 .and. XEMPRESA == "018"
 			   processaContabilidade(row)
 			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
 			endif
@@ -824,7 +820,7 @@ static function processaContabilidade(row)
        replace LANC->Filial    with strzero(val(get(row,'empresa')),4)
        replace LANC->Centro    with ""
        replace LANC->Valor     with get(row,'valor')
-       replace LANC->Num_lote  with "WB"+strzero(day(date()),2)+strzero(month(date()),2)+strzero(year(date()),4)
+       replace LANC->Num_lote  with get(row,'lote')
        replace LANC->Num_lanc  with strzero(nNUM_LANC:=nNUM_LANC + 1,5)  // numero do lancamento
        replace LANC->Num_doc   with ""
        replace LANC->Hist_comp with get(row,'historico')
@@ -863,13 +859,15 @@ static function marcaComoContabilizadoTxt(oServer,id)
 return
 
 
-
 function i_Referenciado()
 
 local oServer, oRow
 local oQuery
 local nCont := 0
 local cQuery :=  ""
+		
+		PLAN->(dbsetorder(3))
+		PLAN->(dbgotop(3))
 		
 		 oServer := TMySQLServer():New(XSERVER, "root", "borios")
 		 if oServer:NetErr()
@@ -878,7 +876,7 @@ local cQuery :=  ""
 
 		 oServer:SelectDB("comercial")	
 		 
-		 cQuery := " select * from plano_referencial ref where importado = 0 "
+		 cQuery := " select * from plano_aline where importado = 0 "
 		 
 		 oQuery := oServer:Query(cQuery)
 		 
@@ -891,7 +889,6 @@ local cQuery :=  ""
   	     do while nCont <= oQuery:LastRec() 	
 			
 			row := oQuery:getRow(nCont)
-			qmensa(get(row,'codigo')) 
 			processaReferenciado (row)
 			marcaReferenciadoComoImportado(oServer,get(row,'id'))
 				
@@ -900,24 +897,22 @@ local cQuery :=  ""
 
 return
 
+
 static function processaReferenciado(row)
 	
-	if REFER->(qrlock()) .and. REFER->(qappend())
-
-		replace REFER->Codigo    with get(row,'codigo')
-		replace REFER->Descricao with get(row,'descricao')
-		replace REFER->Dt_ini    with get(row,'dt_ini')
-		replace REFER->Dt_fim    with get(row,'dt_fim')
-		replace REFER->Tipo      with get(row,'tipo')
-		replace REFER->Superior  with get(row,'conta_superior')
-		replace REFER->Nivel     with get(row,'nivel')
-		replace REFER->Natureza  with get(row,'natureza')
-		replace REFER->Orient    with get(row,'obs')
-
-        REFER->(qunlock())
-    endif
 	
-	REFER->(dbcommit())
+	if PLAN->(dbseek( alltrim(get(row,'reduzido'))))
+	
+		qmensa(PLAN->Reduzido)
+		if PLAN->(qrlock()) 
+
+			replace PLAN->Refer   with alltrim(get(row,'referencial'))
+
+			PLAN->(qunlock())
+		endif
+	endif	
+	
+	PLAN->(dbcommit())
 	
 return
 
@@ -927,7 +922,7 @@ static function marcaReferenciadoComoImportado(oServer,id)
    local row
    local nCont := 1
    
-   cQuery := " update plano_referencial set importado = 1 "
+   cQuery := " update plano_aline set importado = 1 "
    cQuery += " where id =" + alltrim(str(id))
    oQuery := oServer:Query(cQuery)
    
