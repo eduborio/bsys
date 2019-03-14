@@ -807,17 +807,17 @@ static function i_imprfim
       qcabecprn(cTITULO1,134,.F.,cTITULO2)
    endif
 
-   nEXTENSO := len(qextenso(nTOTAL))
+   nEXTENSO := len(i_extenso(nTOTAL))
    nTOTAL := iif(nTOTAL < 0, nTOTAL * -1 , nTOTAL)
 
    if cTIPO != "3"
       @ prow()+3,007 say "Reconhecemos a exatidao do presente BALANCO PATRIMONIAL, em que o ATIVO se equivale ao PASSIVO em R$ " + transform(nTOTAL,"@E 9,999,999,999.99")
-      @ prow()+1,007 say "(" + qextenso(nTOTAL) + repl("*",112-nEXTENSO) + "),"
+      @ prow()+1,007 say "(" + i_extenso(nTOTAL) + repl("*",112-nEXTENSO) + "),"
       @ prow()+1,007 say "bem como a DEMONSTRACAO DO RESULTADO DO EXERCICIO e a DEMONSTRACAO DE LUCROS OU PREJUIZOS ACUMULADOS, para o exercicio"
       @ prow()+1,007 say "findo nesta data, conforme elementos fornecidos pela empresa."
    else
       @ prow()+3,007 say "Reconhecemos a exatidao do presente BALANCO PATRIMONIAL DE ABERTURA, que o ATIVO equivale ao PASSIVO em R$ " + transform(nTOTAL,"@E 9,999,999,999.99")
-      @ prow()+1,007 say "(" + qextenso(nTOTAL) + repl("*",112-nEXTENSO) + "),"
+      @ prow()+1,007 say "(" + i_extenso(nTOTAL) + repl("*",112-nEXTENSO) + "),"
    endif
 
    CGM->(dbseek(XCGM))
@@ -1008,4 +1008,91 @@ static function i_nivelcta
        endif
    next
 return
+
+static function i_extenso ( nVALOR , cTIPO )
+
+   local cEXTENSO := "", nCONT, zTMP, cCENTENA, cCOMP
+   local cSTRING := strtran(strzero(nVALOR,15,2),".","0")
+
+   private aUNID := {"ZERO","UM","DOIS","TRES","QUATRO","CINCO","SEIS","SETE","OITO","NOVE","DEZ","ONZE","DOZE","TREZE","QUATORZE","QUINZE","DEZESSEIS","DEZESSETE","DEZOITO","DEZENOVE"}
+   private aDEZE := {"VINTE","TRINTA","QUARENTA","CINQUENTA","SESSENTA","SETENTA","OITENTA","NOVENTA"}
+   private aCENT := {"CENTO","DUZENTOS","TREZENTOS","QUATROCENTOS","QUINHENTOS","SEISCENTOS","SETECENTOS","OITOCENTOS","NOVECENTOS"}
+   private aCASA := {"BILHOES","MILHOES","MIL","REAIS","CENTAVOS","BILHAO","MILHAO","MIL","REAL","CENTAVO"}
+
+
+   for nCONT := 1 to 13 step 3
+       cCENTENA := substr(cSTRING,nCONT,3)
+	   
+       cCOMP := ""
+       if ! empty( zTMP := i_ext(cCENTENA) )
+          cCOMP := zTMP + aCASA[int(nCONT/3+iif(val(cCENTENA)==1,6,1))]
+       else
+	   endif
+       do case
+          case nCONT == 10 .and. substr(cSTRING,7,6)  == "000000" .and. nVALOR > 999999
+               cEXTENSO := left(cEXTENSO,len(cEXTENSO)-2)
+               cCOMP += " DE REAIS"
+          case nCONT == 10 .and. substr(cSTRING,10,3) == "000" .and. nVALOR > 999
+               cEXTENSO := left(cEXTENSO,len(cEXTENSO)-2)
+               cCOMP += " REAIS"
+       endcase
+       cCOMP += iif(nCONT<9.and.!empty(zTMP),", ","")
+       iif(nCONT==13.and.nVALOR>1.and.!empty(zTMP),cCOMP:=" E "+cCOMP,NIL)
+       cEXTENSO += cCOMP
+   next
+
+return cEXTENSO
+
+static function i_ext ( cCENTENA )
+
+   local nCONT, nINDIC, cEXTENSO
+   declare aDIG[3]
+   
+   if cCENTENA == "000" ; return "" ; endif
+
+   for nCONT = 1 to 3
+       aDIG[nCONT] := val(substr(cCENTENA,nCONT,1))
+   next
+
+   ANT := .F.
+   cEXTENSO := ""
+   nINDIC := 1
+
+   if aDIG[nINDIC] <> 0
+      if aDIG[nINDIC] == 1 .and. aDIG[nINDIC+1] == 0 .and. aDIG[nINDIC+2] == 0
+         cEXTENSO += "CEM "
+         ANT := .T.
+         return cEXTENSO
+      else
+         cEXTENSO += (trim(aCENT[aDIG[nINDIC]]) + " ")
+         ANT := .T.
+      endif
+   endif
+
+   if aDIG[nINDIC+1] <> 0
+      if ANT
+         cEXTENSO += "E "
+         ANT := .F.
+      endif
+      if aDIG[nINDIC+1] == 1
+         POS := val(str(aDIG[nINDIC+1],1)+str(aDIG[nINDIC+2],1))+1
+         cEXTENSO += (trim(aUNID[POS]) + " ")
+         return cEXTENSO
+      else
+         cEXTENSO += (trim(aDEZE[aDIG[nINDIC+1]-1]) + " ")
+         ANT := .T.
+      endif
+   endif
+
+   if aDIG[nINDIC+2] == 0
+      return cEXTENSO
+   else
+      if ANT
+         cEXTENSO += "E "
+         ANT := .F.
+      endif
+      cEXTENSO += (trim(aUNID[(aDIG[nINDIC+2]+1)]) + " ")
+   endif
+
+return (cEXTENSO)
 

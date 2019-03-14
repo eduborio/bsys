@@ -1,19 +1,11 @@
-function main(funcao,filtro)
+function main()
 
     private XCOR_MENSA := "N/G"
+	clear
     
-	if funcao == NIL
-		OUTSTD("Nenhum parametro informado")
-		return
-	endif   
+	nValor = 1240698.37
 	
-	if filtro == NIL
-       OUTSTD("Nenhum parametro informado")
-	   return
-	endif   
-	
-	public where := filtro
-    public macro := funcao + "(where)"
+	OUTSTD(i_extenso(nValor))
 	
 	REQUEST DBFCDX
     RDDSETDEFAULT("DBFCDX")
@@ -27,137 +19,9 @@ function main(funcao,filtro)
     set date brit
     set conf on
     set excl off
-	
-	clear 
-	
-	OUTSTD(&(macro))
-	
-	//if error()
-	//   OUTSTD("Erro OPA")
-    //endif	
-    
-	//@ saprow()+1,00 say getReceberPorId(filtro)
-    //@ prow()+2,00 say &(macro)
 
 return
 
-function getReceberPorId(filtro)
-return "{id: '25',nome:'Eduaro Borio',filtro:'"+filtro+"'}"
-
-function getDuds(filtro)
-return "Eduardo Borio Here, filtrado por: " +filtro
-
-function getReceber(id)
-
-  json := "receberList:["  
-
-  cCli := strzero(val(id),5)
-  
-  if ! quse("\QSYS_G\QRB\E004\","RECEBER")
-	 outstd("{erro:Error ao conectar ao sistema Cntas a Receber - Receber!}")
-     return 
-  endif	
-   
-  RECEBER->(dbsetorder(5))
-  
-  if RECEBER->(dbseek(cCli))
-
-	  do while ! RECEBER->(eof()) .and. RECEBER->cod_cli == cCli
-
-		 //if RECEBER->Data_venc < date()
-			//nTotalVencido += RECEBER->Valor_liq
-		 //endif
-		 
-		 json += "{nome:"+left(RECEBER->Cliente,20)+",valor:"+alltrim(transform(RECEBER->Valor_liq,"@R 99999999.99"))+",Vencimento:"+ dtoc(RECEBER->Data_venc)+"},"
-
-		 RECEBER->(dbskip())
-
-	  enddo
-	  
-  endif	  
-  
-  json += "]"
-
-  RECEBER->(dbCloseArea())
-   
-return json
-
-function getReceberVencido(id)
-
-  json := "receberList:["  
-
-  cCli := strzero(val(id),5)
-  
-  if ! quse("\QSYS_G\QRB\E004\","RECEBER")
-	 outstd("{erro:Error ao conectar ao sistema Cntas a Receber - Receber!}")
-     return 
-  endif	
-   
-  RECEBER->(dbsetorder(5))
-  
-  if RECEBER->(dbseek(cCli))
-
-	  do while ! RECEBER->(eof()) .and. RECEBER->cod_cli == cCli
-
-		 if RECEBER->Data_venc < date()
-			//nTotalVencido += RECEBER->Valor_liq
-			json += "{nome:"+left(RECEBER->Cliente,20)+",valor:"+alltrim(transform(RECEBER->Valor_liq,"@R 99999999.99"))+",Vencimento:"+ dtoc(RECEBER->Data_venc)+"},"
-		 endif
-
-		 RECEBER->(dbskip())
-
-	  enddo
-	  
-  endif	  
-  
-  json += "]"
-
-  RECEBER->(dbCloseArea())
-   
-return json
-
-
-function getDevolucoes(cCli)
-
-	cCli := strzero(val(id),5)
-	
-	json := ""
-  
-    if ! quse("\QSYS_G\QCT\E004\","LANC")
-	  outstd("{erro:Error ao conectar ao sistema contabil - Lanc!}")
-	  return 
-    endif	
-	
-	if ! quse("\QSYS_G\QCT\E004\","PLAN")
-	   outstd("{erro:Error ao conectar ao sistema contabil - Plan!}")
-	  return "Erro ao abrir"
-    endif	
-	
-	LANC->(dbsetorder(1))
-	PLAN->(dbseek(dbsetorder(1)))
-	
-	if PLAN->(dbseek("2010502"))
-	    LANC->(dbsetorder(1))
-		LANC->(dbgotop())
-	    
-		do while ! PLAN->(eof()) .and. left(PLAN->Codigo,7) == "02010502" // Todas Devolucoes
-		
-		    if LANC->(dbseek(PLAN->Reduzido))
-			   do while ! LANC->(eof()) .and. LANC->Cont_cr == PLAN->Reduzido
-			      json+="{"+PLAN->Descricao + transform(LANC->Valor,"@R 9999999.99")+"}"
-			      LANC->(dbskip())
-			   enddo
-			   
-      		   json += transform(LANC->Valor,"@ 99999999.99")
-			endif	
-				
-			PLAN->(dbskip())
-		enddo	
-    endif
-	
-	LANC->(dbcloseArea())
-	PLAN->(dbcloseArea())
-return json
 
 procedure ErrorSys()
 
@@ -168,4 +32,91 @@ return
 static function berror( e )
 	OUTSTD(e:description," ",e:operation)	
 return .F.
+
+static function i_extenso ( nVALOR , cTIPO )
+
+   local cEXTENSO := "", nCONT, zTMP, cCENTENA, cCOMP
+   local cSTRING := strtran(strzero(nVALOR,15,2),".","0")
+
+   private aUNID := {"ZERO","UM","DOIS","TRES","QUATRO","CINCO","SEIS","SETE","OITO","NOVE","DEZ","ONZE","DOZE","TREZE","QUATORZE","QUINZE","DEZESSEIS","DEZESSETE","DEZOITO","DEZENOVE"}
+   private aDEZE := {"VINTE","TRINTA","QUARENTA","CINQUENTA","SESSENTA","SETENTA","OITENTA","NOVENTA"}
+   private aCENT := {"CENTO","DUZENTOS","TREZENTOS","QUATROCENTOS","QUINHENTOS","SEISCENTOS","SETECENTOS","OITOCENTOS","NOVECENTOS"}
+   private aCASA := {"BILHOES","MILHOES","MIL","REAIS","CENTAVOS","BILHAO","MILHAO","MIL","REAL","CENTAVO"}
+
+
+   for nCONT := 1 to 13 step 3
+       cCENTENA := substr(cSTRING,nCONT,3)
+	   
+       cCOMP := ""
+       if ! empty( zTMP := i_ext(cCENTENA) )
+          cCOMP := zTMP + aCASA[int(nCONT/3+iif(val(cCENTENA)==1,6,1))]
+       else
+	   endif
+       do case
+          case nCONT == 10 .and. substr(cSTRING,7,6)  == "000000" .and. nVALOR > 999999
+               cEXTENSO := left(cEXTENSO,len(cEXTENSO)-2)
+               cCOMP += " DE REAIS"
+          case nCONT == 10 .and. substr(cSTRING,10,3) == "000" .and. nVALOR > 999
+               cEXTENSO := left(cEXTENSO,len(cEXTENSO)-2)
+               cCOMP += " REAIS"
+       endcase
+       cCOMP += iif(nCONT<9.and.!empty(zTMP),", ","")
+       iif(nCONT==13.and.nVALOR>1.and.!empty(zTMP),cCOMP:=" E "+cCOMP,NIL)
+       cEXTENSO += cCOMP
+   next
+
+return cEXTENSO
+
+static function i_ext ( cCENTENA )
+
+   local nCONT, nINDIC, cEXTENSO
+   declare aDIG[3]
+   
+   if cCENTENA == "000" ; return "" ; endif
+
+   for nCONT = 1 to 3
+       aDIG[nCONT] := val(substr(cCENTENA,nCONT,1))
+   next
+
+   ANT := .F.
+   cEXTENSO := ""
+   nINDIC := 1
+
+   if aDIG[nINDIC] <> 0
+      if aDIG[nINDIC] == 1 .and. aDIG[nINDIC+1] == 0 .and. aDIG[nINDIC+2] == 0
+         cEXTENSO += "CEM "
+         ANT := .T.
+         return cEXTENSO
+      else
+         cEXTENSO += (trim(aCENT[aDIG[nINDIC]]) + " ")
+         ANT := .T.
+      endif
+   endif
+
+   if aDIG[nINDIC+1] <> 0
+      if ANT
+         cEXTENSO += "E "
+         ANT := .F.
+      endif
+      if aDIG[nINDIC+1] == 1
+         POS := val(str(aDIG[nINDIC+1],1)+str(aDIG[nINDIC+2],1))+1
+         cEXTENSO += (trim(aUNID[POS]) + " ")
+         return cEXTENSO
+      else
+         cEXTENSO += (trim(aDEZE[aDIG[nINDIC+1]-1]) + " ")
+         ANT := .T.
+      endif
+   endif
+
+   if aDIG[nINDIC+2] == 0
+      return cEXTENSO
+   else
+      if ANT
+         cEXTENSO += "E "
+         ANT := .F.
+      endif
+      cEXTENSO += (trim(aUNID[(aDIG[nINDIC+2]+1)]) + " ")
+   endif
+
+return (cEXTENSO)
 

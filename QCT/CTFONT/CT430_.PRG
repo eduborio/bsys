@@ -3,7 +3,7 @@
 // OBJETIVO...: Exportar arquivo p/ SPED Contabil
 // ANALISTA...: EDUARDO AUGUSTO BORIO
 // PROGRAMADOR: EDUARDO AUGUSTO BORIO
-// INICIO.....: JULHO 2010
+// INICIO.....: MAIO 2018
 // OBS........:
 // ALTERACOES.:
 
@@ -245,18 +245,18 @@ local cSPED := ""
       cSPED += "|"+CGM->Estado
       cSPED += "|"+alltrim(qtiraponto(FILIAL->Insc_estad))
       cSPED += "|"+CGM->Cod_rais //IBGE codigo
-      cSPED += "|"              //Insc Municipal
-      cSPED += "|"              //Indcador Situacao Especial
-      cSPED += "|0"              //Indicador de perdido 0 - Inicio do Ano
-      cSPED += "|0"              //Indcador Se Tem a escrituracao tem NIRE
-      cSPED += "|0"              //Finalidade - 0 Original
-      cSPED += "|"               //HasCode
-      cSPED += "|"              //Nire da escrit sendo sbstituida
-      cSPED += "|0"              //Indicador grande porte
-      cSPED += "|0"              //Empresa nao part de SCP como socio ostensivo
-      cSPED += "|"              //Indicacao da SCP
-	  cSPED += "|N"              //Fim
-	  cSPED += "|"              //Fim
+      cSPED += "|"              //Insc Municipal  - 10
+      cSPED += "|"              //Indcador Situacao Especial - 11
+      cSPED += "|0"              //Indicador de inicio - 12
+      
+	  cSPED += "|0"              //Indcador Se Tem a escrituracao tem NIRE - 13
+      cSPED += "|0"              //Finalidade - 0 Original - 14
+      cSPED += "|"               //HasCode - 15 
+      cSPED += "|0"              //Indicador grande porte - 16 
+      cSPED += "|0"              //Empresa nao part de SCP como socio ostensivo 17 
+      cSPED += "|"              //Indicacao da SCP - 18
+	  cSPED += "|N"              //Moeda Funcional
+	  cSPED += "|N|"              //Consolidadas
 
       nTOT_LIN++
 
@@ -298,7 +298,7 @@ local cSPED := ""
 
       nTOT_BLOCOI++
       nTOT_LIN++
-      cSPED := "|I010|G|4.00|" //Tipo de Arquivo G = Diario Geral
+      cSPED := "|I010|G|5.00|" //Tipo de Arquivo G = Diario Geral
 
       write(nFile,cSPED,len(cSPED))
       cSPED := ""
@@ -387,13 +387,18 @@ local cNIVEL := ""
       cSPED += "|"+cNivel
       cSPED += "|"+alltrim(maskCod(PLAN->Codigo,cNIVEL))
       cSPED += "|"+cSuperior
-      cSPED += "|"+rtrim(PLAN->Descricao)
+      cSPED += "|"+strtran(rtrim(PLAN->Descricao),chr(9),"")
       cSPED += "|" //Finaliza Reg
 
       write(nFile,cSPED,len(cSPED))
 	  
-	  if(cIndicador == "A")
-		  rI052(+alltrim(maskCod(PLAN->Codigo,cNIVEL)))
+	  if cIndicador == "A" 
+		
+		  qmensa(plan->refer)
+		  if  !empty(PLAN->Refer)
+			 rI051(alltrim(PLAN->Refer))
+		  endif	 
+		  rI052(alltrim(maskCod(PLAN->Codigo,cNIVEL)))
 	  endif	  
 
       cSPED := ""
@@ -406,6 +411,24 @@ local cNIVEL := ""
 
    enddo
 
+return
+
+static function rI051(cReferencial)
+local cSPED := ""
+
+      cSPED := "|I051"
+      cSPED += "|1"
+      cSPED += "|"
+      cSPED += "|"+cReferencial 
+      cSPED += "|"
+
+      write(nFile,cSPED,len(cSPED))
+	  
+      cSPED := ""
+
+      nTOT_I051++
+      nTOT_BLOCOI++
+      nTOT_LIN++
 return
 
 static function rI052(cSuperior)
@@ -586,6 +609,10 @@ local nNUM_LANC := 0
 		  if empty(cHIST)
 			 cHist := "LANCAMENTO" 
 		  endif
+		  
+		  cHIST := strtran(cHist,chr(9),"")
+		  cHIST := strtran(cHist,chr(13),"")
+		  cHIST := strtran(cHist,chr(10),"")
 
           if ! empty(LANC->Cont_cr)
              cSPED := "|I250"
@@ -628,6 +655,10 @@ local nNUM_LANC := 0
 			 if empty(cHIST)
 				cHist := "LANCAMENTO" 
 		     endif
+			 
+			 cHIST := strtran(cHist,chr(9),"")
+			 cHIST := strtran(cHist,chr(13),"")
+		     cHIST := strtran(cHist,chr(10),"")
 
              if ! empty(ITN_LANC->Cont_cr)
                 cSPED := "|I250"
@@ -883,6 +914,12 @@ local cSPED := ""
    
    nTOT_LIN++
    nTOT_BLOCO9++
+   cSPED := "|9900|I051|"+alltrim(str(nTOT_I051)) +"|"
+   write(nFile,cSPED,len(cSPED))
+   cSPED := ""
+   
+   nTOT_LIN++
+   nTOT_BLOCO9++
    cSPED := "|9900|I052|"+alltrim(str(nTOT_I052)) +"|"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
@@ -980,7 +1017,7 @@ local cSPED := ""
 
    nTOT_LIN++
    nTOT_BLOCO9++
-   cSPED := "|9900|9900|"+alltrim(str(27)) +"|"
+   cSPED := "|9900|9900|"+alltrim(str(28)) +"|"
    write(nFile,cSPED,len(cSPED))
    cSPED := ""
 
@@ -1560,7 +1597,7 @@ local nHnd := 0
    endif
    
    
-   voltaLinhas := 34 
+   voltaLinhas := 35 
    voltaLinhas := voltaLinhas *(-1)
    
 
@@ -1624,7 +1661,7 @@ local cNIVEL := ""
 			cSPED += "|"+maskCod(alltrim(PLAN->Codigo))
 			cSPED += "|"+cNIVEL
 			cSPED += "|"+left(PLAN->Codigo,1)
-			cSPED += "|"+ rtrim(PLAN->Descricao)
+			cSPED += "|"+ strtran(strtran(strtran(rtrim(PLAN->Descricao),chr(9),""),chr(13),""),chr(10),"")
        
 			cSPED += "|"+i_valida(iif(nValor < 0,nValor*(-1),nValor),19)
 			if nValor < 0

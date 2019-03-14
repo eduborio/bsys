@@ -92,10 +92,10 @@ static function i_edicao
       qrsay(XNIVEL++,qabrev(PLAN->Cent_custo,"NS",{"N„o","Sim"}))
       qrsay(XNIVEL++,qabrev(PLAN->Lanc_index,"NS",{"N„o","Sim"}))
       qrsay(XNIVEL++,qabrev(PLAN->Mat_filial,"NS",{"N„o","Sim"}))
-      if ! empty(CONFIG->Mantra)
-        // qrsay(XNIVEL++,PLAN->Plan_fin) ; PLAN_FIN->(dbseek(PLAN->Plan_fin))
-         //qrsay(XNIVEL++,left(PLAN_FIN->Descricao,29))
-      endif
+      
+      //qrsay(XNIVEL++,PLAN->Refer) ; REFER->(dbseek(alltrim(PLAN->Refer)))
+      //qrsay(XNIVEL++,left(REFER->Descricao,34))
+      
    endif
 
    // CONSULTA OU EXCLUSAO __________________________________________________
@@ -115,12 +115,9 @@ static function i_edicao
    aadd(aEDICAO,{{ || qesco(-1,0,@fCENT_CUSTO  ,sBLOC1                      ) } ,"CENT_CUSTO"})
    aadd(aEDICAO,{{ || qesco(-1,0,@fLANC_INDEX  ,sBLOC1                      ) } ,"LANC_INDEX"})
    aadd(aEDICAO,{{ || qesco(-1,0,@fMAT_FILIAL  ,sBLOC1                      ) } ,"MAT_FILIAL"})
-   //if ! empty(CONFIG->Mantra)
-
-   //aadd(aEDICAO,{{||view_planfin(-1,0,@fPlan_fin                             )},"PLAN_FIN"  })
-   //aadd(aEDICAO,{{ || NIL                                                     } ,NIL        })
-   //endif
-
+   //aadd(aEDICAO,{{||view_refer(-1,0,@fREFER                                   )},"REFER"  })
+   aadd(aEDICAO,{{ || NIL                                                     } ,NIL        })
+   aadd(aEDICAO,{{ || NIL                                                     } ,NIL        })
    aadd(aEDICAO,{{ || lCONF := qconf("Confirma "+iif(cOPCAO=="I","inclus„o","altera‡„o")+" ?") },NIL})
 
    // INICIALIZACAO DA EDICAO _______________________________________________
@@ -305,6 +302,18 @@ static function i_critica ( cCAMPO )
 
             qrsay(XNIVEL+1,left(PLAN_FIN->Descricao,29))
          endif
+		 
+	   case cCAMPO == "REFER"
+         if ! empty(fREFER)
+            qrsay(XNIVEL,fREFER)
+
+            if ! REFER->(dbseek(fREFER))
+                 qmensa("PLANO Referencial nao cadastrado !","B")
+                 return .F.
+            endif
+
+            qrsay(XNIVEL+1,left(REFER->Descricao,34))
+         endif	 
 
       case cCAMPO == "BLOQ_TECLA"
            if empty(fBLOQ_TECLA) ; return .F. ; endif
@@ -408,4 +417,15 @@ static procedure retornaAoRegistro(nReg,nIndex)
    PLAN->(dbgoto(nReg))
    PLAN->(dbsetorder(nIndex))
 return
+
+
+static function i_trocachr(cTROCADO)
+
+   cTROCADO := strtran(cTROCADO,"Ç","C")
+   cTROCADO := strtran(cTROCADO,"ç","C")
+   cTROCADO := strtran(cTROCADO,"Ã","A")
+   cTROCADO := strtran(cTROCADO,"Õ","O")
+   cTROCADO := strtran(cTROCADO,"É","E")
+
+return(cTROCADO)
 

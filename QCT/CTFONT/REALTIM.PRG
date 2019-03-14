@@ -59,9 +59,16 @@ if ! quse( XDRV_CTX,"HIST",{"HI_CODIG","HI_DESCR"})
    return
 endif
 
+//if ! quse( XDRV_CT,"REFER",{"CODIGO","DESCRICAO"})
+//   qmensa("N„o foi poss¡vel abrir arquivo REFER.DBF !! Tente novamente.")
+//   CONFIG->(dbclosearea())
+//   LOTE->(dbclosearea())
+//   return
+//endif
+
    if CONFIG->Inter_fisc == "S" // INTERFACE SOMENTE COM A ESCRITA FISCAL
 
-   //if ! quse( XDRV_EF,"SH_EFCON",NIL,"E")
+   //if ! quse( XDRV_EF,"SH_EFCON",NIL)
    //   qmensa("N„o foi poss¡vel abrir arquivo SH_EFCON.DBF !! Tente novamente.")
    //   CONFIG->(dbclosearea())
    //   LOTE->(dbclosearea())
@@ -94,11 +101,8 @@ else
 
    i_interface()  // INTERFACE COM ENTRADAS E SAIDAS
       
-   if XEMPRESA == "001"
-     i_RecebimentosWeb()
-   endif	  
-   
    i_ImportaTxtWeb()
+   //i_Referenciado()
    
    dbcloseall()
 
@@ -243,7 +247,7 @@ static function i_propaga_web ( conta_db, conta_cr, data,valor )
   if CONFIG->(qrlock())
      if ! empty(conta_db)
         ct_prop_saldo(conta_db,valor,"DB"+strzero(month(data),2))
-        CONFIG->&("DB"+strzero(month(data),2))+=valor
+        CONFIG->&("DB"+strzero(month(data),2) )+= valor
      endif
      if ! empty(conta_cr)
         ct_prop_saldo(conta_cr,valor,"CR"+strzero(month(data),2))
@@ -786,12 +790,12 @@ local cQuery :=  ""
 			
 			row := oQuery:getRow(nCont)
 			
-			if year(get(row,'lancamento')) == 2018 .and. XEMPRESA == "001"
+			if year(get(row,'lancamento')) == 2019 .and. XEMPRESA == "001"
 			   processaContabilidade(row)
 			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
 			endif   
 			
-			if year(get(row,'lancamento')) == 2017 .and. XEMPRESA == "017"
+			if year(get(row,'lancamento')) == 2018 .and. XEMPRESA == "018"
 			   processaContabilidade(row)
 			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
 			endif
@@ -816,19 +820,21 @@ static function processaContabilidade(row)
        replace LANC->Filial    with strzero(val(get(row,'empresa')),4)
        replace LANC->Centro    with ""
        replace LANC->Valor     with get(row,'valor')
-       replace LANC->Num_lote  with "WB"+strzero(day(date()),2)+strzero(month(date()),2)+strzero(year(date()),4)
+       replace LANC->Num_lote  with get(row,'lote')
        replace LANC->Num_lanc  with strzero(nNUM_LANC:=nNUM_LANC + 1,5)  // numero do lancamento
        replace LANC->Num_doc   with ""
        replace LANC->Hist_comp with get(row,'historico')
 	   replace LANC->web_tab   with "contabilidade"
 	   replace LANC->web_id    with get(row,'id')
 
-       //if ct_trava_prop(conta_db,conta_cr)
-          i_propaga_web(conta_db,conta_cr,get(row,'lancamento'),get(row,'valor'))
-       //endif
-
        LANC->(qunlock())
     endif
+	
+	LANC->(dbcommit())
+	
+	//if ct_trava_prop(LANC->cont_db,LANC->cont_cr)
+       i_propaga_web(LANC->cont_db,LANC->cont_cr,LANC->Data_lanc,LANC->Valor)
+    //endif
 	
 	if CONFIG->(qrlock())
          replace CONFIG->Num_lanc with nNUM_LANC
@@ -853,6 +859,78 @@ static function marcaComoContabilizadoTxt(oServer,id)
 return
 
 
+function i_Referenciado()
+
+local oServer, oRow
+local oQuery
+local nCont := 0
+local cQuery :=  ""
+		
+		PLAN->(dbsetorder(3))
+		PLAN->(dbgotop(3))
+		
+		 oServer := TMySQLServer():New(XSERVER, "root", "borios")
+		 if oServer:NetErr()
+			Alert(oServer:Error())
+		 endif
+
+		 oServer:SelectDB("comercial")	
+		 
+		 cQuery := " select * from plano_aline where importado = 0 "
+		 
+		 oQuery := oServer:Query(cQuery)
+		 
+		  if oQuery:NetErr()
+		    Alert(oQuery:Error())
+	     endif
+   
+         nCont := 1
+   
+  	     do while nCont <= oQuery:LastRec() 	
+			
+			row := oQuery:getRow(nCont)
+			processaReferenciado (row)
+			marcaReferenciadoComoImportado(oServer,get(row,'id'))
+				
+			nCont++
+		 enddo
+
+return
+
+
+static function processaReferenciado(row)
+	
+	
+	if PLAN->(dbseek( alltrim(get(row,'reduzido'))))
+	
+		qmensa(PLAN->Reduzido)
+		if PLAN->(qrlock()) 
+
+			replace PLAN->Refer   with alltrim(get(row,'referencial'))
+
+			PLAN->(qunlock())
+		endif
+	endif	
+	
+	PLAN->(dbcommit())
+	
+return
+
+static function marcaReferenciadoComoImportado(oServer,id)
+   local cQuery := ""
+   local oQuery
+   local row
+   local nCont := 1
+   
+   cQuery := " update plano_aline set importado = 1 "
+   cQuery += " where id =" + alltrim(str(id))
+   oQuery := oServer:Query(cQuery)
+   
+   if oQuery:NetErr()
+      Alert(oQuery:Error())
+   endif
+   
+return
 
 static function get(row,campo)
 return  row:fieldget(campo)
