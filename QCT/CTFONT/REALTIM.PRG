@@ -794,7 +794,7 @@ local cQuery :=  ""
 		 oServer:SelectDB("comercial")	
 		 
 		 cQuery := " select * from contabilidade cont "
-		 cQuery += " where contabilizado = 0 and empresa_id in ('1','2') "
+		 cQuery += " where contabilizado = 0 and empresa in ('1','2') "
 		 
 		 oQuery := oServer:Query(cQuery)
 		 
