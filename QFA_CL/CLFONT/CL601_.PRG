@@ -488,7 +488,7 @@ static function i_interface
 			endif
 			
 			if CGM->Estado == "SP"
-  			   TIPOCONT->(Dbseek("010147")) // Conta De St MG
+  			   TIPOCONT->(Dbseek("010147")) // Conta De St SP
 			endif
 			
 			if right(alltrim(FAT->cod_cfop),3) $ "910" //Se for Remessa de bonificacao

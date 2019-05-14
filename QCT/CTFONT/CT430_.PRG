@@ -298,7 +298,7 @@ local cSPED := ""
 
       nTOT_BLOCOI++
       nTOT_LIN++
-      cSPED := "|I010|G|5.00|" //Tipo de Arquivo G = Diario Geral
+      cSPED := "|I010|G|6.00|" //Tipo de Arquivo G = Diario Geral
 
       write(nFile,cSPED,len(cSPED))
       cSPED := ""
@@ -498,10 +498,10 @@ local cDEB,cCRE  := ""
             cSPED += "|"
 
             if nSALDO_ANT < 0
-               cSPED += "|"+i_valida(nSALDO_ANT*(-1),19)
+               cSPED += "|"+i_valida(iif(nSALDO_ANT <0, nSALDO_ANT *(-1),nSALDO_ANT),19)
                cSPED += "|C"
             else
-               cSPED += "|"+i_valida(nSALDO_ANT,19)
+               cSPED += "|"+i_valida(iif(nSALDO_ANT <0, nSALDO_ANT *(-1),nSALDO_ANT),19)
                cSPED += "|D"
             endif
 
@@ -521,15 +521,15 @@ local cDEB,cCRE  := ""
             nDebitos  += PLAN->&cDEB
             nCreditos += PLAN->&cCRE
 
-            cSPED += "|"+i_valida(nDebitos,19)
-            cSPED += "|"+i_valida((nCreditos)*(-1),19)
+            cSPED += "|"+i_valida(iif(nDebitos < 0, nDebitos*(-1), nDebitos),19)
+            cSPED += "|"+i_valida(iif(nCreditos < 0,(nCreditos)*(-1),nCreditos),19)
             nSALDO_ATU := nSALDO_ANT + nDebitos + nCreditos
 
             if nSALDO_ATU < 0
-               cSPED += "|"+i_valida(nSALDO_ATU*(-1),19)
+               cSPED += "|"+i_valida(iif(nSALDO_ATU < 0, nSALDO_ATU *(-1),nSALDO_ATU),19)
                cSPED += "|C"
             else
-               cSPED += "|"+i_valida(nSALDO_ATU,19)
+               cSPED += "|"+i_valida(iif(nSALDO_ATU < 0, nSALDO_ATU *(-1),nSALDO_ATU),19)
                cSPED += "|D"
             endif
 
@@ -1261,7 +1261,7 @@ local cValor   := ""
 local cInteiro := ""
 local cDecimal := ""
    cDecimal := right(strzero(val(qtiraponto(str(nVALOR,nNUM,2))),nNUM),2)
-   cInteiro := strzero(int(nValor),16)
+   cInteiro := alltrim(str(int(nValor)))
    cValor := cInteiro +"," + cDecimal
 
 return cVALOR
@@ -1677,7 +1677,7 @@ local cNIVEL := ""
 		    else
 				cSIT := "D"
 			endif
-			cSPED += "|"+cSIT+"|"
+			cSPED += "|"+cSIT+"||"
 			write(nFILE,cSPED,len(cSPED))
 	 
 			nTOT_LIN++
@@ -1826,7 +1826,7 @@ static function dre_romero
          cSPED += "|RECEITAS"
 		 cSPED += "|"+i_valida(nREC_OPER,19)
 		 cSPED += "|"+"P"
-		 cSPED += "|"
+		 cSPED += "||"
 		
 		 write(nFILE,cSPED,len(cSPED))
 	     cSPED := ""
@@ -1848,7 +1848,7 @@ static function dre_romero
 			cSPED += "|"+rtrim(RESULTAD->Titulo)
 			cSPED += "|"+i_valida(abs(nREC_OPER),19)
 			cSPED += "|"+"P"
-			cSPED += "|"
+			cSPED += "||"
 			write(nFILE,cSPED,len(cSPED))
 			cSPED := ""
 			nTOT_LIN++
@@ -1864,7 +1864,7 @@ static function dre_romero
 			cSPED += "|"+rtrim(RESULTAD->Titulo)
 			cSPED += "|"+i_valida(abs(nDEDUCOES),19)
 			cSPED += "|"+"P"
-			cSPED += "|"
+			cSPED += "||"
 			
 			write(nFILE,cSPED,len(cSPED))
 			cSPED := ""
@@ -2195,7 +2195,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2213,7 +2213,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2230,7 +2230,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2248,7 +2248,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2266,7 +2266,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2284,7 +2284,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2302,7 +2302,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2320,7 +2320,7 @@ static function dre_mantra
 		cSPED += "|"+"N"
 		cSPED += "|"+i_valida(0,19)
 		cSPED += "|"+"N"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2337,7 +2337,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2356,7 +2356,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2375,7 +2375,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2394,7 +2394,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2413,7 +2413,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2432,7 +2432,7 @@ static function dre_mantra
 		cSPED += "|"+"P"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"P"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2451,7 +2451,7 @@ static function dre_mantra
 		cSPED += "|"+"N"
 		cSPED += "|"+i_valida(abs(0),19)
 		cSPED += "|"+"N"
-		cSPED += "|"
+		cSPED += "||"
 		write(nFILE,cSPED,len(cSPED))
 		cSPED := ""
 		nTOT_LIN++
@@ -2489,7 +2489,7 @@ static function imprimeSubContas(contaPai)
 			 cSPED += "|"+iif(PLAN->Saldo_dre > 0,"D","R")
 			 cSPED += "|"+i_valida(abs(0),19)
 			 cSPED += "|"+iif(PLAN->Saldo_dre > 0,"D","R")
-			 cSPED += "|"
+			 cSPED += "||"
 			 write(nFILE,cSPED,len(cSPED))
 			 cSPED := ""
 			 nTOT_LIN++

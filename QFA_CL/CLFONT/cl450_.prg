@@ -23,10 +23,22 @@ function cl450
 	 return .F.
   endif
   
+  if ! quse("\QSYS_G\QCT\E100\","PLAN",{},,"PLANKTL")
+	 qmensa("Nao foi possivel abrir plan ktl!","BL")
+	 return .F.
+  endif
+  
+  if ! quse("\QSYS_G\QCT\E200\","PLAN",{},,"PLANDKL")
+	 qmensa("Nao foi possivel abrir plan dkl!","BL")
+	 return .F.
+  endif
+  
   i_importa()
   dbcommitAll()
   
   CFGCP->(dbCloseArea())
+  PLANKTL->(dbCloseArea())
+  PLANDKL->(dbCloseArea())
 
 return
 
@@ -254,6 +266,30 @@ if PLAN->(Qappend())
    replace PLAN->Mat_filial with "S"
 endif
 PLAN->(DbCommit())
+
+if PLANKTL->(Qappend())
+   replace PLANKTL->Codigo     with myCODIGO
+   replace PLANKTL->Reduzido   with fREDUZIDO
+   replace PLANKTL->Descricao  with nome
+   replace PLANKTL->Nat_cont   with "AT"
+   replace PLANKTL->Bloq_tecla with "N"
+   replace PLANKTL->Cent_custo with "N"
+   replace PLANKTL->Lanc_index with "N"
+   replace PLANKTL->Mat_filial with "S"
+endif
+PLANKTL->(DbCommit())
+
+if PLANDKL->(Qappend())
+   replace PLANDKL->Codigo     with myCODIGO
+   replace PLANDKL->Reduzido   with fREDUZIDO
+   replace PLANDKL->Descricao  with nome
+   replace PLANDKL->Nat_cont   with "AT"
+   replace PLANDKL->Bloq_tecla with "N"
+   replace PLANDKL->Cent_custo with "N"
+   replace PLANDKL->Lanc_index with "N"
+   replace PLANDKL->Mat_filial with "S"
+endif
+PLANDKL->(DbCommit())
 
 return fREDUZIDO
 

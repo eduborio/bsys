@@ -584,7 +584,7 @@ local cQuery :=  ""
 		 cQuery += " left outer join bancos b on b.id = rec.banco_id "
 		 cQuery += " left outer join clientes cli on cli.id = rec.cliente_id "
 		 cQuery += " left join nota_fiscal nf on nf.id = rec.nota_fiscal_id "
-		 cQuery += " where recebido = 1 and contabil_baixa = 0 and nf.empresa_id in (1,2) "
+		 cQuery += " where recebido = 1 and contabil_baixa = 0 and nf.empresa_id in (1,2,3,4) "
 		 
 		 oQuery := oServer:Query(cQuery)
 		 
@@ -605,14 +605,14 @@ local cQuery :=  ""
 				marcaComoContabilizado(oServer,get(row,'recId'))
 			endif	
 			
-			if  get(row,'empresa') == "3" .and. XEMPRESA == "003"	
+			if  get(row,'empresa') == "3" .and. XEMPRESA == "100"	
 				processaRecebimento(row)
 				processaJuros(row)
 				processaDesconto(row)
 				marcaComoContabilizado(oServer,get(row,'recId'))
 			endif	
 			
-			if  get(row,'empresa') == "4" .and. XEMPRESA == "004"	
+			if  get(row,'empresa') == "4" .and. XEMPRESA == "200"	
 				processaRecebimento(row)
 				processaJuros(row)
 				processaDesconto(row)
@@ -794,7 +794,7 @@ local cQuery :=  ""
 		 oServer:SelectDB("comercial")	
 		 
 		 cQuery := " select * from contabilidade cont "
-		 cQuery += " where contabilizado = 0 and empresa in ('1','2') "
+		 cQuery += " where contabilizado = 0"
 		 
 		 oQuery := oServer:Query(cQuery)
 		 
@@ -813,15 +813,15 @@ local cQuery :=  ""
 			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
 			endif
 			
-			//if year(get(row,'lancamento')) == 2019 .and.  get(row,'empresa') == "3" .and. XEMPRESA == "003"
-			//   processaContabilidade(row)
-			// /  marcaComoContabilizadoTxt(oServer,get(row,'id'))
-			//endif
+			if year(get(row,'lancamento')) == 2019 .and.  get(row,'empresa') == "3" .and. XEMPRESA == "100"
+			   processaContabilidade(row)
+			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
+			endif
 			
-			//if year(get(row,'lancamento')) == 2019 .and.  get(row,'empresa') == "4" .and. XEMPRESA == "004"
-			//   processaContabilidade(row)
-			//   marcaComoContabilizadoTxt(oServer,get(row,'id'))
-			//endif
+			if year(get(row,'lancamento')) == 2019 .and.  get(row,'empresa') == "4" .and. XEMPRESA == "200"
+			   processaContabilidade(row)
+			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
+			endif
 			
 			//if year(get(row,'lancamento')) == 2018 .and. XEMPRESA == "018"
 			//   processaContabilidade(row)
@@ -850,7 +850,7 @@ static function processaContabilidade(row)
        replace LANC->Valor     with get(row,'valor')
        replace LANC->Num_lote  with get(row,'lote')
        replace LANC->Num_lanc  with strzero(nNUM_LANC:=nNUM_LANC + 1,5)  // numero do lancamento
-       replace LANC->Num_doc   with ""
+       replace LANC->Num_doc   with get(row,'documento')
        replace LANC->Hist_comp with get(row,'historico')
 	   replace LANC->web_tab   with "contabilidade"
 	   replace LANC->web_id    with get(row,'id')
