@@ -615,7 +615,7 @@ static function i_interface
 
    i_devol()
    i_notas()
-   i_frete()
+   //i_frete()
    //i_baixa_rb()
 return
 

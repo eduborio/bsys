@@ -808,17 +808,35 @@ local cQuery :=  ""
 			
 			row := oQuery:getRow(nCont)
 			
-			if year(get(row,'lancamento')) == 2019 .and.  get(row,'empresa') $ "1-2" .and. XEMPRESA == "001"
+			if year(get(row,'lancamento')) == 2020 .and.  get(row,'empresa') $ "1-2" .and. XEMPRESA == "001"
 			   processaContabilidade(row)
 			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
 			endif
 			
-			if year(get(row,'lancamento')) == 2019 .and.  get(row,'empresa') == "3" .and. XEMPRESA == "100"
+			if year(get(row,'lancamento')) == 2020 .and.  get(row,'empresa') == "3" .and. XEMPRESA == "100"
 			   processaContabilidade(row)
 			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
 			endif
 			
-			if year(get(row,'lancamento')) == 2019 .and.  get(row,'empresa') == "4" .and. XEMPRESA == "200"
+			if year(get(row,'lancamento')) == 2020 .and.  get(row,'empresa') == "4" .and. XEMPRESA == "200"
+			   processaContabilidade(row)
+			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
+			endif
+			
+			// 2019 - 
+			//////////////////////
+			
+			if year(get(row,'lancamento')) == 2019 .and.  get(row,'empresa') $ "1-2" .and. XEMPRESA == "019"
+			   processaContabilidade(row)
+			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
+			endif
+			
+			if year(get(row,'lancamento')) == 2019 .and.  get(row,'empresa') == "3" .and. XEMPRESA == "119"
+			   processaContabilidade(row)
+			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
+			endif
+			
+			if year(get(row,'lancamento')) == 2019 .and.  get(row,'empresa') == "4" .and. XEMPRESA == "219"
 			   processaContabilidade(row)
 			   marcaComoContabilizadoTxt(oServer,get(row,'id'))
 			endif

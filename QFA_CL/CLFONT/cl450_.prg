@@ -94,8 +94,8 @@ static function i_importa
     qmensa(" sincronizando transformacao...")
    processaTransform(oServer)
    
-   qmensa(" sincronizando fretes...")
-   processaFrete(oServer)
+   //qmensa(" sincronizando fretes...")
+   //processaFrete(oServer)
    
 return
 
