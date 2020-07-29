@@ -359,6 +359,11 @@ local cNIVEL := ""
          PLAN->(dbskip())
          loop
       endif
+	  
+	  if ! i_temMovimentoAno()
+	     PLAN->(dbskip())
+         loop
+      endif
 
       do case
          case left(PLAN->Nat_cont,2) == "AT"
@@ -397,7 +402,7 @@ local cNIVEL := ""
 	  
 	  if cIndicador == "A" 
 		
-		  qmensa(plan->refer)
+		  //qmensa(plan->refer)
 		  if  !empty(PLAN->Refer)
 			 rI051(alltrim(PLAN->Refer))
 		  endif	 
@@ -1668,17 +1673,19 @@ local cNIVEL := ""
 			cSPED += "|"+iif(left(PLAN->Codigo,1) == "1", "A","P")
 			
 			cSPED += "|"+ strtran(strtran(strtran(rtrim(PLAN->Descricao),chr(9),""),chr(13),""),chr(10),"")
-       
-			cSPED += "|"+i_valida(iif(nValor < 0,nValor*(-1),nValor),19)
-			if nValor < 0
+       			
+			cSPED += "|"+i_valida(iif(nSaldo_ant < 0,nSaldo_ant*(-1),nSaldo_ant),19)
+			
+			if nSaldo_ant < 0
 				cSIT := "C"
 		    else
 				cSIT := "D"
 			endif
-			cSPED += "|"+cSIT
-			cSPED += "|"+i_valida(iif(nSaldo_ant < 0,nSaldo_ant*(-1),nSaldo_ant),19)
 			
-			if nSaldo_ant < 0
+			cSPED += "|"+cSIT
+			cSPED += "|"+i_valida(iif(nValor < 0,nValor*(-1),nValor),19)
+			
+			if nValor < 0
 				cSIT := "C"
 		    else
 				cSIT := "D"
@@ -1721,6 +1728,30 @@ static function getAglutinacao(cCONTA)
 
 
 return
+
+
+static function i_temMovimentoAno
+   local nCONT :=1
+   local nSaldo    := 0
+   local nDebitos  := 0
+   local nCreditos := 0
+
+   nSALDO := PLAN->Saldo_ant
+   for nCONT = 1 to 12
+       cDEB := "DB"+strzero(nCONT,2)
+       cCRE := "CR"+strzero(nCONT,2)
+	   
+       nDebitos  += PLAN->&cDEB
+       nCreditos += PLAN->&cCRE
+      
+   next
+   
+   if nSaldo == 0 .and. nDebitos == 0 .and. nCreditos == 0
+	  return .F.	
+   endif	  
+   
+   
+return .T.
 
 static function i_puxaatps
    local nCONT :=1
