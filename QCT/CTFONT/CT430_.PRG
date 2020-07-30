@@ -360,8 +360,8 @@ local cNIVEL := ""
          loop
       endif
 	  
-	  if ! i_temMovimentoAno()
-	     PLAN->(dbskip())
+	  if ! i_temMovimentoAno() .and. PLAN->Codigo != "10204       "
+		 PLAN->(dbskip())
          loop
       endif
 
@@ -1310,6 +1310,13 @@ static function grava_saldo ( cCONTA , nVALOR , cMACRO )
    if "SALDO" $ cMACRO
       cMACRO := cMACRO + iif(nNEG<0,"_CR","_DB")
    endif
+   
+   do case
+      case len(cCONTA) == 12 ; grava_saldo ( left(cCONTA,7) , nVALOR , cMACRO )
+      case len(cCONTA) == 7  ; grava_saldo ( left(cCONTA,5) , nVALOR , cMACRO )
+      case len(cCONTA) == 5  ; grava_saldo ( left(cCONTA,3) , nVALOR , cMACRO )
+      case len(cCONTA) == 3  ; grava_saldo ( left(cCONTA,1) , nVALOR , cMACRO )
+   endcase
 
    PLAN->(dbsetorder(nORD))
    PLAN->(dbgoto(nREC))
@@ -1646,13 +1653,26 @@ static function balanco
 local cSPED    := ""
 local cNIVEL := ""
 
-   PLAN->(dbsetfilter({|| left(Codigo,1)  $ "12"}))
    PLAN->(dbsetorder(1))
-   PLAN->(dbgotop())
-
+   PLAN->(dbgotop())	
 
    do while ! PLAN->(eof())
-
+     
+       if left(PLAN->codigo,1) > "2"
+		  PLAN->(dbskip())
+          loop
+	   endif	  
+	 
+	   if empty(PLAN->Codigo)
+          PLAN->(dbskip())
+          loop
+       endif
+	   
+	  if ! i_temMovimentoAno() .and. PLAN->Codigo != "10204       "
+		 PLAN->(dbskip())
+         loop
+      endif
+	  
        cNIVEL := getNivel(PLAN->Codigo)       
 	   nValor := i_puxaatps()
 	   nSaldo_ant := i_puxasaldo(1)
@@ -1661,14 +1681,16 @@ local cNIVEL := ""
 		//	PLAN->(dbskip())
 		//	loop
 	   //endif
-	     
 
-	   if nValor <> 0
+	   //if nValor <> 0 || nSaldo_ant <> 0
 			cSPED := "|J100"
 			cSPED += "|"+maskCod(alltrim(PLAN->Codigo))
 			cSPED += "|"+iif(cNIVEL == "5","D","T")
 			cSPED += "|"+cNIVEL
-			cSPED += "|"+left(PLAN->Codigo,1)
+			
+			cSuperior := alltrim(maskCod(searchSuperior(PLAN->Codigo),cNIVEL))
+						
+			cSPED += "|"+cSuperior
 			
 			cSPED += "|"+iif(left(PLAN->Codigo,1) == "1", "A","P")
 			
@@ -1696,7 +1718,7 @@ local cNIVEL := ""
 			nTOT_LIN++
 			nTOT_BLOCOJ++
 			nTOT_J100++
-		endif	
+		//endif	
 
       PLAN->(dbskip())
 
@@ -1731,27 +1753,32 @@ return
 
 
 static function i_temMovimentoAno
-   local nCONT :=1
+   local nCONT := 1
    local nSaldo    := 0
    local nDebitos  := 0
    local nCreditos := 0
 
    nSALDO := PLAN->Saldo_ant
+   
+   if PLAN->Saldo_ant <> 0
+	  return .T. 
+   endif	   
+   
    for nCONT = 1 to 12
        cDEB := "DB"+strzero(nCONT,2)
        cCRE := "CR"+strzero(nCONT,2)
 	   
-       nDebitos  += PLAN->&cDEB
-       nCreditos += PLAN->&cCRE
+       if PLAN->&cDEB <> 0
+		  return .T. 
+	   endif
+	   
+       if PLAN->&cCRE <> 0 
+		  return .T. 
+	   endif
       
    next
-   
-   if nSaldo == 0 .and. nDebitos == 0 .and. nCreditos == 0
-	  return .F.	
-   endif	  
-   
-   
-return .T.
+      
+return .F.
 
 static function i_puxaatps
    local nCONT :=1
