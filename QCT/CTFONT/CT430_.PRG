@@ -792,7 +792,8 @@ local cSPED := ""
       balanco()
 	  
 	  if CONFIG->Mantra == "S"
-	      dre_mantra()
+	      //dre_mantra()
+		  dre_novo()
 	  else
 		  dre_romero()	
 	  endif
@@ -2258,7 +2259,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|3.01.01.01"
 		cSPED += "|T"
-		cSPED += "|0"			
+		cSPED += "|2"			
 		cSPED += "|"			
 		cSPED += "|"+"RECEITAS OPERACIONAIS"
 		cSPED += "|" //Saldo Anterior
@@ -2282,7 +2283,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|3.01.01.02"
 		cSPED += "|T"
-		cSPED += "|0"
+		cSPED += "|2"
 		cSPED += "|"		
 		cSPED += "|"+"DEDUCOES"
 		cSPED += "|" //Saldo Anterior
@@ -2305,7 +2306,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|3.01.02.01"
 		cSPED += "|T"
-		cSPED += "|0"			
+		cSPED += "|2"			
 		cSPED += "|"
 		cSPED += "|"+"IMPOSTOS"
 		cSPED += "|" //Saldo Anterior
@@ -2329,7 +2330,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|"
 		cSPED += "|T"
-		cSPED += "|0"			
+		cSPED += "|1"			
 		cSPED += "|"
 		cSPED += "|"+"(=)RECEITA OPERACIONAL LIQUIDA"
 		cSPED += "|" //Saldo Anterior
@@ -2353,7 +2354,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|3.02.02.01"
 		cSPED += "|T"
-		cSPED += "|0"			
+		cSPED += "|2"			
 		cSPED += "|"
 		cSPED += "|"+"CUSTOS DOS ESTOQUES"
 		cSPED += "|" //Saldo Anterior
@@ -2377,7 +2378,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim( str(nCont))
 		cSPED += "|"		
 		cSPED += "|T"
-		cSPED += "|0"	
+		cSPED += "|2"	
 		cSPED += "|"
 		cSPED += "|"+"CUSTOS ESTOQUES/EXPEDICAO"
 		cSPED += "|" //Saldo Anterior
@@ -2401,7 +2402,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|"	
 		cSPED += "|T"		
-		cSPED += "|0"	
+		cSPED += "|2"	
 		cSPED += "|"
 		cSPED += "|"+"OUTROS CUSTOS"
 		cSPED += "|" //Saldo Anterior
@@ -2425,7 +2426,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|"
 		cSPED += "|T"
-		cSPED += "|0"			
+		cSPED += "|1"			
 		cSPED += "|"
 		cSPED += "|"+"(=)LUCRO BRUTO"
 		cSPED += "|" //Saldo Anterior
@@ -2448,7 +2449,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|"	
 	    cSPED += "|T"		
-		cSPED += "|0"	
+		cSPED += "|2"	
 		cSPED += "|"
 		cSPED += "|"+"DESPESAS COM PESSOAL"
 		cSPED += "|" //Saldo Anterior
@@ -2473,7 +2474,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|"	
 		cSPED += "|T"
-		cSPED += "|0"	
+		cSPED += "|2"	
 		cSPED += "|"
 		cSPED += "|"+"DESPESAS GERAIS"
 		cSPED += "|" //Saldo Anterior
@@ -2498,7 +2499,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|"		
 		cSPED += "|T"		
-		cSPED += "|0"	
+		cSPED += "|2"	
 		cSPED += "|"
 		cSPED += "|"+"DESPESAS COM VENDAS"
 		cSPED += "|" //Saldo Anterior
@@ -2523,7 +2524,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|"	
 		cSPED += "|T"
-		cSPED += "|0"	
+		cSPED += "|2"	
 		cSPED += "|"
 		cSPED += "|"+"ENCARGOS FINANCEIROS LIQUIDOS"
 		cSPED += "|" //Saldo Anterior
@@ -2548,7 +2549,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|"	
 		cSPED += "|T"	
-		cSPED += "|0"	
+		cSPED += "|2"	
 		cSPED += "|"
 		cSPED += "|"+"DESPESAS TRIBUTARIAS"
 		cSPED += "|" //Saldo Anterior
@@ -2574,7 +2575,7 @@ static function dre_mantra
 		cSPED += "|"	
 		cSPED += "|T"
 	
-		cSPED += "|0"	
+		cSPED += "|2"	
 		cSPED += "|"
 		cSPED += "|"+"PROVISOES PARA ENCERRAMENTO DO EXERCICIO"
 		cSPED += "|" //Saldo Anterior
@@ -2599,7 +2600,7 @@ static function dre_mantra
 		cSPED += "|" + alltrim(str(nCont))
 		cSPED += "|"
 		cSPED += "|T"
-		cSPED += "|0"			
+		cSPED += "|1"			
 		cSPED += "|"
 		cSPED += "|"+"(=)LUCRO DO EXERCICIO"
 		cSPED += "|" //Saldo Anterior
@@ -2635,23 +2636,32 @@ static function imprimeSubContas(contaPai)
 			    PLAN->(dbskip())
 				loop
 			endif	
+			
 			 nCont++
 			 cSPED := "|J150"	
 			 cSPED += "|" + alltrim(str(nCont))
 			 cSPED += "|"+maskCod(alltrim(PLAN->Codigo))	
 			 cSPED += "|D"
-			 cSPED += "|0"
+			 cSPED += "|3"
 			 cSPED += "|" //Cod Aglutinacao Superior
 			 
 			 cSPED += "|"+rtrim(PLAN->Descricao)
 			 cSPED += "|" //Saldo
 			 cSPED += "|" //Tipo Saldo - Debito ou credito
 			 
-			 cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
+			 //cSPED += "|"+i_valida(abs(PLAN->Saldo_dre),19)
 			 
-			 cSPED += "|"+iif(PLAN->Saldo_dre > 0,"C","D")
+			 cSPED += "|"+i_valida(iif(PLAN->Saldo_dre < 0,PLAN->Saldo_dre*(-1),PLAN->Saldo_dre),19)
+			
+			if PLAN->Saldo_dre < 0
+				cSIT := "C"
+		    else
+				cSIT := "D"
+			endif
 			 
-			 cSPED += "|"+iif(PLAN->Saldo_dre > 0,"R","D")
+			 cSPED += "|"+cSIT
+			 
+			 cSPED += "|"+iif(PLAN->Saldo_dre < 0,"D","R")
 			 cSPED += "||"
 			 write(nFILE,cSPED,len(cSPED))
 			 cSPED := ""
@@ -2663,6 +2673,86 @@ static function imprimeSubContas(contaPai)
 		enddo
 	endif	
 
+
+
+return
+
+static function dre_novo()
+	local cSPED      := ""
+	local cIndicador := ""
+	local cSuperior  := ""
+	local cNIVEL     := ""
+	local cNATUREZA  := ""
+	local nCONT      := 0
+	
+	    //PLAN->(dbclearfilter())
+        PLAN->(dbsetorder(1))
+        PLAN->(dbgotop())
+	
+		do while ! PLAN->(eof())
+		
+		    if left(PLAN->codigo,1) != "3"
+			   PLAN->(dbskip())
+               loop
+	        endif	  
+		
+			if PLAN->Saldo_dre == 0
+			    PLAN->(dbskip())
+				loop
+			endif	
+						
+			 cNIVEL := getNivel(PLAN->Codigo)
+			 cSuperior := alltrim(maskCod(searchSuperior(PLAN->Codigo),cNIVEL))
+			 
+			 if empty(PLAN->Reduzido)
+				cIndicador := "T"
+			 else
+				cIndicador := "D"
+			 endif
+			
+			 nCont++
+			 cSPED := "|J150"	
+			 cSPED += "|" + alltrim(str(nCont))
+			 cSPED += "|"+maskCod(alltrim(PLAN->Codigo))	
+			 cSPED += "|"+cIndicador
+			 cSPED += "|"+cNivel
+			 cSPED += "|"+cSuperior //Cod Aglutinacao Superior
+			 
+			 cSPED += "|"+strtran(rtrim(PLAN->Descricao),chr(9),"")
+			 cSPED += "|" //Saldo
+			 cSPED += "|" //Tipo Saldo - Debito ou credito
+			 
+			 cSPED += "|"+i_valida(iif(PLAN->Saldo_dre < 0,PLAN->Saldo_dre*(-1),PLAN->Saldo_dre),19)
+			
+			 if PLAN->Saldo_dre < 0
+				cSIT := "C"
+		     else
+				cSIT := "D"
+			 endif
+			 
+			 cSPED += "|"+cSIT
+
+			 if left(PLAN->Nat_cont,2) == "DP"
+                cNATUREZA := "D"
+			 endif	
+
+             if left(PLAN->Nat_cont,2) == "RC"
+                cNATUREZA := "R"
+			 endif 	
+				
+			 //cSPED += "|"+iif(PLAN->Saldo_dre < 0,"D","R")
+			 cSPED += "|"+cNATUREZA
+			 
+			 
+			 cSPED += "||"
+			 write(nFILE,cSPED,len(cSPED))
+			 cSPED := ""
+			 nTOT_LIN++
+			 nTOT_BLOCOJ++
+			 nTOT_J150++
+			
+			PLAN->(dbskip())
+		enddo
 
 
 return
